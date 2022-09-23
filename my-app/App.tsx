@@ -7,9 +7,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
-      <Text>Hi</Text>
-      <Text>Hey</Text>
-      <Text>기분굿</Text>
+      <Text>제대로 해</Text>
     </View>
   );
 }
