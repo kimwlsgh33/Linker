@@ -1,13 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import RootStack from "./src/nav/RootStack";
 
-export default function App() {
+function HomeScreen() {
   return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+    </View>
   );
 }
 
@@ -19,3 +17,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default HomeScreen;
