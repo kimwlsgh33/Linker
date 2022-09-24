@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-function DetailScreen() {
+function WelcomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Detail Screen</Text>
+      <Text>Welcome Screen</Text>
     </View>
   );
 }
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailScreen;
+export default WelcomeScreen;
