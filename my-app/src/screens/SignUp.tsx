@@ -35,15 +35,22 @@ const SignUp = () => {
         <Text
           style={{
             fontFamily: "Lobster-Regular",
-            fontSize: 55,
+            fontSize: 50,
+            textAlign: "center",
           }}
         >
           Instagram
         </Text>
-        <Text></Text>
+        <Text style={[styles.recommadText]}>
+          친구들의 사진과 동영상을 보려면
+        </Text>
+        <Text style={[styles.recommadText]}>가입하세요.</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
-            <Text style={styles.buttonOutlineText}>Facebook으로 로그인</Text>
+            <Text style={styles.buttonOutlineText}>
+              <Icon name="logo-facebook" size={15} color="#FFF" />
+              &nbsp;&nbsp;Facebook으로 로그인
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -61,6 +68,8 @@ const SignUp = () => {
                 width: 50,
                 textAlign: "center",
                 color: "gray",
+                marginTop: 10,
+                marginBottom: 10,
               }}
             >
               또는
@@ -100,6 +109,22 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <View style={styles.policyView}>
+        <Text style={styles.policyText}>
+          가입하면 Instagram의{" "}
+          <Text style={styles.policyTextIm}>약관, 데이터</Text>
+        </Text>
+        <Text style={styles.policyText}>
+          <Text style={styles.policyTextIm}>정책</Text> 및{" "}
+          <Text style={styles.policyTextIm}>쿠키 정책</Text>에 동의하게 됩니
+        </Text>
+        <Text style={styles.policyText}>다.</Text>
+      </View>
+      <View style={styles.bottomView}>
+        <Text>
+          계정이 있으신가요? <Text style={styles.gologin}>로그인</Text>
+        </Text>
+      </View>
     </KeyboardAvoidingView>
   );
 };
@@ -112,7 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputContainer: {
-    width: "60%",
+    width: "80%",
   },
   input: {
     backgroundColor: "ccc",
@@ -127,11 +152,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     // backgroundColor: "#0782F9",
+    height: 50,
   },
   button: {
     backgroundColor: "#fff",
     width: "100%",
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
 
     alignItems: "center",
@@ -141,6 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderColor: "#ccc",
     borderWidth: 1,
+    fontSize: 15,
   },
   buttonText: {
     color: "white",
@@ -170,9 +197,29 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     borderWidth: 1,
   },
-  mainText: {
-    fontFamily: "Lobster-Regular",
-    fontSize: 40,
+  bottomView: {
+    marginTop: 40,
+  },
+  gologin: {
+    color: "#0782F9",
+  },
+  recommadText: {
+    fontSize: 18,
+    color: "#999",
+    textAlign: "center",
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  policyView: {
+    marginTop: 15,
+  },
+  policyText: {
+    fontSize: 15,
+    color: "#999",
+    textAlign: "center",
+  },
+  policyTextIm: {
+    fontWeight: "bold",
   },
 });
 export default SignUp;
