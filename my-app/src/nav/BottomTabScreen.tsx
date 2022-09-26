@@ -12,7 +12,6 @@ import Ionic from "react-native-vector-icons/Ionicons";
 const BottomTabScreen = () => {
 
   const Tab = createBottomTabNavigator();
-  const Stack = createNativeStackNavigator();
 
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
