@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BackToSchool.ttf",
+      "sha1": "49acf7080e92b3fa64f7b64796fb43d2af76c94b"
+    },
+    {
+      "path": "assets/fonts/Lobster-Regular.ttf",
+      "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
+    },
+    {
+      "path": "assets/fonts/강원교육모두 Bold.ttf",
+      "sha1": "3d79faadb80e6097dcc18a683785e507da4c6eb4"
+    },
+    {
+      "path": "assets/fonts/강원교육모두 Light.ttf",
+      "sha1": "83b78e96a1626533320db5d55adbd06e1db6e827"
+    }
+  ]
+}
