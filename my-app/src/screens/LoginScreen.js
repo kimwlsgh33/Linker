@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
   return (
@@ -62,8 +63,44 @@ const LoginScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
-          <Text style={styles.buttonOutlineText}>Facebook으로 로그인</Text>
+          <Text style={styles.buttonOutlineText}>
+            <Icon name="logo-facebook" size={15} color="#0782F9" />
+            Facebook으로 로그인
+          </Text>
         </TouchableOpacity>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <View
+          style={{
+            marginTop: 135,
+            borderTopWidth: 1,
+            borderTopColor: "#ccc",
+            width: "100%",
+            position: "absolute",
+          }}
+        >
+          <Text
+            style={{
+              color: "gray",
+              fontSize: 10,
+              padding: 16,
+              textAlign: "center",
+            }}
+          >
+            계정이 없으신가요?
+            <Text
+              style={{
+                color: "#404040",
+                fontSize: 10,
+                padding: 16,
+                textAlign: "center",
+                fontWeight: "700",
+              }}
+            >
+              가입하기.
+            </Text>
+          </Text>
+        </View>
       </View>
     </KeyboardAvoidingView>
   );
@@ -77,11 +114,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
+    fontFamily: "Ramadhan Mubarak",
     color: "black",
-    fontWeight: "700",
-    fontSize: 26,
-    fontStyle: "italic",
-    marginBottom: 20,
+    fontSize: 50,
+    marginBottom: 10,
   },
   inputContainer: {
     width: "90%",
