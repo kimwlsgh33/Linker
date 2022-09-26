@@ -6,7 +6,7 @@ import HomeTab from "./src/nav/HomeTab";
 export default function App() {
   return (
     <NavigationContainer>
-      <HomeTab  />
+      <HomeTab />
     </NavigationContainer>
   );
 }
