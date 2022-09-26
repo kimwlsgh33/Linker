@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import RootStack from "./src/nav/RootStack";
+import HomeTab from "./src/nav/HomeTab";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <RootStack />
+      <HomeTab  />
     </NavigationContainer>
   );
 }
