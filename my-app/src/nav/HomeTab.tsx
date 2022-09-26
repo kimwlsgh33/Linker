@@ -1,56 +1,17 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
-import DetailScreen from "../screens/DetailScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import SearchScreen from "../screens/SearchScreen";
-import ReelsScreen from "../screens/ReelsScreen";
-import Ionic from "react-native-vector-icons/Ionicons";
 
+import BottomTabScreen from "./BottomTabScreen";
 
 function HomeTab() {
   const Tab = createBottomTabNavigator();
   const Stack = createNativeStackNavigator();
-  const BottomTabScreen = () => {
-    return (
-      <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarShowLabel: false,
-        tabBarStyle: {
-        height: 50,
-        },
-
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-          if (route.name === 'Instagram') {
-            iconName = focused ? 'home-sharp' : "home-outline";
-          } else if (route.name === 'Search') {
-            iconName = focused ? 'search' : "ios-search-outline";
-          } else if (route.name === 'Reels') {
-            iconName = focused ? 'caret-forward-circle' : "caret-forward-circle-outline";
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'ios-person-circle' : "ios-person-circle-outline";
-          } else if (route.name === 'Detail') {
-            iconName = focused ? 'ios-heart' : "ios-heart-outline";
-          } 
-          return <Ionic name={iconName} size={size} color={color} />;
-        },
-      })}>
-        <Tab.Screen name="Instagram" component={HomeScreen}  />
-        <Tab.Screen name="Search" component={SearchScreen} />
-        <Tab.Screen name="Reels" component={ReelsScreen} />
-        <Tab.Screen name="Detail" component={DetailScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-      </Tab.Navigator>
-    )
-  }
+  
   return (
-    <NavigationContainer independent={true} >
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={BottomTabScreen} />
       </Stack.Navigator>
-    </NavigationContainer>
   )
 }
 
