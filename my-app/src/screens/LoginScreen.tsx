@@ -5,28 +5,33 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Platform,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <View style={styles.container}>
       <Text style={styles.logo}>instagram</Text>
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="전화번호, 이메일 주소 또는 사용자 이름"
-          style={[styles.input, styles.buttonOutline]}
-        />
-        <TextInput
-          placeholder="비밀번호"
-          style={[styles.input, styles.buttonOutline]}
-          secureTextEntry
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>로그인</Text>
-          </TouchableOpacity>
-        </View>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "height" : "padding"}
+        >
+          <TextInput
+            placeholder="전화번호, 이메일 주소 또는 사용자 이름"
+            style={[styles.input, styles.buttonOutline]}
+          />
+          <TextInput
+            placeholder="비밀번호"
+            style={[styles.input, styles.buttonOutline]}
+            secureTextEntry
+          />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>로그인</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
         <Text style={styles.text}>
           로그인 상세정보를 잊으셨나요?
           <Text style={styles.link}>로그인 도움말 보기.</Text>
@@ -104,7 +109,7 @@ const LoginScreen = () => {
           </Text>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
