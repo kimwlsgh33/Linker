@@ -53,9 +53,11 @@
 	<string>UIStatusBarStyleDefault</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Just Overthink.ttf</string>
-		<string>Ramadhan Mubarak.ttf</string>
 		<string>SingleDay-Regular.ttf</string>
+		<string>Lobster-Regular.ttf</string>
+		<string>강원교육모두 Bold.ttf</string>
+		<string>강원교육모두 Light.ttf</string>
+		<string>BackToSchool.ttf</string>
 	</array>
 </dict>
 </plist>

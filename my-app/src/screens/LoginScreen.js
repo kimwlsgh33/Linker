@@ -11,7 +11,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 const LoginScreen = () => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.logo}>My App</Text>
+      <Text style={styles.logo}>instagram</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="전화번호, 이메일 주소 또는 사용자 이름"
@@ -43,6 +43,7 @@ const LoginScreen = () => {
           <View>
             <Text
               style={{
+                fontFamily: "강원교육모두 Bold",
                 width: 50,
                 textAlign: "center",
                 color: "gray",
@@ -72,7 +73,7 @@ const LoginScreen = () => {
       <View style={{ alignItems: "center" }}>
         <View
           style={{
-            marginTop: 135,
+            marginTop: 125,
             borderTopWidth: 1,
             borderTopColor: "#ccc",
             width: "100%",
@@ -81,20 +82,21 @@ const LoginScreen = () => {
         >
           <Text
             style={{
+              fontFamily: "강원교육모두 Light",
               color: "gray",
-              fontSize: 10,
-              padding: 16,
+              fontSize: 11,
+              padding: 13,
               textAlign: "center",
             }}
           >
             계정이 없으신가요?
             <Text
               style={{
+                fontFamily: "강원교육모두 Bold",
                 color: "#404040",
-                fontSize: 10,
-                padding: 16,
+                fontSize: 11,
+                padding: 13,
                 textAlign: "center",
-                fontWeight: "700",
               }}
             >
               가입하기.
@@ -114,16 +116,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    fontFamily: "Ramadhan Mubarak",
+    fontFamily: "BackToSchool",
     color: "black",
     fontSize: 50,
-    marginBottom: 10,
+    marginBottom: 18,
   },
   inputContainer: {
     width: "90%",
   },
   input: {
-    backgroundColor: "#f9f9f9",
+    fontFamily: "강원교육모두 Light",
+    backgroundColor: "#ccc",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 5,
@@ -149,27 +152,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonText: {
+    fontFamily: "강원교육모두 Bold",
     color: "white",
-    fontWeight: "700",
     fontSize: 16,
   },
   text: {
+    fontFamily: "강원교육모두 Light",
     color: "#404040",
-    fontSize: 10,
-    padding: 16,
+    fontSize: 11,
+    padding: 13,
     textAlign: "center",
   },
   link: {
+    fontFamily: "강원교육모두 Bold",
     color: "#404040",
-    fontWeight: "700",
-    fontSize: 10,
-    padding: 16,
+    fontSize: 11,
+    padding: 13,
     textAlign: "center",
   },
   buttonOutlineText: {
+    fontFamily: "강원교육모두 Bold",
     color: "#0782F9",
-    fontSize: 12,
-    fontWeight: "700",
+    fontSize: 13,
   },
   buttonOutline2: {
     backgroundColor: "#fff",
