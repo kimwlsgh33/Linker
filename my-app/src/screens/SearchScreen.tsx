@@ -23,8 +23,6 @@ const postAndRils = new Array(10).fill(0).map((_, i) => ({
   rils: rilsArray.slice(i, i + 1),
 }));
 
-console.log(postAndRils);
-
 function SearchScreen() {
   const [paR, setPaR] = useState(postAndRils);
 
