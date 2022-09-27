@@ -53,7 +53,15 @@
 	<string>UIStatusBarStyleDefault</string>
 	<key>UIAppFonts</key>
 	<array>
+<<<<<<< HEAD
 		<string>Lobster-Regular.ttf</string>
+=======
+		<string>SingleDay-Regular.ttf</string>
+		<string>Lobster-Regular.ttf</string>
+		<string>강원교육모두 Bold.ttf</string>
+		<string>강원교육모두 Light.ttf</string>
+		<string>BackToSchool.ttf</string>
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
 	</array>
 </dict>
 </plist>
