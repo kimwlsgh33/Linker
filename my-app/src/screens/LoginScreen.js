@@ -20,6 +20,10 @@ const LoginScreen = () => {
     navigation.navigate("Home");
   };
 
+  const goSignUp = () => {
+    navigation.navigate("SignUp");
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.logo}>instagram</Text>
@@ -106,6 +110,7 @@ const LoginScreen = () => {
           >
             계정이 없으신가요?
             <Text
+              onPress={goSignUp}
               style={{
                 fontFamily: "강원교육모두 Bold",
                 color: "#404040",
