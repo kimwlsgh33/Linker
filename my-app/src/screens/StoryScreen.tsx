@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import RootStack from "./src/nav/RootStack";
 
-export default function App() {
+function StoryScreen({ route }) {
+  const { story } = route.params ?? {};
+  console.log(story);
   return (
-    <NavigationContainer>
-      <RootStack />
-    </NavigationContainer>
+    <View style={styles.container}>
+      <Text>StoryScreen</Text>
+    </View>
   );
 }
 
@@ -19,3 +19,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+export default StoryScreen;

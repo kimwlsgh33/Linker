@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import PostAndRils from "../components/PostAndRils";
+import EntryIcon from "react-native-vector-icons/Entypo";
+
+import PostAndReels from "../components/PostAndReels";
 
 const imageArray = new Array(50).fill(0).map((_, i) => ({
   id: i,
@@ -10,21 +12,21 @@ const imageArray = new Array(50).fill(0).map((_, i) => ({
   createdAt: "6 minutes ago",
 }));
 
-const rilsArray = new Array(20).fill(0).map((_, i) => ({
+const reelsArray = new Array(20).fill(0).map((_, i) => ({
   id: i,
   type: "ril",
   uri: `https://unsplash.it/600/600?image=${i + 1}`,
   createdAt: "6 minutes ago",
 }));
 
-const postAndRils = new Array(10).fill(0).map((_, i) => ({
+const postAndReels = new Array(10).fill(0).map((_, i) => ({
   id: i,
   images: imageArray.slice(i * 4, (i + 1) * 4),
-  rils: rilsArray.slice(i, i + 1),
+  reels: reelsArray.slice(i, i + 1),
 }));
 
 function SearchScreen() {
-  const [paR, setPaR] = useState(postAndRils);
+  const [paR, setPaR] = useState(postAndReels);
 
   if (paR.length === 0) {
     return (
@@ -36,17 +38,19 @@ function SearchScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Icon name="search" size={20} color="black" />
         <View style={styles.searchView}>
-          <TextInput style={styles.searchInput} placeholder="Search" />
+          <Icon name="search" size={15} color="rgba(0,0,0,0.5)" />
+          <TextInput style={styles.searchInput} placeholder="검색" />
         </View>
+
+        <EntryIcon name="location" size={20} color="rgba(0,0,0,0.5)" />
       </View>
 
       <FlatList
         data={paR}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
-          <PostAndRils posts={item.images} rils={item.rils} index={index} />
+          <PostAndReels posts={item.images} reels={item.reels} index={index} />
         )}
       />
     </View>
@@ -73,21 +77,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+    paddingHorizontal: 10,
   },
   searchView: {
     flex: 1,
-    height: 30,
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#eee",
-    borderRadius: 5,
     marginLeft: 10,
     marginRight: 10,
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 10,
   },
   searchInput: {
     flex: 1,
     height: 30,
-    backgroundColor: "#eee",
-    borderRadius: 5,
-    paddingLeft: 10,
+    paddingLeft: 5,
   },
   scrollView: {
     width: "100%",

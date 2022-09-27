@@ -6,6 +6,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
 import ReelsScreen from "../screens/ReelsScreen";
 import Ionic from "react-native-vector-icons/Ionicons";
+
 const Tab = createBottomTabNavigator();
 
 const BottomTab = () => {
@@ -40,7 +41,11 @@ const BottomTab = () => {
       })}
     >
       <Tab.Screen name="Instagram" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen name="Reels" component={ReelsScreen} />
       <Tab.Screen name="Detail" component={DetailScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
