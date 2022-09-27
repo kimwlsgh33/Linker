@@ -53,7 +53,33 @@
 	<string>UIStatusBarStyleDefault</string>
 	<key>UIAppFonts</key>
 	<array>
+<<<<<<< HEAD
+		<string>NotoSerifKR-Black.otf</string>
+		<string>NotoSerifKR-Bold.otf</string>
+		<string>NotoSerifKR-ExtraLight.otf</string>
+		<string>NotoSerifKR-Light.otf</string>
+		<string>NotoSerifKR-Medium.otf</string>
+		<string>NotoSerifKR-Regular.otf</string>
+		<string>NotoSerifKR-SemiBold.otf</string>
+		<string>BungeeSpice-Regular.ttf</string>
 		<string>Lobster-Regular.ttf</string>
+		<string>BackToSchool.ttf</string>
+		<string>강원교육모두 Bold.ttf</string>
+		<string>강원교육모두 Light.ttf</string>
+		<string>강원교육새음.ttf</string>
+		<string>강원교육튼튼.ttf</string>
+		<string>강원교육현옥샘.ttf</string>
+=======
+<<<<<<< HEAD
+		<string>Lobster-Regular.ttf</string>
+=======
+		<string>SingleDay-Regular.ttf</string>
+		<string>Lobster-Regular.ttf</string>
+		<string>강원교육모두 Bold.ttf</string>
+		<string>강원교육모두 Light.ttf</string>
+		<string>BackToSchool.ttf</string>
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 	</array>
 </dict>
 </plist>

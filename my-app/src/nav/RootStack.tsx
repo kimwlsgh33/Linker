@@ -6,6 +6,8 @@ import BottomTab from "./BottomTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 
+import SignUp from "../screens/SignUp";
+import LoginScreen from "../screens/LoginScreen";
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
@@ -20,8 +22,13 @@ function RootStack() {
       <Stack.Screen name="Details" component={DetailScreen} />
       <Stack.Screen name="Post" component={PostScreen} />
       <Stack.Screen name="Story" component={StoryScreen} />
+      <Stack.Screen name="SignUp" component={SignUp} />
     </Stack.Navigator>
   );
 }
 
 export default RootStack;
+
+{
+  /*RootStack.js의 Stack.Navigator 뒤에 initialRouteName="화면이름" */
+}
