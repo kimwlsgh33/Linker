@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+//import { useNavigation } from "@react-navigation/native";
 import React, { useState, useCallback } from "react";
 import {
   KeyboardAvoidingView,
@@ -11,14 +11,14 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { useForm } from "react-hook-form";
+//import { useForm } from "react-hook-form";
 import Icon from "react-native-vector-icons/Ionicons";
 
 function ExampleView(props) {
   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
 }
 
-const Form = {};
+//const Form = {};
 /* interface ISignUpForm {
   email: string;
   name: string;
@@ -34,9 +34,10 @@ const SignUp = () => {
       <View style={styles.inputContainer}>
         <Text
           style={{
-            fontFamily: "Lobster-Regular",
+            fontFamily: "BackToSchool",
             fontSize: 50,
             textAlign: "center",
+            marginBottom: 15,
           }}
         >
           Instagram
@@ -70,6 +71,8 @@ const SignUp = () => {
                 color: "gray",
                 marginTop: 10,
                 marginBottom: 10,
+                fontFamily: "강원교육모두 Bold",
+                fontSize: 15,
               }}
             >
               또는
@@ -121,7 +124,7 @@ const SignUp = () => {
         <Text style={styles.policyText}>다.</Text>
       </View>
       <View style={styles.bottomView}>
-        <Text>
+        <Text style={{ fontFamily: "강원교육모두 Bold" }}>
           계정이 있으신가요? <Text style={styles.gologin}>로그인</Text>
         </Text>
       </View>
@@ -146,6 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 10,
+    fontFamily: "강원교육모두 Light",
   },
   buttonContainer: {
     justifyContent: "center",
@@ -189,8 +193,8 @@ const styles = StyleSheet.create({
   },
   buttonOutlineText: {
     color: "#FFF",
-    fontSize: 12,
-    fontWeight: "700",
+    fontSize: 15,
+    fontFamily: "강원교육모두 Bold",
   },
   buttonOutline2: {
     backgroundColor: "#0782F9",
@@ -204,19 +208,20 @@ const styles = StyleSheet.create({
     color: "#0782F9",
   },
   recommadText: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#999",
     textAlign: "center",
-    fontWeight: "bold",
     marginBottom: 5,
+    fontFamily: "강원교육모두 Bold",
   },
   policyView: {
     marginTop: 15,
   },
   policyText: {
-    fontSize: 15,
+    fontSize: 18,
     color: "#999",
     textAlign: "center",
+    fontFamily: "강원교육모두 Bold",
   },
   policyTextIm: {
     fontWeight: "bold",
