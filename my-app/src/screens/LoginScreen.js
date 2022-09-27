@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -7,23 +8,37 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/core";
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigation = useNavigation();
+
+  const goHome = () => {
+    navigation.navigate("Home");
+  };
+
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <Text style={styles.logo}>instagram</Text>
       <View style={styles.inputContainer}>
         <TextInput
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           placeholder="전화번호, 이메일 주소 또는 사용자 이름"
           style={[styles.input, styles.buttonOutline]}
         />
         <TextInput
+          value={password}
+          onChangeText={(text) => setPassword(text)}
           placeholder="비밀번호"
           style={[styles.input, styles.buttonOutline]}
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity onPress={goHome} style={styles.button}>
             <Text style={styles.buttonText}>로그인</Text>
           </TouchableOpacity>
         </View>
