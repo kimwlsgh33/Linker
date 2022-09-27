@@ -1,13 +1,10 @@
-import React, {Component} from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-
-function WelcomeScreen() {
-
-
+function ProfileScreen() {
   return (
     <View style={styles.container}>
-      <Text>Welcome Screen</Text>
+      <Text>Profile Screen</Text>
     </View>
   );
 }
@@ -19,7 +16,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
 });
 
-export default WelcomeScreen;
+export default ProfileScreen;

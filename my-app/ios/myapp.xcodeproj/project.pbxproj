@@ -14,6 +14,7 @@
 		96905EF65AED1B983A6B3ABC /* libPods-myapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-myapp.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+<<<<<<< HEAD
 		B465D9E5F66C426DBB802042 /* NotoSerifKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = E92959933896463A837F3456 /* NotoSerifKR-Black.otf */; };
 		845D7860E91644CD9EA22B21 /* NotoSerifKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7D1792851C774000BFB3ED63 /* NotoSerifKR-Bold.otf */; };
 		7172BDBDFECD4119913DCC02 /* NotoSerifKR-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 052770F1BDE04ECF9FB1AF0B /* NotoSerifKR-ExtraLight.otf */; };
@@ -29,6 +30,17 @@
 		DC90075AEE6F4247905C98AB /* 강원교육새음.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E651C383F8EB4D078DD01E0E /* 강원교육새음.ttf */; };
 		11B5D9B8B04641B18B3B9633 /* 강원교육튼튼.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 601CD91633C2420FAED954F6 /* 강원교육튼튼.ttf */; };
 		BD556B4986774CBE9F1219B6 /* 강원교육현옥샘.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F8473A35FEC44E9BB9E3AC0 /* 강원교육현옥샘.ttf */; };
+=======
+<<<<<<< HEAD
+		0CAB4A9DD9BE4D70873B7426 /* Lobster-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1D416B025FD64496845B9D5E /* Lobster-Regular.ttf */; };
+=======
+		EF9291D517DE4D5D952C3D11 /* SingleDay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18C08067F90043CCBFDFCF50 /* SingleDay-Regular.ttf */; };
+		8249B1E0A1F240BBB46BAAED /* Lobster-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6DB3FAC5B3894212A82A6CDD /* Lobster-Regular.ttf */; };
+		10D3211417B44A0D866BC6FD /* 강원교육모두 Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F791EB773FE4CD0B4AEF0E7 /* 강원교육모두 Bold.ttf */; };
+		DF5924D00EDD42ABB4DE1A3D /* 강원교육모두 Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0C4503D453FE4C579AF93CF1 /* 강원교육모두 Light.ttf */; };
+		89A26AB2C3B840009DBAFD09 /* BackToSchool.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 43982A0B2BCB4599A364D7D5 /* BackToSchool.ttf */; };
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +58,7 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-myapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		E92959933896463A837F3456 /* NotoSerifKR-Black.otf */ = {isa = PBXFileReference; name = "NotoSerifKR-Black.otf"; path = "../assets/fonts/NotoSerifKR-Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7D1792851C774000BFB3ED63 /* NotoSerifKR-Bold.otf */ = {isa = PBXFileReference; name = "NotoSerifKR-Bold.otf"; path = "../assets/fonts/NotoSerifKR-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		052770F1BDE04ECF9FB1AF0B /* NotoSerifKR-ExtraLight.otf */ = {isa = PBXFileReference; name = "NotoSerifKR-ExtraLight.otf"; path = "../assets/fonts/NotoSerifKR-ExtraLight.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -61,6 +74,17 @@
 		E651C383F8EB4D078DD01E0E /* 강원교육새음.ttf */ = {isa = PBXFileReference; name = "강원교육새음.ttf"; path = "../assets/fonts/강원교육새음.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		601CD91633C2420FAED954F6 /* 강원교육튼튼.ttf */ = {isa = PBXFileReference; name = "강원교육튼튼.ttf"; path = "../assets/fonts/강원교육튼튼.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1F8473A35FEC44E9BB9E3AC0 /* 강원교육현옥샘.ttf */ = {isa = PBXFileReference; name = "강원교육현옥샘.ttf"; path = "../assets/fonts/강원교육현옥샘.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+=======
+<<<<<<< HEAD
+		1D416B025FD64496845B9D5E /* Lobster-Regular.ttf */ = {isa = PBXFileReference; name = "Lobster-Regular.ttf"; path = "../assets/fonts/Lobster-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+=======
+		18C08067F90043CCBFDFCF50 /* SingleDay-Regular.ttf */ = {isa = PBXFileReference; name = "SingleDay-Regular.ttf"; path = "../assets/fonts/SingleDay-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6DB3FAC5B3894212A82A6CDD /* Lobster-Regular.ttf */ = {isa = PBXFileReference; name = "Lobster-Regular.ttf"; path = "../assets/fonts/Lobster-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4F791EB773FE4CD0B4AEF0E7 /* 강원교육모두 Bold.ttf */ = {isa = PBXFileReference; name = "강원교육모두 Bold.ttf"; path = "../assets/fonts/강원교육모두 Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0C4503D453FE4C579AF93CF1 /* 강원교육모두 Light.ttf */ = {isa = PBXFileReference; name = "강원교육모두 Light.ttf"; path = "../assets/fonts/강원교육모두 Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		43982A0B2BCB4599A364D7D5 /* BackToSchool.ttf */ = {isa = PBXFileReference; name = "BackToSchool.ttf"; path = "../assets/fonts/BackToSchool.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +139,15 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+<<<<<<< HEAD
 				7C3F2919DBF44052BA774214 /* Resources */,
+=======
+<<<<<<< HEAD
+				6A601009A30A4AF0BEC90623 /* Resources */,
+=======
+				5B8D82671C954728B75B7887 /* Resources */,
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -164,6 +196,7 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		7C3F2919DBF44052BA774214 /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
@@ -182,6 +215,23 @@
 				E651C383F8EB4D078DD01E0E /* 강원교육새음.ttf */,
 				601CD91633C2420FAED954F6 /* 강원교육튼튼.ttf */,
 				1F8473A35FEC44E9BB9E3AC0 /* 강원교육현옥샘.ttf */,
+=======
+<<<<<<< HEAD
+		6A601009A30A4AF0BEC90623 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				1D416B025FD64496845B9D5E /* Lobster-Regular.ttf */,
+=======
+		5B8D82671C954728B75B7887 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				18C08067F90043CCBFDFCF50 /* SingleDay-Regular.ttf */,
+				6DB3FAC5B3894212A82A6CDD /* Lobster-Regular.ttf */,
+				4F791EB773FE4CD0B4AEF0E7 /* 강원교육모두 Bold.ttf */,
+				0C4503D453FE4C579AF93CF1 /* 강원교육모두 Light.ttf */,
+				43982A0B2BCB4599A364D7D5 /* BackToSchool.ttf */,
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -250,6 +300,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+<<<<<<< HEAD
 				B465D9E5F66C426DBB802042 /* NotoSerifKR-Black.otf in Resources */,
 				845D7860E91644CD9EA22B21 /* NotoSerifKR-Bold.otf in Resources */,
 				7172BDBDFECD4119913DCC02 /* NotoSerifKR-ExtraLight.otf in Resources */,
@@ -265,6 +316,17 @@
 				DC90075AEE6F4247905C98AB /* 강원교육새음.ttf in Resources */,
 				11B5D9B8B04641B18B3B9633 /* 강원교육튼튼.ttf in Resources */,
 				BD556B4986774CBE9F1219B6 /* 강원교육현옥샘.ttf in Resources */,
+=======
+<<<<<<< HEAD
+				0CAB4A9DD9BE4D70873B7426 /* Lobster-Regular.ttf in Resources */,
+=======
+				EF9291D517DE4D5D952C3D11 /* SingleDay-Regular.ttf in Resources */,
+				8249B1E0A1F240BBB46BAAED /* Lobster-Regular.ttf in Resources */,
+				10D3211417B44A0D866BC6FD /* 강원교육모두 Bold.ttf in Resources */,
+				DF5924D00EDD42ABB4DE1A3D /* 강원교육모두 Light.ttf in Resources */,
+				89A26AB2C3B840009DBAFD09 /* BackToSchool.ttf in Resources */,
+>>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
+>>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
