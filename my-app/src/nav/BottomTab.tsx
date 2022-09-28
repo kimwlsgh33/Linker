@@ -1,6 +1,4 @@
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
@@ -9,9 +7,9 @@ import SearchScreen from "../screens/SearchScreen";
 import ReelsScreen from "../screens/ReelsScreen";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const BottomTabScreen = () => {
-  const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
+const BottomTab = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -43,7 +41,11 @@ const BottomTabScreen = () => {
       })}
     >
       <Tab.Screen name="Instagram" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ headerShown: false }}
+      />
       <Tab.Screen name="Reels" component={ReelsScreen} />
       <Tab.Screen name="Detail" component={DetailScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
@@ -51,4 +53,4 @@ const BottomTabScreen = () => {
   );
 };
 
-export default BottomTabScreen;
+export default BottomTab;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -35,6 +35,11 @@ function HomeScreen() {
         </Text>
         <Feather name="navigation" style={{ fontSize: 24 }} />
       </View>
+      <TouchableOpacity onPress={() => navigation.navigate("Story")}>
+        <View
+          style={{ width: 100, height: 100, backgroundColor: "blue" }}
+        ></View>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
