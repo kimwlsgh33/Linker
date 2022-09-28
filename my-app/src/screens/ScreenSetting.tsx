@@ -1,11 +1,10 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
-import { SearchBar } from "react-native-screens";
+import { Text, View, StyleSheet, ScrollView} from "react-native";
+import { useState } from "react";
 
 export default function ScreenSetting() {
   return (
     <ScrollView style={styles.container}>
-      <SearchBar placeholder="검색" onChangeText={this.updateSearch} />
       <View style={styles.menutextbox}>
         <Text style={styles.menutext}>친구 팔로우 및 초대</Text>
         <Text style={styles.menutext}>알림</Text>
@@ -26,16 +25,17 @@ export default function ScreenSetting() {
         </Text>
       </View>
       <View style={styles.Overfooterbox}>
-        <Text style={styles.menutext}>로그아웃</Text>
+        <Text style={styles.menutext}>로그인</Text>
         <Text style={styles.menutext}>계정 삭제</Text>
       </View>
+      
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#000000",
     // alignItems: "center",
     // justifyContent: "center",
@@ -44,34 +44,40 @@ const styles = StyleSheet.create({
   menutext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#4682B4",
+    color: "#FFFAFA",
     // flexDirection: "column",
     // alignItems: "flex-start",
     // flexGrow: 1,
     // justify: "space-between",
-    margin: 50,
+    margin: 40,
   },
 
   menutextbox: {
-    backgroundColor: "#FFFF00",
+    backgroundColor: "#000000",
     width: "100%",
-    height: 20,
+    height: 400,
     justifyContent: "space-around",
+    borderTopColor: "#333333",         
+    borderBottomColor: "#333333",
+    borderWidth: 1,
+    
   },
 
   footerbox: {
-    backgroundColor: "#00FF00",
+    backgroundColor: "#000000",
     width: "100%",
-    height: 10,
+    height: 200,
     justifyContent: "space-around",
+    borderBottomColor: "#333333",
+    borderWidth: 1,
   },
 
   Overfooterbox: {
     // flex: 1,
-    backgroundColor: "#7B68EE",
-    height: 10,
+    backgroundColor: "#000000",
+    height: 130,
     // width: "100%",
-    // justifyContent: "space-around",
+    justifyContent: "space-around",
   },
 
   Overfootertext: {
