@@ -5,6 +5,7 @@
  * params: 네비게이션 스크린에 전달할 파라미터
  */
 declare namespace ReactNavigation {
+
   interface RootParamList {
     BottomTab: any;
     Welcome: any;

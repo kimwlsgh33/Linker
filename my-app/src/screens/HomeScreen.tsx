@@ -37,7 +37,7 @@ function HomeScreen() {
       </View>
       <TouchableOpacity onPress={() => navigation.navigate("Story")}>
         <View
-          style={{ width: 100, height: 100, backgroundColor: "blue" }}
+          style={{ width: 100, height: 100, backgroundColor: "gray" }}
         ></View>
       </TouchableOpacity>
     </SafeAreaView>
