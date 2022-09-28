@@ -8,6 +8,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 //import { useForm } from "react-hook-form";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -30,11 +31,14 @@ const SignUp = () => {
   const navigation = useNavigation();
 
   const goLogin = () => {
-    navigation.navigate("login");
+    navigation.navigate("Login" as any);
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "height" : undefined}
+    >
       <View style={styles.inputContainer}>
         <Text
           style={{

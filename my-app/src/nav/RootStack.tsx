@@ -5,6 +5,8 @@ import DetailScreen from "../screens/DetailScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
+import BottomTabScreen from "./BottomTabScreen";
+
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
@@ -13,6 +15,11 @@ function RootStack() {
       initialRouteName="Login"
       screenOptions={{ headerShown: false }}
     >
+      <Stack.Screen
+        name="BottomTab"
+        component={BottomTabScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -23,7 +30,3 @@ function RootStack() {
 }
 
 export default RootStack;
-
-{
-  /*RootStack.js의 Stack.Navigator 뒤에 initialRouteName="화면이름" */
-}
