@@ -1,20 +1,57 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView } from "react-native";
-import { SearchBar } from "react-native-screens";
+import { useState } from "react";
+import Icon from "react-native-vector-icons/AntDesign";
+import TextAndIcon from "../components/TextAndIcon";
 
 export default function ScreenSetting() {
   return (
     <ScrollView style={styles.container}>
-      <SearchBar placeholder="검색" onChangeText={this.updateSearch} />
       <View style={styles.menutextbox}>
-        <Text style={styles.menutext}>친구 팔로우 및 초대</Text>
-        <Text style={styles.menutext}>알림</Text>
+        {/* <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
+        <Text style={styles.menutext}>친구 팔로우 및 초대</Text> */}
+        <TextAndIcon
+          text="친구 팔로우 및 초대"
+          iconName="right"
+          iconSize={20}
+        />
+        <TextAndIcon text="알림" iconName="right" iconSize={20} />
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>개인정보 보호</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>관리 감독</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>보안</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>광고</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>계정</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>도움말</Text>
+
+        <View style={styles.IconRight}>
+          <Icon name="right" size={20} color="#FFFAFA" />
+        </View>
         <Text style={styles.menutext}>정보</Text>
       </View>
       <View style={styles.footerbox}>
@@ -26,7 +63,7 @@ export default function ScreenSetting() {
         </Text>
       </View>
       <View style={styles.Overfooterbox}>
-        <Text style={styles.menutext}>로그아웃</Text>
+        <Text style={styles.menutext}>로그인</Text>
         <Text style={styles.menutext}>계정 삭제</Text>
       </View>
     </ScrollView>
@@ -35,7 +72,7 @@ export default function ScreenSetting() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: "#000000",
     // alignItems: "center",
     // justifyContent: "center",
@@ -44,39 +81,52 @@ const styles = StyleSheet.create({
   menutext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#4682B4",
+    color: "#FFFAFA",
     // flexDirection: "column",
     // alignItems: "flex-start",
     // flexGrow: 1,
     // justify: "space-between",
-    margin: 50,
+    margin: 40,
   },
 
   menutextbox: {
-    backgroundColor: "#FFFF00",
+    backgroundColor: "#000000",
     width: "100%",
-    height: 20,
+    height: 400,
     justifyContent: "space-around",
+    borderTopColor: "#333333",
+    borderBottomColor: "#333333",
+    borderWidth: 1,
   },
 
   footerbox: {
-    backgroundColor: "#00FF00",
+    backgroundColor: "#000000",
     width: "100%",
-    height: 10,
+    height: 200,
     justifyContent: "space-around",
+    borderBottomColor: "#333333",
+    borderWidth: 1,
   },
 
   Overfooterbox: {
     // flex: 1,
-    backgroundColor: "#7B68EE",
-    height: 10,
+    backgroundColor: "#000000",
+    height: 130,
     // width: "100%",
-    // justifyContent: "space-around",
+    justifyContent: "space-around",
   },
 
   Overfootertext: {
     fontSize: 15,
     fontWeight: "bold",
     color: "#000000",
+  },
+
+  IconRight: {
+    marginTop: 45,
+    marginRight: 5,
+    marginLeft: 5,
+    alignItems: "flex-end",
+    // justifyContent: "center",
   },
 });
