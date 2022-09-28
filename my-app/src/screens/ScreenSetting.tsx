@@ -1,60 +1,58 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
 import { useState } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import TextAndIcon from "../components/TextAndIcon";
+import IconLeft from "../components/IconLeft";
 
 export default function ScreenSetting() {
+  const [text, onChangeText] = React.useState("Useless Text");
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.menutextbox}>
-        {/* <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>친구 팔로우 및 초대</Text> */}
+        {/* <IconLeft iconName="search1" iconSize={10} /> */}
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+          placeholder="검색"
+          placeholderTextColor="#FFFAFA"
+        />
+
+        <IconLeft iconName="adduser" iconSize={20} />
         <TextAndIcon
           text="친구 팔로우 및 초대"
           iconName="right"
           iconSize={20}
         />
+
+        <IconLeft iconName="bells" iconSize={20} />
         <TextAndIcon text="알림" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>개인정보 보호</Text>
+        <IconLeft iconName="lock" iconSize={20} />
+        <TextAndIcon text="개인정보 보호" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>관리 감독</Text>
+        <IconLeft iconName="team" iconSize={20} />
+        <TextAndIcon text="관리 감독" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>보안</Text>
+        <IconLeft iconName="Safety" iconSize={20} />
+        <TextAndIcon text="보안" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>광고</Text>
+        <IconLeft iconName="appstore-o" iconSize={20} />
+        <TextAndIcon text="광고" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>계정</Text>
+        <IconLeft iconName="user" iconSize={20} />
+        <TextAndIcon text="계정" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>도움말</Text>
+        <IconLeft iconName="questioncircleo" iconSize={20} />
+        <TextAndIcon text="도움말" iconName="right" iconSize={20} />
 
-        <View style={styles.IconRight}>
-          <Icon name="right" size={20} color="#FFFAFA" />
-        </View>
-        <Text style={styles.menutext}>정보</Text>
+        <IconLeft iconName="infocirlceo" iconSize={20} />
+        <TextAndIcon text="정보" iconName="right" iconSize={20} />
       </View>
       <View style={styles.footerbox}>
+        <IconLeft iconName="rocket1" iconSize={20} />
         <Text style={styles.menutext}>Meta</Text>
         <Text style={styles.menutext}>계정 센터</Text>
         <Text style={styles.menutext}>
@@ -128,5 +126,19 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     alignItems: "flex-end",
     // justifyContent: "center",
+  },
+
+  IconLeft: {
+    marginTop: 45,
+    marginRight: 5,
+    marginLeft: 5,
+    alignItems: "flex-start",
+  },
+
+  input: {
+    height: 30,
+    margin: 12,
+    borderRadius: 15,
+    backgroundColor: "#333333",
   },
 });

@@ -6,7 +6,6 @@ import ScreenSetting from "../screens/ScreenSetting";
 import BottomTab from "./BottomTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
->>>>>>>>> Temporary merge branch 2
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";

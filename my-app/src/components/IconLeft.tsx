@@ -2,13 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 
-function TextAndIcon({ text, iconName, iconSize }) {
+function IconLeft({ iconName, iconSize }) {
   return (
     <>
-      <View style={styles.IconRight}>
+      <View style={styles.IconLeft}>
         <Icon name={iconName} size={iconSize} color="#FFFAFA" />
       </View>
-      <Text style={styles.menutext}>{text}</Text>
     </>
   );
 }
@@ -33,11 +32,11 @@ const styles = StyleSheet.create({
   },
 
   IconLeft: {
-    marginTop: 45,
-    marginRight: 5,
-    marginLeft: 5,
+    marginTop: 42,
+    // marginRight: 5,
+    marginLeft: 10,
     alignItems: "flex-start",
   },
 });
 
-export default TextAndIcon;
+export default IconLeft;
