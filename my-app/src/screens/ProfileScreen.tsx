@@ -1,5 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Platform,
+  Keyboard,
+} from "react-native";
+import { useNavigation } from "@react-navigation/core";
+import Icon from "react-native-vector-icons/Ionicons";
 
 function ProfileScreen() {
   return (

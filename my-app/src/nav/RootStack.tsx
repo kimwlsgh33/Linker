@@ -7,13 +7,14 @@ import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Profile"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
@@ -23,6 +24,7 @@ function RootStack() {
       />
 
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Details" component={DetailScreen} />
       <Stack.Screen name="Post" component={PostScreen} />
