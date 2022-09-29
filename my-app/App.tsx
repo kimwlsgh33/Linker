@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import RootStack from "./src/nav/RootStack";
-import BottomTabScreen from "./src/nav/BottomTabScreen";
+import BottomTab from "./src/nav/BottomTab";
 
 export default function App() {
   return (
