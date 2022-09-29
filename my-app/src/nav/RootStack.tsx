@@ -6,6 +6,7 @@ import ScreenSetting from "../screens/ScreenSetting";
 import BottomTab from "./BottomTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
+import Icon from "react-native-vector-icons/AntDesign";
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -22,6 +23,7 @@ function RootStack() {
           headerTitleAlign: "center",
           headerTintColor: "#FFFAFA",
           headerStyle: { backgroundColor: "#000000" },
+          headerLeft: () => <Icon name={"left"} size={20} color="#FFFAFA" />,
         }}
       />
       <Stack.Screen
