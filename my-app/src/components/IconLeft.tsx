@@ -2,11 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 
-function IconLeft({ iconName, iconSize }) {
+function IconLeft({ iconName, iconSize, text }) {
   return (
     <>
-      <View style={styles.IconLeft}>
-        <Icon name={iconName} size={iconSize} color="#FFFAFA" />
+      <View style={styles.footersmallbox}>
+        <View style={styles.LeftContent}>
+          <View style={styles.IconLeft}>
+            <Icon name={iconName} size={iconSize} color="#FFFAFA" />
+          </View>
+          <Text style={styles.menutext}>{text}</Text>
+        </View>
       </View>
     </>
   );
@@ -17,25 +22,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#FFFAFA",
-    // flexDirection: "column",
-    // alignItems: "flex-start",
-    // flexGrow: 1,
-    // justify: "space-between",
-    margin: 40,
+    marginLeft: 15,
   },
-  IconRight: {
-    marginTop: 45,
-    marginRight: 5,
-    marginLeft: 5,
-    alignItems: "flex-end",
-    // justifyContent: "center",
+
+  footersmallbox: {
+    backgroundColor: "#000000",
+    borderBottomColor: "#333333",
   },
 
   IconLeft: {
-    marginTop: 42,
-    // marginRight: 5,
-    marginLeft: 10,
     alignItems: "flex-start",
+  },
+
+  LeftContent: {
+    flexDirection: "row",
   },
 });
 

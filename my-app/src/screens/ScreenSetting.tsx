@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
-import { useState } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
+import TextStyle from "../components/TextStyle";
 
 export default function ScreenSetting() {
   const [text, onChangeText] = React.useState("Useless Text");
@@ -11,10 +11,8 @@ export default function ScreenSetting() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.menutextbox}>
-        {/* <IconLeft iconName="search1" iconSize={10} /> 돋보기 아이콘  */}
-
         <View style={styles.Viewtest}>
-          <Icon name={"search1"} size={25} color="#FFFAFA" />
+          <Icon name={"search1"} size={20} color="#FFFAFA" />
           <TextInput
             style={styles.input}
             onChangeText={onChangeText}
@@ -23,14 +21,6 @@ export default function ScreenSetting() {
             placeholderTextColor="#FFFAFA"
           />
         </View>
-
-        {/* <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
-          placeholder="검색"
-          placeholderTextColor="#FFFAFA"
-        /> */}
 
         <TextAndIcon
           text="친구 팔로우 및 초대"
@@ -96,17 +86,15 @@ export default function ScreenSetting() {
         />
       </View>
       <View style={styles.footerbox}>
-        <IconLeft iconName="roket1" iconSize={20} />
-        <Text style={styles.menutext}>Meta</Text>
-        <Text style={styles.menutext}>계정 센터</Text>
-        <Text style={styles.menutext}>
-          스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱, Messenger
-          간에 연결된 환경에 대한 설정을 관리하세요.
+        <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
+        <TextStyle text="계정 센터" />
+        <Text style={styles.footertext}>
+          {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
         </Text>
       </View>
       <View style={styles.Overfooterbox}>
-        <Text style={styles.menutext}>로그인</Text>
-        <Text style={styles.menutext}>계정 삭제</Text>
+        <Text style={styles.Overfootertext}>로그인</Text>
+        <Text style={styles.Overfootertext}>계정 삭제</Text>
       </View>
     </ScrollView>
   );
@@ -115,19 +103,10 @@ export default function ScreenSetting() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
-  },
-
-  menutext: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: "#FFFAFA",
-    margin: 40,
+    borderBottomColor: "#333333",
   },
 
   menutextbox: {
-    backgroundColor: "#000000",
-    width: "100%",
-
     borderTopColor: "#333333",
     borderBottomColor: "#333333",
     borderWidth: 1,
@@ -135,54 +114,46 @@ const styles = StyleSheet.create({
 
   footerbox: {
     backgroundColor: "#000000",
-    width: "100%",
-    height: 200,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     borderBottomColor: "#333333",
     borderWidth: 1,
+    margin: 15,
   },
 
+  footertext: {
+    fontSize: 10,
+    color: "#FFFAFA",
+    fontWeight: "bold",
+    marginTop: 15,
+    marginBottom: 15,
+  },
   Overfooterbox: {
     backgroundColor: "#000000",
-    height: 130,
-    justifyContent: "space-around",
   },
 
   Overfootertext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#000000",
-  },
-
-  IconRight: {
-    marginTop: 45,
-    marginRight: 5,
-    marginLeft: 5,
-    alignItems: "flex-end",
-  },
-
-  IconLeft: {
-    marginTop: 45,
-    marginRight: 5,
-    marginLeft: 5,
-    alignItems: "flex-start",
+    color: "#FFFAFA",
+    marginLeft: 15,
+    marginBottom: 20,
   },
 
   input: {
-    width: 375,
-    height: 40,
     fontWeight: "bold",
-    borderRadius: 10,
-    backgroundColor: "#333333",
-    marginTop: 40,
-    marginBottom: 20,
-    marginLeft: 10,
-    paddingLeft: 35,
+    paddingLeft: 10,
   },
 
   Viewtest: {
+    marginTop: 15,
+    marginLeft: 12,
+    width: 360,
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "#333333",
+    justifyContent: "flex-start",
+    paddingLeft: 4,
+    backgroundColor: "#333333",
+    borderRadius: 10,
+    // width: 390,
   },
 });

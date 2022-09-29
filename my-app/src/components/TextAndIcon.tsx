@@ -22,19 +22,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderWidth: 1,
-    borderColor: "#FFFAFA",
     justifyContent: "space-between",
+    margin: 15,
   },
   menutext: {
     fontSize: 15,
     fontWeight: "bold",
     color: "#FFFAFA",
-    // textAlign: "left",
-    // flexDirection: "column",
-    // alignItems: "flex-start",
-    // flexGrow: 1,
-    // justify: "space-between",
-    // s
+    marginLeft: 10,
   },
   IconRight: {
     alignItems: "flex-end",
