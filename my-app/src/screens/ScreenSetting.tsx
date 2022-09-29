@@ -52,7 +52,7 @@ export default function ScreenSetting() {
         <TextAndIcon text="정보" iconName="right" iconSize={20} />
       </View>
       <View style={styles.footerbox}>
-        <IconLeft iconName="rocket1" iconSize={20} />
+        <IconLeft iconName="roket1" iconSize={20} />
         <Text style={styles.menutext}>Meta</Text>
         <Text style={styles.menutext}>계정 센터</Text>
         <Text style={styles.menutext}>
