@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Pressable,
 } from "react-native";
 //import { useForm } from "react-hook-form";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -19,6 +20,7 @@ import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "./LoginScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import styled from "styled-components/native";
 
 function ExampleView(props) {
   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -35,6 +37,12 @@ function ExampleView(props) {
 } */
 
 const SignUp = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [opacity, setOpacity] = useState(0.5);
+  const [visible, setVisible] = useState(false);
+
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
@@ -62,6 +70,36 @@ const SignUp = () => {
     navigation.navigate("Login" as any);
   };
 
+  /*
+  const StyledView = styled.View`
+    margin: 5px;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: black;
+    height: 30px;
+    width: 60px;
+    align-items: center;
+    justify-content: center;
+    opacity: ${({ pressed }) => (pressed ? 0.55 : 1)};
+    Platform.select({ios: {opacity: pressed ? 0.55 : 1}, android: {opacity: pressed ? 0.55 : 1}});
+  `;
+  const Text = styled.Text``; */
+
+  const handleIdChange = (text) => {
+    setId(text);
+  };
+  const handlePwChange = (text) => {
+    setPassword(text);
+  };
+
+  if (id.includes("@") || id.includes("/^d{11}$/")) {
+    if (password.length < 8) {
+      // return setDisable(false);
+    } else {
+      // return alert("잘못된 형식입니다.");
+    }
+  }
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -81,12 +119,23 @@ const SignUp = () => {
           </Text>
           <Text style={[styles.recommadText]}>가입하세요.</Text>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.button,
+                styles.buttonOutline2,
+                Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+                disable ? { opacity: 0.5 } : {},
+              ]}
+              android_ripple={{ color: "#FFF" }}
+              onPress={() => setVisible(true)}
+              disabled={disable}
+            >
               <Text style={styles.buttonOutlineText}>
                 <Icon name="logo-facebook" size={15} color="#FFF" />
                 &nbsp;&nbsp;Facebook으로 로그인
               </Text>
-            </TouchableOpacity>
+            </Pressable>
+            {visible && <Text>눌렀습니다.</Text>}
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
@@ -130,6 +179,7 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
               }}
+              onChangeText={handleIdChange}
             />
             <TextInput
               placeholder="성명"
@@ -157,12 +207,22 @@ const SignUp = () => {
               secureTextEntry
               ref={ref_input[3]}
               onSubmitEditing={Keyboard.dismiss}
+              onChangeText={handlePwChange}
             />
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.button,
+                styles.buttonOutline2,
+                Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+                disable ? { opacity: 0.5 } : {},
+              ]}
+              android_ripple={{ color: "#FFF" }}
+              disabled={disable}
+            >
               <Text style={styles.buttonOutlineText}>가입</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
         <View style={styles.policyView}>
