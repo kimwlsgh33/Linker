@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     color: "gray",
     fontSize: 11,
     position: "absolute",
-    marginTop: 148,
+    marginTop: 143,
     paddingRight: 40,
   },
   text3: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     color: "#404040",
     fontSize: 11,
     position: "absolute",
-    marginTop: 148,
+    marginTop: 143,
     marginLeft: 20,
   },
 });
