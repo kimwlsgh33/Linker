@@ -1,31 +1,42 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
   Platform,
   Keyboard,
+  Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [disable, setDisable] = useState(true);
+
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
 
-  // const onFocusNext = (index: number) => {
-  //   if (ref_input[index + 1] && index < ref_input.length - 1) {
-  //     ref_input[index + 1].current?.focus();
-  //   }
-  //   if (ref_input[index + 1] && index == ref_input.length - 1) {
-  //     ref_input[index].current?.blur();
-  //   }
-  // };
+  const onFocusNext = (index: number) => {
+    if (ref_input[index + 1] && index < ref_input.length - 1) {
+      ref_input[index + 1].current?.focus();
+    }
+    if (ref_input[index + 1] && index == ref_input.length - 1) {
+      ref_input[index].current?.blur();
+    }
+  };
+
+  const handleIdChange = (text) => {
+    setId(text);
+  };
+  const handlePwChange = (text) => {
+    setPassword(text);
+  };
 
   const navigation = useNavigation();
 
@@ -46,24 +57,37 @@ const LoginScreen = () => {
             behavior={Platform.OS === "ios" ? "height" : undefined}
           >
             <TextInput
+              returnKeyType="next"
               ref={ref_input[0]}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
               }}
+              onChangeText={handleIdChange}
               placeholder="전화번호, 이메일 주소 또는 사용자 이름"
               style={[styles.input, styles.buttonOutline]}
             />
             <TextInput
+              returnKeyType="next"
               ref={ref_input[1]}
-              onSubmitEditing={() => null}
+              onSubmitEditing={Keyboard.dismiss}
+              onChangeText={handlePwChange}
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
               secureTextEntry
             />
             <View style={styles.buttonContainer}>
-              <TouchableOpacity onPress={goHome} style={styles.button}>
+              <Pressable
+                onPress={goHome}
+                style={({ pressed }) => [
+                  styles.button,
+                  Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+                  disable ? { opacity: 0.5 } : {},
+                ]}
+                android_ripple={{ color: "#FFF" }}
+                // disabled={disable}
+              >
                 <Text style={styles.buttonText}>로그인</Text>
-              </TouchableOpacity>
+              </Pressable>
             </View>
           </KeyboardAvoidingView>
           <Text style={styles.text}>
@@ -81,22 +105,34 @@ const LoginScreen = () => {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              styles.buttonOutline2,
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
             <Text style={styles.buttonOutlineText}>
               <Icon name="logo-facebook" size={15} color="#0782F9" />
               Facebook으로 로그인
             </Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <View style={{ alignItems: "center" }}>
           <View style={styles.bar2}></View>
           <Text style={styles.text2}>계정이 없으신가요?</Text>
           <View>
-            <TouchableOpacity>
-              <Text onPress={goSignUp} style={styles.text3}>
-                가입하기.
-              </Text>
-            </TouchableOpacity>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <Text /*onPress={goSignUp}*/ style={styles.text3}>가입하기.</Text>
+            </Pressable>
           </View>
         </View>
       </View>
