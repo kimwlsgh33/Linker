@@ -20,27 +20,17 @@ import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "./LoginScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import styled from "styled-components/native";
+// import styled from "styled-components/native";
 
 function ExampleView(props) {
   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
 }
 
-//const Form = {};
-/* interface ISignUpForm {
-  email: string;
-  name: string;
-  pw: string;
-  checkPw: string;
-  birth: string;
-  phone: string;
-} */
-
 const SignUp = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
-  const [opacity, setOpacity] = useState(0.5);
+  //  const [opacity, setOpacity] = useState(0.5);
   const [visible, setVisible] = useState(false);
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
@@ -49,14 +39,14 @@ const SignUp = () => {
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
 
-  const onFocusNext = (index: number) => {
-    if (ref_input[index + 1] && index < ref_input.length - 1) {
-      ref_input[index + 1].current?.focus();
-    }
-    if (ref_input[index + 1] && index == ref_input.length - 1) {
-      ref_input[index].current?.blur();
-    }
-  };
+  // const onFocusNext = (index: number) => {
+  //   if (ref_input[index + 1] && index < ref_input.length - 1) {
+  //     ref_input[index + 1].current?.focus();
+  //   }
+  //   if (ref_input[index + 1] && index == ref_input.length - 1) {
+  //     ref_input[index].current?.blur();
+  //   }
+  // };
 
   const Stack = createStackNavigator();
 
@@ -72,9 +62,9 @@ const SignUp = () => {
 
   /*
   const StyledView = styled.View`
-    margin: 5px;
-    border-radius: 10px;
-    border-width: 1px;
+  margin: 5px;
+  border-radius: 10px;
+  border-width: 1px;
     border-color: black;
     height: 30px;
     width: 60px;
@@ -92,13 +82,27 @@ const SignUp = () => {
     setPassword(text);
   };
 
-  if (id.includes("@") || id.includes("/^d{11}$/")) {
-    if (password.length < 8) {
-      // return setDisable(false);
+  const idCheck = (id) => {
+    handleIdChange(id);
+
+    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+    const phnum = /^[0-9]{10,11}$/;
+
+    if (regExp.test(id) || phnum.test(id)) {
+      setDisable(false);
     } else {
-      // return alert("잘못된 형식입니다.");
+      setDisable(true);
     }
-  }
+  };
+
+  const pwCheck = useCallback((password) => {
+    handlePwChange(password);
+    if (password.length < 8) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -124,18 +128,14 @@ const SignUp = () => {
                 styles.button,
                 styles.buttonOutline2,
                 Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
-                disable ? { opacity: 0.5 } : {},
               ]}
               android_ripple={{ color: "#FFF" }}
-              onPress={() => setVisible(true)}
-              disabled={disable}
             >
               <Text style={styles.buttonOutlineText}>
                 <Icon name="logo-facebook" size={15} color="#FFF" />
                 &nbsp;&nbsp;Facebook으로 로그인
               </Text>
             </Pressable>
-            {visible && <Text>눌렀습니다.</Text>}
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <View
@@ -179,7 +179,7 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
               }}
-              onChangeText={handleIdChange}
+              onChangeText={idCheck}
             />
             <TextInput
               placeholder="성명"
@@ -207,7 +207,7 @@ const SignUp = () => {
               secureTextEntry
               ref={ref_input[3]}
               onSubmitEditing={Keyboard.dismiss}
-              onChangeText={handlePwChange}
+              onChangeText={pwCheck}
             />
           </View>
           <View style={styles.buttonContainer}>
