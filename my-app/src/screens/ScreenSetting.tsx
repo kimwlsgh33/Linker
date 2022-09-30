@@ -1,9 +1,18 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Pressable,
+  Linking,
+} from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
+import Hyperlink from "react-native-hyperlink";
 
 export default function ScreenSetting() {
   const [text, onChangeText] = React.useState("Useless Text");
@@ -85,12 +94,19 @@ export default function ScreenSetting() {
           iconSize={20}
         />
       </View>
-      <View style={styles.footerbox}>
-        <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
-        <TextStyle text="계정 센터" />
-        <Text style={styles.footertext}>
-          {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
-        </Text>
+      <View style={styles.footerContainer}>
+        <View style={styles.footerbox}>
+          <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
+          <Pressable
+            style={({ pressed }) => [pressed && { opacity: 0.4 }]}
+            onPress={() => Linking.openURL("https://naver.com")}
+          >
+            <TextStyle text="계정 센터" />
+          </Pressable>
+          <Text style={styles.footertext}>
+            {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
+          </Text>
+        </View>
       </View>
       <View style={styles.Overfooterbox}>
         <Text style={styles.Overfootertext}>로그인</Text>
@@ -112,11 +128,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
-  footerbox: {
-    backgroundColor: "#000000",
+  footerContainer: {
     justifyContent: "space-between",
     borderBottomColor: "#333333",
     borderWidth: 1,
+  },
+
+  footerbox: {
+    backgroundColor: "#000000",
+    // justifyContent: "space-between",
+    // borderBottomColor: "#333333",
+    // borderWidth: 1,
     margin: 15,
   },
 
@@ -135,8 +157,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#FFFAFA",
-    marginLeft: 15,
-    marginBottom: 20,
+    // marginLeft: 15,
+    // marginBottom: 20,
+    margin: 15,
   },
 
   input: {
