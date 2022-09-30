@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
@@ -27,7 +27,7 @@ function HomeScreen() {
         >
           Instagram
         </Text>
-        <Feather name="navigation" style={{ fontSize: 24 }} />
+        <Feather name="send" style={{ fontSize: 24 }} />
       </View>
 
       <ScrollView>

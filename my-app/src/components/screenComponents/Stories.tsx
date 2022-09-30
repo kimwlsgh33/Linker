@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const Stories = () => {
   const navigation = useNavigation();
-  // const storyPressed = useCallback(() => setUser(() => ), []);
   // usestate -> 데이터가 변경이 될때 ui를 변경해줌.
   // state에 데이터 배열 넣기.
   const storyInfo = [
@@ -14,6 +13,7 @@ const Stories = () => {
       isYou: true,
       show: false,
       name: "내 스토리",
+      userName: "nieoodie",
       image: require("../../../assets/images/jinho.jpeg"),
     },
     {
@@ -21,6 +21,7 @@ const Stories = () => {
       isYou: false,
       show: false,
       name: "kwonwoo",
+      userName: "kwonwoo",
       image: require("../../../assets/images/woo.jpeg"),
     },
     {
@@ -28,6 +29,7 @@ const Stories = () => {
       isYou: false,
       show: false,
       name: "pizza",
+      userName: "Domino",
       image: require("../../../assets/images/pizza.jpeg"),
     },
     {
@@ -35,6 +37,7 @@ const Stories = () => {
       isYou: false,
       show: false,
       name: "hyunsu",
+      userName: "hyunsu",
       image: require("../../../assets/images/hyunsu.jpeg"),
     },
     {
@@ -42,6 +45,7 @@ const Stories = () => {
       isYou: false,
       show: false,
       name: "jongin",
+      userName: "jeongjongin",
       image: require("../../../assets/images/jongin.jpeg"),
     },
   ];
@@ -59,7 +63,6 @@ const Stories = () => {
         }
         return user;
       });
-
       setUser(newUsers);
     },
     [user, setUser]
@@ -79,6 +82,7 @@ const Stories = () => {
             navigation.navigate("Story", {
               name: data.name,
               image: data.image,
+              userName: data.userName,
             });
             // 누른 스토리 유저의 id를 함수의 인자로 받아올 수 있다.
             storyPressed(data.id);
@@ -111,9 +115,9 @@ const Stories = () => {
                 width: 68,
                 height: 68,
                 backgroundColor: "white",
-                borderWidth: 1.8,
+                borderWidth: data.show ? 1 : 2.0,
                 borderRadius: 100,
-                borderColor: "#9933CC",
+                borderColor: data.show ? "gray" : "#9933CC",
                 justifyContent: "center",
                 alignItems: "center",
               }}

@@ -24,7 +24,8 @@ const StoryScreen = ({ route, navigation }) => {
         alignItems: "center",
       }}
     >
-      <StatusBar backgroundColor={"black"} barStyle={"light-content"} />
+      <StatusBar backgroundColor={"black"} barStyle={"light-content"} />{" "}
+      {/* 상태바 */}
       <View
         style={{
           height: 3,
@@ -84,6 +85,10 @@ const StoryScreen = ({ route, navigation }) => {
             />
           </TouchableOpacity>
           <TouchableOpacity
+            // 9/29
+            onPress={() => {
+              return navigation.navigate("BottomTabScreen");
+            }} // ------------------
             style={{ flexDirection: "row", justifyContent: "center" }}
           >
             <Ionic
