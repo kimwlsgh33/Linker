@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -12,41 +12,65 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const navigation = useNavigation();
+  const userInfo = [
+    {
+      id: "admin",
+      password: "admin",
+      isLogin: false,
+    },
+    {
+      id: "user",
+      password: "user",
+      isLogin: false,
+    },
+    {
+      id: "guest",
+      password: "guest",
+      isLogin: false,
+    },
+  ];
+
+  const [data, setData] = useState(userInfo);
+  // const loginPressed = (id) => {
+  //   const newDatas = data.map((data) => {
+  //     if (data.id === id) {
+  //       return {
+  //         ...data,
+  //         isLogin: !data.isLogin,
+  //       };
+  //     }
+  //     return data;
+  //   });
+  //   setData(newDatas);
+  // };
+
   const [disable, setDisable] = useState(true);
+  const [text, setText] = useState("");
+
+  const onChange = (e: any) => {
+    setText(e.target.value);
+  };
+
+  const onReset = () => {
+    setText("");
+  };
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
 
-  const onFocusNext = (index: number) => {
-    if (ref_input[index + 1] && index < ref_input.length - 1) {
-      ref_input[index + 1].current?.focus();
-    }
-    if (ref_input[index + 1] && index == ref_input.length - 1) {
-      ref_input[index].current?.blur();
-    }
-  };
-
-  const handleIdChange = (text) => {
-    setId(text);
-  };
-  const handlePwChange = (text) => {
-    setPassword(text);
-  };
-
-  const navigation = useNavigation();
-
-  const goHome = () => {
-    navigation.navigate("BottomTab" as any);
-  };
-
-  const goSignUp = () => {
-    navigation.navigate("SignUp" as any);
-  };
+  // const onFocusNext = (index: number) => {
+  //   if (ref_input[index + 1] && index < ref_input.length - 1) {
+  //     ref_input[index + 1].current?.focus();
+  //   }
+  //   if (ref_input[index + 1] && index == ref_input.length - 1) {
+  //     ref_input[index].current?.blur();
+  //   }
+  // };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,28 +83,36 @@ const LoginScreen = () => {
             <TextInput
               returnKeyType="next"
               ref={ref_input[0]}
+              onChange={onChange}
+              value={text}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
               }}
-              onChangeText={handleIdChange}
               placeholder="전화번호, 이메일 주소 또는 사용자 이름"
               style={[styles.input, styles.buttonOutline]}
             />
             <TextInput
               returnKeyType="next"
               ref={ref_input[1]}
-              onSubmitEditing={Keyboard.dismiss}
-              onChangeText={handlePwChange}
+              onChange={onChange}
+              value={text}
+              onSubmitEditing={() => null}
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
               secureTextEntry
             />
             <View style={styles.buttonContainer}>
               <Pressable
-                onPress={goHome}
+                // onPress={() => navigation.navigate("Instagram")}
+                onPress={onReset}
+                // onPress={() => {
+                //   loginPressed(data.id);
+                // }}
                 style={({ pressed }) => [
                   styles.button,
-                  Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+                  Platform.select({
+                    ios: { opacity: pressed ? 0.5 : 1 },
+                  }),
                   disable ? { opacity: 0.5 } : {},
                 ]}
                 android_ripple={{ color: "#FFF" }}
@@ -92,7 +124,10 @@ const LoginScreen = () => {
           </KeyboardAvoidingView>
           <Text style={styles.text}>
             로그인 상세정보를 잊으셨나요?
-            <Text onPress={goSignUp} style={styles.link}>
+            <Text
+              onPress={() => navigation.navigate("SignUp")}
+              style={styles.link}
+            >
               로그인 도움말 보기.
             </Text>
           </Text>
@@ -131,7 +166,12 @@ const LoginScreen = () => {
                 },
               ]}
             >
-              <Text /*onPress={goSignUp}*/ style={styles.text3}>가입하기.</Text>
+              <Text
+                onPress={() => navigation.navigate("SignUp")}
+                style={styles.text3}
+              >
+                가입하기.
+              </Text>
             </Pressable>
           </View>
         </View>
