@@ -41,7 +41,6 @@ const BottomTab = () => {
       })}
     >
       <Tab.Screen name="Instagram" component={HomeScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen
         name="Search"
         component={SearchScreen}
@@ -49,6 +48,7 @@ const BottomTab = () => {
       />
       <Tab.Screen name="Reels" component={ReelsScreen} />
       <Tab.Screen name="Detail" component={DetailScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 };

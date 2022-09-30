@@ -16,10 +16,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 function ProfileScreen() {
   const navigation = useNavigation();
 
-  const goLogin = () => {
-    navigation.navigate("Login" as any);
-  };
-
   const profileImage = require("../../assets/images/profile.png");
   const post = 123;
   const followers = 456;
@@ -45,7 +41,7 @@ function ProfileScreen() {
             ]}
           >
             <Text
-              // onPress={goLogin}
+              onPress={() => navigation.navigate("Login")}
               style={{
                 fontFamily: "강원교육모두 Bold",
                 fontSize: 23,
