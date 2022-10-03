@@ -7,12 +7,16 @@ import {
   TextInput,
   Pressable,
   Linking,
+  Button,
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
-import Hyperlink from "react-native-hyperlink";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import icon from "react-native-vector-icons/ionicons";
+import SettingStack from "./SettingStack";
 
 export default function ScreenSetting() {
   const [text, onChangeText] = React.useState("Useless Text");
@@ -88,7 +92,7 @@ export default function ScreenSetting() {
         />
 
         <TextAndIcon
-          text="정보"
+          text="소개"
           iconName="right"
           iconName2="infocirlceo"
           iconSize={20}
@@ -110,7 +114,8 @@ export default function ScreenSetting() {
       </View>
       <View style={styles.Overfooterbox}>
         <Text style={styles.Overfootertext}>로그인</Text>
-        <Text style={styles.Overfootertext}>계정 삭제</Text>
+        <Text style={styles.Overfootertext}>계정 추가</Text>
+        <Text style={styles.Overfootertext}>로그아웃</Text>
       </View>
     </ScrollView>
   );

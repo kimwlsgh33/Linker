@@ -7,6 +7,7 @@ import BottomTab from "./BottomTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 import Icon from "react-native-vector-icons/AntDesign";
+import SettingStack from "../screens/SettingStack";
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -14,7 +15,7 @@ const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
-    <Stack.Navigator initialRouteName="Setting">
+    <Stack.Navigator initialRouteName="SettingStackPage">
       <Stack.Screen
         name="Setting"
         component={ScreenSetting}
@@ -36,6 +37,7 @@ function RootStack() {
       <Stack.Screen name="Post" component={PostScreen} />
       <Stack.Screen name="Story" component={StoryScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="SettingStackPage" component={SettingStack} />
     </Stack.Navigator>
   );
 }
