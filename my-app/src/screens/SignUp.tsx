@@ -69,6 +69,9 @@ const SignUp = () => {
     navigation.navigate("Login" as any);
   };
 
+  const goTOS = () => {
+    navigation.navigate("TOS" as any);
+  };
   /*
   const StyledView = styled.View`
   margin: 5px;
@@ -114,6 +117,7 @@ const SignUp = () => {
 
     if (regExp.test(id) || phnum.test(id)) {
       increaseNumber(number);
+      console.log(number);
     } else {
       setDisable(true);
     }
@@ -122,8 +126,11 @@ const SignUp = () => {
   const nameCheck = (name) => {
     handleNameChange(name);
 
-    if (name != null) {
+    const regExp = /^[a-zA-Z]{2,30}$/;
+
+    if (regExp.test(name)) {
       increaseNumber(number);
+      console.log(number);
     } else {
       setDisable(true);
     }
@@ -132,30 +139,32 @@ const SignUp = () => {
   const nickCheck = (nick) => {
     handleNickChange(nick);
 
-    if (nick != null) {
-      increaseNumber(number);
-    }
-  };
+    const regExp = /^[a-zA-Z0-9%-_]{1,10}$/;
 
-  const pwCheck = useCallback((password) => {
-    handlePwChange(password);
-    if (password.length > 8) {
+    if (regExp.test(nick)) {
       increaseNumber(number);
+      console.log(number);
     } else {
       setDisable(true);
     }
-  }, []);
+  };
+
+  const pwCheck = (password) => {
+    handlePwChange(password);
+    if (password.length > 8) {
+      increaseNumber(number);
+      console.log(number);
+      if (number >= 4) {
+        if (name != null) setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    } else {
+      setDisable(true);
+    }
+  };
 
   const increaseNumber = (number) => setNumber(number + 1);
-  useEffect(() => {
-    return () => {
-      increaseNumber(number);
-    };
-  }, []);
-
-  if (number >= 4) {
-    setDisable(false);
-  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -227,12 +236,13 @@ const SignUp = () => {
             <TextInput
               placeholder="휴대폰 번호 또는 이메일 주소"
               style={[styles.input, styles.buttonOutline]}
+              // value={id}
               returnKeyType="next"
               ref={ref_input[0]}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
               }}
-              onChangeText={idCheck}
+              onEndEditing={(e) => idCheck(e.nativeEvent.text)}
             />
             <TextInput
               placeholder="성명"
@@ -242,7 +252,7 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[2].current.focus();
               }}
-              onChangeText={nameCheck}
+              onEndEditing={(e) => nameCheck(e.nativeEvent.text)}
             />
             <TextInput
               placeholder="사용자 이름"
@@ -252,15 +262,15 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[3].current.focus();
               }}
-              onChangeText={nickCheck}
+              onEndEditing={(e) => nickCheck(e.nativeEvent.text)}
             />
             <TextInput
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
               secureTextEntry
               ref={ref_input[3]}
-              onSubmitEditing={Keyboard.dismiss}
-              onChangeText={pwCheck}
+              //onSubmitEditing={Keyboard.dismiss}
+              onChangeText={(e) => pwCheck(e)}
             />
           </View>
           <View style={styles.buttonContainer}>
@@ -274,7 +284,9 @@ const SignUp = () => {
               android_ripple={{ color: "#FFF" }}
               disabled={disable}
             >
-              <Text style={styles.buttonOutlineText}>가입</Text>
+              <Text style={styles.buttonOutlineText} onPress={goTOS}>
+                가입
+              </Text>
             </Pressable>
           </View>
         </View>
