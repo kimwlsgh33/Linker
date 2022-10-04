@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,19 +6,19 @@ import {
   View,
   Image,
   Platform,
+  Modal as DefaultModal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
+import Entypo from "react-native-vector-icons/Entypo";
+import ProfileBottomTab from "../components/ProfileBottomTab";
+import { Modal } from "../components/Modal";
 
 function ProfileScreen() {
   const navigation = useNavigation();
-
-  const goLogin = () => {
-    navigation.navigate("Login" as any);
-  };
 
   const profileImage = require("../../assets/images/profile.png");
   const post = 123;
@@ -44,16 +44,77 @@ function ProfileScreen() {
               },
             ]}
           >
-            <Text
-              // onPress={goLogin}
-              style={{
-                fontFamily: "강원교육모두 Bold",
-                fontSize: 23,
-              }}
-            >
-              userID33
-              <Feather name="chevron-down" style={{ fontSize: 16 }} />
-            </Text>
+            <Modal
+              activator={({ handleOpen }) => (
+                <Text
+                  onPress={handleOpen}
+                  style={{
+                    fontFamily: "강원교육모두 Bold",
+                    fontSize: 23,
+                  }}
+                >
+                  userID33
+                  <Feather name="chevron-down" style={{ fontSize: 16 }} />
+                </Text>
+              )}
+            ><View style={{flexDirection: "row"}}>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    marginLeft: 15,
+                    width: 45,
+                    height: 45,
+                    borderRadius: 100,
+                    borderWidth: 1,
+                    opacity: 0.7,
+                    marginHorizontal: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+                </View>
+              </Pressable>
+              <Text style={{top: 14, left: 5, fontSize: 11}}>계정 추가</Text>
+              </View>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    marginTop: 10,
+                    marginLeft: 15,
+                    width: 45,
+                    height: 45,
+                    borderRadius: 100,
+                    borderWidth: 1,
+                    opacity: 0.7,
+                    marginHorizontal: 5,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+                </View>
+              </Pressable>
+              {/* <View //bar style
+            style={{
+              height: 1,
+              backgroundColor: "#ccc",
+            }}
+          >
+          </View> */}
+            </Modal>
           </Pressable>
           <View>
             <Pressable
@@ -180,6 +241,7 @@ function ProfileScreen() {
         >
           <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
             <Pressable
+              onPress={() => navigation.navigate("EditProfile")}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -237,6 +299,70 @@ function ProfileScreen() {
             </Pressable>
           </View>
         </View>
+        <View
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 5,
+            marginVertical: 10,
+          }}
+        >
+          <Pressable
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <View
+            // style={{
+            //   width: 50,
+            //   height: 50,
+            //   borderRadius: 100,
+            //   backgroundColor: "black",
+            //   opacity: 0.1,
+            //   marginHorizontal: 5,
+            // }}
+            >
+              <Image
+                source={profileImage}
+                style={{
+                  resizeMode: "cover",
+                  width: 50,
+                  height: 50,
+                  borderRadius: 100,
+                  borderColor: "lightgray",
+                  borderWidth: 2,
+                  marginHorizontal: 5,
+                }}
+              />
+            </View>
+            <Text style={{ fontSize: 11, left: 18 }}>취미</Text>
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 100,
+                borderWidth: 1,
+                opacity: 0.7,
+                marginHorizontal: 5,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+            </View>
+            <Text style={{ fontSize: 11, left: 18 }}>신규</Text>
+          </Pressable>
+        </View>
+        <ProfileBottomTab />
       </View>
     </SafeAreaView>
   );

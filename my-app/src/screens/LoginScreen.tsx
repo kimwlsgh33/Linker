@@ -14,12 +14,12 @@ import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState(""); // ui바꿀때 사용
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
-  ref_input[0] = useRef(null);
+  ref_input[0] = useRef(null); //주소값 저장
   ref_input[1] = useRef(null);
 
   const onFocusNext = (index: number) => {
@@ -39,14 +39,6 @@ const LoginScreen = () => {
   };
 
   const navigation = useNavigation();
-
-  const goHome = () => {
-    navigation.navigate("BottomTab" as any);
-  };
-
-  const goSignUp = () => {
-    navigation.navigate("SignUp" as any);
-  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -77,7 +69,7 @@ const LoginScreen = () => {
             />
             <View style={styles.buttonContainer}>
               <Pressable
-                onPress={goHome}
+                onPress={() => navigation.navigate("Instagram")}
                 style={({ pressed }) => [
                   styles.button,
                   Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
@@ -92,7 +84,10 @@ const LoginScreen = () => {
           </KeyboardAvoidingView>
           <Text style={styles.text}>
             로그인 상세정보를 잊으셨나요?
-            <Text onPress={goSignUp} style={styles.link}>
+            <Text
+              onPress={() => navigation.navigate("SignUp")}
+              style={styles.link}
+            >
               로그인 도움말 보기.
             </Text>
           </Text>
@@ -131,7 +126,12 @@ const LoginScreen = () => {
                 },
               ]}
             >
-              <Text /*onPress={goSignUp}*/ style={styles.text3}>가입하기.</Text>
+              <Text
+                onPress={() => navigation.navigate("SignUp")}
+                style={styles.text3}
+              >
+                가입하기.
+              </Text>
             </Pressable>
           </View>
         </View>
