@@ -94,7 +94,7 @@ const LoginScreen = () => {
   // };
 
   return (
-    <TouchableWithoutFeedback /*key={data[0].id}*/ onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.logo}>instagram</Text>
         <View style={styles.inputContainer}>
@@ -102,6 +102,7 @@ const LoginScreen = () => {
             behavior={Platform.OS === "ios" ? "height" : undefined}
           >
             <TextInput
+              // key={data[0].id}
               returnKeyType="next"
               ref={ref_input[0]}
               onChange={onChange}
@@ -138,8 +139,10 @@ const LoginScreen = () => {
                 ]}
                 android_ripple={{ color: "#FFF" }}
                 disabled={disable}
-                // onPress={() => loginPressed(data[0].id)}
-                // disabled={(data[0].isLogin) ? !disable : disable}
+                // onPress={() => {
+                //   loginPressed(data[0].id), navigation.navigate("BottomTab");
+                // }}
+                // disabled={data[0].isLogin ? !disable : disable}
               >
                 <Text style={styles.buttonText}>로그인</Text>
               </Pressable>
