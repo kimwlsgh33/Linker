@@ -8,6 +8,7 @@ import StoryScreen from "../screens/StoryScreen";
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import EditProfile from "../screens/EditProfile";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,7 @@ function RootStack() {
       <Stack.Screen name="Post" component={PostScreen} />
       <Stack.Screen name="Story" component={StoryScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   );
 }
