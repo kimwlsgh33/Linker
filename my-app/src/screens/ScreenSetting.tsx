@@ -10,15 +10,86 @@ import {
   Button,
 } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+import icon from "react-native-vector-icons/ionicons";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
-import icon from "react-native-vector-icons/ionicons";
-import SettingStack from "./SettingStack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+import AddUser2 from "./AddUser2";
+import Bells2 from "./Bells2";
 
-export default function ScreenSetting() {
+const Stack = createNativeStackNavigator();
+
+const navbars = [
+  {
+    navigateUri: "AddUser2",
+    text: "친구 팔로우 및 초대",
+    iconName: "right",
+    iconName2: "adduser",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "Bells2",
+    text: "알림",
+    iconName: "right",
+    iconName2: "bells",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "개인정보 보호",
+    iconName: "right",
+    iconName2: "lock",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "관리 감독",
+    iconName: "right",
+    iconName2: "team",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "보안",
+    iconName: "right",
+    iconName2: "Safety",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "광고",
+    iconName: "right",
+    iconName2: "appstore-o",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "계정",
+    iconName: "right",
+    iconName2: "user",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "도움말",
+    iconName: "right",
+    iconName2: "questioncircleo",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "AddUser2",
+    text: "소개",
+    iconName: "right",
+    iconName2: "infocirlceo",
+    iconSize: 20,
+  },
+];
+
+export default function ScreenSetting({ navigation, route }) {
   const [text, onChangeText] = React.useState("Useless Text");
 
   return (
@@ -35,68 +106,21 @@ export default function ScreenSetting() {
           />
         </View>
 
-        <TextAndIcon
-          text="친구 팔로우 및 초대"
-          iconName="right"
-          iconName2="adduser"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="알림"
-          iconName="right"
-          iconName2="bells"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="개인정보 보호"
-          iconName="right"
-          iconName2="lock"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="관리 감독"
-          iconName="right"
-          iconName2="team"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="보안"
-          iconName="right"
-          iconName2="Safety"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="광고"
-          iconName="right"
-          iconName2="appstore-o"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="계정"
-          iconName="right"
-          iconName2="user"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="도움말"
-          iconName="right"
-          iconName2="questioncircleo"
-          iconSize={20}
-        />
-
-        <TextAndIcon
-          text="소개"
-          iconName="right"
-          iconName2="infocirlceo"
-          iconSize={20}
-        />
+        {navbars.map((item, index) => (
+          <Pressable
+            onPress={() => {
+              navigation.navigate(item.navigateUri);
+            }}
+            key={index}
+          >
+            <TextAndIcon
+              text={item.text}
+              iconName={item.iconName}
+              iconName2={item.iconName2}
+              iconSize={item.iconSize}
+            />
+          </Pressable>
+        ))}
       </View>
       <View style={styles.footerContainer}>
         <View style={styles.footerbox}>
@@ -141,9 +165,6 @@ const styles = StyleSheet.create({
 
   footerbox: {
     backgroundColor: "#000000",
-    // justifyContent: "space-between",
-    // borderBottomColor: "#333333",
-    // borderWidth: 1,
     margin: 15,
   },
 
@@ -162,8 +183,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#FFFAFA",
-    // marginLeft: 15,
-    // marginBottom: 20,
     margin: 15,
   },
 
@@ -182,6 +201,5 @@ const styles = StyleSheet.create({
     paddingLeft: 4,
     backgroundColor: "#333333",
     borderRadius: 10,
-    // width: 390,
   },
 });

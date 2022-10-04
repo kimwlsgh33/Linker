@@ -16,5 +16,8 @@ declare namespace ReactNavigation {
     Reels: any;
     Detail: any;
     Profile: any;
+    Setting: any;
+    AddUser2: any;
+    Bells2: any;
   }
 }
