@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,7 @@ import {
   Button,
   Pressable,
   ScrollView,
+  Switch,
 } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -21,11 +22,22 @@ import ScreenSetting from "./ScreenSetting";
 const Stack = createNativeStackNavigator();
 
 function Bells2({ navigation, route }) {
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Bells2textBox}>
         <Text style={styles.Bells2text}>푸시 알림</Text>
-        <Text style={styles.Bells2text}>모두 일시 중단</Text>
+        <View style={styles.toggleBox}>
+          <Text style={styles.Bells2text}>모두 일시 중단</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+          />
+        </View>
         <Text style={styles.Bells2text}>게시물,스토리 및 댓글</Text>
         <Text style={styles.Bells2text}>팔로잉 및 팔로워</Text>
         <Text style={styles.Bells2text}>라이브 방송 및 릴스</Text>
@@ -55,6 +67,11 @@ const styles = StyleSheet.create({
   Bells2textBox: {
     borderWidth: 1,
     borderBottomColor: "#333333",
+  },
+
+  toggleBox: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
