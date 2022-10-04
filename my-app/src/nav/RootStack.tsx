@@ -6,12 +6,13 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
 import BottomTabScreen from "./BottomTabScreen";
+import TOSScreen from "../screens/TOSScreen";
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
     <Stack.Navigator
-      initialRouteName="SignUp"
+      initialRouteName="TOS"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="BottomTab" component={BottomTabScreen} />
@@ -20,6 +21,7 @@ function RootStack() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="TOS" component={TOSScreen} />
     </Stack.Navigator>
   );
 }

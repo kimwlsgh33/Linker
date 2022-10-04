@@ -1,5 +1,11 @@
 //import { useNavigation } from "@react-navigation/native";
-import React, { useState, useCallback, Component, useRef } from "react";
+import React, {
+  useState,
+  useCallback,
+  Component,
+  useRef,
+  useEffect,
+} from "react";
 import {
   KeyboardAvoidingView,
   SafeAreaView,
@@ -28,10 +34,13 @@ function ExampleView(props) {
 
 const SignUp = () => {
   const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
   //  const [opacity, setOpacity] = useState(0.5);
   const [visible, setVisible] = useState(false);
+  const [number, setNumber] = useState(1);
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
@@ -75,9 +84,24 @@ const SignUp = () => {
   `;
   const Text = styled.Text``; */
 
+  function counter() {
+    const boot = useEffect(() => {
+      increaseNumber(number);
+    });
+  }
+
   const handleIdChange = (text) => {
     setId(text);
   };
+
+  const handleNameChange = (text) => {
+    setName(text);
+  };
+
+  const handleNickChange = (text) => {
+    setNick(text);
+  };
+
   const handlePwChange = (text) => {
     setPassword(text);
   };
@@ -89,20 +113,49 @@ const SignUp = () => {
     const phnum = /^[0-9]{10,11}$/;
 
     if (regExp.test(id) || phnum.test(id)) {
-      setDisable(false);
+      increaseNumber(number);
     } else {
       setDisable(true);
     }
   };
 
+  const nameCheck = (name) => {
+    handleNameChange(name);
+
+    if (name != null) {
+      increaseNumber(number);
+    } else {
+      setDisable(true);
+    }
+  };
+
+  const nickCheck = (nick) => {
+    handleNickChange(nick);
+
+    if (nick != null) {
+      increaseNumber(number);
+    }
+  };
+
   const pwCheck = useCallback((password) => {
     handlePwChange(password);
-    if (password.length < 8) {
-      setDisable(true);
+    if (password.length > 8) {
+      increaseNumber(number);
     } else {
-      setDisable(false);
+      setDisable(true);
     }
   }, []);
+
+  const increaseNumber = (number) => setNumber(number + 1);
+  useEffect(() => {
+    return () => {
+      increaseNumber(number);
+    };
+  }, []);
+
+  if (number >= 4) {
+    setDisable(false);
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -184,22 +237,22 @@ const SignUp = () => {
             <TextInput
               placeholder="성명"
               style={[styles.input, styles.buttonOutline]}
-              secureTextEntry
               returnKeyType="next"
               ref={ref_input[1]}
               onSubmitEditing={() => {
                 ref_input[2].current.focus();
               }}
+              onChangeText={nameCheck}
             />
             <TextInput
               placeholder="사용자 이름"
               style={[styles.input, styles.buttonOutline]}
-              secureTextEntry
               returnKeyType="next"
               ref={ref_input[2]}
               onSubmitEditing={() => {
                 ref_input[3].current.focus();
               }}
+              onChangeText={nickCheck}
             />
             <TextInput
               placeholder="비밀번호"
