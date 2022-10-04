@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -12,43 +12,42 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const userInfo = [
-    {
-      id: "admin",
-      password: "admin",
-      isLogin: false,
-    },
-    {
-      id: "user",
-      password: "user",
-      isLogin: false,
-    },
-    {
-      id: "guest",
-      password: "guest",
-      isLogin: false,
-    },
-  ];
-
-  const [data, setData] = useState(userInfo);
-  // const loginPressed = (id) => {
-  //   const newDatas = data.map((data) => {
-  //     if (data.id === id) {
-  //       return {
-  //         ...data,
-  //         isLogin: !data.isLogin,
-  //       };
-  //     }
-  //     return data;
-  //   });
-  //   setData(newDatas);
-  // };
-
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
+
+  const handleIdChange = (text) => {
+    setId(text);
+  };
+  const handlePwChange = (text) => {
+    setPassword(text);
+  };
+
+  const idCheck = useCallback((id) => {
+    handleIdChange(id);
+
+    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+    const phnum = /^[0-9]{10,11}$/;
+
+    if (regExp.test(id) || phnum.test(id)) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, []);
+
+  const pwCheck = useCallback((password) => {
+    handlePwChange(password);
+    if (password.length < 8) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, []);
+
   const [text, setText] = useState("");
 
   const onChange = (e: any) => {
@@ -63,6 +62,28 @@ const LoginScreen = () => {
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
 
+  // const userInfo = [
+  //   {
+  //     id: "admin",
+  //     password: "admin",
+  //     isLogin: false,
+  //   },
+  // ];
+
+  // const [data, setData] = useState(userInfo);
+  // const loginPressed = (id) => {
+  //   const newDatas = data.map((data) => {
+  //     if (data.id === id) {
+  //       return {
+  //         ...data,
+  //         isLogin: !data.isLogin,
+  //       };
+  //     }
+  //     return data;
+  //   });
+  //   setData(newDatas);
+  // };
+
   // const onFocusNext = (index: number) => {
   //   if (ref_input[index + 1] && index < ref_input.length - 1) {
   //     ref_input[index + 1].current?.focus();
@@ -73,7 +94,7 @@ const LoginScreen = () => {
   // };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback /*key={data[0].id}*/ onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Text style={styles.logo}>instagram</Text>
         <View style={styles.inputContainer}>
@@ -90,6 +111,7 @@ const LoginScreen = () => {
               }}
               placeholder="전화번호, 이메일 주소 또는 사용자 이름"
               style={[styles.input, styles.buttonOutline]}
+              onChangeText={idCheck}
             />
             <TextInput
               returnKeyType="next"
@@ -99,15 +121,14 @@ const LoginScreen = () => {
               onSubmitEditing={() => null}
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
+              onChangeText={pwCheck}
               secureTextEntry
             />
             <View style={styles.buttonContainer}>
               <Pressable
-                // onPress={() => navigation.navigate("Instagram")}
-                onPress={onReset}
-                // onPress={() => {
-                //   loginPressed(data.id);
-                // }}
+                onPress={() => {
+                  navigation.navigate("BottomTab"), onReset();
+                }}
                 style={({ pressed }) => [
                   styles.button,
                   Platform.select({
@@ -116,7 +137,9 @@ const LoginScreen = () => {
                   disable ? { opacity: 0.5 } : {},
                 ]}
                 android_ripple={{ color: "#FFF" }}
-                // disabled={disable}
+                disabled={disable}
+                // onPress={() => loginPressed(data[0].id)}
+                // disabled={(data[0].isLogin) ? !disable : disable}
               >
                 <Text style={styles.buttonText}>로그인</Text>
               </Pressable>
