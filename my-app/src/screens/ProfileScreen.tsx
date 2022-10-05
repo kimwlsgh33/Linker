@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -27,16 +27,8 @@ function ProfileScreen() {
 
   return (
     <SafeAreaView>
-      <View style={{ backgroundColor: "#fff", height: "100%" }}>
-        <View
-          style={{
-            justifyContent: "space-between",
-            flexDirection: "row",
-            paddingHorizontal: 15,
-            alignItems: "center",
-            padding: 15,
-          }}
-        >
+      <View style={styles.container}>
+        <View style={styles.header}>
           <Pressable
             style={({ pressed }) => [
               {
@@ -47,7 +39,9 @@ function ProfileScreen() {
             <Modal
               activator={({ handleOpen }) => (
                 <Text
-                  onPress={handleOpen}
+                  onPress={() => {
+                    handleOpen();
+                  }}
                   style={{
                     fontFamily: "강원교육모두 Bold",
                     fontSize: 23,
@@ -57,63 +51,47 @@ function ProfileScreen() {
                   <Feather name="chevron-down" style={{ fontSize: 16 }} />
                 </Text>
               )}
-            ><View style={{flexDirection: "row"}}>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed ? 0.2 : 1,
-                  },
-                ]}
-              >
-                <View
-                  style={{
-                    marginLeft: 15,
-                    width: 45,
-                    height: 45,
-                    borderRadius: 100,
-                    borderWidth: 1,
-                    opacity: 0.7,
-                    marginHorizontal: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+            >
+              <View style={styles.modal}>
+                <View style={{ flexDirection: "row" }}>
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                    ]}
+                  >
+                    <View style={styles.modalIcon1}>
+                      <Entypo
+                        name="plus"
+                        style={{ fontSize: 20, color: "#000" }}
+                      />
+                    </View>
+                  </Pressable>
+                  <Text style={{ fontSize: 11, top: 45, left: 5 }}>
+                    계정 추가
+                  </Text>
                 </View>
-              </Pressable>
-              <Text style={{top: 14, left: 5, fontSize: 11}}>계정 추가</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                    ]}
+                  >
+                    <View style={styles.modalIcon2}>
+                      <Entypo
+                        name="plus"
+                        style={{ fontSize: 20, color: "#000" }}
+                      />
+                    </View>
+                  </Pressable>
+                  <Text style={{ fontSize: 11, top: 30, left: 5 }}>
+                    계정 추가
+                  </Text>
+                </View>
               </View>
-              <Pressable
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed ? 0.2 : 1,
-                  },
-                ]}
-              >
-                <View
-                  style={{
-                    marginTop: 10,
-                    marginLeft: 15,
-                    width: 45,
-                    height: 45,
-                    borderRadius: 100,
-                    borderWidth: 1,
-                    opacity: 0.7,
-                    marginHorizontal: 5,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
-                </View>
-              </Pressable>
-              {/* <View //bar style
-            style={{
-              height: 1,
-              backgroundColor: "#ccc",
-            }}
-          >
-          </View> */}
             </Modal>
           </Pressable>
           <View>
@@ -142,15 +120,7 @@ function ProfileScreen() {
             </Pressable>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-around",
-            paddingVertical: 8,
-            paddingHorizontal: 13,
-          }}
-        >
+        <View style={styles.profileHeader}>
           <View>
             <Pressable
               style={({ pressed }) => [
@@ -161,27 +131,8 @@ function ProfileScreen() {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
-              <Image
-                source={profileImage}
-                style={{
-                  resizeMode: "cover",
-                  width: 80,
-                  height: 80,
-                  borderRadius: 100,
-                  borderColor: "lightgray",
-                  borderWidth: 2,
-                  top: 10,
-                }}
-              />
-              <Text
-                style={{
-                  paddingVertical: 5,
-                  fontFamily: "강원교육모두 Bold",
-                  fontSize: 15,
-                  textAlign: "center",
-                  top: 5,
-                }}
-              >
+              <Image source={profileImage} style={styles.profileStyle} />
+              <Text style={styles.profileText}>
                 user_name
                 {/* {user name} */}
               </Text>
@@ -230,15 +181,7 @@ function ProfileScreen() {
             </View>
           </Pressable>
         </View>
-        <View
-          style={{
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-evenly",
-            paddingVertical: 10,
-          }}
-        >
+        <View style={styles.profileButton}>
           <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
             <Pressable
               onPress={() => navigation.navigate("EditProfile")}
@@ -254,23 +197,8 @@ function ProfileScreen() {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)" }}
             >
-              <View
-                style={{
-                  width: "100%",
-                  height: 35,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "강원교육모두 Bold",
-                    fontSize: 14,
-                    letterSpacing: 1,
-                  }}
-                >
-                  프로필편집
-                </Text>
+              <View style={styles.profileButtonView}>
+                <Text style={styles.profileButtonText}>프로필편집</Text>
               </View>
             </Pressable>
           </View>
@@ -287,25 +215,13 @@ function ProfileScreen() {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)" }}
             >
-              <View
-                style={{
-                  height: 35,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <View style={styles.profileButtonView2}>
                 <Feather name="user-plus" style={{ fontSize: 17 }} />
               </View>
             </Pressable>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            marginHorizontal: 5,
-            marginVertical: 10,
-          }}
-        >
+        <View style={styles.roundView}>
           <Pressable
             style={({ pressed }) => [
               {
@@ -313,28 +229,8 @@ function ProfileScreen() {
               },
             ]}
           >
-            <View
-            // style={{
-            //   width: 50,
-            //   height: 50,
-            //   borderRadius: 100,
-            //   backgroundColor: "black",
-            //   opacity: 0.1,
-            //   marginHorizontal: 5,
-            // }}
-            >
-              <Image
-                source={profileImage}
-                style={{
-                  resizeMode: "cover",
-                  width: 50,
-                  height: 50,
-                  borderRadius: 100,
-                  borderColor: "lightgray",
-                  borderWidth: 2,
-                  marginHorizontal: 5,
-                }}
-              />
+            <View>
+              <Image source={profileImage} style={styles.round1} />
             </View>
             <Text style={{ fontSize: 11, left: 18 }}>취미</Text>
           </Pressable>
@@ -345,18 +241,7 @@ function ProfileScreen() {
               },
             ]}
           >
-            <View
-              style={{
-                width: 50,
-                height: 50,
-                borderRadius: 100,
-                borderWidth: 1,
-                opacity: 0.7,
-                marginHorizontal: 5,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.round2}>
               <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
             </View>
             <Text style={{ fontSize: 11, left: 18 }}>신규</Text>
@@ -370,10 +255,115 @@ function ProfileScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
+    height: "100%",
+  },
+  header: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    paddingHorizontal: 15,
     alignItems: "center",
+    padding: 15,
+  },
+  modal: {
+    backgroundColor: "white",
+    height: 150,
+    top: 585,
+    borderRadius: 15,
+  },
+  modalIcon1: {
+    marginTop: 30,
+    marginLeft: 15,
+    width: 45,
+    height: 45,
+    borderRadius: 100,
+    borderWidth: 1,
+    opacity: 0.7,
+    marginHorizontal: 5,
     justifyContent: "center",
+    alignItems: "center",
+  },
+  modalIcon2: {
+    marginTop: 15,
+    marginLeft: 15,
+    width: 45,
+    height: 45,
+    borderRadius: 100,
+    borderWidth: 1,
+    opacity: 0.7,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    paddingVertical: 8,
+    paddingHorizontal: 13,
+  },
+  profileStyle: {
+    resizeMode: "cover",
+    width: 80,
+    height: 80,
+    borderRadius: 100,
+    borderColor: "lightgray",
+    borderWidth: 2,
+    top: 10,
+  },
+  profileText: {
+    paddingVertical: 5,
+    fontFamily: "강원교육모두 Bold",
+    fontSize: 15,
+    textAlign: "center",
+    top: 5,
+  },
+  profileButton: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    paddingVertical: 10,
+  },
+  profileButtonView: {
+    width: "100%",
+    height: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileButtonText: {
+    fontFamily: "강원교육모두 Bold",
+    fontSize: 14,
+    letterSpacing: 1,
+  },
+  profileButtonView2: {
+    height: 35,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  roundView: {
+    flexDirection: "row",
+    marginHorizontal: 5,
+    marginVertical: 10,
+  },
+  round1: {
+    resizeMode: "cover",
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    borderColor: "lightgray",
+    borderWidth: 2,
+    marginHorizontal: 5,
+  },
+  round2: {
+    width: 50,
+    height: 50,
+    borderRadius: 100,
+    borderWidth: 1,
+    opacity: 0.7,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
