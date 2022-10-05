@@ -4,9 +4,13 @@ import {
     View,
     Modal as DefaultModal,
     Button,
+    Pressable,
 } from "react-native";
-import Ionic from "react-native-vector-icons/Ionicons";
 
+// 외부 창 클릭시 모달 닫는기능만 구현되어있음
+// 모달 컴포넌트 사용시 <View style={{background:"white"}}> 사용해서 
+// 해당 스크린에 직접 창 만들어야함(사이즈, 위치, 스타일 등 자유롭게)
+// <Modal>버튼,뷰</Modal>
 type ModalProps = {
     activator?: FunctionComponent<{ handleOpen: () => void }>;
     children: React.ReactNode;
@@ -20,19 +24,15 @@ export function Modal({ activator: Activator, children }: ModalProps) {
         <DefaultModal
         visible={Visible}
         transparent={true}
-        animationType={"slide"}
-        onRequestClose={() => setVisible(false)}
+        animationType={"fade"}
         >
-        <View style={styles.contentView}>
-            <View style={{ flexDirection: "row", alignSelf: "flex-end" }}>
-            <Ionic
-                onPress={() => setVisible(false)}
-                name="close-outline"
-                style={{ fontSize: 35 }}
-            />
-            </View>
-            {children}
-        </View>
+        <Pressable 
+            onPress={() => setVisible(false)}
+            style={{flex: 1, backgroundColor: "rgba(0,0,0,0.1)"}}>
+                <View>
+                    {children}
+                </View>
+        </Pressable>
         </DefaultModal>
         {Activator ? (
         <Activator handleOpen={() => setVisible(true)} />
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     contentView: {
     top: 580,
     backgroundColor: "white",
-    height: "22%",
     borderRadius: 15,
+    height: "50%",
     },
 });
