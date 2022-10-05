@@ -9,8 +9,8 @@ import {
   Linking,
   Button,
 } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
-import icon from "react-native-vector-icons/ionicons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionic from "react-native-vector-icons/ionicons";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
@@ -20,6 +20,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import AddUser2 from "./AddUser2";
 import Bells2 from "./Bells2";
+import Lock2 from "./Lock2";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ const navbars = [
     iconSize: 20,
   },
   {
-    navigateUri: "AddUser2",
+    navigateUri: "Lock2",
     text: "개인정보 보호",
     iconName: "right",
     iconName2: "lock",
@@ -53,7 +54,7 @@ const navbars = [
     iconSize: 20,
   },
   {
-    navigateUri: "AddUser2",
+    navigateUri: "Safety2",
     text: "보안",
     iconName: "right",
     iconName2: "Safety",
@@ -95,8 +96,8 @@ export default function ScreenSetting({ navigation, route }) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.menutextbox}>
-        <View style={styles.Viewtest}>
-          <Icon name={"search1"} size={20} color="#FFFAFA" />
+        <View style={styles.InputView}>
+          <AntDesign name={"search1"} size={20} color="#FFFAFA" />
           <TextInput
             style={styles.input}
             onChangeText={onChangeText}
@@ -123,7 +124,6 @@ export default function ScreenSetting({ navigation, route }) {
         ))}
       </View>
       <View style={styles.footerContainer}>
-        <View style={styles.footerbox}>
           <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
           <Pressable
             style={({ pressed }) => [pressed && { opacity: 0.4 }]}
@@ -134,7 +134,6 @@ export default function ScreenSetting({ navigation, route }) {
           <Text style={styles.footertext}>
             {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
           </Text>
-        </View>
       </View>
       <View style={styles.Overfooterbox}>
         <Text style={styles.Overfootertext}>로그인</Text>
@@ -163,17 +162,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
-  footerbox: {
-    backgroundColor: "#000000",
-    margin: 15,
-  },
-
   footertext: {
     fontSize: 10,
     color: "#FFFAFA",
     fontWeight: "bold",
-    marginTop: 15,
-    marginBottom: 15,
+    margin: 15,
   },
   Overfooterbox: {
     backgroundColor: "#000000",
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
 
-  Viewtest: {
+  InputView: {
     marginTop: 15,
     marginLeft: 12,
     width: 360,

@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+import Ionic from "react-native-vector-icons/ionicons";
 
 function TextAndIcon({ text, iconName, iconName2, iconSize }) {
   return (
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
   },
   IconRight: {
     alignItems: "flex-end",
-    // justifyContent: "center",
   },
 
   IconLeft: {
