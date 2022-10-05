@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -10,67 +10,80 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
+import TOS from "../components/TOS";
+
+const data = [
+  {
+    state: "collect",
+    title: "개인정보의 수집 및 이용[필수]",
+    desc: "Meta Platforms, Inc.가 서비스 제공 및 맞춤화, 분석, 안전 및 보안, 맞춤형 광고 표시를 위한 개인정보 수집 및 이용에 동의합니다.",
+    link: "더 알아보기",
+  },
+  {
+    state: "offer",
+    title: "개인정보의 제공[필수]",
+    desc: "Meta Platforms, Inc.가 다른 Meta Companies 및 Meta Companies에서 서비스를 제공하는 국가의 정부 기관, 수사 기관, 분쟁 해결 기관에 개인정보를 공유하는 데 동의합니다. Meta Platforms, Inc.는 회원님의 개인정보를 절대 판매하지 않습니다.",
+    link: "더 알아보기",
+  },
+  {
+    state: "transfer",
+    title: "개인정보의 국가 간 이전[필수]",
+    desc: "Meta Platforms, Inc.가 서비스를 제공하기 위해 전 세계의 지사, 데이터 센터 및 파트너 비즈니스에 개인정보를 이전하는 데 동의합니다.",
+    link: "더 알아보기",
+  },
+  {
+    state: "location",
+    title: "위치 정보[필수]",
+    desc: "Meta Platforms, Inc.의 위치 기반 서비스 약관 에 동의합니다.",
+    link: "위치 기반 서비스 약관 보기",
+  },
+  {
+    state: "event",
+    title: "이벤트 정보 수신 동의[선택]",
+    desc: "Meta Platforms, Inc.가 제공하는 이벤트 정보를 수신하는 데에 동의합니다.",
+    link: "더 알아보기",
+  },
+  {
+    state: "night",
+    title: "야간 알림 수신 동의[선택]",
+    desc: "0~6시 사이에 알림을 수신하는 데에 동의합니다.",
+    link: "더 알아보기",
+  },
+];
 
 const TOSScreen = () => {
-  const [allow, setAllow] = useState(false);
-
-  const [isEnabled, setIsEnabled] = useState(false);
   const [disable, setDisable] = useState(true);
-  const [collect, setCollect] = useState(false);
-  const [offer, setOffer] = useState(false);
-  const [transfer, setTransfer] = useState(false);
-  const [location, setLocation] = useState(false);
-  const [event, setEvent] = useState(false);
-  const [night, setNight] = useState(false);
+  const [toss, setToss] = useState({
+    collect: false,
+    offer: false,
+    transfer: false,
+    location: false,
+    event: false,
+    night: false,
+  });
 
-  const toggleSwitch = () => {
-    setIsEnabled((previousState) => !previousState);
-    if (isEnabled == true) {
-      setCollect(false);
-      setOffer(false);
-      setTransfer(false);
-      setLocation(false);
-      setEvent(false);
-      setNight(false);
-    } else {
-      setCollect(true);
-      setOffer(true);
-      setTransfer(true);
-      setLocation(true);
-      setEvent(true);
-      setNight(true);
-    }
-  };
+  // useEffect(() => {
+  //   console.log("isenabled: " + isEnabled);
+  //   console.log("collect", collect);
+  //   console.log("offer", offer);
+  //   console.log("transfer", transfer);
+  //   console.log("location", location);
+  //   console.log("event", event);
+  //   console.log("night", night);
+  // }, [collect, offer, transfer, location, event, night]);
 
-  const collectHandler = (e) => {
-    setCollect((previousState) => !previousState);
-    TOSCheck();
-  };
-  const offerHandler = () => setOffer((previousState) => !previousState);
-  const transferHandler = () => setTransfer((previousState) => !previousState);
-  const locationHandler = () => setLocation((previousState) => !previousState);
-  const eventHandler = () => setEvent((previousState) => !previousState);
-  const nightHandler = () => setNight((previousState) => !previousState);
-
-  const TOSCheck = () => {
-    console.log("collect", collect);
-    console.log("offer", offer);
-    console.log("transfer", transfer);
-    console.log("location", location);
-    console.log("event", event);
-    console.log("night", night);
-
-    if (
-      collect == false &&
-      offer == false &&
-      transfer == false &&
-      location == false
-    ) {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
-  };
+  // const TOSCheck = () => {
+  //   if (
+  //     collect == false &&
+  //     offer == false &&
+  //     transfer == false &&
+  //     location == false
+  //   ) {
+  //     setDisable(false);
+  //   } else {
+  //     setDisable(true);
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -88,12 +101,8 @@ const TOSScreen = () => {
         </Text>
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          onChange={TOSCheck}
-          onTouchEnd={TOSCheck}
+          //onValueChange={toggleSwitch}
         />
       </View>
       <ScrollView style={styles.scrollview}>
@@ -104,158 +113,16 @@ const TOSScreen = () => {
           다음은 Meta에서 서비스를 제공하기 위해 회원님의 정보를 이용할 수 있는
           몇가지 주된 방법입니다. 회원님이 각 항목을 검토하고 동의하셔야 합니다.
         </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: 10,
-          }}
-        />
-        <Text style={styles.head_txt}>개인정보의 수집 및 이용[필수]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={collectHandler}
-          value={collect}
-          // onChange
-          // onTouchEnd={TOSCheck}
-        />
-        <Text style={styles.nom_txt}>
-          Meta Platforms, Inc.가 서비스 제공 및 맞춤화, 분석, 안전 및 보안,
-          맞춤형 광고 표시를 위한 개인정보 수집 및 이용에 동의합니다.
-          <Text style={styles.link}>더 알아보기</Text>
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: 10,
-          }}
-        />
-        <Text style={styles.head_txt}>개인정보의 제공[필수]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={offerHandler}
-          value={offer}
-          onChange={TOSCheck}
-          // onTouchEnd={TOSCheck}
-        />
-        <Text style={styles.nom_txt}>
-          Meta Platforms, Inc.가 다른 Meta Companies 및 Meta Companies에서
-          서비스를 제공하는 국가의 정부 기관, 수사 기관, 분쟁 해결 기관에
-          개인정보를 공유하는 데 동의합니다. Meta Platforms, Inc.는 회원님의
-          개인정보를 절대 판매하지 않습니다.
-          <Text style={styles.link}>더 알아보기</Text>
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: 10,
-          }}
-        />
-        <Text style={styles.head_txt}>개인정보의 국가 간 이전[필수]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={transferHandler}
-          value={transfer}
-          onChange={TOSCheck}
-          // onTouchEnd={TOSCheck}
-        />
-        <Text style={styles.nom_txt}>
-          Meta Platforms, Inc.가 서비스를 제공하기 위해 전 세계의 지사, 데이터
-          센터 및 파트너 비즈니스에 개인정보를 이전하는 데 동의합니다.
-          <Text style={styles.link}>더 알아보기</Text>
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: ,
-          }}
-        />
-
-        <Text style={styles.head_txt}>위치 정보[필수]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={locationHandler}
-          value={location}
-          onChange={TOSCheck}
-          // onTouchEnd={TOSCheck}
-        />
-        <Text style={styles.nom_txt}>
-          Meta Platforms, Inc.의{" "}
-          <Text style={styles.link}>위치 기반 서비스 약관</Text>에 동의합니다.
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: ,
-          }}
-        />
-        <Text style={styles.head_txt}>이벤트 정보 수신 동의[선택]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={eventHandler}
-          value={event}
-        />
-        <Text style={styles.nom_txt}>
-          Meta Platforms, Inc.가 제공하는 이벤트 정보를 수신하는 데에 동의
-          합니다. <Text style={styles.link}>더 알아보기</Text>
-        </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: "#AAA",
-            width: "100%",
-            alignItems: "center",
-            marginTop: 20,
-            //marginBottom: ,
-          }}
-        />
-        <Text style={styles.head_txt}>야간 알림 수신 동의[선택]</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={nightHandler}
-          value={night}
-        />
-        <Text style={styles.nom_txt}>
-          0~6시 사이에 알림을 수신하는 데에 동의합니다.{" "}
-          <Text style={styles.link}>더 알아보기</Text>
-        </Text>
+        {data.map((item, index) => (
+          <TOS
+            key={index}
+            title={item.title}
+            desc={item.desc}
+            link={item.link}
+            pData={item.state}
+            setPData={setToss}
+          />
+        ))}
       </ScrollView>
       <View style={styles.bottomBar}>
         <Pressable
