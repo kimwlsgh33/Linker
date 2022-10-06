@@ -19,5 +19,7 @@ declare namespace ReactNavigation {
     Login: any;
     SignUp: any;
     EditProfile: any;
+    Posts: any;
+    FollowTab: any;
   }
 }

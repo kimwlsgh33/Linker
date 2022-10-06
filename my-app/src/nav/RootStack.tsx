@@ -9,6 +9,7 @@ import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EditProfile from "../screens/EditProfile";
+import FollowTab from "../components/FollowTab";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ function RootStack() {
       <Stack.Screen name="Story" component={StoryScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="EditProfile" component={EditProfile} />
+      <Stack.Screen
+        name="FollowTab"
+        component={FollowTab}
+        options={{ headerShown: true, title: "userID33" }}
+      />
     </Stack.Navigator>
   );
 }
