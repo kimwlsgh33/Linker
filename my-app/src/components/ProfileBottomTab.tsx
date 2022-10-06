@@ -114,7 +114,7 @@ const ProfileBottomTab = () => {
         tabBarIcon: ({ focused, color }) => {
           let iconName;
           if (route.name === "Posts") {
-            iconName = focused ? "ios-apps-sharp" : "ios-apps-sharp";
+            iconName = focused ? "ios-apps-sharp" : "ios-apps-outline";
             color = focused ? "black" : "gray";
           } else if (route.name === "Video") {
             iconName = focused ? "ios-play-circle" : "ios-play-circle-outline";
