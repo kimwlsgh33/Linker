@@ -9,6 +9,7 @@ import {
   Linking,
   Button,
   Switch,
+  Modal,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import ionic from "react-native-vector-icons/ionicons";
@@ -30,6 +31,32 @@ function Lock2({ navigation, route }) {
   return (
   <ScrollView style={styles.container}>
       <View style={styles.BorderBox}>
+      <Modal 
+                  animationType="slide"
+                  visible={isEnabled}
+                  transparent={true}  // 배경 투명하게 만들기 
+                  >
+      <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setIsEnabled(false)}>
+          <View style={styles.ModalBox}>
+            <View style={styles.ModalView}>
+                <View style={styles.ModalInnerBox}>
+                  <Text style={styles.ModalBoxText}>비공개 계정으로 전환하시겠어요?</Text>
+                </View>
+                <View style={styles.ModalInnerBox}>
+                  <Text style={styles.lock2Text}>회원님의 팔로워만 회원님의 사진과 동영상을 볼 수 있습니다.</Text>
+                  <Text style={styles.lock2Text}>회원님을 태그, @언급하거나 회원님에게 메시지를 보낼 수 있는 사람은 변경되지 않습니다.</Text>
+                </View>
+                <View style={styles.ButtonBox}>  
+                  <Button
+                    title="비공개로 전환" 
+                    color="#0174DF" 
+                    onPress={() => setIsEnabled(!isEnabled)}
+                  />
+                </View>
+            </View>
+          </View>
+              </Pressable>
+                </Modal>
         <Text style={styles.lock2Text}>계정 공개 범위</Text>
         <View style={styles.Rightbox}>  
           <IconLeft iconName={"lock"} iconSize={20} text={"비공개 계정"} />
@@ -99,7 +126,46 @@ const styles = StyleSheet.create({
   },
 
   BottomBox: {
-  }
+  },
+
+  ModalView: {
+    backgroundColor: '#151515',
+    borderWidth: 1,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  ModalBox: {
+    flex:1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    // borderWidth: 1,
+    // borderTopLeftRadius: 20,
+  },
+
+  ModalText: {
+    color: "#FFFAFA",
+    fontSize: 15,
+    fontWeight: "bold",
+    margin: 10,
+  },
+
+  ModalInnerBox: {
+    borderWidth: 1,
+    borderBottomColor: "#333333",
+  },
+
+  ModalBoxText: {
+    color: "#FFFAFA",
+    fontSize: 17,
+    fontWeight: "bold",
+    textAlign: 'center',
+    margin: 10,
+  },
+
+  ButtonBox: {
+    padding: 15,
+  },
 
 });
 
