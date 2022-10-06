@@ -6,11 +6,11 @@ import {
     Button,
     Pressable,
 } from "react-native";
-
-// 외부 창 클릭시 모달 닫는기능만 구현되어있음
-// 모달 컴포넌트 사용시 <View style={{background:"white"}}> 사용해서 
+// import { Modal } from "../components/Modal";
+// import {Modal as DefaultModal} from "react-native";
+// 모달 컴포넌트 사용시 모달태그 안에 <View style={{}}> 사용해서
 // 해당 스크린에 직접 창 만들어야함(사이즈, 위치, 스타일 등 자유롭게)
-// <Modal>버튼,뷰</Modal>
+// <Modal><View style={{}}></View></Modal>
 type ModalProps = {
     activator?: FunctionComponent<{ handleOpen: () => void }>;
     children: React.ReactNode;
@@ -21,17 +21,18 @@ export function Modal({ activator: Activator, children }: ModalProps) {
 
     return (
     <View>
+        <DefaultModal visible={Visible} transparent={true} animationType={"fade"}>
+        <Pressable
+            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.1)" }}
+        ></Pressable>
+        </DefaultModal>
         <DefaultModal
         visible={Visible}
         transparent={true}
-        animationType={"fade"}
+        animationType={"slide"}
         >
-        <Pressable 
-            onPress={() => setVisible(false)}
-            style={{flex: 1, backgroundColor: "rgba(0,0,0,0.1)"}}>
-                <View>
-                    {children}
-                </View>
+        <Pressable style={{ flex: 1 }} onPress={() => setVisible(false)}>
+            <View>{children}</View>
         </Pressable>
         </DefaultModal>
         {Activator ? (

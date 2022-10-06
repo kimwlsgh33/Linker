@@ -95,18 +95,34 @@ function ProfileScreen() {
             </Modal>
           </Pressable>
           <View>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  opacity: pressed ? 0.2 : 1,
-                },
-              ]}
+            <Modal
+              activator={({ handleOpen }) => (
+                <Pressable
+                  onPress={() => {
+                    handleOpen();
+                  }}
+                  style={({ pressed }) => [
+                    {
+                      opacity: pressed ? 0.2 : 1,
+                    },
+                  ]}
+                >
+                  <FontAwesome
+                    name="plus-square-o"
+                    style={{ fontSize: 22, left: 95 }}
+                  />
+                </Pressable>
+              )}
             >
-              <FontAwesome
-                name="plus-square-o"
-                style={{ fontSize: 22, left: 95 }}
-              />
-            </Pressable>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  height: 400,
+                  top: 400,
+                  borderRadius: 15,
+                }}
+              ></View>
+            </Modal>
           </View>
           <View>
             <Pressable
@@ -123,6 +139,9 @@ function ProfileScreen() {
         <View style={styles.profileHeader}>
           <View>
             <Pressable
+              onPress={() => {
+                navigation.navigate("Story");
+              }}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -139,6 +158,9 @@ function ProfileScreen() {
             </Pressable>
           </View>
           <Pressable
+            onPress={() => {
+              navigation.navigate("Posts");
+            }}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -153,6 +175,7 @@ function ProfileScreen() {
             </View>
           </Pressable>
           <Pressable
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -167,6 +190,7 @@ function ProfileScreen() {
             </View>
           </Pressable>
           <Pressable
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -223,6 +247,9 @@ function ProfileScreen() {
         </View>
         <View style={styles.roundView}>
           <Pressable
+            onPress={() => {
+              navigation.navigate("Story");
+            }}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
