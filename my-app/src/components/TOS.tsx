@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
 
-function TOS({ title, desc, link, pData, setPData }: any) {
+function TOS({ title, desc, link, pData, setPData, id }: any) {
   return (
     <>
       <View style={styles.hr} />
@@ -9,7 +9,7 @@ function TOS({ title, desc, link, pData, setPData }: any) {
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         ios_backgroundColor="#3e3e3e"
-        onValueChange={() => setPData(!pData)}
+        onValueChange={() => setPData(id)}
         value={pData}
       />
       <Text style={styles.nom_txt}>

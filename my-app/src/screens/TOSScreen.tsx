@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Text,
   View,
@@ -12,39 +12,45 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import TOS from "../components/TOS";
 
-const data = [
+const datas = [
   {
-    state: "collect",
+    id: 1,
+    state: false,
     title: "개인정보의 수집 및 이용[필수]",
     desc: "Meta Platforms, Inc.가 서비스 제공 및 맞춤화, 분석, 안전 및 보안, 맞춤형 광고 표시를 위한 개인정보 수집 및 이용에 동의합니다.",
     link: "더 알아보기",
   },
   {
-    state: "offer",
+    id: 2,
+    state: false,
     title: "개인정보의 제공[필수]",
     desc: "Meta Platforms, Inc.가 다른 Meta Companies 및 Meta Companies에서 서비스를 제공하는 국가의 정부 기관, 수사 기관, 분쟁 해결 기관에 개인정보를 공유하는 데 동의합니다. Meta Platforms, Inc.는 회원님의 개인정보를 절대 판매하지 않습니다.",
     link: "더 알아보기",
   },
   {
-    state: "transfer",
+    id: 3,
+    state: false,
     title: "개인정보의 국가 간 이전[필수]",
     desc: "Meta Platforms, Inc.가 서비스를 제공하기 위해 전 세계의 지사, 데이터 센터 및 파트너 비즈니스에 개인정보를 이전하는 데 동의합니다.",
     link: "더 알아보기",
   },
   {
-    state: "location",
+    id: 4,
+    state: false,
     title: "위치 정보[필수]",
     desc: "Meta Platforms, Inc.의 위치 기반 서비스 약관 에 동의합니다.",
     link: "위치 기반 서비스 약관 보기",
   },
   {
-    state: "event",
+    id: 5,
+    state: false,
     title: "이벤트 정보 수신 동의[선택]",
     desc: "Meta Platforms, Inc.가 제공하는 이벤트 정보를 수신하는 데에 동의합니다.",
     link: "더 알아보기",
   },
   {
-    state: "night",
+    id: 6,
+    state: false,
     title: "야간 알림 수신 동의[선택]",
     desc: "0~6시 사이에 알림을 수신하는 데에 동의합니다.",
     link: "더 알아보기",
@@ -53,14 +59,107 @@ const data = [
 
 const TOSScreen = () => {
   const [disable, setDisable] = useState(true);
-  const [toss, setToss] = useState({
-    collect: false,
-    offer: false,
-    transfer: false,
-    location: false,
-    event: false,
-    night: false,
-  });
+  const [toss, setToss] = useState(datas);
+  const [all, setAll] = useState(false);
+
+  useEffect(() => {
+    TOSCheck();
+  }, [toss]);
+
+  const handleSwitch = useCallback(
+    (id) => {
+      setToss((prev) =>
+        prev.map((data) => {
+          if (data.id === id) {
+            return {
+              ...data,
+              state: !data.state,
+            };
+          }
+          return data;
+        })
+      );
+    },
+    [toss, setToss]
+  );
+  console.log("====================================");
+  console.log(toss[0].state);
+  console.log(toss[1].state);
+  console.log(toss[2].state);
+  console.log(toss[3].state);
+  console.log("====================================");
+
+  //
+
+  const TOSCheck = useCallback(() => {
+    if (
+      toss[0].state === true &&
+      toss[1].state === true &&
+      toss[2].state === true &&
+      toss[3].state === true
+    ) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [toss, setDisable]);
+
+  const toggleSwitch = (state) => {
+    // toggleSwitch를 움직이는 역할
+    const newState = () => setAll((previousState) => !previousState);
+    // toggleSwitch가 true일 때 모든 switch를 true로 바꾸는 역할
+    if (state === true) {
+      newState();
+      setToss((prev) =>
+        prev.map((data) => {
+          return {
+            ...data,
+            state: true,
+          };
+        })
+      );
+      // toggleSwitch가 false일 때 모든 switch를 false로 바꾸는 역할
+    } else if (state === false) {
+      newState();
+      setToss((prev) =>
+        prev.map((data) => {
+          return {
+            ...data,
+            state: false,
+          };
+        })
+      );
+    }
+  };
+  // 모든 switch가 true일 때 toggleSwitch를 true로 바꾸는 역할
+  useEffect(() => {
+    if (
+      toss[0].state === true &&
+      toss[1].state === true &&
+      toss[2].state === true &&
+      toss[3].state === true &&
+      toss[4].state === true &&
+      toss[5].state === true
+    ) {
+      setAll(true);
+    } else {
+      setAll(false);
+    }
+  }, [toss]);
+
+  // 한 개의 switch라도 false일 때 toggleSwitch를 false로 바꾸는 역할
+  useEffect(() => {
+    if (
+      toss[0].state === false ||
+      toss[1].state === false ||
+      toss[2].state === false ||
+      toss[3].state === false ||
+      toss[4].state === false ||
+      toss[5].state === false
+    ) {
+      setAll(false);
+    }
+  }, [toss]);
 
   // useEffect(() => {
   //   console.log("isenabled: " + isEnabled);
@@ -72,19 +171,6 @@ const TOSScreen = () => {
   //   console.log("night", night);
   // }, [collect, offer, transfer, location, event, night]);
 
-  // const TOSCheck = () => {
-  //   if (
-  //     collect == false &&
-  //     offer == false &&
-  //     transfer == false &&
-  //     location == false
-  //   ) {
-  //     setDisable(false);
-  //   } else {
-  //     setDisable(true);
-  //   }
-  // };
-
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -93,7 +179,14 @@ const TOSScreen = () => {
           backgroundColor: "#ddd",
         }}
       >
-        <Feather name="more-horizontal" size={30} color="#000" />
+        <Pressable
+          style={({ pressed }) => [
+            Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+          ]}
+          android_ripple={{ color: "#EEE" }}
+        >
+          <Feather name="more-horizontal" size={30} color="#000" />
+        </Pressable>
       </View>
       <View style={{ borderBottomWidth: 1, backgroundColor: "#ddd" }}>
         <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 }}>
@@ -102,7 +195,8 @@ const TOSScreen = () => {
         <Switch
           trackColor={{ false: "#767577", true: "#81b0ff" }}
           ios_backgroundColor="#3e3e3e"
-          //onValueChange={toggleSwitch}
+          onValueChange={toggleSwitch}
+          value={all}
         />
       </View>
       <ScrollView style={styles.scrollview}>
@@ -113,14 +207,15 @@ const TOSScreen = () => {
           다음은 Meta에서 서비스를 제공하기 위해 회원님의 정보를 이용할 수 있는
           몇가지 주된 방법입니다. 회원님이 각 항목을 검토하고 동의하셔야 합니다.
         </Text>
-        {data.map((item, index) => (
+        {toss.map((data) => (
           <TOS
-            key={index}
-            title={item.title}
-            desc={item.desc}
-            link={item.link}
-            pData={item.state}
-            setPData={setToss}
+            key={data.id}
+            id={data.id}
+            title={data.title}
+            desc={data.desc}
+            link={data.link}
+            pData={data.state}
+            setPData={handleSwitch}
           />
         ))}
       </ScrollView>
@@ -170,15 +265,6 @@ const styles = StyleSheet.create({
     fontFamily: "강원교육모두 Light",
     fontSize: 18,
     textAlign: "left",
-  },
-  head_txt: {
-    fontFamily: "강원교육모두 Bold",
-    fontSize: 20,
-    marginTop: 20,
-    textAlign: "left",
-  },
-  link: {
-    color: "#0000FF",
   },
   btn: {
     backgroundColor: "#0782F9",
