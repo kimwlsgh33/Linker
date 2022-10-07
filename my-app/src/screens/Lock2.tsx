@@ -49,7 +49,7 @@ function Lock2({ navigation, route }) {
                 <View style={styles.ButtonBox}>  
                   <Button
                     title="비공개로 전환" 
-                    color="#0174DF" 
+                    color="#0174DF"
                     onPress={() => setIsEnabled(!isEnabled)}
                   />
                 </View>
