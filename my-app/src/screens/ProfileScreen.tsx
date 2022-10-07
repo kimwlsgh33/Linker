@@ -1,22 +1,27 @@
 import React from "react";
 import {
+  SafeAreaView,
+  Image,
   Pressable,
   StyleSheet,
   Text,
   View,
   Modal as DefaultModal,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/core";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
-import ProfileTopTab from "../components/ProfileTopTab";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ProfileBody from "../components/ProfileBody";
+import ProfileTopTab from "../components/ProfileTopTab";
 import { Modal } from "../components/Modal";
 
 const ProfileScreen = () => {
   const acountName = "userId33";
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -54,19 +59,20 @@ const ProfileScreen = () => {
                       },
                     ]}
                   >
-                    <View style={styles.modalIcon1}>
-                      <Entypo
-                        name="plus"
-                        style={{ fontSize: 20, color: "#000" }}
+                    <View>
+                      <Image
+                        style={styles.modalIcon1}
+                        source={require("../../assets/images/profile.png")}
                       />
                     </View>
-                    <Text style={{ fontSize: 11, top: -30, left: 70 }}>
-                      계정 추가
-                    </Text>
+                    <Text style={styles.modalText}>{acountName}</Text>
                   </Pressable>
                 </View>
                 <View style={{ flexDirection: "row" }}>
                   <Pressable
+                    onPress={() => {
+                      navigation.navigate("Login");
+                    }}
                     style={({ pressed }) => [
                       {
                         opacity: pressed ? 0.2 : 1,
@@ -80,9 +86,7 @@ const ProfileScreen = () => {
                         style={{ fontSize: 20, color: "#000" }}
                       />
                     </View>
-                    <Text style={{ fontSize: 11, top: -30, left: 70 }}>
-                      계정 추가
-                    </Text>
+                    <Text style={styles.modalText}>계정 추가</Text>
                   </Pressable>
                 </View>
               </View>
@@ -108,14 +112,7 @@ const ProfileScreen = () => {
                 </Pressable>
               )}
             >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  height: 200,
-                  top: 535,
-                  borderRadius: 15,
-                }}
-              >
+              <View style={styles.modal2}>
                 <View>
                   <Icon
                     name="ios-remove-outline"
@@ -123,15 +120,8 @@ const ProfileScreen = () => {
                     color="gray"
                     style={{ top: -15, left: 170 }}
                   />
-                  <Text style={{ top: -30, left: 175 }}>만들기</Text>
-                  <View
-                    style={{
-                      borderWidth: 0.3,
-                      width: "100%",
-                      opacity: 0.3,
-                      top: -20,
-                    }}
-                  ></View>
+                  <Text style={styles.modalText2}>만들기</Text>
+                  <View style={styles.modalBar}></View>
                   <Pressable
                     style={({ pressed }) => [
                       {
@@ -146,7 +136,7 @@ const ProfileScreen = () => {
                         color="black"
                         style={{ left: 10, top: -10 }}
                       />
-                      <Text style={{ left: 20, top: -6 }}>릴스</Text>
+                      <Text style={styles.modalText2_1}>릴스</Text>
                     </View>
                   </Pressable>
                   <Pressable
@@ -158,13 +148,13 @@ const ProfileScreen = () => {
                     ]}
                   >
                     <View style={{ flexDirection: "row" }}>
-                      <Icon
-                        name="ios-play-circle-outline"
-                        size={25}
+                      <MaterialCommunityIcons
+                        name="grid"
+                        size={22}
                         color="black"
                         style={{ left: 10, top: -10 }}
                       />
-                      <Text style={{ left: 20, top: -6 }}>게시물</Text>
+                      <Text style={styles.modalText2_2}>게시물</Text>
                     </View>
                   </Pressable>
                   <Pressable
@@ -176,13 +166,13 @@ const ProfileScreen = () => {
                     ]}
                   >
                     <View style={{ flexDirection: "row" }}>
-                      <Icon
-                        name="ios-play-circle-outline"
+                      <MaterialCommunityIcons
+                        name="plus-circle-outline"
                         size={25}
                         color="black"
                         style={{ left: 10, top: -10 }}
                       />
-                      <Text style={{ left: 20, top: -6 }}>스토리</Text>
+                      <Text style={styles.modalText2_1}>스토리</Text>
                     </View>
                   </Pressable>
                 </View>
@@ -206,21 +196,14 @@ const ProfileScreen = () => {
                 </Pressable>
               )}
             >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  height: 200,
-                  top: 535,
-                  borderRadius: 15,
-                }}
-              >
-                <View>
-                  <Icon
-                    name="ios-remove-outline"
-                    size={50}
-                    color="gray"
-                    style={{ top: -15, left: 170 }}
-                  />
+              <View style={styles.modal2}>
+                <Icon
+                  name="ios-remove-outline"
+                  size={50}
+                  color="gray"
+                  style={{ top: -15, left: 170 }}
+                />
+                <View style={{ marginTop: 10 }}>
                   <Pressable
                     style={({ pressed }) => [
                       {
@@ -230,12 +213,48 @@ const ProfileScreen = () => {
                   >
                     <View style={{ flexDirection: "row" }}>
                       <Icon
-                        name="ios-play-circle-outline"
+                        name="ios-settings-sharp"
                         size={25}
                         color="black"
                         style={{ left: 10, top: -10 }}
                       />
-                      <Text style={{ left: 20, top: -6 }}>설정</Text>
+                      <Text style={styles.modalText2_1}>설정</Text>
+                    </View>
+                  </Pressable>
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                        top: 20,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <MaterialCommunityIcons
+                        name="clock-time-eight-outline"
+                        size={25}
+                        color="black"
+                        style={{ left: 10, top: -10 }}
+                      />
+                      <Text style={styles.modalText2_1}>내 활동</Text>
+                    </View>
+                  </Pressable>
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                        top: 40,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <MaterialCommunityIcons
+                        name="history"
+                        size={27}
+                        color="black"
+                        style={{ left: 9, top: -10 }}
+                      />
+                      <Text style={styles.modalText2_1}>보관</Text>
                     </View>
                   </Pressable>
                 </View>
@@ -280,8 +299,8 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 100,
-    borderWidth: 1,
-    opacity: 0.7,
+    borderWidth: 1.5,
+    borderColor: "rgba(0,0,0,0.3)",
     marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
@@ -296,6 +315,39 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  modalText: {
+    fontSize: 14,
+    top: -30,
+    left: 70,
+    fontFamily: "강원교육모두 Bold",
+  },
+  modal2: {
+    backgroundColor: "white",
+    height: 200,
+    top: 535,
+    borderRadius: 15,
+  },
+  modalBar: {
+    borderWidth: 0.3,
+    width: "100%",
+    opacity: 0.3,
+    top: -20,
+  },
+  modalText2: {
+    top: -30,
+    left: 177,
+    fontFamily: "강원교육모두 Bold",
+  },
+  modalText2_1: {
+    left: 20,
+    top: -6,
+    fontFamily: "강원교육모두 Bold",
+  },
+  modalText2_2: {
+    left: 23,
+    top: -8,
+    fontFamily: "강원교육모두 Bold",
   },
 });
 

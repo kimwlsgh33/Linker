@@ -28,6 +28,8 @@ const screenOptions = ({ navigation, route }) => {
     title = "SignUp";
   } else if (route.name === "Discover") {
     title = "탐색 탭";
+  } else if (route.name === "FollowTab") {
+    title = "userId33";
   }
 
   return {
@@ -65,11 +67,7 @@ function RootStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
-        <Stack.Screen
-          name="FollowTab"
-          component={FollowTab}
-          options={{ headerShown: true }}
-        />
+        <Stack.Screen name="FollowTab" component={FollowTab} />
       </Stack.Group>
     </Stack.Navigator>
   );

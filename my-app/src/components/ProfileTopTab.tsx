@@ -1,10 +1,12 @@
 import React from "react";
-import { View, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
 const ProfileTopTab = () => {
   const Tab = createMaterialTopTabNavigator();
+  const navigation = useNavigation();
 
   let squares = [];
   let numberOfSquare = 9;
@@ -21,12 +23,23 @@ const ProfileTopTab = () => {
         //   opacity: 0.1,
         // }}
         >
-          <Image
-            source={{ uri: "https://source.unsplash.com/daily" }}
-            // source={require("../../assets/images/profile.png")}
-            style={{ width: 130, height: 130, marginVertical: 1 }}
-            resizeMode="cover"
-          />
+          <Pressable
+            onPress={() => {
+              navigation.navigate("Story");
+            }}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.7 : 1,
+              },
+            ]}
+          >
+            <Image
+              source={{ uri: "https://source.unsplash.com/daily" }}
+              // source={require("../../assets/images/profile.png")}
+              style={{ width: 130, height: 130, marginVertical: 1 }}
+              resizeMode="cover"
+            />
+          </Pressable>
         </View>
       </View>
     );

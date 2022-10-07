@@ -8,8 +8,8 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/core";
+import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 
 export const ProfileBody = ({
@@ -120,6 +120,7 @@ export const ProfileBody = ({
           </View>
           <View style={{ borderRadius: 5, overflow: "hidden", width: "10%" }}>
             <Pressable
+              onPress={() => navigation.navigate("FollowTab")}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -149,10 +150,12 @@ export const ProfileBody = ({
             ]}
           >
             <View>
-              <Image source = {{uri:"https://source.unsplash.com/random/100x102"}}
-              style={styles.round1} />
+              <Image
+                source={{ uri: "https://source.unsplash.com/random/100x102" }}
+                style={styles.round1}
+              />
             </View>
-            <Text style={{ fontSize: 11, left: 18, top: 8 }}>취미</Text>
+            <Text style={styles.roundText}>취미</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [
@@ -164,7 +167,7 @@ export const ProfileBody = ({
             <View style={styles.round2}>
               <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
             </View>
-            <Text style={{ fontSize: 11, left: 18, top: 8 }}>신규</Text>
+            <Text style={styles.roundText}>신규</Text>
           </Pressable>
         </View>
       </View>
@@ -242,6 +245,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  roundText: {
+    fontSize: 11,
+    left: 20,
+    top: 8,
+    fontFamily: "강원교육모두 Bold",
   },
 });
 
