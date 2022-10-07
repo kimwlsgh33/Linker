@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,10 +7,6 @@ import { useNavigation } from "@react-navigation/core";
 
 function HomeScreen() {
   const navigation = useNavigation();
-
-  const goLogin = () => {
-    navigation.navigate("Login" as any);
-  };
 
   return (
     <SafeAreaView>
@@ -24,7 +20,7 @@ function HomeScreen() {
       >
         <FontAwesome name="plus-square-o" style={{ fontSize: 24 }} />
         <Text
-          onPress={goLogin}
+          onPress={()=>navigation.navigate("Login")}
           style={{
             fontFamily: "Lobster-Regular",
             fontSize: 25,

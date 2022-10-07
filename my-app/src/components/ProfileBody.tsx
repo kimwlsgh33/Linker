@@ -8,17 +8,19 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/core";
+import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 
-function ProfileBody() {
+export const ProfileBody = ({
+  acountName,
+  name,
+  profileImage,
+  post,
+  follower,
+  following,
+}) => {
   const navigation = useNavigation();
-
-  const profileImage = require("../../assets/images/profile.png");
-  const post = 123;
-  const followers = 456;
-  const following = 789;
 
   return (
     <SafeAreaView>
@@ -38,10 +40,7 @@ function ProfileBody() {
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
               <Image source={profileImage} style={styles.profileStyle} />
-              <Text style={styles.profileText}>
-                user_name
-                {/* {user name} */}
-              </Text>
+              <Text style={styles.profileText}>{name}</Text>
             </Pressable>
           </View>
           <Pressable
@@ -71,7 +70,7 @@ function ProfileBody() {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 20 }}>
-                {followers}
+                {follower}
               </Text>
               <Text style={{ fontFamily: "강원교육모두 Bold" }}>팔로워</Text>
             </View>
@@ -95,7 +94,13 @@ function ProfileBody() {
         <View style={styles.profileButton}>
           <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
             <Pressable
-              onPress={() => navigation.navigate("EditProfile")}
+              onPress={() =>
+                navigation.navigate("EditProfile", {
+                  name: name,
+                  acountName: acountName,
+                  profileImage: profileImage,
+                })
+              }
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -115,6 +120,7 @@ function ProfileBody() {
           </View>
           <View style={{ borderRadius: 5, overflow: "hidden", width: "10%" }}>
             <Pressable
+              onPress={() => navigation.navigate("FollowTab")}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -144,9 +150,12 @@ function ProfileBody() {
             ]}
           >
             <View>
-              <Image source={profileImage} style={styles.round1} />
+              <Image
+                source={{ uri: "https://source.unsplash.com/random/100x102" }}
+                style={styles.round1}
+              />
             </View>
-            <Text style={{ fontSize: 11, left: 18, top: 8 }}>취미</Text>
+            <Text style={styles.roundText}>취미</Text>
           </Pressable>
           <Pressable
             style={({ pressed }) => [
@@ -158,13 +167,13 @@ function ProfileBody() {
             <View style={styles.round2}>
               <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
             </View>
-            <Text style={{ fontSize: 11, left: 18, top: 8 }}>신규</Text>
+            <Text style={styles.roundText}>신규</Text>
           </Pressable>
         </View>
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   profileHeader: {
@@ -236,6 +245,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  roundText: {
+    fontSize: 11,
+    left: 20,
+    top: 8,
+    fontFamily: "강원교육모두 Bold",
   },
 });
 

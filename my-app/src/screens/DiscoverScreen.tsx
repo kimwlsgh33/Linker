@@ -1,7 +1,8 @@
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { RootStackScreenProps } from "../navigation/types";
 
-function PostScreen({ route }) {
+function DiscoverScreen({ route }: RootStackScreenProps<"Discover">) {
   const { post } = route.params;
   return (
     <View style={styles.container}>
@@ -30,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PostScreen;
+export default DiscoverScreen;
