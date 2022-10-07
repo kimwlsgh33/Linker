@@ -1,85 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
+		<key>CFBundleDevelopmentRegion</key>
+		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleExecutable</key>
+		<string>$(EXECUTABLE_NAME)</string>
+		<key>CFBundleIdentifier</key>
+		<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+		<key>CFBundleInfoDictionaryVersion</key>
+		<string>6.0</string>
+		<key>CFBundleName</key>
+		<string>$(PRODUCT_NAME)</string>
+		<key>CFBundlePackageType</key>
+		<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+		<key>CFBundleSignature</key>
+		<string>????</string>
+		<key>CFBundleShortVersionString</key>
+		<string>1.0</string>
+		<key>CFBundleVersion</key>
+		<string>1</string>
+		<key>LSRequiresIPhoneOS</key>
 		<true/>
-		<key>NSExceptionDomains</key>
+		<key>NSAppTransportSecurity</key>
 		<dict>
-			<key>localhost</key>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSExceptionDomains</key>
 			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
+				<key>localhost</key>
+				<dict>
+					<key>NSExceptionAllowsInsecureHTTPLoads</key>
+					<true/>
+				</dict>
 			</dict>
 		</dict>
+		<key>UILaunchStoryboardName</key>
+		<string>SplashScreen</string>
+		<key>UIRequiredDeviceCapabilities</key>
+		<array>
+			<string>armv7</string>
+		</array>
+		<key>UISupportedInterfaceOrientations</key>
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+		</array>
+		<key>UIViewControllerBasedStatusBarAppearance</key>
+		<false/>
+		<key>UIStatusBarStyle</key>
+		<string>UIStatusBarStyleDefault</string>
+		<key>UIAppFonts</key>
+		<array>
+			<string>NotoSerifKR-Black.otf</string>
+			<string>NotoSerifKR-Bold.otf</string>
+			<string>NotoSerifKR-ExtraLight.otf</string>
+			<string>NotoSerifKR-Light.otf</string>
+			<string>NotoSerifKR-Medium.otf</string>
+			<string>NotoSerifKR-Regular.otf</string>
+			<string>NotoSerifKR-SemiBold.otf</string>
+			<string>BungeeSpice-Regular.ttf</string>
+			<string>Lobster-Regular.ttf</string>
+			<string>BackToSchool.ttf</string>
+			<string>강원교육모두 Bold.ttf</string>
+			<string>강원교육모두 Light.ttf</string>
+			<string>강원교육새음.ttf</string>
+			<string>강원교육튼튼.ttf</string>
+			<string>강원교육현옥샘.ttf</string>
+		</array>
 	</dict>
-	<key>UILaunchStoryboardName</key>
-	<string>SplashScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>UIStatusBarStyle</key>
-	<string>UIStatusBarStyleDefault</string>
-	<key>UIAppFonts</key>
-	<array>
-<<<<<<< HEAD
-		<string>NotoSerifKR-Black.otf</string>
-		<string>NotoSerifKR-Bold.otf</string>
-		<string>NotoSerifKR-ExtraLight.otf</string>
-		<string>NotoSerifKR-Light.otf</string>
-		<string>NotoSerifKR-Medium.otf</string>
-		<string>NotoSerifKR-Regular.otf</string>
-		<string>NotoSerifKR-SemiBold.otf</string>
-		<string>BungeeSpice-Regular.ttf</string>
-		<string>Lobster-Regular.ttf</string>
-		<string>BackToSchool.ttf</string>
-		<string>강원교육모두 Bold.ttf</string>
-		<string>강원교육모두 Light.ttf</string>
-		<string>강원교육새음.ttf</string>
-		<string>강원교육튼튼.ttf</string>
-		<string>강원교육현옥샘.ttf</string>
-=======
-<<<<<<< HEAD
-		<string>Lobster-Regular.ttf</string>
-=======
-		<string>SingleDay-Regular.ttf</string>
-		<string>Lobster-Regular.ttf</string>
-		<string>강원교육모두 Bold.ttf</string>
-		<string>강원교육모두 Light.ttf</string>
-		<string>BackToSchool.ttf</string>
->>>>>>> 4e4aecc27f3f38c27831dc3e6598f5042b1d8924
->>>>>>> 55d3e3ccccf87b44e83aa3eef27464a2e7ebce3a
-	</array>
-</dict>
 </plist>

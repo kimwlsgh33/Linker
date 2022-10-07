@@ -1,48 +1,36 @@
 import React from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import SearchReels from "./SearchReels";
-import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { Dimensions, StyleSheet, View } from "react-native";
+import SearchReel from "./SearchReel";
+import SearchPost from "./SearchPost";
+import { TPost, TReel } from "../screens/screen";
 
 const { width } = Dimensions.get("window");
 const POST_WIDTH = (width - 6) / 3;
 
-function PostAndReels({ posts, reels, index }) {
+type PostAndReelsProps = {
+  posts: TPost[];
+  reels: TReel[];
+  index: number;
+};
+
+function PostAndReels({ posts, reels, index }: PostAndReelsProps) {
+  // 만약 index가 짝수면 오른쪽에 reels를, 홀수면 왼쪽에 reels를 배치한다.
   const isLeft = index % 2 === 0;
-  const navigation = useNavigation();
+
   return (
     <View style={styles.postAndReels}>
-      {!isLeft && <SearchReels POST_WIDTH={POST_WIDTH} uri={reels[0].uri} />}
+      {!isLeft && <SearchReel POST_WIDTH={POST_WIDTH} uri={reels[0].uri} />}
       <View style={styles.postView}>
         {posts.map((post) => (
-          <TouchableOpacity
+          <SearchPost
             key={post.id}
-            style={[
-              styles.imageBtn,
-              isLeft ? { marginRight: 3 } : { marginLeft: 3 },
-            ]}
-            onPress={() => navigation.navigate("Post", { post })}
-          >
-            <Image source={{ uri: post.uri }} style={styles.image} />
-            <View
-              style={{
-                position: "absolute",
-                right: 7,
-                top: 7,
-              }}
-            >
-              <Icon name="documents" size={20} color="white" />
-            </View>
-          </TouchableOpacity>
+            post={post}
+            POST_WIDTH={POST_WIDTH}
+            isLeft={isLeft}
+          />
         ))}
       </View>
-      {isLeft && <SearchReels POST_WIDTH={POST_WIDTH} uri={reels[0].uri} />}
+      {isLeft && <SearchReel POST_WIDTH={POST_WIDTH} uri={reels[0].uri} />}
     </View>
   );
 }
@@ -58,15 +46,6 @@ const styles = StyleSheet.create({
     height: POST_WIDTH * 2 + 3,
     flexDirection: "row",
     flexWrap: "wrap",
-  },
-  imageBtn: {
-    width: POST_WIDTH,
-    height: POST_WIDTH,
-    marginBottom: 3,
-  },
-  image: {
-    width: POST_WIDTH,
-    height: POST_WIDTH,
   },
 });
 
