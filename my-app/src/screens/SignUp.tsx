@@ -38,8 +38,6 @@ const SignUp = () => {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
-  //  const [opacity, setOpacity] = useState(0.5);
-  const [visible, setVisible] = useState(false);
   const [number, setNumber] = useState(1);
 
   const ref_input: Array<React.RefObject<TextInput>> = [];

@@ -7,12 +7,16 @@ import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
 import BottomTabScreen from "./BottomTabScreen";
 import TOSScreen from "../screens/TOSScreen";
+import CreateNameScreen from "../screens/CreateNameScreen";
+import NameConfirm from "../screens/NameConfirm";
+import CompleteNScreen from "../screens/CompleteNScreen";
+import BirthdayScreen from "../screens/BirthdayScreen";
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
     <Stack.Navigator
-      initialRouteName="TOS"
+      initialRouteName="Birthday"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="BottomTab" component={BottomTabScreen} />
@@ -22,6 +26,10 @@ function RootStack() {
       <Stack.Screen name="Details" component={DetailScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="TOS" component={TOSScreen} />
+      <Stack.Screen name="CreateName" component={CreateNameScreen} />
+      <Stack.Screen name="NameConfirm" component={NameConfirm} />
+      <Stack.Screen name="CompleteN" component={CompleteNScreen} />
+      <Stack.Screen name="Birthday" component={BirthdayScreen} />
     </Stack.Navigator>
   );
 }

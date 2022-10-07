@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import TOS from "../components/TOS";
+import { useNavigation } from "@react-navigation/native";
 
 const datas = [
   {
@@ -58,6 +59,12 @@ const datas = [
 ];
 
 const TOSScreen = () => {
+  const navigation = useNavigation();
+
+  const goCreateName = () => {
+    navigation.navigate("CreateName" as any);
+  };
+
   const [disable, setDisable] = useState(true);
   const [toss, setToss] = useState(datas);
   const [all, setAll] = useState(false);
@@ -228,6 +235,7 @@ const TOSScreen = () => {
           ]}
           android_ripple={{ color: "#FFF" }}
           disabled={disable}
+          onPress={goCreateName}
         >
           <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 18 }}>
             동의함
