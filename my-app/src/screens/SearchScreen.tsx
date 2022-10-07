@@ -4,7 +4,9 @@ import {
   Dimensions,
   FlatList,
   Keyboard,
+  Platform,
   Pressable,
+  RefreshControl,
   StyleSheet,
   Text,
   TextInput,
@@ -19,26 +21,33 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAnimationValue } from "../hooks/useAnimationValue";
 import { useStyle } from "../hooks/useStyle";
 import { interpolate } from "../utils/interpolate";
+import SearchProfile from "../components/SearchProfile";
+import { TPost, TPostAndReels, TReel } from "../global";
 
 //================================================================================================
-// data sets
-const imageArray = new Array(50).fill(0).map((_, i) => ({
-  id: i,
-  type: "image",
-  uri: `https://unsplash.it/600/600?image=${i + 1}`,
+// data sets & types
+//================================================================================================
+
+const postsArray: TPost[] = new Array(50).fill(0).map((_, i) => ({
+  id: `${i}_post`,
+  user_id: `user_id_${i}`,
+  images: new Array(3).fill(0).map((_, i) => ({
+    id: `${i}_image`,
+    uri: "https://picsum.photos/600",
+  })),
   createdAt: "6 minutes ago",
 }));
 
-const reelsArray = new Array(20).fill(0).map((_, i) => ({
-  id: i,
+const reelsArray: TReel[] = new Array(20).fill(0).map((_, i) => ({
+  id: `${i}_reel`,
   type: "ril",
-  uri: `https://unsplash.it/600/600?image=${i + 1}`,
+  uri: "https://picsum.photos/600",
   createdAt: "6 minutes ago",
 }));
 
-const postAndReels = new Array(10).fill(0).map((_, i) => ({
-  id: i,
-  images: imageArray.slice(i * 4, (i + 1) * 4),
+const postAndReels: TPostAndReels[] = new Array(10).fill(0).map((_, i) => ({
+  id: `${i}_postAndReels`,
+  posts: postsArray.slice(i * 4, (i + 1) * 4),
   reels: reelsArray.slice(i, i + 1),
 }));
 //================================================================================================
@@ -49,9 +58,16 @@ const AnimTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 const { width, height } = Dimensions.get("window");
 
 function SearchScreen() {
-  const [paR, setPaR] = useState(postAndReels);
-  const [visible, setVisible] = useState(false);
+  const [searchText, setSearchText] = useState<string>("");
+  // useEffect(() => {
+  //   console.log("searchText", searchText);
+  // }, [searchText]);
+  const [paR, setPaR] = useState<TPostAndReels[]>(postAndReels);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const inputRef = useRef<TextInput>(null);
 
+  // 만약에 포스트, 릴스가 없으면, 내용이 없다는 문구를 보여준다.
   if (paR.length === 0) {
     return (
       <View style={styles.container}>
@@ -79,7 +95,7 @@ function SearchScreen() {
     Animated.parallel([
       Animated.timing(zindexAnimValue, {
         toValue: visible ? -1 : 1, // 화면이 보이는 상태에서는(true) -1, 안보이는 상태에서는 1
-        duration: 500,
+        duration: 300,
         useNativeDriver: true,
       }),
       Animated.timing(opacityAnimValue, {
@@ -106,9 +122,25 @@ function SearchScreen() {
   };
 
   const close = () => {
+    inputRef.current.clear();
     Keyboard.dismiss();
     setVisible(false);
     modalAnim();
+  };
+
+  // 검색창에 글자를 입력할때마다 실행되는 함수
+  const search = (text: string) => {
+    // 검색창 글자 변경
+    setSearchText(text);
+
+    // 로딩 화면 보여주기 위해, 상태값 변경
+    setLoading(true);
+    //TODO: 이전 검사 로직 중지
+
+    const search = setTimeout(() => {
+      setLoading(false);
+      console.log("loaded");
+    }, 10000);
   };
 
   return (
@@ -121,7 +153,16 @@ function SearchScreen() {
             style={styles.searchInput}
             placeholder="검색"
             onFocus={open}
+            returnKeyType="search"
+            value={searchText}
+            onChangeText={setSearchText}
+            ref={inputRef}
           />
+          {searchText && (
+            <Pressable onPress={() => setSearchText("")}>
+              <Icon name="close-circle" size={20} color="rgba(0,0,0,0.5)" />
+            </Pressable>
+          )}
         </Animated.View>
 
         <View style={styles.iconView}>
@@ -154,8 +195,14 @@ function SearchScreen() {
         data={paR}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => (
-          <PostAndReels posts={item.images} reels={item.reels} index={index} />
+          <PostAndReels posts={item.posts} reels={item.reels} index={index} />
         )}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={() => console.log("검색창 새로고침")}
+          />
+        }
       />
 
       <Animated.View
@@ -167,9 +214,54 @@ function SearchScreen() {
           },
         ]}
       >
-        <View>
-          <Text>test</Text>
-        </View>
+        {loading ? (
+          <View>
+            <Text>loading...</Text>
+          </View>
+        ) : (
+          searchText && (
+            <View>
+              <Pressable
+                style={({ pressed }) => [
+                  {
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingVertical: 5,
+                    paddingLeft: 15,
+                  },
+                  pressed && {
+                    backgroundColor: "#eee",
+                  },
+                ]}
+              >
+                <View
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 25,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderWidth: 1,
+                    borderColor: "#eee",
+                    marginRight: 10,
+                  }}
+                >
+                  <Icon name="search" size={23} />
+                </View>
+                <Text>{searchText}</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => console.log("presseds")}
+                style={({ pressed }) => [
+                  styles.resultAll,
+                  pressed && { opacity: 0.5 },
+                ]}
+              >
+                <Text style={styles.resultAllText}>결과 모두 보기</Text>
+              </Pressable>
+            </View>
+          )
+        )}
       </Animated.View>
     </SafeAreaView>
   );
@@ -204,6 +296,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     paddingLeft: 7,
+    paddingRight: 3,
     paddingVertical: 2,
     borderRadius: 10,
     zIndex: 2,
@@ -231,11 +324,39 @@ const styles = StyleSheet.create({
   },
   backgroundView: {
     position: "absolute",
-    top: 95,
+    top: Platform.OS === "ios" ? 95 : 50,
     width,
     height: height,
     backgroundColor: "white",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+  },
+  resultAll: {
+    height: 50,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  resultAllText: {
+    color: "blue",
+    fontWeight: "700",
   },
 });
 
 export default SearchScreen;
+
+/*
+1. 검색창에 텍스트 입력 시작
+2. 검색 결과 로딩 화면 진입
+  - setLoading(true)
+3. 텍스트 입력 마치면, 검색 로직 시작
+  - 텍스트 입력이 멈추었다는 것 검사
+  - 텍스트 입력시 마다 검색
+    - 이전 검사 중지
+    - 새로운 검사시작
+5. 검색 완료
+  - setLoading(false)
+6. 검색 
+7. 검색 결과와 일치하는 4개만 보여줌
+8. 결과 모두 보기 보여줌
+*/
