@@ -11,9 +11,9 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
-import ProfileBottomTab from "../components/ProfileBottomTab";
-import { Modal } from "../components/Modal";
+import ProfileTopTab from "../components/ProfileTopTab";
 import ProfileBody from "../components/ProfileBody";
+import { Modal } from "../components/Modal";
 
 const ProfileScreen = () => {
   const acountName = "userId33";
@@ -251,7 +251,7 @@ const ProfileScreen = () => {
           following="789"
           profileImage={require("../../assets/images/profile.png")}
         />
-        <ProfileBottomTab />
+        <ProfileTopTab />
       </View>
     </SafeAreaView>
   );

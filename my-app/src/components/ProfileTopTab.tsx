@@ -1,9 +1,9 @@
 import React from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, ScrollView, Image } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const ProfileBottomTab = () => {
+const ProfileTopTab = () => {
   const Tab = createMaterialTopTabNavigator();
 
   let squares = [];
@@ -22,7 +22,7 @@ const ProfileBottomTab = () => {
         // }}
         >
           <Image
-          source = {{uri:"https://source.unsplash.com/daily"}}
+            source={{ uri: "https://source.unsplash.com/daily" }}
             // source={require("../../assets/images/profile.png")}
             style={{ width: 130, height: 130, marginVertical: 1 }}
             resizeMode="cover"
@@ -137,4 +137,4 @@ const ProfileBottomTab = () => {
   );
 };
 
-export default ProfileBottomTab;
+export default ProfileTopTab;
