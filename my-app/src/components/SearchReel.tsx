@@ -2,7 +2,12 @@ import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
-function SearchReels({ POST_WIDTH, uri }) {
+type SearchReelProps = {
+  POST_WIDTH: number;
+  uri: string;
+};
+
+function SearchReel({ POST_WIDTH, uri }: SearchReelProps) {
   return (
     <TouchableOpacity
       style={{
@@ -30,4 +35,4 @@ function SearchReels({ POST_WIDTH, uri }) {
   );
 }
 
-export default SearchReels;
+export default SearchReel;
