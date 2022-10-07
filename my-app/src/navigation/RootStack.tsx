@@ -52,7 +52,11 @@ function RootStack() {
         <Stack.Screen name="Discover" component={DiscoverScreen} />
       </Stack.Group>
       <Stack.Group>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

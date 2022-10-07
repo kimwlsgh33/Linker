@@ -128,7 +128,7 @@ const LoginScreen = () => {
             <View style={styles.buttonContainer}>
               <Pressable
                 onPress={() => {
-                  navigation.navigate("BottomTab"), onReset();
+                  navigation.navigate("HomeTab"), onReset();
                 }}
                 style={({ pressed }) => [
                   styles.button,
