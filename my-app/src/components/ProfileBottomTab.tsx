@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
@@ -13,15 +13,20 @@ const ProfileBottomTab = () => {
     squares.push(
       <View key={index}>
         <View
-          style={{
-            width: 130,
-            height: 130,
-            marginVertical: 1,
-            backgroundColor: "black",
-            opacity: 0.1,
-          }}
+        // style={{
+        //   width: 130,
+        //   height: 130,
+        //   marginVertical: 1,
+        //   backgroundColor: "black",
+        //   opacity: 0.1,
+        // }}
         >
-          {/* <Image> */}
+          <Image
+          source = {{uri:"https://source.unsplash.com/daily"}}
+            // source={require("../../assets/images/profile.png")}
+            style={{ width: 130, height: 130, marginVertical: 1 }}
+            resizeMode="cover"
+          />
         </View>
       </View>
     );
@@ -43,7 +48,6 @@ const ProfileBottomTab = () => {
             backgroundColor: "white",
             flexWrap: "wrap",
             flexDirection: "row",
-            paddingVertical: 5,
             justifyContent: "space-between",
           }}
         >
@@ -68,7 +72,6 @@ const ProfileBottomTab = () => {
             backgroundColor: "white",
             flexWrap: "wrap",
             flexDirection: "row",
-            paddingVertical: 5,
             justifyContent: "space-between",
           }}
         >
@@ -93,7 +96,6 @@ const ProfileBottomTab = () => {
             backgroundColor: "white",
             flexWrap: "wrap",
             flexDirection: "row",
-            paddingVertical: 5,
             justifyContent: "space-between",
           }}
         >

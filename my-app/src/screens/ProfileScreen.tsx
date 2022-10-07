@@ -15,7 +15,8 @@ import ProfileBottomTab from "../components/ProfileBottomTab";
 import { Modal } from "../components/Modal";
 import ProfileBody from "../components/ProfileBody";
 
-function ProfileScreen() {
+const ProfileScreen = () => {
+  const acountName = "userId33";
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -38,7 +39,7 @@ function ProfileScreen() {
                     fontSize: 23,
                   }}
                 >
-                  userID33
+                  {acountName}
                   <Feather name="chevron-down" style={{ fontSize: 16 }} />
                 </Text>
               )}
@@ -189,23 +190,72 @@ function ProfileScreen() {
             </Modal>
           </View>
           <View>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  opacity: pressed ? 0.2 : 1,
-                },
-              ]}
+            <Modal
+              activator={({ handleOpen }) => (
+                <Pressable
+                  onPress={() => {
+                    handleOpen();
+                  }}
+                  style={({ pressed }) => [
+                    {
+                      opacity: pressed ? 0.2 : 1,
+                    },
+                  ]}
+                >
+                  <Icon name="menu-outline" style={{ fontSize: 29 }} />
+                </Pressable>
+              )}
             >
-              <Icon name="menu-outline" style={{ fontSize: 29 }} />
-            </Pressable>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  height: 200,
+                  top: 535,
+                  borderRadius: 15,
+                }}
+              >
+                <View>
+                  <Icon
+                    name="ios-remove-outline"
+                    size={50}
+                    color="gray"
+                    style={{ top: -15, left: 170 }}
+                  />
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Icon
+                        name="ios-play-circle-outline"
+                        size={25}
+                        color="black"
+                        style={{ left: 10, top: -10 }}
+                      />
+                      <Text style={{ left: 20, top: -6 }}>설정</Text>
+                    </View>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
-        <ProfileBody />
+        <ProfileBody
+          acountName="userId33"
+          name="user_name"
+          post="123"
+          follower="456"
+          following="789"
+          profileImage={require("../../assets/images/profile.png")}
+        />
         <ProfileBottomTab />
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -221,7 +271,6 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    height: 150,
     top: 585,
     borderRadius: 15,
   },

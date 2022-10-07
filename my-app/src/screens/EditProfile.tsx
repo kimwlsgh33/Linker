@@ -10,10 +10,9 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 
 const EditProfile = ({ route, navigation }) => {
-  // const {
-  //   /*name, accountName, profileImage*/
-  // } = route.params;
-  const profileImage = require("../../assets/images/profile.png");
+  const {
+    acountName, name, profileImage
+  } = route?.params || {};
   const TostMessage = () => {
     ToastAndroid.show("Edited Sucessfully !", ToastAndroid.SHORT);
   };
@@ -89,7 +88,7 @@ const EditProfile = ({ route, navigation }) => {
           </Text>
           <TextInput
             placeholder="name"
-            // defaultValue={name}
+            defaultValue={name}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -107,7 +106,7 @@ const EditProfile = ({ route, navigation }) => {
           </Text>
           <TextInput
             placeholder="accountname"
-            // defaultValue={accountName}
+            defaultValue={acountName}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
