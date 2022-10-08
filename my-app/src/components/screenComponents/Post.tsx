@@ -1,12 +1,38 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ImageSourcePropType,
+} from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import events from "../../lib/eventEmiiter";
 
-const postInfo = [
+type TRecomment = {
+  id: number;
+  recomment: string;
+  recommentLike: boolean;
+  recommentLikeCount: number;
+};
+
+type TPost = {
+  id: number;
+  userId: string;
+  postPersonImage: ImageSourcePropType;
+  postImage: ImageSourcePropType;
+  likes: number;
+  isLiked: boolean;
+  bookMark: boolean;
+  comment: string;
+  recommentCount: number;
+  recomment: TRecomment[];
+};
+
+const postInfo: TPost[] = [
   // postInfo라는 배열에 객체(데이터)를 넣어줌.
   {
     // postInfo[0]
@@ -119,6 +145,7 @@ const Post = () => {
     setData((prev) =>
       prev.map((data) => {
         if (id === data.id) {
+          console.log("댓글 추가!");
           return {
             ...data,
             recomment: [
@@ -155,27 +182,43 @@ const Post = () => {
     recomment_id: any;
   }) => {
     setData((prev) => {
-      console.log("===============================");
-      return prev.map((post) => {
+      const Dera = prev.map((post) => {
         if (post.id === id) {
-          post.recomment.map((recomment) => {
+          console.log(post.userId);
+          const newRecomment = post.recomment.map((recomment) => {
             if (recomment_id === recomment.id) {
-              console.log(recomment);
-              const newComment = {
+              //================================
+              console.log(
+                "댓글 좋아요!",
+
+                !recomment.recommentLike,
+                recomment.recommentLikeCount + 1
+              );
+              //================================
+              const newObject = {
                 ...recomment,
                 recommentLike: !recomment.recommentLike,
                 recommentLikeCount: recomment.recommentLike
                   ? recomment.recommentLikeCount - 1
                   : recomment.recommentLikeCount + 1,
               };
-              console.log(newComment);
-              return newComment;
+
+              console.log("newObject", newObject);
+              return newObject;
             }
             return recomment;
           });
+          return {
+            ...post,
+            recomment: newRecomment,
+          };
         }
         return post;
       });
+      // Dera.map((item) => {
+      //   console.log("Dera : ", item.recomment);
+      // });
+      return Dera;
     });
   };
 

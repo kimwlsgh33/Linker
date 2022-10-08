@@ -78,9 +78,9 @@ const CommentScreen = ({ route, Navigation }) => {
   };
 
   // post에 댓글 좋아요정보 전달.
-  const saveRecommentLike = (recommnetId) => {
+  const saveRecommentLike = (recomment_id) => {
     events.emit("saveRecommentLike", {
-      recomment_id: recommnetId,
+      recomment_id,
       id,
     });
   };
