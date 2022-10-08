@@ -15,9 +15,6 @@ const BottomTabScreen = () => {
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         headerShown: false,
-        tabBarStyle: {
-          height: 50,
-        },
 
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
