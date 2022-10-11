@@ -33,7 +33,7 @@ function Bells2({ navigation, route }) {
           <Text style={styles.Bells2text}>모두 일시 중단</Text>
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+            thumbColor={isEnabled ? "#1E90FF" : "#f4f3f4"}
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
