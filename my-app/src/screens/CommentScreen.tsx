@@ -29,10 +29,6 @@ const CommentScreen = ({ route, Navigation }) => {
   const [recomment, setRecomment] = useState("");
   const [recommentList, setRecommentList] = useState(recommentArray);
 
-  useEffect(() => {
-    console.log("댓글 배열 : ", recommentArray);
-  }, [recommentArray]);
-
   // 댓글 좋아요 bb
   const recommentLikePressed = (id) => {
     const newLikePressed = recommentList.map((recomment) => {
@@ -49,7 +45,6 @@ const CommentScreen = ({ route, Navigation }) => {
     });
     setRecommentList(newLikePressed);
     saveRecommentLike(id);
-    console.log(newLikePressed);
   };
 
   // 댓글 추가관련 data state관리
@@ -129,14 +124,7 @@ const CommentScreen = ({ route, Navigation }) => {
         <View style={{ flex: 0.8 }}>
           {recommentList.map((recomment) => {
             return (
-              <View
-                key={recomment.id}
-                style={{
-                  flexDirection: "row",
-                  paddingHorizontal: 10,
-                  paddingVertical: 10,
-                }}
-              >
+              <View key={recomment.id} style={styles.view3}>
                 <View>
                   {/* postPersonImage넣기 */}
                   <Image
@@ -174,12 +162,7 @@ const CommentScreen = ({ route, Navigation }) => {
                   onPress={() => {
                     recommentLikePressed(recomment.id);
                   }}
-                  style={{
-                    position: "absolute",
-                    right: 10,
-                    top: 13,
-                    alignItems: "center",
-                  }}
+                  style={styles.touchable1}
                 >
                   <AntDesign
                     name={recomment.recommentLike ? "heart" : "hearto"}
@@ -198,47 +181,16 @@ const CommentScreen = ({ route, Navigation }) => {
           })}
         </View>
       </ScrollView>
-      <View
-        style={{
-          // alignItems: "center",
-          flex: 0.1,
-          borderColor: "gray",
-          borderTopWidth: 0.3,
-          paddingHorizontal: 10,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            paddingLeft: 5,
-            alignItems: "center",
-            flexDirection: "row",
-          }}
-        >
-          <Image
-            source={mypostPersonImage}
-            style={{
-              width: 44,
-              height: 44,
-              borderRadius: 100,
-            }}
-          />
+      <View style={styles.view4}>
+        <View style={styles.view5}>
+          <Image source={mypostPersonImage} style={styles.image1} />
           <TextInput
             placeholder={`${myId}(으)로 댓글 달기...`}
             placeholderTextColor={"gray"}
             value={recomment}
             onChangeText={(text) => setRecomment(text)}
             onSubmitEditing={addRecomment}
-            style={{
-              borderWidth: 0.5,
-              borderColor: "gray",
-              width: "85%",
-              height: 40,
-              borderRadius: 20,
-              paddingLeft: 10,
-              left: 5,
-            }}
+            style={styles.textInput1}
           ></TextInput>
         </View>
       </View>
@@ -271,6 +223,44 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     alignItems: "flex-start",
     justifyContent: "center",
+  },
+  view3: {
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  view4: {
+    flex: 0.1,
+    borderColor: "gray",
+    borderTopWidth: 0.3,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  view5: {
+    paddingLeft: 5,
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  image1: {
+    width: 44,
+    height: 44,
+    borderRadius: 100,
+  },
+  textInput1: {
+    borderWidth: 0.5,
+    borderColor: "gray",
+    width: "85%",
+    height: 40,
+    borderRadius: 20,
+    paddingLeft: 10,
+    left: 5,
+  },
+  touchable1: {
+    position: "absolute",
+    right: 10,
+    top: 13,
+    alignItems: "center",
   },
 });
 

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  StyleSheet,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import Ionic from "react-native-vector-icons/Ionicons";
@@ -54,65 +55,16 @@ const StoryScreen = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: "black",
-        position: "relative",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"black"} barStyle={"light-content"} />
-      <View
-        style={{
-          height: 3,
-          width: "95%",
-          borderWidth: 1,
-          backgroundColor: "grey",
-          position: "absolute",
-          top: 18,
-        }}
-      >
+      <View style={styles.view1}>
         <View style={{}}></View>
       </View>
-      <View
-        style={{
-          padding: 15,
-          flexDirection: "row",
-          position: "absolute",
-          top: 12,
-          left: 0,
-          width: "90%",
-        }}
-      >
-        <View
-          style={{
-            borderRadius: 100,
-            width: 30,
-            height: 30,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Image
-            source={image}
-            style={{
-              width: 33,
-              height: 33,
-              borderRadius: 100,
-              backgroundColor: "orange",
-            }}
-          />
+      <View style={styles.view2}>
+        <View style={styles.view3}>
+          <Image source={image} style={styles.image1} />
         </View>
-        <View
-          style={{
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row",
-            width: "100%",
-          }}
-        >
+        <View style={styles.view4}>
           <Text style={{ color: "white", fontSize: 13, paddingLeft: 14 }}>
             {name}
           </Text>
@@ -129,15 +81,7 @@ const StoryScreen = ({ route, navigation }) => {
             }} // ------------------
             style={{ flexDirection: "row", justifyContent: "center" }}
           >
-            <Ionic
-              name="close"
-              style={{
-                color: "white",
-                fontSize: 30,
-                opacity: 0.6,
-                alignItems: "center",
-              }}
-            />
+            <Ionic name="close" style={styles.ionic} />
           </TouchableOpacity>
         </View>
       </View>
@@ -145,18 +89,7 @@ const StoryScreen = ({ route, navigation }) => {
         source={image}
         style={{ width: "100%", height: 550, position: "absolute" }}
       />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          bottom: 0,
-          position: "absolute",
-          left: 0,
-          justifyContent: "space-around",
-          marginVertical: 10,
-          paddingLeft: 6,
-        }}
-      >
+      <View style={styles.view5}>
         <TextInput
           placeholder=" 메시지 보내기"
           placeholderTextColor="white"
@@ -169,32 +102,89 @@ const StoryScreen = ({ route, navigation }) => {
             // 엔터를 누르면 실행되는 함수
             addMessage();
           }}
-          style={{
-            borderRadius: 25,
-            width: "80%",
-            height: 40,
-            paddingLeft: 15,
-            borderWidth: 1,
-            borderColor: "white",
-            letterSpacing: 0.005,
-            color: "white",
-          }}
+          style={styles.textInput1}
         />
         <TouchableOpacity onPress={() => likePressed()}>
-          <Antdesign
-            name={heart ? "heart" : "hearto"}
-            style={{ fontSize: 25, color: "white", paddingLeft: 5 }}
-          />
+          <Antdesign name={heart ? "heart" : "hearto"} style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather
-            name="send"
-            style={{ fontSize: 25, color: "white", paddingLeft: 5 }}
-          />
+          <Feather name="send" style={styles.icon} />
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: "black",
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  view1: {
+    height: 3,
+    width: "95%",
+    borderWidth: 1,
+    backgroundColor: "grey",
+    position: "absolute",
+    top: 18,
+  },
+  view2: {
+    padding: 15,
+    flexDirection: "row",
+    position: "absolute",
+    top: 12,
+    left: 0,
+    width: "90%",
+  },
+  view3: {
+    borderRadius: 100,
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image1: {
+    width: 33,
+    height: 33,
+    borderRadius: 100,
+    backgroundColor: "orange",
+  },
+  view4: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    width: "100%",
+  },
+  ionic: {
+    color: "white",
+    fontSize: 30,
+    opacity: 0.6,
+    alignItems: "center",
+  },
+  view5: {
+    flexDirection: "row",
+    alignItems: "center",
+    bottom: 0,
+    position: "absolute",
+    left: 0,
+    justifyContent: "space-around",
+    marginVertical: 10,
+    paddingLeft: 6,
+  },
+  textInput1: {
+    borderRadius: 25,
+    width: "80%",
+    height: 40,
+    paddingLeft: 15,
+    borderWidth: 1,
+    borderColor: "white",
+    letterSpacing: 0.005,
+    color: "white",
+  },
+  icon: { fontSize: 25, color: "white", paddingLeft: 5 },
+});
 
 export default StoryScreen;

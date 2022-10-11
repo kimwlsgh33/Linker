@@ -1,5 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
 
@@ -90,23 +97,8 @@ const Stories = () => {
         >
           <View style={{ position: "relative", paddingHorizontal: 8 }}>
             {data.isYou == true ? (
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: 15,
-                  right: 10,
-                  zIndex: 1,
-                }}
-              >
-                <Entypo
-                  name="circle-with-plus"
-                  style={{
-                    fontSize: 20,
-                    color: "#405de6",
-                    backgroundColor: "white",
-                    borderRadius: 100,
-                  }}
-                />
+              <View style={styles.view1}>
+                <Entypo name="circle-with-plus" style={styles.entypo} />
               </View>
             ) : null}
 
@@ -122,16 +114,7 @@ const Stories = () => {
                 alignItems: "center",
               }}
             >
-              <Image
-                source={data.image}
-                style={{
-                  resizeMode: "cover",
-                  width: "92%",
-                  height: "92%",
-                  borderRadius: 100,
-                  backgroundColor: "orange",
-                }}
-              />
+              <Image source={data.image} style={styles.image1} />
             </View>
             <Text
               style={{
@@ -150,4 +133,25 @@ const Stories = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  view1: {
+    position: "absolute",
+    bottom: 15,
+    right: 10,
+    zIndex: 1,
+  },
+  entypo: {
+    fontSize: 20,
+    color: "#405de6",
+    backgroundColor: "white",
+    borderRadius: 100,
+  },
+  image1: {
+    resizeMode: "cover",
+    width: "92%",
+    height: "92%",
+    borderRadius: 100,
+    backgroundColor: "orange",
+  },
+});
 export default Stories;

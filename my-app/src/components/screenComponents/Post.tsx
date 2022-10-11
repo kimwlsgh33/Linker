@@ -5,12 +5,14 @@ import {
   Image,
   TouchableOpacity,
   ImageSourcePropType,
+  StyleSheet,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import events from "../../lib/eventEmiiter";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 type TRecomment = {
   id: number;
@@ -145,7 +147,6 @@ const Post = () => {
     setData((prev) =>
       prev.map((data) => {
         if (id === data.id) {
-          console.log("댓글 추가!");
           return {
             ...data,
             recomment: [
@@ -184,17 +185,8 @@ const Post = () => {
     setData((prev) => {
       const Dera = prev.map((post) => {
         if (post.id === id) {
-          console.log(post.userId);
           const newRecomment = post.recomment.map((recomment) => {
             if (recomment_id === recomment.id) {
-              //================================
-              console.log(
-                "댓글 좋아요!",
-
-                !recomment.recommentLike,
-                recomment.recommentLikeCount + 1
-              );
-              //================================
               const newObject = {
                 ...recomment,
                 recommentLike: !recomment.recommentLike,
@@ -202,8 +194,6 @@ const Post = () => {
                   ? recomment.recommentLikeCount - 1
                   : recomment.recommentLikeCount + 1,
               };
-
-              console.log("newObject", newObject);
               return newObject;
             }
             return recomment;
@@ -215,9 +205,6 @@ const Post = () => {
         }
         return post;
       });
-      // Dera.map((item) => {
-      //   console.log("Dera : ", item.recomment);
-      // });
       return Dera;
     });
   };
@@ -236,14 +223,7 @@ const Post = () => {
               borderBottomWidth: 0.1,
             }}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: 15,
-              }}
-            >
+            <View style={styles.view1}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Image
                   source={data.postPersonImage}
@@ -257,25 +237,13 @@ const Post = () => {
               </View>
               <Feather name="more-horizontal" style={{ fontSize: 20 }} />
             </View>
-            <View
-              style={{
-                position: "relative",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <View style={styles.view2}>
               <Image
                 source={data.postImage}
                 style={{ width: "100%", height: 380 }}
               />
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                paddingVertical: 5,
-                paddingLeft: 5,
-              }}
-            >
+            <View style={styles.view3}>
               <TouchableOpacity
                 onPress={() => {
                   likePressed(data.id); // likePressed 함수를 호출해줌. 인자로 data의 id를 넣어줌.
@@ -337,13 +305,7 @@ const Post = () => {
                 {data.comment}
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                paddingLeft: 5,
-                paddingTop: 5,
-              }}
-            >
+            <View style={styles.view3}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("Comment", {
@@ -357,17 +319,55 @@ const Post = () => {
                   });
                 }}
               >
-                <Text
-                  style={{
-                    fontWeight: "bold",
-                    color: "gray",
-                    letterSpacing: 0.001,
-                  }}
-                >
+                <Text style={styles.text1}>
                   {data.recommentCount == 0
                     ? null
                     : `댓글 ${data.recommentCount} 개 모두 보기`}
                 </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.view4}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Comment", {
+                    comment: data.comment,
+                    userId: data.userId,
+                    postPersonImage: data.postPersonImage,
+                    myId: myId,
+                    mypostPersonImage: mypostPersonImage,
+                    id: data.id,
+                    recomment: data.recomment,
+                  });
+                }}
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={{ fontWeight: "bold" }}>
+                    {data.recomment[0]?.recomment == null ? null : data.userId}
+                  </Text>
+                  <View style={styles.view5}>
+                    <Text>{data.recomment[0]?.recomment}</Text>
+                  </View>
+                  <View style={{ justifyContent: "center" }}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        addRecommentLike({
+                          id: data.id,
+                          recomment_id: data.recomment[0]?.id,
+                        });
+                      }}
+                    >
+                      <AntDesign
+                        name={
+                          data.recomment[0]?.recommentLike ? "heart" : "hearto"
+                        }
+                        color={
+                          data.recomment[0]?.recommentLike ? "red" : "black"
+                        }
+                        style={{ paddingHorizontal: 7 }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -376,5 +376,42 @@ const Post = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  view1: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 15,
+  },
+
+  view2: {
+    position: "relative",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  view3: {
+    flexDirection: "row",
+    paddingVertical: 5,
+    paddingLeft: 5,
+  },
+  text1: {
+    fontWeight: "bold",
+    color: "gray",
+    letterSpacing: 0.001,
+  },
+  view4: {
+    paddingLeft: 5,
+    paddingTop: 4,
+    height: 30,
+    flexShrink: 1,
+    justifyContent: "center",
+  },
+  view5: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1,
+  },
+});
 
 export default Post;
