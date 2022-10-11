@@ -19,6 +19,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Pressable,
+  Linking,
 } from "react-native";
 //import { useForm } from "react-hook-form";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -189,6 +190,7 @@ const SignUp = () => {
                 styles.buttonOutline2,
                 Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
               ]}
+              onPress={() => Linking.openURL("http://facebook.com")}
               android_ripple={{ color: "#FFF" }}
             >
               <Text style={styles.buttonOutlineText}>

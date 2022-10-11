@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   Pressable,
-  TextInput,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
@@ -14,13 +13,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native";
 
 const BirthdayScreen = () => {
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
   const [date, onChangeDate] = useState(new Date()); // 선택 날짜
   const [mode, setMode] = useState("date"); // 모달 유형
   const [visible, setVisible] = useState(false); // 모달 노출 여부
+
+  const navigation = useNavigation();
+
+  const goComplete = () => {
+    navigation.navigate("CompleteN" as any);
+  };
 
   const onPressDate = () => {
     // 날짜 클릭 시
@@ -57,6 +62,8 @@ const BirthdayScreen = () => {
                 {format(new Date(date), "PPP")}{" "}
               </Text>
             </Pressable>
+            <Text></Text>
+            <Text style={styles.desc}>날짜를 눌러 생일을 입력하세요.</Text>
             <View />
           </View>
         </View>
@@ -71,6 +78,7 @@ const BirthdayScreen = () => {
               Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
             ]}
             android_ripple={{ color: "#FFF" }}
+            onPress={goComplete}
           >
             <Text style={styles.buttonText}>다음</Text>
           </Pressable>

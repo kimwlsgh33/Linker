@@ -10,8 +10,8 @@ const NameConfirm = ({ route }) => {
   const goLogin = () => {
     navigation.navigate("Login" as any);
   };
-  const goComplete = () => {
-    navigation.navigate("CompleteN" as any);
+  const goBirthday = () => {
+    navigation.navigate("Birthday" as any);
   };
 
   return (
@@ -26,7 +26,7 @@ const NameConfirm = ({ route }) => {
             저희 서비스를 이용하는 사람이 회원님의 연락처 정보를 Instagram에
             업로드했을 수도 있습니다. <Text>더 알아보기</Text>
           </Text>
-          <Pressable style={styles.button} onPress={goComplete}>
+          <Pressable style={styles.button} onPress={goBirthday}>
             <Text style={styles.buttonText}>가입하기</Text>
           </Pressable>
           <Text style={styles.desc}>

@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 function RootStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Birthday"
+      initialRouteName="SignUp"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="BottomTab" component={BottomTabScreen} />

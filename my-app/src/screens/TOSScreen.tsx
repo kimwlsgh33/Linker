@@ -180,23 +180,15 @@ const TOSScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          alignItems: "flex-end",
-          backgroundColor: "#ddd",
-        }}
-      >
-        <Pressable
-          style={({ pressed }) => [
-            Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
-          ]}
-          android_ripple={{ color: "#EEE" }}
-        >
-          <Feather name="more-horizontal" size={30} color="#000" />
-        </Pressable>
-      </View>
       <View style={{ borderBottomWidth: 1, backgroundColor: "#ddd" }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "bold",
+            marginLeft: 20,
+            marginTop: 20,
+          }}
+        >
           전체동의
         </Text>
         <Switch
@@ -237,7 +229,13 @@ const TOSScreen = () => {
           disabled={disable}
           onPress={goCreateName}
         >
-          <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 18 }}>
+          <Text
+            style={{
+              fontFamily: "강원교육모두 Bold",
+              fontSize: 18,
+              color: "#FFF",
+            }}
+          >
             동의함
           </Text>
         </Pressable>

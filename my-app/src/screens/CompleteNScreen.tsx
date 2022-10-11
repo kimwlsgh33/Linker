@@ -5,12 +5,17 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
+import MaskedView from "@react-native-community/masked-view";
 
 const CompleteNScreen = () => {
   const navigation = useNavigation();
 
   const goHome = () => {
     navigation.navigate("Home" as any);
+  };
+
+  const LinearGradientProps = {
+    colors: ["#FFB6C1", "#FFA07A"],
   };
 
   return (
@@ -37,11 +42,32 @@ const CompleteNScreen = () => {
         </View>
       </View>
       <View style={styles.header}>
-        <View>
-          <LinearGradient colors={["purple", "red", "pink", "yellow"]}>
-            <AntDesign name="checkcircleo" size={50} />
-          </LinearGradient>
-        </View>
+        <MaskedView
+          style={{ flex: 1, flexDirection: "row", height: "100%" }}
+          maskElement={
+            <View
+              style={{
+                backgroundColor: "transparent",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <AntDesign
+                name="checkcircleo"
+                size={50}
+                color="white"
+                style={styles.shadow}
+              />
+            </View>
+          }
+        >
+          <LinearGradient
+            colors={["green", "purple", "red"]}
+            style={{ flex: 1 }}
+            start={{ x: 0.3, y: 0.3 }}
+            end={{ x: 0.6, y: 0.7 }}
+          />
+        </MaskedView>
         <Text style={styles.title}>완료되었습니다!</Text>
         <Text style={styles.desc}>
           정보 수집, 이용 및 제공에 관한 내용을 검토하고 동의해주셔서
@@ -65,15 +91,18 @@ const CompleteNScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  linearGradient: {
-    flex: 1,
-    paddingLeft: 15,
-    paddingRight: 15,
-    borderRadius: 5,
+  shadow: {
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#FFF",
   },
   TopBar: {
     flex: 0.15,
@@ -97,7 +126,7 @@ const styles = StyleSheet.create({
   desc: {
     fontFamily: "강원교육모두 Light",
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 30,
   },
   footer: {
     flex: 1,
