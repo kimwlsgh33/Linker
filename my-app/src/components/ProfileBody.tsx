@@ -54,10 +54,10 @@ export const ProfileBody = ({
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 20 }}>
+              <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
                 {post}
               </Text>
-              <Text style={{ fontFamily: "강원교육모두 Bold" }}>게시물</Text>
+              <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
           </Pressable>
           <Pressable
@@ -69,10 +69,10 @@ export const ProfileBody = ({
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 20 }}>
+              <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
                 {follower}
               </Text>
-              <Text style={{ fontFamily: "강원교육모두 Bold" }}>팔로워</Text>
+              <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
           </Pressable>
           <Pressable
@@ -84,10 +84,10 @@ export const ProfileBody = ({
             ]}
           >
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontFamily: "강원교육모두 Bold", fontSize: 20 }}>
+              <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
                 {following}
               </Text>
-              <Text style={{ fontFamily: "강원교육모두 Bold" }}>팔로잉</Text>
+              <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>
           </Pressable>
         </View>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   profileText: {
     paddingVertical: 5,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 15,
     textAlign: "center",
     top: 5,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileButtonText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 14,
     letterSpacing: 1,
   },
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     left: 20,
     top: 8,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
 });
 

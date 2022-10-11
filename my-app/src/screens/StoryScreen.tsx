@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 function StoryScreen({ route }) {
-  const { story } = route.params ?? {};
+  const { story } = route?.params || {};
   console.log(story);
   return (
     <View style={styles.container}>
