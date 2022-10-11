@@ -30,12 +30,12 @@ const styles = StyleSheet.create({
     //marginBottom: 10,
   },
   nom_txt: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     fontSize: 18,
     textAlign: "left",
   },
   head_txt: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 20,
     marginTop: 20,
     textAlign: "left",

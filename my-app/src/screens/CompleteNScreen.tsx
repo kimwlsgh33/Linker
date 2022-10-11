@@ -117,14 +117,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 18,
   },
   title: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 30,
     marginTop: 20,
     textAlign: "center",
     marginBottom: 10,
   },
   desc: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     fontSize: 16,
     marginTop: 30,
   },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   footerText: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     fontSize: 18,
     textAlign: "center",
   },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 16,
     color: "#fff",
   },

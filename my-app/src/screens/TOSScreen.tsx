@@ -231,7 +231,7 @@ const TOSScreen = () => {
         >
           <Text
             style={{
-              fontFamily: "강원교육모두 Bold",
+              fontFamily: "GangwonEduAllBold",
               fontSize: 18,
               color: "#FFF",
             }}
@@ -262,13 +262,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   title_txt: {
-    fontFamily: "강원교육튼튼",
+    fontFamily: "GangwonEduAllBold",
     fontSize: 30,
     marginTop: 15,
     marginBottom: 15,
   },
   nom_txt: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     fontSize: 18,
     textAlign: "left",
   },
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
   },
   bottomText: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     fontSize: 14,
     marginTop: 10,
     marginBottom: 5,

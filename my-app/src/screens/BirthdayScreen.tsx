@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: "center",
     marginBottom: 20,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     marginTop: 20,
   },
   dateTitle: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     border: "1px solid #000",
     borderRadius: 10,
     padding: 10,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     height: 50,
   },
   desc: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     marginHorizontal: 80,
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
   },
   input: {
     width: "100%",
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     color: "#8e8e8e",
     textAlign: "center",
     marginHorizontal: 25,
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
   },
   button: {
     backgroundColor: "#0782F9",
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 14,
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
   },
   dateView: {
     alignItems: "center",
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   dateText: {
     color: "#fff",
     fontSize: 14,
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
   },
 });
 
