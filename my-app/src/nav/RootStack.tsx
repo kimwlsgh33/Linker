@@ -12,6 +12,8 @@ import StoryScreen from "../screens/StoryScreen";
 import Icon from "react-native-vector-icons/AntDesign";
 import AddUser2 from "../screens/AddUser2";
 import Bells2 from "../screens/Bells2";
+import Lock2 from "../screens/Lock2";
+import Safety2 from "../screens/Safety2"
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -47,6 +49,7 @@ function RootStack() {
       <Stack.Screen name="Post" component={PostScreen} />
       <Stack.Screen name="Story" component={StoryScreen} />
       <Stack.Screen name="SignUp" component={SignUp} />
+
       <Stack.Screen
         name="AddUser2"
         component={AddUser2}
@@ -62,6 +65,7 @@ function RootStack() {
           ),
         }}
       />
+
       <Stack.Screen
         name="Bells2"
         component={Bells2}
@@ -80,6 +84,45 @@ function RootStack() {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="Lock2"
+        component={Lock2}
+        options={{
+          title: "개인정보 보호",
+          headerTitleAlign: "left",
+          headerTintColor: "#FFFAFA",
+          headerStyle: { backgroundColor: "#000000" },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={styles.headertitle}
+            >
+              <Icon name={"left"} size={20} color="#FFFAFA" />
+            </Pressable>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="Safety2"
+        component={Safety2}
+        options={{
+          title: "보안",
+          headerTitleAlign: "left",
+          headerTintColor: "#FFFAFA",
+          headerStyle: { backgroundColor: "#000000" },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={styles.headertitle}
+            >
+              <Icon name={"left"} size={20} color="#FFFAFA" />
+            </Pressable>
+          ),
+        }}
+      />
+
     </Stack.Navigator>
   );
 }

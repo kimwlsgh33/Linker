@@ -7,6 +7,8 @@ import {
   Pressable,
   ScrollView,
   Switch,
+  Alert,
+  Modal,
 } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -24,16 +26,47 @@ const Stack = createNativeStackNavigator();
 function Bells2({ navigation, route }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const onClose = () => {};
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Bells2textBox}>
+        <Modal
+          animationType="fade"
+          visible={isEnabled}
+          transparent={true} // 배경 투명하게 만들기
+        >
+          <Pressable
+            style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.8)" }}
+            onPress={() => setIsEnabled(false)}
+          >
+            <View style={styles.ModalBox}>
+              <View style={styles.ModalView}>
+                <View style={styles.ModalInnerBox}>
+                  <Text
+                    style={styles.ModalBoxText}
+                  >{`푸시 알림을 받지는 않지만, Instagram을\n열면 새 알림을 볼 수 있습니다.`}</Text>
+                </View>
+                <Pressable>
+                  <Text style={styles.ModalText}>15분</Text>
+                  <Text style={styles.ModalText}>1시간</Text>
+                  <Text style={styles.ModalText}>2시간</Text>
+                  <Text style={styles.ModalText}>4시간</Text>
+                  <Text style={styles.ModalText}>8시간</Text>
+                </Pressable>
+                <Pressable onPress={() => setIsEnabled(!isEnabled)}>
+                  <Text style={styles.ModalText}>취소</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Pressable>
+        </Modal>
         <Text style={styles.Bells2text}>푸시 알림</Text>
         <View style={styles.toggleBox}>
           <Text style={styles.Bells2text}>모두 일시 중단</Text>
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={isEnabled ? "#1E90FF" : "#f4f3f4"}
+            thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
             onValueChange={toggleSwitch}
             value={isEnabled}
           />
@@ -72,6 +105,37 @@ const styles = StyleSheet.create({
   toggleBox: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+
+  ModalView: {
+    width: "80%",
+    backgroundColor: "#151515",
+  },
+
+  ModalBox: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  ModalText: {
+    color: "#FFFAFA",
+    fontSize: 15,
+    fontWeight: "bold",
+    margin: 10,
+  },
+
+  ModalInnerBox: {
+    borderWidth: 1,
+    borderBottomColor: "#333333",
+  },
+
+  ModalBoxText: {
+    color: "#FFFAFA",
+    fontSize: 13,
+    fontWeight: "bold",
+    textAlign: "center",
+    margin: 10,
   },
 });
 
