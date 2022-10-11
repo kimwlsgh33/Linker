@@ -38,7 +38,7 @@ const FollowTab = () => {
                 <Ionic name="add" size={30} color="black" />
               </View>
             </Pressable>
-            <Text style={{ top: 15, fontFamily: "강원교육모두 Bold" }}>
+            <Text style={{ top: 18, fontFamily: "GangwonEduAllBold" }}>
               팔로우 추가
             </Text>
           </View>
@@ -64,7 +64,7 @@ const FollowTab = () => {
                 }}
               ></View>
             </Pressable>
-            <Text style={{ top: 20, fontFamily: "강원교육모두 Bold" }}>
+            <Text style={{ top: 22, fontFamily: "GangwonEduAllBold" }}>
               유저ID
             </Text>
             <View
@@ -89,7 +89,7 @@ const FollowTab = () => {
                   },
                 ]}
               >
-                <Text style={{ fontSize: 11, fontFamily: "강원교육모두 Bold" }}>
+                <Text style={{ fontSize: 11, fontFamily: "GangwonEduAllBold" }}>
                   삭제
                 </Text>
               </Pressable>

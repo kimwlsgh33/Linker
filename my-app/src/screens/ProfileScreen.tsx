@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   Image,
@@ -21,6 +21,9 @@ import { Modal } from "../components/Modal";
 const ProfileScreen = () => {
   const acountName = "userId33";
   const navigation = useNavigation();
+  const [Visible, setVisible] = useState(false); // modal창 갯수만큼 useState를 만들어줘야함
+  const [Visible2, setVisible2] = useState(false);
+  const [Visible3, setVisible3] = useState(false);
 
   return (
     <SafeAreaView>
@@ -34,19 +37,29 @@ const ProfileScreen = () => {
             ]}
           >
             <Modal
+              Visible={Visible}
+              setVisible={setVisible}
               activator={({ handleOpen }) => (
-                <Text
+                <Pressable
                   onPress={() => {
                     handleOpen();
                   }}
-                  style={{
-                    fontFamily: "강원교육모두 Bold",
-                    fontSize: 23,
-                  }}
+                  style={({ pressed }) => [
+                    {
+                      opacity: pressed ? 0.2 : 1,
+                    },
+                  ]}
                 >
-                  {acountName}
-                  <Feather name="chevron-down" style={{ fontSize: 16 }} />
-                </Text>
+                  <Text
+                    style={{
+                      fontFamily: "GangwonEduAllBold",
+                      fontSize: 23,
+                    }}
+                  >
+                    {acountName}
+                    <Feather name="chevron-down" style={{ fontSize: 16 }} />
+                  </Text>
+                </Pressable>
               )}
             >
               <View style={styles.modal}>
@@ -72,6 +85,7 @@ const ProfileScreen = () => {
                   <Pressable
                     onPress={() => {
                       navigation.navigate("Login");
+                      setVisible(false);
                     }}
                     style={({ pressed }) => [
                       {
@@ -94,6 +108,8 @@ const ProfileScreen = () => {
           </Pressable>
           <View>
             <Modal
+              Visible={Visible2}
+              setVisible={setVisible2}
               activator={({ handleOpen }) => (
                 <Pressable
                   onPress={() => {
@@ -123,6 +139,10 @@ const ProfileScreen = () => {
                   <Text style={styles.modalText2}>만들기</Text>
                   <View style={styles.modalBar}></View>
                   <Pressable
+                    onPress={() => {
+                      navigation.navigate("Story");
+                      setVisible2(false);
+                    }}
                     style={({ pressed }) => [
                       {
                         opacity: pressed ? 0.2 : 1,
@@ -140,6 +160,10 @@ const ProfileScreen = () => {
                     </View>
                   </Pressable>
                   <Pressable
+                    onPress={() => {
+                      navigation.navigate("Story");
+                      setVisible2(false);
+                    }}
                     style={({ pressed }) => [
                       {
                         opacity: pressed ? 0.2 : 1,
@@ -181,6 +205,8 @@ const ProfileScreen = () => {
           </View>
           <View>
             <Modal
+              Visible={Visible3}
+              setVisible={setVisible3}
               activator={({ handleOpen }) => (
                 <Pressable
                   onPress={() => {
@@ -205,6 +231,10 @@ const ProfileScreen = () => {
                 />
                 <View style={{ marginTop: 10 }}>
                   <Pressable
+                    onPress={() => {
+                      navigation.navigate("Story");
+                      setVisible3(false);
+                    }}
                     style={({ pressed }) => [
                       {
                         opacity: pressed ? 0.2 : 1,
@@ -248,13 +278,13 @@ const ProfileScreen = () => {
                     ]}
                   >
                     <View style={{ flexDirection: "row" }}>
-                      <MaterialCommunityIcons
-                        name="history"
-                        size={27}
+                      <Feather
+                        name="star"
+                        size={25}
                         color="black"
-                        style={{ left: 9, top: -10 }}
+                        style={{ left: 10, top: -10 }}
                       />
-                      <Text style={styles.modalText2_1}>보관</Text>
+                      <Text style={styles.modalText2_1}>즐겨찾기</Text>
                     </View>
                   </Pressable>
                 </View>
@@ -290,7 +320,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    top: 585,
+    top: "385%",
     borderRadius: 15,
   },
   modalIcon1: {
@@ -320,12 +350,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     top: -30,
     left: 70,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   modal2: {
     backgroundColor: "white",
     height: 200,
-    top: 535,
+    top: "270%",
     borderRadius: 15,
   },
   modalBar: {
@@ -337,17 +367,17 @@ const styles = StyleSheet.create({
   modalText2: {
     top: -30,
     left: 177,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   modalText2_1: {
     left: 20,
     top: -6,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   modalText2_2: {
     left: 23,
     top: -8,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
 });
 

@@ -20,6 +20,7 @@ export type RootStackParamList = {
   Login: undefined;
   EditProfile: any;
   Posts: undefined;
+  Video: undefined;
   ProfileTopTab: NavigatorScreenParams<ProfileTopTabParamList>;
   FollowTab: NavigatorScreenParams<FollowTabParamList>;
   Discover: { post: TPost };
