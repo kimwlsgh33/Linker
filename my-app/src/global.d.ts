@@ -21,5 +21,6 @@ declare namespace ReactNavigation {
     Bells2: any;
     Lock2: any;
     Safety2: any;
+    Thema2: any;
   }
 }

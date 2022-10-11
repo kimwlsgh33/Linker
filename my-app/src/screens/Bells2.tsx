@@ -27,9 +27,6 @@ function Bells2({ navigation, route }) {
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const onClose = () => {
-  }
-
 
   return (
     <ScrollView style={styles.container}>
@@ -56,7 +53,7 @@ function Bells2({ navigation, route }) {
                     onPress={() => setIsEnabled(!isEnabled)}>
                     <Text style={styles.ModalText}>취소</Text>
                     </Pressable>
-                  </View>
+                </View>
               </View>
               </Pressable>
                 </Modal>
@@ -98,7 +95,7 @@ const styles = StyleSheet.create({
 
   Bells2textBox: {
     borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomColor: "rgba(60,60,60,0.3)",
   },
 
   toggleBox: {

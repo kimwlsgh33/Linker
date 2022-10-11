@@ -21,6 +21,8 @@ import { useNavigation } from "@react-navigation/native";
 import AddUser2 from "./AddUser2";
 import Bells2 from "./Bells2";
 import Lock2 from "./Lock2";
+import Thema2 from "./Thema2";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -86,6 +88,13 @@ const navbars = [
     text: "소개",
     iconName: "right",
     iconName2: "infocirlceo",
+    iconSize: 20,
+  },
+  {
+    navigateUri: "Thema2",
+    text: "테마",
+    iconName: "right",
+    iconName2: "skin",
     iconSize: 20,
   },
 ];
