@@ -7,7 +7,6 @@ import {
   TextInput,
   Pressable,
   Linking,
-  Button,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/ionicons";
@@ -22,9 +21,6 @@ import AddUser2 from "./AddUser2";
 import Bells2 from "./Bells2";
 import Lock2 from "./Lock2";
 import Thema2 from "./Thema2";
-
-
-const Stack = createNativeStackNavigator();
 
 const navbars = [
   {
@@ -49,7 +45,7 @@ const navbars = [
     iconSize: 20,
   },
   {
-    navigateUri: "AddUser2",
+    navigateUri: "team2",
     text: "관리 감독",
     iconName: "right",
     iconName2: "team",
@@ -119,6 +115,13 @@ export default function ScreenSetting({ navigation, route }) {
         {navbars.map((item, index) => (
           <Pressable
             onPress={() => {
+              // if(item.navigateUri == "team2"){
+              //   <team2Modal
+              //   animationType="slide"
+              //   visible={true}
+              //   transparent={false}
+              //   />
+              // }
               navigation.navigate(item.navigateUri);
             }}
             key={index}

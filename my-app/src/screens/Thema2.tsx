@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -17,32 +17,53 @@ import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
 import ScreenSetting from "./ScreenSetting";
-
-const Stack = createNativeStackNavigator();
+import { RadioButton } from 'react-native-paper';
 
 function Thema2({ navigation, route }) {
+
+  const [checked, setChecked] = useState('first');
+
   return (
     <ScrollView style={styles.container}>
     <View>
-        <View>
-            <Text style={styles.Thema2Text}>라이트 모드</Text>
-            <AntDesign name="checkcircleo" size={20} color="#FFFAFA" />
+        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center", margin: 10}}>
+          <Text style={styles.Thema2Text}>라이트 모드</Text>
+          <RadioButton
+            value="first"
+            color="#0080FF"
+            uncheckedColor="white"
+            status={ checked === 'first' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('first')}
+          />
         </View>
-        <View>
-            <Text style={styles.Thema2Text}>다크 모드</Text>
-            <AntDesign name="checkcircleo" size={20} color="#FFFAFA" />
+        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center", margin: 10}}>
+          <Text style={styles.Thema2Text}>다크 모드</Text>
+          <RadioButton
+            value="second"
+            color="#0080FF"
+            uncheckedColor="white"
+            status={ checked === 'second' ? 'checked' : 'unchecked' }
+            onPress={() => setChecked('second')}
+        />
         </View>
-    <View>
-        <Text style={styles.Thema2Text}>시스템 기본 설정</Text>
-        <AntDesign name="checkcircleo" size={20} color="#FFFAFA" />
+        <View style={{flexDirection: "row", justifyContent: "space-between", alignItems:"center", margin: 10}}>
+          <Text style={styles.Thema2Text}>시스템 기본 설정</Text>
+          <RadioButton
+            value="third"
+            color="#0080FF"
+            uncheckedColor="white"
+            status={ checked === 'third' ? 'checked' : 'unchecked' }
+            onPress={() => [
+                            setChecked('third'),
+                            console.log("click")
+                    ]}
+          />
+        </View>
     </View>
-      </View>
     </ScrollView>
   );
 }
 
-{/* ellipse-outline 동그라미 */}
-{/* checkcircleo 체크 동그라미 */}
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
@@ -52,6 +73,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#FFFAFA",
     },
+
+  TestView: {
+    backgroundColor: "blue",
+  }
 
 });
 
