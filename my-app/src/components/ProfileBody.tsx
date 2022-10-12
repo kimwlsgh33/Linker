@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   Pressable,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   View,
   Image,
   Platform,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/core";
@@ -13,7 +14,7 @@ import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 
 export const ProfileBody = ({
-  acountName,
+  accountName,
   name,
   profileImage,
   post,
@@ -97,7 +98,7 @@ export const ProfileBody = ({
               onPress={() =>
                 navigation.navigate("EditProfile", {
                   name: name,
-                  acountName: acountName,
+                  accountName: accountName,
                   profileImage: profileImage,
                 })
               }
@@ -138,38 +139,44 @@ export const ProfileBody = ({
             </Pressable>
           </View>
         </View>
-        <View style={styles.roundView}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Story");
-            }}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View>
-              <Image
-                source={{ uri: "https://source.unsplash.com/random/100x102" }}
-                style={styles.round1}
-              />
-            </View>
-            <Text style={styles.roundText}>취미</Text>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={styles.round2}>
-              <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
-            </View>
-            <Text style={styles.roundText}>신규</Text>
-          </Pressable>
-        </View>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={{ paddingVertical: 5, paddingHorizontal: 10 }}
+        >
+          <View style={styles.roundView}>
+            <Pressable
+              onPress={() => {
+                navigation.navigate("Story");
+              }}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <View>
+                <Image
+                  source={{ uri: "https://source.unsplash.com/random/100x102" }}
+                  style={styles.round1}
+                />
+              </View>
+              <Text style={styles.roundText}>취미</Text>
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <View style={styles.round2}>
+                <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+              </View>
+              <Text style={styles.roundText}>신규</Text>
+            </Pressable>
+          </View>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

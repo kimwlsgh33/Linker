@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import {
+  ImageSourcePropType,
   SafeAreaView,
   Image,
   Pressable,
@@ -17,13 +18,66 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import ProfileBody from "../components/ProfileBody";
 import ProfileTopTab from "../components/ProfileTopTab";
 import { Modal } from "../components/Modal";
+import events from "../lib/eventEmitter";
 
 const ProfileScreen = () => {
-  const acountName = "userId33";
+  type TProfile = {
+    accountName: string;
+    name: string;
+    profileImage: ImageSourcePropType;
+    post: number;
+    follower: number;
+    following: number;
+    profile: TProfile[];
+  };
+  const userInfo: TProfile[] = [
+    {
+      accountName: "userId33",
+      name: "user_name",
+      post: 123,
+      follower: 456,
+      following: 789,
+      profileImage: require("../../assets/images/profile.png"),
+      profile: [],
+    },
+  ];
+  
+  const [data, setData] = useState(userInfo);
   const navigation = useNavigation();
   const [Visible, setVisible] = useState(false); // modal창 갯수만큼 useState를 만들어줘야함
   const [Visible2, setVisible2] = useState(false);
   const [Visible3, setVisible3] = useState(false);
+
+  const onEdit = ({
+    accountName,
+    name,
+    profileImage,
+  }: {
+    accountName: string;
+    name: string;
+    profileImage: ImageSourcePropType;
+  }) => {
+    setData((prev) =>
+    prev.map((data) => {
+      if(accountName === data.accountName){
+        return {
+          ...data,
+          accountName: data[0].accountName,
+          name: data[0].name,
+          profileImage: data[0].profileImage,
+        };
+      }
+      return data;
+      })
+    );
+  };
+
+  useEffect(() => {
+    events.addListener("saveEdit", onEdit);
+    return () => {
+      events.removeListener("saveEdit", onEdit);
+    };
+  }, []);
 
   return (
     <SafeAreaView>
@@ -56,7 +110,7 @@ const ProfileScreen = () => {
                       fontSize: 23,
                     }}
                   >
-                    {acountName}
+                    {data[0].accountName}
                     <Feather name="chevron-down" style={{ fontSize: 16 }} />
                   </Text>
                 </Pressable>
@@ -75,10 +129,10 @@ const ProfileScreen = () => {
                     <View>
                       <Image
                         style={styles.modalIcon1}
-                        source={require("../../assets/images/profile.png")}
+                        source={data[0].profileImage}
                       />
                     </View>
-                    <Text style={styles.modalText}>{acountName}</Text>
+                    <Text style={styles.modalText}>{data[0].accountName}</Text>
                   </Pressable>
                 </View>
                 <View style={{ flexDirection: "row" }}>
@@ -293,12 +347,12 @@ const ProfileScreen = () => {
           </View>
         </View>
         <ProfileBody
-          acountName="userId33"
-          name="user_name"
-          post="123"
-          follower="456"
-          following="789"
-          profileImage={require("../../assets/images/profile.png")}
+          accountName={data[0].accountName}
+          name={data[0].name}
+          post={data[0].post}
+          follower={data[0].follower}
+          following={data[0].following}
+          profileImage={data[0].profileImage}
         />
         <ProfileTopTab />
       </View>
@@ -320,7 +374,6 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    top: "385%",
     borderRadius: 15,
   },
   modalIcon1: {
@@ -355,7 +408,6 @@ const styles = StyleSheet.create({
   modal2: {
     backgroundColor: "white",
     height: 200,
-    top: "270%",
     borderRadius: 15,
   },
   modalBar: {

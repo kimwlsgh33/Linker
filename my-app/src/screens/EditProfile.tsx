@@ -15,17 +15,39 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Modal } from "../components/Modal";
+import events from "../lib/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
+  const { accountName, name, profileImage, profile: profileArray } = route?.params || {};
   const [Visible, setVisible] = useState(false);
-  const [text, setText] = useState("");
-  const { acountName, name, profileImage } = route?.params || {};
+  
   const TostMessage = () => {
     ToastAndroid.show("Edited Sucessfully !", ToastAndroid.SHORT);
   };
+  const [edit, setEdit] = useState("");
+  const [editList, setEditList] = useState(profileArray);
 
-  const onChange = (e: any) => {
-    setText(e.target.value);
+
+  const onEdit = () => {
+    const newEdit = [
+      ...editList,
+      {
+      accountName: accountName,
+      name: name,
+      profileImage: profileImage,
+    },
+  ];
+    setEditList(newEdit);
+    saveEdit();
+    setEdit("");
+  }
+
+  const saveEdit = () => {
+    events.emit("saveEdit", {
+      accountName,
+      name,
+      profileImage,
+    });
   };
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
@@ -124,7 +146,6 @@ const EditProfile = ({ route, navigation }) => {
                 style={{
                   backgroundColor: "white",
                   height: 150,
-                  top: "390%",
                   borderRadius: 15,
                 }}
               >
@@ -215,13 +236,13 @@ const EditProfile = ({ route, navigation }) => {
               <TextInput
                 placeholder="name"
                 defaultValue={name}
-                onChangeText={(text) => setText(text)}
+                value={edit}
+                onChangeText={(text) => setEdit(text)}
                 returnKeyType="next"
                 ref={ref_input[0]}
-                onChange={onChange}
-                // value={text}
                 onSubmitEditing={() => {
                   ref_input[1].current.focus();
+                  {onEdit}
                 }}
                 style={{
                   fontSize: 16,
@@ -241,11 +262,9 @@ const EditProfile = ({ route, navigation }) => {
               </Text>
               <TextInput
                 placeholder="accountname"
-                defaultValue={acountName}
+                defaultValue={accountName}
                 returnKeyType="next"
                 ref={ref_input[1]}
-                onChange={onChange}
-                // value={text}
                 onSubmitEditing={() => {
                   ref_input[2].current.focus();
                 }}
@@ -259,10 +278,8 @@ const EditProfile = ({ route, navigation }) => {
             <View style={{ paddingVertical: 10 }}>
               <TextInput
                 placeholder="소개"
-                onChangeText={(text) => setText(text)}
                 returnKeyType="next"
                 ref={ref_input[2]}
-                onChange={onChange}
                 onSubmitEditing={() => {
                   ref_input[3].current.focus();
                 }}
@@ -277,10 +294,8 @@ const EditProfile = ({ route, navigation }) => {
             <View style={{ paddingVertical: 10 }}>
               <TextInput
                 placeholder="링크 추가"
-                onChangeText={(text) => setText(text)}
                 returnKeyType="next"
                 ref={ref_input[3]}
-                onChange={onChange}
                 onSubmitEditing={() => null}
                 style={{
                   fontSize: 16,
