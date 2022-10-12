@@ -26,7 +26,6 @@ const Stack = createNativeStackNavigator();
 function Bells2({ navigation, route }) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-  const onClose = () => {};
 
   return (
     <ScrollView style={styles.container}>
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
 
   Bells2textBox: {
     borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomColor: "rgba(60,60,60,0.3)",
   },
 
   toggleBox: {

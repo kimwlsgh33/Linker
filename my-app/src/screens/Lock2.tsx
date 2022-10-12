@@ -23,21 +23,32 @@ import { useNavigation } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
+
 function Lock2({ navigation, route }) {
 
   const [isEnabled, setIsEnabled] = useState(false);
-  const [LockProfile, setLockProfile] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const toggleSwitch = () => {
+    if(isEnabled == false){
+    setModalVisible(!modalVisible);
+    }
+    else if(isEnabled == true){
+    setModalVisible2(!modalVisible2);
+    }
+  }
 
   return (
   <ScrollView style={styles.container}>
     <View style={styles.BorderBox}>
-    <Modal 
+
+    <Modal  // 비공개 계정으로 전환하시겠어요? 모달창
       animationType="slide"
-      visible={isEnabled}
+      visible={modalVisible}
       transparent={true}  // 배경 투명하게 만들기 
     >
-      <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setIsEnabled(false)}>
+      <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible(false)}>
           <View style={styles.ModalBox}>
             <View style={styles.ModalView}>
                 <View style={styles.ModalInnerBox}>
@@ -64,7 +75,11 @@ function Lock2({ navigation, route }) {
                 <View style={styles.ButtonBox}>  
                   <Pressable 
                     style={styles.ModalButton} 
-                    onPress={() => setLockProfile(true)}>
+                    onPress={() => {
+                      setModalVisible(false);
+                      setIsEnabled(true);
+                    }}
+                    >
                   <Text style={styles.ModalButtonText}>비공개로 전환</Text>
                   </Pressable>
                 </View>
@@ -72,6 +87,68 @@ function Lock2({ navigation, route }) {
           </View>
         </Pressable>
       </Modal>
+
+    <Modal                // 공개 계정으로 전환하시겠어요? 모달창
+      animationType="slide"
+      visible={modalVisible2}
+      transparent={true}  // 배경 투명하게 만들기 
+    >
+      <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible(false)}>
+          <View style={styles.ModalBox}>
+            <View style={styles.ModalView}>
+                <View style={styles.ModalInnerBox}>
+                  <Text style={styles.ModalBoxText}>공개 계정으로 전환하시겠어요?</Text>
+                </View>
+              <View style={styles.ModalInnerBox}>
+                <View style={{flexDirection: "row"}}>
+                  <View style={styles.ViewPadding}>
+                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                  </View>
+                  <View style={styles.ViewPadding}>
+                    <Text style={styles.ModalIconText}>누구나 회원님의 게시물, 릴스 및 스토리를 볼 수 있으며  회원님의 원본 오디오를 사용할 수 있습니다.</Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: "row"}}>
+                  <View style={styles.ViewPadding}>
+                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                  </View>
+                  <View style={styles.ViewPadding}>
+                    <Text style={styles.ModalIconText}>회원님에게 메시지를 보내거나 회원님을 태그 또는 @언급할 수 있는 사람은 변경되지 않습니다.</Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: "row"}}>
+                  <View style={styles.ViewPadding}>
+                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                  </View>
+                  <View style={styles.ViewPadding}>
+                    <Text style={styles.ModalIconText}>대기 중인 팔로워 요청은 삭제하지 않을 경우 모두 승인됩니다.</Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: "row"}}>
+                  <View style={styles.ViewPadding}>
+                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                  </View>
+                  <View style={styles.ViewPadding}>
+                    <Text style={styles.ModalIconText}>사람들이 회원님의 릴스를 리믹스하거나 리믹스의 일부로 다운로드할 수 있습니다. 설정에서 언제든지 이 옵션을 변경할 수 있습니다.</Text>
+                  </View>
+                </View>
+              </View>
+                <View style={styles.ButtonBox}>  
+                  <Pressable 
+                    style={styles.ModalButton} 
+                    onPress={() => {
+                      setModalVisible2(false);
+                      setIsEnabled(false);
+                    }}
+                    >
+                  <Text style={styles.ModalButtonText}>공개로 전환</Text>
+                  </Pressable>
+                </View>
+            </View>
+          </View>
+        </Pressable>
+      </Modal>
+
         <Text style={styles.lock2Text}>계정 공개 범위</Text>
       <View style={styles.Rightbox}>  
           <IconLeft iconName={"lock"} iconSize={20} text={"비공개 계정"} />
