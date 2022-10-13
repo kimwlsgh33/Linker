@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Linking,
+  Modal,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/ionicons";
@@ -45,7 +46,7 @@ const navbars = [
     iconSize: 20,
   },
   {
-    navigateUri: "team2",
+    navigateUri: "Team2",
     text: "관리 감독",
     iconName: "right",
     iconName2: "team",
@@ -96,7 +97,8 @@ const navbars = [
 ];
 
 export default function ScreenSetting({ navigation, route }) {
-  const [text, onChangeText] = React.useState("Useless Text");
+  const [text, onChangeText] = useState("Useless Text");
+  const [ModalVisible, setModalVisible] = useState(false);
 
   return (
     <ScrollView style={styles.container}>
@@ -115,14 +117,25 @@ export default function ScreenSetting({ navigation, route }) {
         {navbars.map((item, index) => (
           <Pressable
             onPress={() => {
-              // if(item.navigateUri == "team2"){
-              //   <team2Modal
-              //   animationType="slide"
-              //   visible={true}
-              //   transparent={false}
-              //   />
-              // }
-              navigation.navigate(item.navigateUri);
+              // navigation.navigate(item.navigateUri);
+              setModalVisible(true);
+              if (item.navigateUri == "Lock2") {
+                navigation.navigate(item.navigateUri);
+                console.log("Not team2");
+                // <Modal animationType="slide" visible={true} transparent={false}>
+                //   <Text>test</Text>
+                // </Modal>;
+              } else if (item.iconName2 == "team") {
+                // navigation.navigate(item.navigateUri);
+                console.log("team2");
+                <Modal
+                  animationType="slide"
+                  visible={ModalVisible}
+                  transparent={false}
+                >
+                  <Text>test</Text>
+                </Modal>;
+              }
             }}
             key={index}
           >
@@ -136,16 +149,16 @@ export default function ScreenSetting({ navigation, route }) {
         ))}
       </View>
       <View style={styles.footerContainer}>
-          <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
-          <Pressable
-            style={({ pressed }) => [pressed && { opacity: 0.4 }]}
-            onPress={() => Linking.openURL("https://naver.com")}
-          >
-            <TextStyle text="계정 센터" />
-          </Pressable>
-          <Text style={styles.footertext}>
-            {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
-          </Text>
+        <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
+        <Pressable
+          style={({ pressed }) => [pressed && { opacity: 0.4 }]}
+          onPress={() => Linking.openURL("https://naver.com")}
+        >
+          <TextStyle text="계정 센터" />
+        </Pressable>
+        <Text style={styles.footertext}>
+          {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
+        </Text>
       </View>
       <View style={styles.Overfooterbox}>
         <Text style={styles.Overfootertext}>로그인</Text>

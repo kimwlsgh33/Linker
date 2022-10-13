@@ -13,8 +13,8 @@ import Icon from "react-native-vector-icons/AntDesign";
 import AddUser2 from "../screens/AddUser2";
 import Bells2 from "../screens/Bells2";
 import Lock2 from "../screens/Lock2";
-import Safety2 from "../screens/Safety2"
-import Thema2 from "../screens/Thema2"
+import Safety2 from "../screens/Safety2";
+import Thema2 from "../screens/Thema2";
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -142,7 +142,6 @@ function RootStack() {
           ),
         }}
       />
-
     </Stack.Navigator>
   );
 }
