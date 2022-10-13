@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
+  // ImageSourcePropType,
   SafeAreaView,
   Image,
   Pressable,
@@ -17,16 +18,50 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import ProfileBody from "../components/ProfileBody";
 import ProfileTopTab from "../components/ProfileTopTab";
 import { Modal } from "../components/Modal";
+import events from "../lib/eventEmitter";
 
 const ProfileScreen = () => {
-  const acountName = "userId33";
+  const userInfo = {
+    accountName: "userId33",
+    name: "user_name",
+    post: 123,
+    follower: 456,
+    following: 789,
+    profileImage: require("../../assets/images/profile.png"),
+  };
+
   const navigation = useNavigation();
+  const [data, setData] = useState(userInfo);
   const [Visible, setVisible] = useState(false); // modal창 갯수만큼 useState를 만들어줘야함
   const [Visible2, setVisible2] = useState(false);
   const [Visible3, setVisible3] = useState(false);
 
+  const onEdit = ({
+    accountName,
+    name,
+  }: {
+    accountName: string;
+    name: string;
+  }) => {
+    console.log("Edit Profile");
+    setData((data) => {
+      return {
+        ...data,
+        accountName: accountName,
+        name: name,
+      };
+    });
+  };
+
+  useEffect(() => {
+    events.addListener("saveEdit", onEdit);
+    return () => {
+      events.removeListener("saveEdit");
+    };
+  }, []);
+
   return (
-    <SafeAreaView>
+    <SafeAreaView key={data.accountName}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable
@@ -56,7 +91,7 @@ const ProfileScreen = () => {
                       fontSize: 23,
                     }}
                   >
-                    {acountName}
+                    {data.accountName}
                     <Feather name="chevron-down" style={{ fontSize: 16 }} />
                   </Text>
                 </Pressable>
@@ -75,10 +110,10 @@ const ProfileScreen = () => {
                     <View>
                       <Image
                         style={styles.modalIcon1}
-                        source={require("../../assets/images/profile.png")}
+                        source={data.profileImage}
                       />
                     </View>
-                    <Text style={styles.modalText}>{acountName}</Text>
+                    <Text style={styles.modalText}>{data.accountName}</Text>
                   </Pressable>
                 </View>
                 <View style={{ flexDirection: "row" }}>
@@ -121,10 +156,15 @@ const ProfileScreen = () => {
                     },
                   ]}
                 >
-                  <FontAwesome
-                    name="plus-square-o"
-                    style={{ fontSize: 22, left: 95 }}
-                  />
+                  <View>
+                    <FontAwesome
+                      name="plus-square-o"
+                      style={{
+                        fontSize: 22,
+                        left: 90
+                      }}
+                    />
+                  </View>
                 </Pressable>
               )}
             >
@@ -218,7 +258,12 @@ const ProfileScreen = () => {
                     },
                   ]}
                 >
-                  <Icon name="menu-outline" style={{ fontSize: 29 }} />
+                  <Icon
+                    name="menu-outline"
+                    style={{
+                      fontSize: 29,
+                    }}
+                  />
                 </Pressable>
               )}
             >
@@ -292,14 +337,7 @@ const ProfileScreen = () => {
             </Modal>
           </View>
         </View>
-        <ProfileBody
-          acountName="userId33"
-          name="user_name"
-          post="123"
-          follower="456"
-          following="789"
-          profileImage={require("../../assets/images/profile.png")}
-        />
+        <ProfileBody data={data} />
         <ProfileTopTab />
       </View>
     </SafeAreaView>
@@ -320,8 +358,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    top: "385%",
-    borderRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   modalIcon1: {
     marginTop: 30,
@@ -355,8 +393,8 @@ const styles = StyleSheet.create({
   modal2: {
     backgroundColor: "white",
     height: 200,
-    top: "270%",
-    borderRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   modalBar: {
     borderWidth: 0.3,
