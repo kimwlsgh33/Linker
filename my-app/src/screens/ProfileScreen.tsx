@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
-  ImageSourcePropType,
+  // ImageSourcePropType,
   SafeAreaView,
   Image,
   Pressable,
@@ -21,29 +21,17 @@ import { Modal } from "../components/Modal";
 import events from "../lib/eventEmitter";
 
 const ProfileScreen = () => {
-  type TProfile = {
-    accountName: string;
-    name: string;
-    profileImage: ImageSourcePropType;
-    post: number;
-    follower: number;
-    following: number;
-    profile: TProfile[];
+  const userInfo = {
+    accountName: "userId33",
+    name: "user_name",
+    post: 123,
+    follower: 456,
+    following: 789,
+    profileImage: require("../../assets/images/profile.png"),
   };
-  const userInfo: TProfile[] = [
-    {
-      accountName: "userId33",
-      name: "user_name",
-      post: 123,
-      follower: 456,
-      following: 789,
-      profileImage: require("../../assets/images/profile.png"),
-      profile: [],
-    },
-  ];
-  
-  const [data, setData] = useState(userInfo);
+
   const navigation = useNavigation();
+  const [data, setData] = useState(userInfo);
   const [Visible, setVisible] = useState(false); // modal창 갯수만큼 useState를 만들어줘야함
   const [Visible2, setVisible2] = useState(false);
   const [Visible3, setVisible3] = useState(false);
@@ -51,36 +39,29 @@ const ProfileScreen = () => {
   const onEdit = ({
     accountName,
     name,
-    profileImage,
   }: {
     accountName: string;
     name: string;
-    profileImage: ImageSourcePropType;
   }) => {
-    setData((prev) =>
-    prev.map((data) => {
-      if(accountName === data.accountName){
-        return {
-          ...data,
-          accountName: data[0].accountName,
-          name: data[0].name,
-          profileImage: data[0].profileImage,
-        };
-      }
-      return data;
-      })
-    );
+    console.log("Edit Profile");
+    setData((data) => {
+      return {
+        ...data,
+        accountName: accountName,
+        name: name,
+      };
+    });
   };
 
   useEffect(() => {
     events.addListener("saveEdit", onEdit);
     return () => {
-      events.removeListener("saveEdit", onEdit);
+      events.removeListener("saveEdit");
     };
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView key={data.accountName}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Pressable
@@ -110,7 +91,7 @@ const ProfileScreen = () => {
                       fontSize: 23,
                     }}
                   >
-                    {data[0].accountName}
+                    {data.accountName}
                     <Feather name="chevron-down" style={{ fontSize: 16 }} />
                   </Text>
                 </Pressable>
@@ -129,10 +110,10 @@ const ProfileScreen = () => {
                     <View>
                       <Image
                         style={styles.modalIcon1}
-                        source={data[0].profileImage}
+                        source={data.profileImage}
                       />
                     </View>
-                    <Text style={styles.modalText}>{data[0].accountName}</Text>
+                    <Text style={styles.modalText}>{data.accountName}</Text>
                   </Pressable>
                 </View>
                 <View style={{ flexDirection: "row" }}>
@@ -175,10 +156,15 @@ const ProfileScreen = () => {
                     },
                   ]}
                 >
-                  <FontAwesome
-                    name="plus-square-o"
-                    style={{ fontSize: 22, left: 95 }}
-                  />
+                  <View>
+                    <FontAwesome
+                      name="plus-square-o"
+                      style={{
+                        fontSize: 22,
+                        left: 90
+                      }}
+                    />
+                  </View>
                 </Pressable>
               )}
             >
@@ -272,7 +258,12 @@ const ProfileScreen = () => {
                     },
                   ]}
                 >
-                  <Icon name="menu-outline" style={{ fontSize: 29 }} />
+                  <Icon
+                    name="menu-outline"
+                    style={{
+                      fontSize: 29,
+                    }}
+                  />
                 </Pressable>
               )}
             >
@@ -346,14 +337,7 @@ const ProfileScreen = () => {
             </Modal>
           </View>
         </View>
-        <ProfileBody
-          accountName={data[0].accountName}
-          name={data[0].name}
-          post={data[0].post}
-          follower={data[0].follower}
-          following={data[0].following}
-          profileImage={data[0].profileImage}
-        />
+        <ProfileBody data={data} />
         <ProfileTopTab />
       </View>
     </SafeAreaView>
@@ -374,7 +358,8 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    borderRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   modalIcon1: {
     marginTop: 30,
@@ -408,7 +393,8 @@ const styles = StyleSheet.create({
   modal2: {
     backgroundColor: "white",
     height: 200,
-    borderRadius: 15,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   modalBar: {
     borderWidth: 0.3,

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { View, Modal as DefaultModal, Pressable } from "react-native";
 // import { Modal } from "../components/Modal";
 // import {Modal as DefaultModal} from "react-native";

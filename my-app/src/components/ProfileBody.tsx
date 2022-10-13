@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
   Pressable,
   StyleSheet,
@@ -13,18 +13,12 @@ import { useNavigation } from "@react-navigation/core";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 
-export const ProfileBody = ({
-  accountName,
-  name,
-  profileImage,
-  post,
-  follower,
-  following,
-}) => {
+// 부모컴포넌트로부터 props전달받음
+export const ProfileBody = ({ data }) => {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
+    <SafeAreaView key={data.accountName}>
       <View>
         <View style={styles.profileHeader}>
           <View>
@@ -40,8 +34,8 @@ export const ProfileBody = ({
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
-              <Image source={profileImage} style={styles.profileStyle} />
-              <Text style={styles.profileText}>{name}</Text>
+              <Image source={data.profileImage} style={styles.profileStyle} />
+              <Text style={styles.profileText}>{data.name}</Text>
             </Pressable>
           </View>
           <Pressable
@@ -56,7 +50,7 @@ export const ProfileBody = ({
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {post}
+                {data.post}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -71,7 +65,7 @@ export const ProfileBody = ({
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {follower}
+                {data.follower}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
@@ -86,7 +80,7 @@ export const ProfileBody = ({
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {following}
+                {data.following}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>
@@ -97,9 +91,9 @@ export const ProfileBody = ({
             <Pressable
               onPress={() =>
                 navigation.navigate("EditProfile", {
-                  name: name,
-                  accountName: accountName,
-                  profileImage: profileImage,
+                  name: data.name,
+                  accountName: data.accountName,
+                  profileImage: data.profileImage,
                 })
               }
               style={({ pressed }) => [

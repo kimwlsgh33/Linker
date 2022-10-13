@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Keyboard,
   Platform,
+  StyleSheet,
   Modal as DefaultModal,
   View,
   Text,
@@ -18,37 +19,37 @@ import { Modal } from "../components/Modal";
 import events from "../lib/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
-  const { accountName, name, profileImage, profile: profileArray } = route?.params || {};
+  const { accountName, name, profileImage } = route?.params || {};
   const [Visible, setVisible] = useState(false);
-  
+  const [disable, setDisable] = useState(true);
+  const [text, setText] = useState("");
+
   const TostMessage = () => {
     ToastAndroid.show("Edited Sucessfully !", ToastAndroid.SHORT);
   };
-  const [edit, setEdit] = useState("");
-  const [editList, setEditList] = useState(profileArray);
+  const [edit, setEdit] = useState(""); // accountName이 저장되는 상태
+  const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
 
-
+  // 저장 버튼 누르면
   const onEdit = () => {
-    const newEdit = [
-      ...editList,
-      {
-      accountName: accountName,
-      name: name,
-      profileImage: profileImage,
-    },
-  ];
-    setEditList(newEdit);
-    saveEdit();
-    setEdit("");
-  }
-
-  const saveEdit = () => {
     events.emit("saveEdit", {
-      accountName,
-      name,
-      profileImage,
+      accountName: edit,
+      name: edit2,
     });
   };
+
+  const lengthChange = (text) => {
+    setText(text);
+  };
+
+  const lengthCheck = useCallback((accountName) => {
+    lengthChange(accountName);
+    if (accountName.length < 7) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, []);
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
@@ -61,21 +62,8 @@ const EditProfile = ({ route, navigation }) => {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "height" : undefined}
       >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white",
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: 10,
-            }}
-          >
+        <View style={styles.container}>
+          <View style={styles.header}>
             <Pressable
               onPress={() => navigation.goBack()}
               style={({ pressed }) => [
@@ -86,19 +74,20 @@ const EditProfile = ({ route, navigation }) => {
             >
               <Ionic name="close-outline" style={{ fontSize: 35 }} />
             </Pressable>
-            <Text style={{ fontSize: 16, fontFamily: "GangwonEduAllBold" }}>
-              프로필 편집
-            </Text>
+            <Text style={styles.headerText}>프로필 편집</Text>
             <Pressable
               onPress={() => {
                 TostMessage();
                 navigation.goBack();
+                onEdit();
               }}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
                 },
+                disable ? { opacity: 0.5 } : {},
               ]}
+                disabled={disable}
             >
               <Ionic
                 name="checkmark"
@@ -107,17 +96,7 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image
-              source={profileImage}
-              style={{
-                width: 80,
-                height: 80,
-                borderRadius: 100,
-                borderColor: "lightgray",
-                borderWidth: 2,
-                marginBottom: 10,
-              }}
-            />
+            <Image source={profileImage} style={styles.profileImage} />
             <Modal
               Visible={Visible}
               setVisible={setVisible}
@@ -131,24 +110,11 @@ const EditProfile = ({ route, navigation }) => {
                     },
                   ]}
                 >
-                  <Text
-                    style={{
-                      color: "#3493D9",
-                      fontFamily: "GangwonEduAllBold",
-                    }}
-                  >
-                    프로필 사진 변경
-                  </Text>
+                  <Text style={styles.profileText}>프로필 사진 변경</Text>
                 </Pressable>
               )}
             >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  height: 150,
-                  borderRadius: 15,
-                }}
-              >
+              <View style={styles.modal}>
                 <View>
                   <Icon
                     name="ios-remove-outline"
@@ -156,23 +122,8 @@ const EditProfile = ({ route, navigation }) => {
                     color="gray"
                     style={{ top: -15, left: 170 }}
                   />
-                  <Text
-                    style={{
-                      top: -30,
-                      left: 153,
-                      fontFamily: "GangwonEduAllBold",
-                    }}
-                  >
-                    프로필 사진 변경
-                  </Text>
-                  <View
-                    style={{
-                      borderWidth: 0.3,
-                      width: "100%",
-                      opacity: 0.3,
-                      top: -20,
-                    }}
-                  ></View>
+                  <Text style={styles.modalText}>프로필 사진 변경</Text>
+                  <View style={styles.modalBar}></View>
                   <View style={{ marginTop: 10 }}>
                     <Pressable
                       style={({ pressed }) => [
@@ -183,15 +134,7 @@ const EditProfile = ({ route, navigation }) => {
                       ]}
                     >
                       <View style={{ flexDirection: "row" }}>
-                        <Text
-                          style={{
-                            left: 20,
-                            top: -6,
-                            fontFamily: "GangwonEduAllBold",
-                          }}
-                        >
-                          새 프로필 사진
-                        </Text>
+                        <Text style={styles.modalText2}>새 프로필 사진</Text>
                       </View>
                     </Pressable>
                     <Pressable
@@ -207,15 +150,7 @@ const EditProfile = ({ route, navigation }) => {
                       ]}
                     >
                       <View style={{ flexDirection: "row" }}>
-                        <Text
-                          style={{
-                            left: 20,
-                            top: -6,
-                            fontFamily: "GangwonEduAllBold",
-                          }}
-                        >
-                          프로필 사진 삭제
-                        </Text>
+                        <Text style={styles.modalText2}>프로필 사진 삭제</Text>
                       </View>
                     </Pressable>
                   </View>
@@ -225,54 +160,36 @@ const EditProfile = ({ route, navigation }) => {
           </View>
           <View style={{ padding: 10 }}>
             <View>
-              <Text
-                style={{
-                  opacity: 0.5,
-                  fontFamily: "GangwonEduAllBold",
-                }}
-              >
-                이름
-              </Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.text}>사용자 이름</Text>
+                <Text style={styles.text2}>(8자 이상 10자 미만)</Text>
+              </View>
               <TextInput
-                placeholder="name"
-                defaultValue={name}
+                maxLength={10}
+                placeholder={accountName}
                 value={edit}
                 onChangeText={(text) => setEdit(text)}
-                returnKeyType="next"
-                ref={ref_input[0]}
-                onSubmitEditing={() => {
-                  ref_input[1].current.focus();
-                  {onEdit}
-                }}
-                style={{
-                  fontSize: 16,
-                  borderBottomWidth: 1,
-                  borderColor: "#CDCDCD",
-                }}
-              />
-            </View>
-            <View style={{ paddingVertical: 10 }}>
-              <Text
-                style={{
-                  opacity: 0.5,
-                  fontFamily: "GangwonEduAllBold",
-                }}
-              >
-                사용자 이름
-              </Text>
-              <TextInput
-                placeholder="accountname"
-                defaultValue={accountName}
+                onChange={() => lengthCheck(edit)}
                 returnKeyType="next"
                 ref={ref_input[1]}
                 onSubmitEditing={() => {
                   ref_input[2].current.focus();
                 }}
-                style={{
-                  fontSize: 16,
-                  borderBottomWidth: 1,
-                  borderColor: "#CDCDCD",
+                style={styles.textInput}
+              />
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <Text style={styles.text}>이름</Text>
+              <TextInput
+                placeholder={name}
+                value={edit2}
+                onChangeText={(text) => setEdit2(text)}
+                returnKeyType="next"
+                ref={ref_input[0]}
+                onSubmitEditing={() => {
+                  ref_input[1].current.focus();
                 }}
+                style={styles.textInput}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -283,12 +200,7 @@ const EditProfile = ({ route, navigation }) => {
                 onSubmitEditing={() => {
                   ref_input[3].current.focus();
                 }}
-                style={{
-                  fontSize: 16,
-                  borderBottomWidth: 1,
-                  borderColor: "#CDCDCD",
-                  fontFamily: "GangwonEduAllBold",
-                }}
+                style={styles.textInput}
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
@@ -297,16 +209,12 @@ const EditProfile = ({ route, navigation }) => {
                 returnKeyType="next"
                 ref={ref_input[3]}
                 onSubmitEditing={() => null}
-                style={{
-                  fontSize: 16,
-                  borderBottomWidth: 1,
-                  borderColor: "#CDCDCD",
-                  fontFamily: "GangwonEduAllBold",
-                }}
+                style={styles.textInput}
               />
             </View>
           </View>
           <View style={{ paddingTop: 20 }}>
+            <View style={styles.bar} />
             <Pressable
               style={({ pressed }) => [
                 {
@@ -315,19 +223,9 @@ const EditProfile = ({ route, navigation }) => {
                 },
               ]}
             >
-              <Text
-                style={{
-                  padding: 10,
-                  color: "#3493D9",
-                  borderTopWidth: 1,
-                  borderBottomWidth: 1,
-                  borderColor: "#EFEFEF",
-                  fontFamily: "GangwonEduAllBold",
-                }}
-              >
-                프로페셔널 계정으로 전환
-              </Text>
+              <Text style={styles.text3}>프로페셔널 계정으로 전환</Text>
             </Pressable>
+            <View style={styles.bar} />
             <Pressable
               style={({ pressed }) => [
                 {
@@ -336,23 +234,92 @@ const EditProfile = ({ route, navigation }) => {
                 },
               ]}
             >
-              <Text
-                style={{
-                  padding: 10,
-                  color: "#3493D9",
-                  borderBottomWidth: 1,
-                  borderColor: "#EFEFEF",
-                  fontFamily: "GangwonEduAllBold",
-                }}
-              >
-                개인정보 설정
-              </Text>
+              <Text style={styles.text3}>개인정보 설정</Text>
             </Pressable>
+            <View style={styles.bar} />
           </View>
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  headerText: {
+    fontSize: 16,
+    fontFamily: "GangwonEduAllBold",
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 100,
+    borderColor: "lightgray",
+    borderWidth: 2,
+    marginBottom: 10,
+  },
+  profileText: {
+    color: "#3493D9",
+    fontFamily: "GangwonEduAllBold",
+  },
+  modal: {
+    backgroundColor: "white",
+    height: 150,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  modalText: {
+    top: -30,
+    left: 153,
+    fontFamily: "GangwonEduAllBold",
+  },
+  modalBar: {
+    borderWidth: 0.3,
+    width: "100%",
+    opacity: 0.3,
+    top: -20,
+  },
+  modalText2: {
+    left: 20,
+    top: -6,
+    fontFamily: "GangwonEduAllBold",
+  },
+  text: {
+    opacity: 0.5,
+    fontFamily: "GangwonEduAllBold",
+  },
+  text2: {
+    paddingLeft: 5,
+    opacity: 0.4,
+    fontSize: 10,
+    fontFamily: "GangwonEduAllBold",
+  },
+  textInput: {
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderColor: "#CDCDCD",
+    fontFamily: "GangwonEduAllBold",
+  },
+  bar: {
+    borderTopWidth: 0.7,
+    borderBottomWidth: 0.7,
+    borderColor: "#EFEFEF",
+  },
+  text3: {
+    padding: 10,
+    color: "#3493D9",
+    fontFamily: "GangwonEduAllBold",
+  },
+});
 
 export default EditProfile;
