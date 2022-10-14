@@ -6,13 +6,17 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import events from "../../lib/eventEmiiter";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Modal from "../Modal";
+import ModalScreen from "../screenComponents/ModalScreen";
+import ShareModal from "../screenComponents/ShareModal";
+import LinkModal from "../screenComponents/LinkModal";
 
 type TRecomment = {
   id: number;
@@ -90,12 +94,18 @@ const postInfo: TPost[] = [
 const Post = () => {
   const navigation = useNavigation(); // 네비게이션을 쓰기 위한 두가지 방법 중 하나 hook
 
+  const [id, setId] = useState(0);
   const [myId, setMyId] = useState("nieoodie"); // 내 아이디
   const [mypostPersonImage, setMypostPersonImage] = useState(
     require("../../../assets/images/jinho.jpeg")
   ); // 내 프로필 사진
 
   const [datas, setData] = useState(postInfo); // useState를 이용해 data라는 state를 만들어줌. postInfo를 넣어줌.
+
+  const [modal, setModal] = useState<boolean>(false);
+  const [shareModal, setShareModal] = useState<boolean>(false);
+  const [linkModal, setLinkModal] = useState<boolean>(false);
+  const [bookMark, setBookMark] = useState<boolean>(false);
 
   const likePressed = useCallback(
     // likePressed라는 함수를 usecallback을 이용해 만들어줌.
@@ -121,16 +131,17 @@ const Post = () => {
   const bookMarkPressed = useCallback(
     // 위와 같은 방식으로 북마크를 눌렀을 때의 함수를 만들어줌^^
     (id) => {
-      const newDatas = datas.map((data) => {
-        if (data.id === id) {
-          return {
-            ...data,
-            bookMark: !data.bookMark,
-          };
-        }
-        return data;
-      });
-      setData(newDatas);
+      setData((datas) =>
+        datas.map((data) => {
+          if (data.id === id) {
+            return {
+              ...data,
+              bookMark: !data.bookMark,
+            };
+          }
+          return data;
+        })
+      );
     },
     [datas, setData]
   );
@@ -166,12 +177,33 @@ const Post = () => {
     );
   };
 
+  const shareModalState = () => {
+    setModal(false);
+    setShareModal(true);
+  };
+
+  const linkModalState = () => {
+    setModal(false);
+    setLinkModal(true);
+  };
+
+  const save = (id) => {
+    setModal(false);
+    bookMarkPressed(id);
+  };
+
   useEffect(() => {
     events.addListener("saveRecomment", addRecomment);
     events.addListener("saveRecommentLike", addRecommentLike);
+    events.addListener("shareModal", shareModalState);
+    events.addListener("linkModal", linkModalState);
+    events.addListener("save", save);
+
     return () => {
       events.removeListener("saveRecomment");
       events.removeListener("saveRecommentLike");
+      events.removeListener("shareModal");
+      events.removeListener("linkModal");
     };
   }, []);
 
@@ -224,19 +256,29 @@ const Post = () => {
             }}
           >
             <View style={styles.view1}>
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Image
-                  source={data.postPersonImage}
-                  style={{ width: 40, height: 40, borderRadius: 100 }}
-                />
-                <View style={{ paddingLeft: 5 }}>
-                  <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                    {data.userId}
-                  </Text>
+              <TouchableOpacity>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Image
+                    source={data.postPersonImage}
+                    style={{ width: 40, height: 40, borderRadius: 100 }}
+                  />
+                  <View style={{ paddingLeft: 5 }}>
+                    <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                      {data.userId}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <Feather name="more-horizontal" style={{ fontSize: 20 }} />
+              </TouchableOpacity>
+              <Pressable
+                onPress={() => {
+                  setModal(true);
+                  setId(data.id);
+                }}
+              >
+                <Feather name="more-horizontal" style={{ fontSize: 20 }} />
+              </Pressable>
             </View>
+
             <View style={styles.view2}>
               <Image
                 source={data.postImage}
@@ -305,74 +347,93 @@ const Post = () => {
                 {data.comment}
               </Text>
             </View>
+
             <View style={styles.view3}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Comment", {
-                    comment: data.comment, //data의 comment를 인자로 넘겨줌. --> 누른 친구의 comment
-                    userId: data.userId, // data의 userId를 인자로 넘겨줌.
-                    postPersonImage: data.postPersonImage, // data의 postPersonImage를 인자로 넘겨줌.
-                    myId: myId, // myId를 인자로 넘겨줌.
-                    mypostPersonImage: mypostPersonImage, // mypostPersonImage를 인자로 넘겨줌.
-                    id: data.id, // data의 id를 인자로 넘겨줌.
-                    recomment: data.recomment, // data의 recomment를 인자로 넘겨줌.
-                  });
-                }}
-              >
-                <Text style={styles.text1}>
-                  {data.recommentCount == 0
-                    ? null
-                    : `댓글 ${data.recommentCount} 개 모두 보기`}
-                </Text>
-              </TouchableOpacity>
+              {data.recomment[0]?.recomment == null ? null : (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Comment", {
+                      comment: data.comment, //data의 comment를 인자로 넘겨줌. --> 누른 친구의 comment
+                      userId: data.userId, // data의 userId를 인자로 넘겨줌.
+                      postPersonImage: data.postPersonImage, // data의 postPersonImage를 인자로 넘겨줌.
+                      myId: myId, // myId를 인자로 넘겨줌.
+                      mypostPersonImage: mypostPersonImage, // mypostPersonImage를 인자로 넘겨줌.
+                      id: data.id, // data의 id를 인자로 넘겨줌.
+                      recomment: data.recomment, // data의 recomment를 인자로 넘겨줌.
+                    });
+                  }}
+                >
+                  <Text style={styles.text1}>
+                    {data.recommentCount == 0
+                      ? null
+                      : `댓글 ${data.recommentCount} 개 모두 보기`}
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View style={styles.view4}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Comment", {
-                    comment: data.comment,
-                    userId: data.userId,
-                    postPersonImage: data.postPersonImage,
-                    myId: myId,
-                    mypostPersonImage: mypostPersonImage,
-                    id: data.id,
-                    recomment: data.recomment,
-                  });
-                }}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ fontWeight: "bold" }}>
-                    {data.recomment[0]?.recomment == null ? null : data.userId}
-                  </Text>
-                  <View style={styles.view5}>
-                    <Text>{data.recomment[0]?.recomment}</Text>
+              {data.recomment[0]?.recomment == null ? null : (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Comment", {
+                      comment: data.comment,
+                      userId: data.userId,
+                      postPersonImage: data.postPersonImage,
+                      myId: myId,
+                      mypostPersonImage: mypostPersonImage,
+                      id: data.id,
+                      recomment: data.recomment,
+                    });
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontWeight: "bold" }}>
+                      {data.recomment[0]?.recomment == null
+                        ? null
+                        : data.userId}
+                    </Text>
+                    <View style={styles.view5}>
+                      <Text>{data.recomment[0]?.recomment}</Text>
+                    </View>
+                    <View style={{ justifyContent: "center" }}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          addRecommentLike({
+                            id: data.id,
+                            recomment_id: data.recomment[0]?.id,
+                          });
+                        }}
+                      >
+                        <AntDesign
+                          name={
+                            data.recomment[0]?.recommentLike
+                              ? "heart"
+                              : "hearto"
+                          }
+                          color={
+                            data.recomment[0]?.recommentLike ? "red" : "black"
+                          }
+                          style={{ paddingHorizontal: 7 }}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <View style={{ justifyContent: "center" }}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        addRecommentLike({
-                          id: data.id,
-                          recomment_id: data.recomment[0]?.id,
-                        });
-                      }}
-                    >
-                      <AntDesign
-                        name={
-                          data.recomment[0]?.recommentLike ? "heart" : "hearto"
-                        }
-                        color={
-                          data.recomment[0]?.recommentLike ? "red" : "black"
-                        }
-                        style={{ paddingHorizontal: 7 }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         );
       })}
+
+      <Modal Visible={modal} setVisible={setModal}>
+        <ModalScreen id={id} bookMark={bookMark} />
+      </Modal>
+      <Modal Visible={shareModal} setVisible={setShareModal}>
+        <ShareModal />
+      </Modal>
+      <Modal Visible={linkModal} setVisible={setLinkModal}>
+        <LinkModal />
+      </Modal>
     </View>
   );
 };
@@ -383,6 +444,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     padding: 15,
+    height: 60,
   },
 
   view2: {
