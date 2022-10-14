@@ -8,6 +8,7 @@ import {
   Pressable,
   Linking,
   Modal,
+  ImageBackground,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/Ionicons";
@@ -22,6 +23,7 @@ import AddUser2 from "./AddUser2";
 import Bells2 from "./Bells2";
 import Lock2 from "./Lock2";
 import Thema2 from "./Thema2";
+import User2 from "./User2";
 
 const navbars = [
   {
@@ -67,7 +69,7 @@ const navbars = [
     iconSize: 20,
   },
   {
-    navigateUri: "AddUser2",
+    navigateUri: "User2",
     text: "계정",
     iconName: "right",
     iconName2: "user",
@@ -116,11 +118,10 @@ export default function ScreenSetting({ navigation, route }) {
         {navbars.map((item, index) => (
           <Pressable
             onPress={() => {
-              if (item.navigateUri == "Lock2") {
-                navigation.navigate(item.navigateUri);
-                console.log("Not team2");
-              } else if (item.iconName2 == "team") {
+              if (item.iconName2 == "team") {
                 setModalVisible(true);
+              } else {
+                navigation.navigate(item.navigateUri);
               }
             }}
             key={index}
@@ -140,7 +141,7 @@ export default function ScreenSetting({ navigation, route }) {
           >
             <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible(false)}>
               <View style={styles.ModalBox}>
-                  <View style={styles.ModalView}>
+                <ImageBackground source={require("../components/Meridian.jpg")} style={styles.bgImage}>
                     <View style={{marginLeft:5}}>
                       <Ionic name="md-close-outline" size={30} color="#FFFAFA"/>
                     </View>
@@ -165,10 +166,10 @@ export default function ScreenSetting({ navigation, route }) {
                       </View>
                     </View>
                     <View style={{alignItems:'center'}}>
-                    <View style={{paddingTop: 20, paddingBottom: 20, paddingLeft: 10, backgroundColor:"#0A2229",width:"93%", borderRadius:10}}>
+                    <View style={{paddingTop: 20, paddingBottom: 20, paddingLeft: 10, backgroundColor:"#769188",width:"93%", borderRadius:10}}>
                       <Pressable style={({ pressed }) => [pressed && { opacity: 0.4 },]}
                         onPress={() => Linking.openURL("https://naver.com")}>
-                          <Text style={{color:"#013ADF"}}>계정 추가</Text>
+                          <Text style={{color:"#013ADF",}}>계정 추가</Text>
                       </Pressable>
                     </View>
                     </View>
@@ -176,7 +177,7 @@ export default function ScreenSetting({ navigation, route }) {
                       <Text style={{fontWeight:"bold", fontSize: 15, color:"#FFFAFA"}}>리소스</Text>
                     </View>
                     <View style={{alignItems:"center"}}>
-                      <View style={{padding: 8, borderRadius:10, backgroundColor: "#0A2229", width: "95%", height:"45%", justifyContent:"space-around"}}>
+                      <View style={{padding: 8, borderRadius:10, backgroundColor: "#769188", width: "95%", height:"45%", justifyContent:"space-around"}}>
                         <View style={{flexDirection: "row", justifyContent:"space-between"}}>
                           <Text style={{color:"#FFFAFA"}}>교육 허브</Text>
                           <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
@@ -191,7 +192,7 @@ export default function ScreenSetting({ navigation, route }) {
                         </View>
                       </View>
                     </View>
-                  </View>
+                </ImageBackground>
               </View>
             </Pressable>
           </Modal>
@@ -201,7 +202,7 @@ export default function ScreenSetting({ navigation, route }) {
         <Pressable
           style={({ pressed }) => [pressed && { opacity: 0.4 }]}
           onPress={() => Linking.openURL("https://naver.com")}
-        >
+          >
           <TextStyle text="계정 센터" />
         </Pressable>
         <Text style={styles.footertext}>
@@ -269,13 +270,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  ModalView: {
-    backgroundColor: "#0B1907",
-    height:"100%",
-  },
-
   ModalBox: {
     flex: 1,
     justifyContent: "flex-end"
+  },
+
+  bgImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
   }
+
 });

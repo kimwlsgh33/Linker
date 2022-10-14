@@ -15,6 +15,7 @@ import Bells2 from "../screens/Bells2";
 import Lock2 from "../screens/Lock2";
 import Safety2 from "../screens/Safety2";
 import Thema2 from "../screens/Thema2";
+import User2 from "../screens/User2";
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -110,6 +111,25 @@ function RootStack() {
         component={Safety2}
         options={{
           title: "보안",
+          headerTitleAlign: "left",
+          headerTintColor: "#FFFAFA",
+          headerStyle: { backgroundColor: "#000000" },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={styles.headertitle}
+            >
+              <Icon name={"left"} size={20} color="#FFFAFA" />
+            </Pressable>
+          ),
+        }}
+      />
+
+      <Stack.Screen
+        name="User2"
+        component={User2}
+        options={{
+          title: "계정",
           headerTitleAlign: "left",
           headerTintColor: "#FFFAFA",
           headerStyle: { backgroundColor: "#000000" },
