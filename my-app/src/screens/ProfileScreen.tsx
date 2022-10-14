@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
-  // ImageSourcePropType,
+  ImageSourcePropType,
   SafeAreaView,
   Image,
   Pressable,
@@ -53,10 +53,26 @@ const ProfileScreen = () => {
     });
   };
 
+  const onDelete = ({
+    profileImage,
+  }: {
+    profileImage: ImageSourcePropType;
+  }) => {
+    console.log("Edit Image");
+    setData((data) => {
+      return {
+        ...data,
+        profileImage: profileImage,
+      };
+    });
+  };
+
   useEffect(() => {
     events.addListener("saveEdit", onEdit);
+    events.addListener("deleteImage", onDelete);
     return () => {
       events.removeListener("saveEdit");
+      events.removeListener("deleteImage");
     };
   }, []);
 
@@ -161,7 +177,7 @@ const ProfileScreen = () => {
                       name="plus-square-o"
                       style={{
                         fontSize: 22,
-                        left: 90
+                        left: 90,
                       }}
                     />
                   </View>

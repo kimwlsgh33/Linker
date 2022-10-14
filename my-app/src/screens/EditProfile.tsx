@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -22,13 +22,13 @@ const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
   const [Visible, setVisible] = useState(false);
   const [disable, setDisable] = useState(true);
-  const [text, setText] = useState("");
 
   const TostMessage = () => {
     ToastAndroid.show("Edited Sucessfully !", ToastAndroid.SHORT);
   };
   const [edit, setEdit] = useState(""); // accountName이 저장되는 상태
   const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
+  const [image, setImage] = useState(profileImage); // image가 저장되는 상태
 
   // 저장 버튼 누르면
   const onEdit = () => {
@@ -38,13 +38,15 @@ const EditProfile = ({ route, navigation }) => {
     });
   };
 
-  const lengthChange = (text) => {
-    setText(text);
+  const onDelete = () => {
+    events.emit("deleteImage", {
+      profileImage: image,
+    });
   };
 
-  const lengthCheck = useCallback((accountName) => {
-    lengthChange(accountName);
-    if (accountName.length < 7) {
+  // 길이가 8자 미만이면 pressable (view)비활성화
+  const lengthCheck = useCallback((text) => {
+    if (text.length < 8) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -87,7 +89,8 @@ const EditProfile = ({ route, navigation }) => {
                 },
                 disable ? { opacity: 0.5 } : {},
               ]}
-                disabled={disable}
+              // eidt이 8자 미만이면 onPress 비활성화
+              disabled={edit.length < 8 || edit2 === ""}
             >
               <Ionic
                 name="checkmark"
@@ -96,7 +99,10 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image source={profileImage} style={styles.profileImage} />
+            <Image
+              source={profileImage}
+              style={styles.profileImage}
+            />
             <Modal
               Visible={Visible}
               setVisible={setVisible}
@@ -139,7 +145,7 @@ const EditProfile = ({ route, navigation }) => {
                     </Pressable>
                     <Pressable
                       onPress={() => {
-                        //프로필 사진 삭제 함수
+                        // onDelete();
                         setVisible(false);
                       }}
                       style={({ pressed }) => [
@@ -168,12 +174,14 @@ const EditProfile = ({ route, navigation }) => {
                 maxLength={10}
                 placeholder={accountName}
                 value={edit}
-                onChangeText={(text) => setEdit(text)}
-                onChange={() => lengthCheck(edit)}
+                onChangeText={(text) => {
+                  setEdit(text);
+                  lengthCheck(text);
+                }}
                 returnKeyType="next"
-                ref={ref_input[1]}
+                ref={ref_input[0]}
                 onSubmitEditing={() => {
-                  ref_input[2].current.focus();
+                  ref_input[1].current.focus();
                 }}
                 style={styles.textInput}
               />
@@ -185,9 +193,9 @@ const EditProfile = ({ route, navigation }) => {
                 value={edit2}
                 onChangeText={(text) => setEdit2(text)}
                 returnKeyType="next"
-                ref={ref_input[0]}
+                ref={ref_input[1]}
                 onSubmitEditing={() => {
-                  ref_input[1].current.focus();
+                  ref_input[2].current.focus();
                 }}
                 style={styles.textInput}
               />
