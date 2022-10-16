@@ -10,19 +10,27 @@ import {
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import events from "../../lib/eventEmiiter";
 import Modal from "../Modal";
-import ModalScreen from "../screenComponents/ModalScreen";
-import ShareModal from "../screenComponents/ShareModal";
-import LinkModal from "../screenComponents/LinkModal";
+import ModalScreen from "../modalScreen/ModalScreen";
+import ShareModal from "../modalScreen/ShareModal";
+import LinkModal from "../modalScreen/LinkModal";
+import QrModal from "../modalScreen/QrModal";
+import FavoirteModal from "../modalScreen/FavoriteModal";
+import FollowModal from "../modalScreen/followModal";
 
 type TRecomment = {
   id: number;
   recomment: string;
   recommentLike: boolean;
   recommentLikeCount: number;
+};
+
+type TFollowList = {
+  id: number;
 };
 
 type TPost = {
@@ -36,6 +44,8 @@ type TPost = {
   comment: string;
   recommentCount: number;
   recomment: TRecomment[];
+  favorite: boolean;
+  followList: TFollowList[];
 };
 
 const postInfo: TPost[] = [
@@ -52,6 +62,8 @@ const postInfo: TPost[] = [
     comment: "핡",
     recommentCount: 0, //  이 친구는 recomment배열의 길이로 바꾸는게 깔끔할듯.
     recomment: [],
+    favorite: false,
+    followList: [],
   },
   {
     id: 2_192312937123871,
@@ -64,6 +76,8 @@ const postInfo: TPost[] = [
     comment: "웅앵",
     recommentCount: 0,
     recomment: [],
+    favorite: false,
+    followList: [],
   },
   {
     id: 3_19248589574839,
@@ -76,6 +90,8 @@ const postInfo: TPost[] = [
     comment: "흐규",
     recommentCount: 0,
     recomment: [],
+    favorite: false,
+    followList: [],
   },
   {
     id: 4_38574857389,
@@ -88,6 +104,8 @@ const postInfo: TPost[] = [
     comment: "헐랭",
     recommentCount: 0,
     recomment: [],
+    favorite: false,
+    followList: [],
   },
 ];
 
@@ -106,6 +124,10 @@ const Post = () => {
   const [shareModal, setShareModal] = useState<boolean>(false);
   const [linkModal, setLinkModal] = useState<boolean>(false);
   const [bookMark, setBookMark] = useState<boolean>(false);
+  const [qrModal, setQrModal] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFollowed, setIsFollowed] = useState<boolean>(false);
 
   const likePressed = useCallback(
     // likePressed라는 함수를 usecallback을 이용해 만들어줌.
@@ -128,6 +150,22 @@ const Post = () => {
     [datas, setData] // data와 setData를 의존성 배열에 넣어줌.
   );
 
+  const followPressed = useCallback((id) => {
+    setData((datas) =>
+      datas.map((data) => {
+        if (data.id === id) {
+          return {
+            ...data,
+            followList: data.followList.includes(id)
+              ? data.followList.filter((ids) => ids !== id)
+              : [...data.followList, id],
+          };
+        }
+        return data;
+      })
+    );
+  }, []);
+
   const bookMarkPressed = useCallback(
     // 위와 같은 방식으로 북마크를 눌렀을 때의 함수를 만들어줌^^
     (id) => {
@@ -142,9 +180,25 @@ const Post = () => {
           return data;
         })
       );
+      setBookMark((prev) => !prev);
     },
     [datas, setData]
   );
+
+  const favoriteItem = (id) => {
+    setData((datas) =>
+      datas.map((data) => {
+        if (data.id === id) {
+          return {
+            ...data,
+            favorite: !data.favorite,
+          };
+        }
+        return data;
+      })
+    );
+    setFavorite((prev) => !prev);
+  };
 
   const addRecomment = ({
     recomment,
@@ -192,18 +246,35 @@ const Post = () => {
     bookMarkPressed(id);
   };
 
+  const qrModalState = () => {
+    setModal(false);
+    setQrModal(true);
+  };
+
+  const favoriteState = (id) => {
+    setModal(false);
+    favoriteItem(id);
+  };
+
   useEffect(() => {
     events.addListener("saveRecomment", addRecomment);
     events.addListener("saveRecommentLike", addRecommentLike);
     events.addListener("shareModal", shareModalState);
     events.addListener("linkModal", linkModalState);
     events.addListener("save", save);
+    events.addListener("qrModal", qrModalState);
+    events.addListener("favorite", favoriteState);
+    events.addListener("follow", followPressed);
 
     return () => {
       events.removeListener("saveRecomment");
       events.removeListener("saveRecommentLike");
       events.removeListener("shareModal");
       events.removeListener("linkModal");
+      events.removeListener("save");
+      events.removeListener("qrModal");
+      events.removeListener("favorite");
+      events.removeListener("follow");
     };
   }, []);
 
@@ -269,14 +340,28 @@ const Post = () => {
                   </View>
                 </View>
               </TouchableOpacity>
-              <Pressable
-                onPress={() => {
-                  setModal(true);
-                  setId(data.id);
-                }}
-              >
-                <Feather name="more-horizontal" style={{ fontSize: 20 }} />
-              </Pressable>
+              <View style={{ flexDirection: "row" }}>
+                {data.favorite ? (
+                  <Pressable
+                    onPress={() => {
+                      setIsFavorite(true);
+                    }}
+                  >
+                    <Ionicons
+                      name="star-half"
+                      style={{ fontSize: 20, marginRight: 10 }}
+                    />
+                  </Pressable>
+                ) : null}
+                <Pressable
+                  onPress={() => {
+                    setModal(true);
+                    setId(data.id);
+                  }}
+                >
+                  <Feather name="more-horizontal" style={{ fontSize: 20 }} />
+                </Pressable>
+              </View>
             </View>
 
             <View style={styles.view2}>
@@ -426,13 +511,22 @@ const Post = () => {
       })}
 
       <Modal Visible={modal} setVisible={setModal}>
-        <ModalScreen id={id} bookMark={bookMark} />
+        <ModalScreen id={id} bookMark={bookMark} favorite={favorite} />
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />
       </Modal>
       <Modal Visible={linkModal} setVisible={setLinkModal}>
         <LinkModal />
+      </Modal>
+      <Modal Visible={qrModal} setVisible={setQrModal}>
+        <QrModal />
+      </Modal>
+      <Modal Visible={isFavorite} setVisible={setIsFavorite}>
+        <FavoirteModal />
+      </Modal>
+      <Modal Visible={isFollowed} setVisible={setIsFollowed}>
+        <FollowModal />
       </Modal>
     </View>
   );

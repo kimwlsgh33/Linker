@@ -8,9 +8,17 @@ import FontAweSome5 from "react-native-vector-icons/FontAwesome5";
 import Evilcons from "react-native-vector-icons/EvilIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Orcticon from "react-native-vector-icons/Octicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import events from "../../lib/eventEmiiter";
 
-const ModalScreen = ({ id, bookMark }) => {
+type ModalProps = {
+  id: any;
+  bookMark: boolean;
+  favorite: boolean;
+  followList?: [number];
+};
+
+const ModalScreen = ({ id, bookMark, favorite, followList }: ModalProps) => {
   return (
     <View
       style={{
@@ -58,22 +66,22 @@ const ModalScreen = ({ id, bookMark }) => {
             events.emit("save", id);
           }}
         >
-          bookMark === false ? (
-          <View>
-            <Feather name="bookmark" size={25} color="#fff" />
-            <Text style={styles.textColor}>저장</Text>
-          </View>
-          :{" "}
-          <View>
-            <Feather name="bookmark-slash" size={25} color="#fff" />
-            <Text style={styles.textColor}>취소</Text>
-          </View>
-          )
+          {bookMark === false ? (
+            <View>
+              <Feather name="bookmark" size={25} color="#fff" />
+              <Text style={styles.textColor}>저장</Text>
+            </View>
+          ) : (
+            <View>
+              <Orcticon name="bookmark-slash" size={25} color="#fff" />
+              <Text style={styles.textColor}>취소</Text>
+            </View>
+          )}
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.topbox]}
           onPress={() => {
-            events.emit("closeModal");
+            events.emit("qrModal");
           }}
         >
           <View>
@@ -87,6 +95,7 @@ const ModalScreen = ({ id, bookMark }) => {
           </View>
         </TouchableOpacity>
       </View>
+
       <View
         style={{
           width: "100%",
@@ -102,26 +111,57 @@ const ModalScreen = ({ id, bookMark }) => {
             },
           ]}
         >
-          <AntDesign
-            name="star"
-            size={25}
-            color="#fff"
-            style={{ marginLeft: 10 }}
-          />
-          <Text style={[styles.textColor, { marginLeft: 10 }]}>
-            즐겨찾기에 추가
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              events.emit("favorite", id);
+            }}
+          >
+            {favorite === false ? (
+              <View style={{ flexDirection: "row" }}>
+                <AntDesign
+                  name="star"
+                  size={25}
+                  color="#fff"
+                  style={{ marginLeft: 10 }}
+                />
+                <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                  즐겨찾기에 추가
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <MaterialCommunityIcons
+                  name="star-off-outline"
+                  size={25}
+                  color="#fff"
+                  style={{ marginLeft: 10 }}
+                />
+                <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                  즐겨찾기에서 삭제
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
         </View>
         <View style={styles.centerBottomBox}>
-          <AntDesign
-            name="deleteuser"
-            size={25}
-            color="#fff"
-            style={{ marginLeft: 10 }}
-          />
-          <Text style={[styles.textColor, { marginLeft: 10 }]}>
-            팔로우 취소
-          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              events.emit("follow", id);
+            }}
+          >
+            {}
+            <View style={{ flexDirection: "row" }}>
+              <AntDesign
+                name="deleteuser"
+                size={25}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                팔로우 취소
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={{ width: "100%", height: "27%", alignItems: "center" }}>
