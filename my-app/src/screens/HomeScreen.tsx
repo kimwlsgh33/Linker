@@ -5,7 +5,7 @@ import Feather from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "@aws-amplify/datastore";
-import { Followers, User } from "../models";
+import { User } from "../models";
 
 function HomeScreen() {
   const navigation = useNavigation();
@@ -34,7 +34,14 @@ function HomeScreen() {
       <TouchableOpacity
         onPress={() => {
           (async () => {
-            await DataStore.save(new Followers({}));
+            await DataStore.save(
+              new User({
+                username: "abkorc33",
+                email: "abkorc33@gmail.com",
+                followersID: "12354",
+                likepostID: "1231213",
+              })
+            );
           })();
         }}
       >
