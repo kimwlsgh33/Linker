@@ -57,5 +57,6 @@ type User @model @auth(rules: [{allow: public}]) {
   Followings: Followings @hasOne
   followersID: ID! @index(name: "byFollowers")
   likepostID: ID! @index(name: "byLikes")
+  password: String
 }
  
