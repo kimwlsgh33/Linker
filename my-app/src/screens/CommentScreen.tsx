@@ -85,7 +85,7 @@ const CommentScreen = ({ route, Navigation }) => {
       <View style={styles.view1}>
         <TouchableOpacity
           onPress={() => {
-            return navigation.navigate("BottomTabScreen");
+            return navigation.navigate("HomeTab");
           }}
         >
           <Ionic name="chevron-back-outline" style={{ fontSize: 30 }} />

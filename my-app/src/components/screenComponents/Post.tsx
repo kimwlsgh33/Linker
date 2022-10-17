@@ -20,36 +20,10 @@ import ShareModal from "../modalScreen/ShareModal";
 import LinkModal from "../modalScreen/LinkModal";
 import QrModal from "../modalScreen/QrModal";
 import FavoirteModal from "../modalScreen/FavoriteModal";
-import FollowModal from "../modalScreen/followModal";
+import FollowModal from "../modalScreen/FollowModal";
+import { TPost1 } from "../../global";
 
-type TRecomment = {
-  id: number;
-  recomment: string;
-  recommentLike: boolean;
-  recommentLikeCount: number;
-};
-
-type TFollowList = {
-  id: number;
-  follow: boolean;
-};
-
-type TPost = {
-  id: number;
-  userId: string;
-  postPersonImage: ImageSourcePropType;
-  postImage: ImageSourcePropType;
-  likes: number;
-  isLiked: boolean;
-  bookMark: boolean;
-  comment: string;
-  recommentCount: number;
-  recomment: TRecomment[];
-  favorite: boolean;
-  followList: TFollowList[];
-};
-
-const postInfo: TPost[] = [
+const postInfo: TPost1[] = [
   // postInfo라는 배열에 객체(데이터)를 넣어줌.
   {
     // postInfo[0]
