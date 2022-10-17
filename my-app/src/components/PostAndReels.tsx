@@ -2,7 +2,7 @@ import React from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import SearchReel from "./SearchReel";
 import SearchPost from "./SearchPost";
-import { TPost, TReel } from "../screens/screen";
+import { TPost, TReel } from "../global";
 
 const { width } = Dimensions.get("window");
 const POST_WIDTH = (width - 6) / 3;
