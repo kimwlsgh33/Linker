@@ -1,12 +1,16 @@
-import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Stories from "../components/screenComponents/Stories";
 import Post from "../components/screenComponents/Post";
+import React from "react";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
+import { useNavigation } from "@react-navigation/native";
+// import { DataStore } from "@aws-amplify/datastore";
+// import { Followers, User } from "../models";
 
 function HomeScreen() {
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
       <View
