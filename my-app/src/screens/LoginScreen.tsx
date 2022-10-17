@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import React from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -62,37 +63,6 @@ const LoginScreen = () => {
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
 
-  // const userInfo = [
-  //   {
-  //     id: "admin",
-  //     password: "admin",
-  //     isLogin: false,
-  //   },
-  // ];
-
-  // const [data, setData] = useState(userInfo);
-  // const loginPressed = (id) => {
-  //   const newDatas = data.map((data) => {
-  //     if (data.id === id) {
-  //       return {
-  //         ...data,
-  //         isLogin: !data.isLogin,
-  //       };
-  //     }
-  //     return data;
-  //   });
-  //   setData(newDatas);
-  // };
-
-  // const onFocusNext = (index: number) => {
-  //   if (ref_input[index + 1] && index < ref_input.length - 1) {
-  //     ref_input[index + 1].current?.focus();
-  //   }
-  //   if (ref_input[index + 1] && index == ref_input.length - 1) {
-  //     ref_input[index].current?.blur();
-  //   }
-  // };
-
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -102,7 +72,6 @@ const LoginScreen = () => {
             behavior={Platform.OS === "ios" ? "height" : undefined}
           >
             <TextInput
-              // key={data[0].id}
               returnKeyType="next"
               ref={ref_input[0]}
               onChange={onChange}
@@ -139,10 +108,6 @@ const LoginScreen = () => {
                 ]}
                 android_ripple={{ color: "#FFF" }}
                 disabled={disable}
-                // onPress={() => {
-                //   loginPressed(data[0].id), navigation.navigate("BottomTab");
-                // }}
-                // disabled={data[0].isLogin ? !disable : disable}
               >
                 <Text style={styles.buttonText}>로그인</Text>
               </Pressable>
