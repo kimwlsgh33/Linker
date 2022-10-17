@@ -55,30 +55,18 @@ function RootStack() {
         <Stack.Screen name="Details" component={DetailScreen} />
         <Stack.Screen name="Post" component={PostScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
-        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
-      </Stack.Group>
-
-      <Stack.Group>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="EditProfile"
-          component={EditProfile}
-          options={{ headerShown: false }}
-        />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
+      </Stack.Group>
+
+      <Stack.Group screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="SignUp" component={SignUp} />
       </Stack.Group>
     </Stack.Navigator>
   );
 }
 
 export default RootStack;
-
-{
-  /*RootStack.js의 Stack.Navigator 뒤에 initialRouteName="화면이름" */
-}

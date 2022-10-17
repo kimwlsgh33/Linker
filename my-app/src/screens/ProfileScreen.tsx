@@ -146,10 +146,7 @@ const ProfileScreen = () => {
                     ]}
                   >
                     <View style={styles.modalIcon2}>
-                      <Entypo
-                        name="plus"
-                        style={{ fontSize: 20, color: "#000" }}
-                      />
+                      <Entypo name="plus" style={{ fontSize: 20, color: "#000" }}/>
                     </View>
                     <Text style={styles.modalText}>계정 추가</Text>
                   </Pressable>
