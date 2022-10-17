@@ -15,15 +15,7 @@ import Ionic from "react-native-vector-icons/Ionicons";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
 import TextStyle from "../components/TextStyle";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import AddUser2 from "./AddUser2";
-import Bells2 from "./Bells2";
-import Lock2 from "./Lock2";
-import Thema2 from "./Thema2";
-import User2 from "./User2";
+
 
 const navbars = [
   {

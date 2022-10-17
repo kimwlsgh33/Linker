@@ -16,6 +16,7 @@ import Lock2 from "../screens/Lock2";
 import Safety2 from "../screens/Safety2";
 import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
+import PersonalData from "../screens/PersonalData";
 
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
@@ -162,6 +163,26 @@ function RootStack() {
           ),
         }}
       />
+
+      <Stack.Screen
+        name="PersonalData"
+        component={PersonalData}
+        options={{
+          title: "개인정보",
+          headerTitleAlign: "left",
+          headerTintColor: "#FFFAFA",
+          headerStyle: { backgroundColor: "#000000" },
+          headerLeft: () => (
+            <Pressable
+              onPress={() => navigation.goBack()}
+              style={styles.headertitle}
+            >
+              <Icon name={"left"} size={20} color="#FFFAFA" />
+            </Pressable>
+          ),
+        }}
+      />
+
     </Stack.Navigator>
   );
 }

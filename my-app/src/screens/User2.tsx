@@ -24,12 +24,12 @@ import ScreenSetting from "./ScreenSetting";
 const Stack = createNativeStackNavigator();
 
 function User2({ navigation, route }) {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
     <ScrollView style={styles.container}>
+      <Pressable onPress={() => navigation.navigate("PersonalData")}>
         <Text style={styles.User2text}>개인정보</Text>
+      </Pressable>
         <Text style={styles.User2text}>저장됨</Text>
         <Text style={styles.User2text}>친한 친구</Text>
         <Text style={styles.User2text}>계정 상태</Text>
