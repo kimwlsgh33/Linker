@@ -17,7 +17,6 @@
     "@react-navigation/material-top-tabs": "^6.3.0",
     "@react-navigation/native": "^6.0.13",
     "@react-navigation/native-stack": "^6.9.0",
-    "eventemitter3": "^4.0.7",
     "amazon-cognito-identity-js": "^5.2.11",
     "aws-amplify": "^4.3.39",
     "aws-amplify-react-native": "^6.0.5",

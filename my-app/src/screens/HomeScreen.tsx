@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -8,7 +9,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import Stories from "../components/screenComponents/Stories";
 import Post from "../components/screenComponents/Post";
-import React from "react";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
@@ -41,24 +41,10 @@ function HomeScreen() {
         </Text>
         <Feather name="send" style={{ fontSize: 24 }} />
       </View>
-      <TouchableOpacity
-        onPress={() => {
-          (async () => {
-            await DataStore.save(
-              new User({
-                username: "abkorc33",
-                email: "abkorc33@gmail.com",
-                followersID: "12354",
-                likepostID: "1231213",
-              })
-            );
-          })();
-        }}
-      >
-        <View
-          style={{ width: 100, height: 100, backgroundColor: "gray" }}
-        ></View>
-      </TouchableOpacity>
+      <ScrollView>
+        <Stories />
+        <Post />
+      </ScrollView>
     </SafeAreaView>
   );
 }
