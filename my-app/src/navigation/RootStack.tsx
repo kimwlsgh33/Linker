@@ -6,7 +6,7 @@ import { createAppContainer } from "react-navigation";
 import DetailScreen from "../screens/DetailScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ScreenSetting from "../screens/ScreenSetting";
-import HomeTab from "../nav/HomeTab";
+import HomeTab from "./HomeTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 import Icon from "react-native-vector-icons/AntDesign";
