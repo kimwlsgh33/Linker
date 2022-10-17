@@ -20,7 +20,7 @@ const PwRe = () => {
   const navigation = useNavigation();
 
   const goHome = () => {
-    navigation.navigate("Home" as any);
+    navigation.navigate("HomeTab" as any);
   };
 
   const pwCheck = (pw) => {

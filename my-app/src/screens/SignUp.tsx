@@ -7,8 +7,6 @@ import React, {
   useEffect,
 } from "react";
 import {
-  KeyboardAvoidingView,
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -21,13 +19,9 @@ import {
   Pressable,
   Linking,
 } from "react-native";
-//import { useForm } from "react-hook-form";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import LoginScreen from "./LoginScreen";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import styled from "styled-components/native";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../models";
 
@@ -48,15 +42,6 @@ const SignUp = () => {
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
-
-  // const onFocusNext = (index: number) => {
-  //   if (ref_input[index + 1] && index < ref_input.length - 1) {
-  //     ref_input[index + 1].current?.focus();
-  //   }
-  //   if (ref_input[index + 1] && index == ref_input.length - 1) {
-  //     ref_input[index].current?.blur();
-  //   }
-  // };
 
   const Stack = createNativeStackNavigator();
 
@@ -81,23 +66,8 @@ const SignUp = () => {
         likepostID: "1234",
       })
     );
-
-    // navigation.navigate("TOS" as any);
+    navigation.navigate("TOS" as any);
   };
-  /*
-  const StyledView = styled.View`
-  margin: 5px;
-  border-radius: 10px;
-  border-width: 1px;
-    border-color: black;
-    height: 30px;
-    width: 60px;
-    align-items: center;
-    justify-content: center;
-    opacity: ${({ pressed }) => (pressed ? 0.55 : 1)};
-    Platform.select({ios: {opacity: pressed ? 0.55 : 1}, android: {opacity: pressed ? 0.55 : 1}});
-  `;
-  const Text = styled.Text``; */
 
   function counter() {
     const boot = useEffect(() => {

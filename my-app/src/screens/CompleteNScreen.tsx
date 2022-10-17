@@ -5,13 +5,13 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-community/masked-view";
+import MaskedView from "@react-native-masked-view/masked-view";
 
 const CompleteNScreen = () => {
   const navigation = useNavigation();
 
   const goHome = () => {
-    navigation.navigate("Home" as any);
+    navigation.navigate("HomeTab" as any);
   };
 
   const LinearGradientProps = {
