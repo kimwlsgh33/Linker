@@ -9,5 +9,6 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "java.configuration.updateBuildConfiguration": "automatic"
   "typescript.tsdk": "node_modules\\typescript\\lib",
 }

@@ -1,9 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { DataStore } from "@aws-amplify/datastore";
+import { Followers, User } from "../models";
 
 function HomeScreen() {
   const navigation = useNavigation();
@@ -29,7 +31,13 @@ function HomeScreen() {
         </Text>
         <Feather name="navigation" style={{ fontSize: 24 }} />
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate("Story")}>
+      <TouchableOpacity
+        onPress={() => {
+          (async () => {
+            await DataStore.save(new Followers({}));
+          })();
+        }}
+      >
         <View
           style={{ width: 100, height: 100, backgroundColor: "blue" }}
         ></View>

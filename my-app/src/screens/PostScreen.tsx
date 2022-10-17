@@ -1,12 +1,18 @@
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
 function PostScreen({ route }) {
   const { post } = route.params;
-  console.log(post);
   return (
     <View style={styles.container}>
-      <Image source={{ uri: post.uri }} style={styles.image} />
+      <FlatList
+        data={post.images}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          console.log(item);
+          return <Image source={{ uri: item.uri }} style={styles.image} />;
+        }}
+      />
       <Text>{post?.createdAt}</Text>
     </View>
   );

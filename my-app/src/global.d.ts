@@ -1,27 +1,31 @@
 /**
- * 네비게이션 스크린의 타입
- *
- * key: 네비게이션 스크린의 이름
- * params: 네비게이션 스크린에 전달할 파라미터
+ * 기존의 네비게이션 스크린의 타입을 지우고,
+ * 스크린 내부에서 사용할 데이터의 타입을 지정하는 파일로 변경
+ * 여러 스크린에서, 동일한 타입의 데이터를 사용하는 경우가 많기 때문에, (ex 유저정보)
+ * 스크린 외부에서, 하나의 파일로 관리한다.
  */
-declare namespace ReactNavigation {
-  interface RootParamList {
-    BottomTab: any;
-    Welcome: any;
-    Details: any;
-    Post: any;
-    Story: any;
-    Instagram: any;
-    Search: any;
-    Reels: any;
-    Detail: any;
-    Profile: any;
-    Setting: any;
-    AddUser2: any;
-    Bells2: any;
-    Lock2: any;
-    Safety2: any;
-    Thema2: any;
-    PersonalData: any;
-  }
-}
+
+export type TImage = {
+  id: string;
+  uri: string;
+};
+
+export type TPost = {
+  id: string;
+  user_id: string;
+  images: TImage[];
+  createdAt: string;
+};
+
+export type TReel = {
+  id: string;
+  type: string;
+  uri: string;
+  createdAt: string;
+};
+
+export type TPostAndReels = {
+  id: string;
+  posts: TPost[];
+  reels: TReel[];
+};
