@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
-import { RootStackScreenProps } from "../navigation/types";
+import { RootStackScreenProps } from "../nav/types";
 
 function DiscoverScreen({ route }: RootStackScreenProps<"Discover">) {
   const { post } = route.params;

@@ -6,7 +6,7 @@ import { createAppContainer } from "react-navigation";
 import DetailScreen from "../screens/DetailScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ScreenSetting from "../screens/ScreenSetting";
-import BottomTab from "./BottomTab";
+import HomeTab from "../nav/HomeTab";
 import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 import Icon from "react-native-vector-icons/AntDesign";
@@ -42,16 +42,6 @@ function RootStack() {
           ),
         }}
       />
-      <Stack.Screen
-        name="BottomTab"
-        component={BottomTab}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-      <Stack.Screen name="Details" component={DetailScreen} />
-      <Stack.Screen name="Post" component={PostScreen} />
-      <Stack.Screen name="Story" component={StoryScreen} />
-      <Stack.Screen name="SignUp" component={SignUp} />
 
       <Stack.Screen
         name="AddUser2"
