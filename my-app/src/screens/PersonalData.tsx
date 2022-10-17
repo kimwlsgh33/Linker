@@ -19,6 +19,7 @@ import TextStyle from "../components/TextStyle";
 
 function PersonalData() {
 
+  const [text, onChangeText] = useState("Useless Text");
 
   return (
     <View style={styles.container}>
@@ -26,6 +27,15 @@ function PersonalData() {
         <View style={styles.PersonalTopView}>
             <Text style={styles.PersonalTop}>비즈니스나 반려동물 등에 사용된 계정인 경우에도 회원님의 개인 정보를 입력하세요. 공개 프로필에 포함되지 않습니다.</Text>
         </View>
+    </View>
+    <View>
+      <TextInput
+            style={styles.input}
+            onChangeText={onChangeText}
+            value={text}
+            placeholder="검색"
+            placeholderTextColor="#FFFAFA"
+      />
     </View>
     </View>
   );
@@ -46,20 +56,16 @@ const styles = StyleSheet.create({
   },
 
   PersonalTopView: {
-    // backgroundColor: "red",
     width: "78%",
-    borderWidth: 1,
   },
 
   PersonalTopViewBox: {
     width:"100%",
     alignItems:"center",
-    borderwidth: 1,
-    // borderTopColor: "#333333",
-    borderTopColor: "red",
+    borderWidth: 1,
+    borderTopColor: "#333333",
     borderBottomColor: "#333333",
-    // backgroundColor:"blue",
-    padding: 5
+    padding: 5,
   }
 
 });

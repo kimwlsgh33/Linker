@@ -2,7 +2,6 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { createAppContainer } from "react-navigation";
 import DetailScreen from "../screens/DetailScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import ScreenSetting from "../screens/ScreenSetting";
@@ -17,9 +16,6 @@ import Safety2 from "../screens/Safety2";
 import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
-
-import SignUp from "../screens/SignUp";
-import LoginScreen from "../screens/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
