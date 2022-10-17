@@ -95,154 +95,154 @@ function RootStack() {
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
       </Stack.Group>
-    <Stack.Group>
-      <Stack.Screen
-        name="Setting"
-        component={ScreenSetting}
-        options={{
-          title: "설정",
-          headerTitleAlign: "center",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable onPress={() => navigation.goBack()}>
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+      <Stack.Group>
+        <Stack.Screen
+          name="Setting"
+          component={ScreenSetting}
+          options={{
+            title: "설정",
+            headerTitleAlign: "center",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable onPress={() => navigation.goBack()}>
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="AddUser2"
-        component={AddUser2}
-        options={{
-          title: "친구 팔로우 및 초대",
-          headerTitleAlign: "center",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable onPress={() => navigation.goBack()}>
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="AddUser2"
+          component={AddUser2}
+          options={{
+            title: "친구 팔로우 및 초대",
+            headerTitleAlign: "center",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable onPress={() => navigation.goBack()}>
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="Bells2"
-        component={Bells2}
-        options={{
-          title: "알림",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="Bells2"
+          component={Bells2}
+          options={{
+            title: "알림",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="Lock2"
-        component={Lock2}
-        options={{
-          title: "개인정보 보호",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="Lock2"
+          component={Lock2}
+          options={{
+            title: "개인정보 보호",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="Safety2"
-        component={Safety2}
-        options={{
-          title: "보안",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="Safety2"
+          component={Safety2}
+          options={{
+            title: "보안",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="User2"
-        component={User2}
-        options={{
-          title: "계정",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="User2"
+          component={User2}
+          options={{
+            title: "계정",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="Thema2"
-        component={Thema2}
-        options={{
-          title: "테마 설정",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="Thema2"
+          component={Thema2}
+          options={{
+            title: "테마 설정",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-      <Stack.Screen
-        name="PersonalData"
-        component={PersonalData}
-        options={{
-          title: "개인정보",
-          headerTitleAlign: "left",
-          headerTintColor: "#FFFAFA",
-          headerStyle: { backgroundColor: "#000000" },
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={styles.headertitle}
-            >
-              <Icon name={"left"} size={20} color="#FFFAFA" />
-            </Pressable>
-          ),
-        }}
-      />
+        <Stack.Screen
+          name="PersonalData"
+          component={PersonalData}
+          options={{
+            title: "개인정보",
+            headerTitleAlign: "left",
+            headerTintColor: "#FFFAFA",
+            headerStyle: { backgroundColor: "#000000" },
+            headerLeft: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={styles.headertitle}
+              >
+                <Icon name={"left"} size={20} color="#FFFAFA" />
+              </Pressable>
+            ),
+          }}
+        />
 
-    </Stack.Group>
+      </Stack.Group>
     </Stack.Navigator>
   );
 }
