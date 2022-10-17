@@ -186,6 +186,29 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
+		7C3F2919DBF44052BA774214 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				E25DE0676D20463689F2B4A6 /* BungeeSpice-Regular.ttf */,
+				A1D8305DCB8647F79D6F28A4 /* NotoSerifKR-Black.otf */,
+				E05132513E524CDE89033850 /* NotoSerifKR-Bold.otf */,
+				18EED64312C747E69844FD3F /* NotoSerifKR-ExtraLight.otf */,
+				045C4A7F789F48A6BC044153 /* NotoSerifKR-Light.otf */,
+				F009B49B6D0E47018EB3CA86 /* NotoSerifKR-Medium.otf */,
+				33B9E37CA350497281D415D1 /* NotoSerifKR-Regular.otf */,
+				F10EC4C65653462180B5E766 /* NotoSerifKR-SemiBold.otf */,
+				DF7DA55621BB4191AE2A2D31 /* BackToSchoolRegular.ttf */,
+				119F751CDA4846F3A65EEAC7 /* GangwonEduAllBold.ttf */,
+				7611D55F2A5F495CADBE50D3 /* GangwonEduAllLight.ttf */,
+				023C900BEDA341BDB377A62A /* Lobster-Regular.ttf */,
+				9815CA0F873B4BD096571F3A /* 강원교육새음.ttf */,
+				A60C78FA95BA4FFE8022A521 /* 강원교육튼튼.ttf */,
+				F52768E4CCBA4527A46103F8 /* 강원교육현옥샘.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
