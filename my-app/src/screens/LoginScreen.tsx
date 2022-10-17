@@ -1,111 +1,173 @@
+import { useCallback, useRef, useState } from "react";
 import React from "react";
 import {
+  TouchableWithoutFeedback,
   KeyboardAvoidingView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
+  Platform,
+  Keyboard,
+  Pressable,
 } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [disable, setDisable] = useState(true);
+
+  const handleIdChange = (text) => {
+    setId(text);
+  };
+  const handlePwChange = (text) => {
+    setPassword(text);
+  };
+
+  const idCheck = useCallback((id) => {
+    handleIdChange(id);
+
+    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+    const phnum = /^[0-9]{10,11}$/;
+
+    if (regExp.test(id) || phnum.test(id)) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, []);
+
+  const pwCheck = useCallback((password) => {
+    handlePwChange(password);
+    if (password.length < 8) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, []);
+
+  const [text, setText] = useState("");
+
+  const onChange = (e: any) => {
+    setText(e.target.value);
+  };
+
+  const onReset = () => {
+    setText("");
+  };
+
+  const ref_input: Array<React.RefObject<TextInput>> = [];
+  ref_input[0] = useRef(null);
+  ref_input[1] = useRef(null);
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.logo}>instagram</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="전화번호, 이메일 주소 또는 사용자 이름"
-          style={[styles.input, styles.buttonOutline]}
-        />
-        <TextInput
-          placeholder="비밀번호"
-          style={[styles.input, styles.buttonOutline]}
-          secureTextEntry
-        />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>로그인</Text>
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.text}>
-          로그인 상세정보를 잊으셨나요?
-          <Text style={styles.link}>로그인 도움말 보기.</Text>
-        </Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: "#ccc",
-              width: "90%",
-            }}
-          />
-          <View>
-            <Text
-              style={{
-                fontFamily: "강원교육모두 Bold",
-                width: 50,
-                textAlign: "center",
-                color: "gray",
-              }}
-            >
-              OR
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              height: 1,
-              backgroundColor: "#ccc",
-              width: "90%",
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.buttonOutline2]}>
-          <Text style={styles.buttonOutlineText}>
-            <Icon name="logo-facebook" size={15} color="#0782F9" />
-            Facebook으로 로그인
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <View
-          style={{
-            marginTop: 125,
-            borderTopWidth: 1,
-            borderTopColor: "#ccc",
-            width: "100%",
-            position: "absolute",
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "강원교육모두 Light",
-              color: "gray",
-              fontSize: 11,
-              padding: 13,
-              textAlign: "center",
-            }}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.logo}>instagram</Text>
+        <View style={styles.inputContainer}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "height" : undefined}
           >
-            계정이 없으신가요?
-            <Text
-              style={{
-                fontFamily: "강원교육모두 Bold",
-                color: "#404040",
-                fontSize: 11,
-                padding: 13,
-                textAlign: "center",
+            <TextInput
+              returnKeyType="next"
+              ref={ref_input[0]}
+              onChange={onChange}
+              value={text}
+              onSubmitEditing={() => {
+                ref_input[1].current.focus();
               }}
+              placeholder="전화번호, 이메일 주소 또는 사용자 이름"
+              style={[styles.input, styles.buttonOutline]}
+              onChangeText={idCheck}
+            />
+            <TextInput
+              returnKeyType="next"
+              ref={ref_input[1]}
+              onChange={onChange}
+              value={text}
+              onSubmitEditing={() => null}
+              placeholder="비밀번호"
+              style={[styles.input, styles.buttonOutline]}
+              onChangeText={pwCheck}
+              secureTextEntry
+            />
+            <View style={styles.buttonContainer}>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate("HomeTab"), onReset();
+                }}
+                style={({ pressed }) => [
+                  styles.button,
+                  Platform.select({
+                    ios: { opacity: pressed ? 0.5 : 1 },
+                  }),
+                  disable ? { opacity: 0.5 } : {},
+                ]}
+                android_ripple={{ color: "#FFF" }}
+                disabled={disable}
+              >
+                <Text style={styles.buttonText}>로그인</Text>
+              </Pressable>
+            </View>
+          </KeyboardAvoidingView>
+          <Text style={styles.text}>
+            로그인 상세정보를 잊으셨나요?
+            <Text
+              onPress={() => navigation.navigate("SignUp")}
+              style={styles.link}
             >
-              가입하기.
+              로그인 도움말 보기.
             </Text>
           </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={styles.bar} />
+            <View>
+              <Text style={styles.barText}>OR</Text>
+            </View>
+            <View style={styles.bar} />
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              styles.buttonOutline2,
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <Text style={styles.buttonOutlineText}>
+              <Icon name="logo-facebook" size={15} color="#0782F9" />
+              Facebook으로 로그인
+            </Text>
+          </Pressable>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <View style={styles.bar2}></View>
+          <Text style={styles.text2}>계정이 없으신가요?</Text>
+          <View>
+            <Pressable
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <Text
+                onPress={() => navigation.navigate("SignUp")}
+                style={styles.text3}
+              >
+                가입하기.
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -117,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    fontFamily: "BackToSchool",
+    fontFamily: "BackToSchoolRegular",
     color: "black",
     fontSize: 50,
     marginBottom: 18,
@@ -126,13 +188,25 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   input: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     backgroundColor: "#ccc",
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 10,
+  },
+  bar: {
+    flex: 1,
+    height: 1,
+    backgroundColor: "#ccc",
+    width: "90%",
+  },
+  barText: {
+    fontFamily: "GangwonEduAllBold",
+    width: 50,
+    textAlign: "center",
+    color: "gray",
   },
   buttonContainer: {
     justifyContent: "center",
@@ -148,38 +222,57 @@ const styles = StyleSheet.create({
   },
   buttonOutline: {
     backgroundColor: "#f9f9f9",
-    marginTop: 5,
     borderColor: "#ccc",
     borderWidth: 1,
   },
   buttonText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "white",
     fontSize: 16,
   },
   text: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     color: "#404040",
     fontSize: 11,
     padding: 13,
     textAlign: "center",
   },
   link: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "#404040",
     fontSize: 11,
-    padding: 13,
-    textAlign: "center",
   },
   buttonOutlineText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "#0782F9",
     fontSize: 13,
   },
   buttonOutline2: {
     backgroundColor: "#fff",
     borderColor: "#fff",
-    borderWidth: 1,
+  },
+  bar2: {
+    marginTop: 130,
+    borderTopWidth: 1,
+    borderTopColor: "#ccc",
+    width: "100%",
+    position: "absolute",
+  },
+  text2: {
+    fontFamily: "GangwonEduAllLight",
+    color: "gray",
+    fontSize: 11,
+    position: "absolute",
+    marginTop: 148,
+    paddingRight: 40,
+  },
+  text3: {
+    fontFamily: "GangwonEduAllBold",
+    color: "#404040",
+    fontSize: 11,
+    position: "absolute",
+    marginTop: 148,
+    marginLeft: 20,
   },
 });
 

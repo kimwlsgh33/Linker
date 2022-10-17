@@ -11,9 +11,8 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Platform,
   TouchableOpacity,
+  Platform,
   TouchableWithoutFeedback,
   Keyboard,
   Pressable,
@@ -25,9 +24,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../models";
 
-function ExampleView(props) {
-  return <Icon name="ios-person" size={30} color="#4F8EF7" />;
-}
+// function ExampleView(props) {
+//   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
+// }
 
 const SignUp = () => {
   const [id, setId] = useState("");

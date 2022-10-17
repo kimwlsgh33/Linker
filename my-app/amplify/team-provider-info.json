@@ -13,17 +13,14 @@
       "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-linker-dev-164521-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
+      "auth": {
+        "linker": {}
+      },
       "function": {
         "linker79365aeb": {
           "deploymentBucketName": "amplify-linker-dev-164521-deployment",
           "s3Key": "amplify-builds/linker79365aeb-3075354352544f496341-build.zip"
         }
-      },
-      "auth": {
-        "linker": {}
-      },
-      "api": {
-        "api3c39071c": {}
       }
     }
   }
