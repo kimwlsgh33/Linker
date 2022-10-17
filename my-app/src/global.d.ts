@@ -25,7 +25,7 @@ export type TRecomment = {
 };
 
 export type TFollowList = {
-  id: number;
+  userId: string;
   follow: boolean;
 };
 

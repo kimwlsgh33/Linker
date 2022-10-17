@@ -22,6 +22,7 @@ import QrModal from "../modalScreen/QrModal";
 import FavoirteModal from "../modalScreen/FavoriteModal";
 import FollowModal from "../modalScreen/FollowModal";
 import { TPost1 } from "../../global";
+import { User } from "../../models";
 
 const postInfo: TPost1[] = [
   // postInfo라는 배열에 객체(데이터)를 넣어줌.
@@ -87,6 +88,7 @@ const postInfo: TPost1[] = [
 const Post = () => {
   const navigation = useNavigation(); // 네비게이션을 쓰기 위한 두가지 방법 중 하나 hook
 
+  const [userId, setUserId] = useState("");
   const [id, setId] = useState(0);
   const [myId, setMyId] = useState("nieoodie"); // 내 아이디
   const [mypostPersonImage, setMypostPersonImage] = useState(
@@ -126,17 +128,15 @@ const Post = () => {
     [datas, setData] // data와 setData를 의존성 배열에 넣어줌.
   );
 
-  const followPressed = useCallback((id) => {
-    console.log(id);
+  const followPressed = useCallback((userId) => {
     setData((datas) =>
       datas.map((data) => {
-        if (data.id === id) {
-          console.log("같아요!!");
+        if (data.userId === userId) {
           return {
             ...data,
-            followList: data.followList.includes(id)
-              ? data.followList.filter((ids) => ids !== id)
-              : [...data.followList, id],
+            followList: data.followList.includes(userId)
+              ? data.followList.filter((ids) => ids !== userId)
+              : [...data.followList, userId],
           };
         }
 
@@ -144,6 +144,10 @@ const Post = () => {
       })
     );
     setIsFollowed((prev) => !prev);
+  }, []);
+
+  useEffect(() => {
+    console.log(datas[0]?.followList[0]);
   }, []);
 
   const bookMarkPressed = useCallback(
@@ -240,8 +244,8 @@ const Post = () => {
     console.log(datas[0].followList);
   }, [datas[0].followList]);
 
-  const followState = (id) => {
-    followPressed(id);
+  const followState = (userId) => {
+    followPressed(userId);
     setModal(false);
     setFollow(true);
   };
@@ -347,6 +351,7 @@ const Post = () => {
                   onPress={() => {
                     setModal(true);
                     setId(data.id);
+                    setUserId(data.userId);
                   }}
                 >
                   <Feather name="more-horizontal" style={{ fontSize: 20 }} />
@@ -506,6 +511,7 @@ const Post = () => {
           bookMark={bookMark}
           favorite={favorite}
           follow={isFollowed}
+          userId={userId}
         />
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
