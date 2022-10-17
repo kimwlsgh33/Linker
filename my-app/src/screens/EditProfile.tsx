@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useContext } from "react";
+import React, { useState, useRef, useCallback, } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -16,7 +16,7 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Modal } from "../components/Modal";
-import events from "../lib/eventEmitter";
+import events from "../libs/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};

@@ -77,7 +77,7 @@ const StoryScreen = ({ route, navigation }) => {
           <TouchableOpacity
             // 9/29
             onPress={() => {
-              return navigation.navigate("BottomTabScreen");
+              return navigation.navigate("HomeTab");
             }} // ------------------
             style={{ flexDirection: "row", justifyContent: "center" }}
           >

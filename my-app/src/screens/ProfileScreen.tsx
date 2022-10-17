@@ -18,7 +18,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import ProfileBody from "../components/ProfileBody";
 import ProfileTopTab from "../components/ProfileTopTab";
 import { Modal } from "../components/Modal";
-import events from "../lib/eventEmitter";
+import events from "../libs/eventEmitter";
 
 const ProfileScreen = () => {
   const userInfo = {

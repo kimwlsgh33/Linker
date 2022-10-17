@@ -13,7 +13,7 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import events from "../lib/eventEmiiter";
+import events from "../libs/eventEmitter";
 
 const CommentScreen = ({ route, Navigation }) => {
   const {

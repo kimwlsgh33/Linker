@@ -10,7 +10,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Orcticon from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import events from "../../lib/eventEmiiter";
+import events from "../../libs/eventEmitter";
 
 type ModalProps = {
   id: any;
