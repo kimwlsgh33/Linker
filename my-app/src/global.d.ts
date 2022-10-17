@@ -29,4 +29,3 @@ export type TPostAndReels = {
   posts: TPost[];
   reels: TReel[];
 };
-

@@ -58,6 +58,7 @@ function RootStack() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
       </Stack.Group>
+
       <Stack.Group>
         <Stack.Screen
           name="Login"
