@@ -17,9 +17,16 @@ type ModalProps = {
   bookMark: boolean;
   favorite: boolean;
   follow: boolean;
+  userId: string;
 };
 
-const ModalScreen = ({ id, bookMark, favorite, follow }: ModalProps) => {
+const ModalScreen = ({
+  id,
+  userId,
+  bookMark,
+  favorite,
+  follow,
+}: ModalProps) => {
   return (
     <View
       style={{
@@ -147,7 +154,7 @@ const ModalScreen = ({ id, bookMark, favorite, follow }: ModalProps) => {
         <View style={styles.centerBottomBox}>
           <TouchableOpacity
             onPress={() => {
-              events.emit("follow", id, follow);
+              events.emit("follow", userId, follow);
             }}
           >
             {follow === true ? (
