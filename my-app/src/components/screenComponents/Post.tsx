@@ -31,6 +31,7 @@ type TRecomment = {
 
 type TFollowList = {
   id: number;
+  follow: boolean;
 };
 
 type TPost = {
@@ -127,6 +128,7 @@ const Post = () => {
   const [qrModal, setQrModal] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<boolean>(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [follow, setFollow] = useState<boolean>(false);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
 
   const likePressed = useCallback(
@@ -151,9 +153,11 @@ const Post = () => {
   );
 
   const followPressed = useCallback((id) => {
+    console.log(id);
     setData((datas) =>
       datas.map((data) => {
         if (data.id === id) {
+          console.log("같아요!!");
           return {
             ...data,
             followList: data.followList.includes(id)
@@ -161,9 +165,11 @@ const Post = () => {
               : [...data.followList, id],
           };
         }
+
         return data;
       })
     );
+    setIsFollowed((prev) => !prev);
   }, []);
 
   const bookMarkPressed = useCallback(
@@ -257,6 +263,16 @@ const Post = () => {
   };
 
   useEffect(() => {
+    console.log(datas[0].followList);
+  }, [datas[0].followList]);
+
+  const followState = (id) => {
+    followPressed(id);
+    setModal(false);
+    setFollow(true);
+  };
+
+  useEffect(() => {
     events.addListener("saveRecomment", addRecomment);
     events.addListener("saveRecommentLike", addRecommentLike);
     events.addListener("shareModal", shareModalState);
@@ -264,7 +280,7 @@ const Post = () => {
     events.addListener("save", save);
     events.addListener("qrModal", qrModalState);
     events.addListener("favorite", favoriteState);
-    events.addListener("follow", followPressed);
+    events.addListener("follow", followState);
 
     return () => {
       events.removeListener("saveRecomment");
@@ -511,7 +527,12 @@ const Post = () => {
       })}
 
       <Modal Visible={modal} setVisible={setModal}>
-        <ModalScreen id={id} bookMark={bookMark} favorite={favorite} />
+        <ModalScreen
+          id={id}
+          bookMark={bookMark}
+          favorite={favorite}
+          follow={isFollowed}
+        />
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />
@@ -525,8 +546,8 @@ const Post = () => {
       <Modal Visible={isFavorite} setVisible={setIsFavorite}>
         <FavoirteModal />
       </Modal>
-      <Modal Visible={isFollowed} setVisible={setIsFollowed}>
-        <FollowModal />
+      <Modal Visible={follow} setVisible={setFollow}>
+        <FollowModal data={datas} />
       </Modal>
     </View>
   );

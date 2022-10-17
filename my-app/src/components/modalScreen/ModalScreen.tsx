@@ -9,16 +9,17 @@ import Evilcons from "react-native-vector-icons/EvilIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Orcticon from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import events from "../../lib/eventEmiiter";
 
 type ModalProps = {
   id: any;
   bookMark: boolean;
   favorite: boolean;
-  followList?: [number];
+  follow: boolean;
 };
 
-const ModalScreen = ({ id, bookMark, favorite, followList }: ModalProps) => {
+const ModalScreen = ({ id, bookMark, favorite, follow }: ModalProps) => {
   return (
     <View
       style={{
@@ -146,21 +147,34 @@ const ModalScreen = ({ id, bookMark, favorite, followList }: ModalProps) => {
         <View style={styles.centerBottomBox}>
           <TouchableOpacity
             onPress={() => {
-              events.emit("follow", id);
+              events.emit("follow", id, follow);
             }}
           >
-            {}
-            <View style={{ flexDirection: "row" }}>
-              <AntDesign
-                name="deleteuser"
-                size={25}
-                color="#fff"
-                style={{ marginLeft: 10 }}
-              />
-              <Text style={[styles.textColor, { marginLeft: 10 }]}>
-                팔로우 취소
-              </Text>
-            </View>
+            {follow === true ? (
+              <View style={{ flexDirection: "row" }}>
+                <AntDesign
+                  name="deleteuser"
+                  size={25}
+                  color="#fff"
+                  style={{ marginLeft: 10 }}
+                />
+                <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                  팔로우 취소
+                </Text>
+              </View>
+            ) : (
+              <View style={{ flexDirection: "row" }}>
+                <SimpleLineIcons
+                  name="user-follow"
+                  size={25}
+                  color="#fff"
+                  style={{ marginLeft: 10 }}
+                />
+                <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                  팔로우
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
       </View>
