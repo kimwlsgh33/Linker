@@ -1,0 +1,61 @@
+type Followers @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Users: [User] @hasMany(indexName: "byFollowers", fields: ["id"])
+}
+
+type Comment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  comment: String
+  Post: [Post] @hasMany(indexName: "byComment", fields: ["id"])
+  userID: ID! @index(name: "byUser")
+  Likes: Likes @hasOne
+}
+
+type Likes @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Users: [User] @hasMany(indexName: "byLikes", fields: ["id"])
+}
+
+type Image @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  uri: String
+  Post: Post @hasOne
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String
+  textcontent: String
+  link: String
+  Influencer: Influencer @hasOne
+  commentID: ID! @index(name: "byComment")
+  userID: ID! @index(name: "byUser")
+  Likes: Likes @hasOne
+}
+
+type Followings @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Influencer: [Influencer] @hasMany(indexName: "byFollowings", fields: ["id"])
+}
+
+type Influencer @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  insta: String
+  User: User @hasOne
+  followingsID: ID! @index(name: "byFollowings")
+  Followers: Followers @hasOne
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String
+  email: String
+  created_at: AWSTimestamp
+  Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  Followings: Followings @hasOne
+  followersID: ID! @index(name: "byFollowers")
+  likepostID: ID! @index(name: "byLikes")
+}
+ 
