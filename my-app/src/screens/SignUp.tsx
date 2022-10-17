@@ -26,8 +26,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "./LoginScreen";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // import styled from "styled-components/native";
+import { DataStore } from "@aws-amplify/datastore";
+import { User } from "../models";
 
 function ExampleView(props) {
   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -56,7 +58,7 @@ const SignUp = () => {
   //   }
   // };
 
-  const Stack = createStackNavigator();
+  const Stack = createNativeStackNavigator();
 
   const navigation = useNavigation();
 
@@ -68,8 +70,19 @@ const SignUp = () => {
     navigation.navigate("Login" as any);
   };
 
-  const goTOS = () => {
-    navigation.navigate("TOS" as any);
+  const goTOS = async () => {
+    console.log("TOS");
+    await DataStore.save(
+      new User({
+        username: "testing name",
+        email: "testing@naver.com",
+        password: "1234",
+        followersID: "1234",
+        likepostID: "1234",
+      })
+    );
+
+    // navigation.navigate("TOS" as any);
   };
   /*
   const StyledView = styled.View`
@@ -285,10 +298,9 @@ const SignUp = () => {
               ]}
               android_ripple={{ color: "#FFF" }}
               disabled={disable}
+              onPress={goTOS}
             >
-              <Text style={styles.buttonOutlineText} onPress={goTOS}>
-                가입
-              </Text>
+              <Text style={styles.buttonOutlineText}>가입</Text>
             </Pressable>
           </View>
         </View>

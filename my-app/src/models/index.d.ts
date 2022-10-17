@@ -51,6 +51,7 @@ export declare class User {
   readonly Followings?: Followings | null;
   readonly followersID: string;
   readonly likepostID: string;
+  readonly password?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly userFollowingsId?: string | null;
