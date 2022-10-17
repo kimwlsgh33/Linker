@@ -150,7 +150,9 @@ const SignUp = () => {
 
   const pwCheck = (password) => {
     handlePwChange(password);
-    if (password.length > 8) {
+    const reg =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+    if (reg.test(password)) {
       increaseNumber(number);
       console.log(number);
       if (number >= 4) {

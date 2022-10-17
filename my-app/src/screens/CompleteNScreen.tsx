@@ -64,7 +64,7 @@ const CompleteNScreen = () => {
           <LinearGradient
             colors={["green", "purple", "red"]}
             style={{ flex: 1 }}
-            start={{ x: 0.3, y: 0.3 }}
+            start={{ x: 0.1, y: 0.3 }}
             end={{ x: 0.6, y: 0.7 }}
           />
         </MaskedView>

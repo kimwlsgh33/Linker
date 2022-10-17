@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,72 +6,106 @@ import {
   TextInput,
   Pressable,
   Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useNavigation } from "@react-navigation/native";
 
-const ErrTab = () => {
-  const [disable, setDisable] = useState(true);
-  const [UserName, setUserName] = useState("");
-  const [phNumber, setPhnumber] = useState("");
-  const navigation = useNavigation();
+function ErrTab({
+  locate,
+  names,
+  pHolder,
+  reg,
+  id,
+  setId,
+  phNumber,
+  setPhNumber,
+}) {
   const Tab = createMaterialTopTabNavigator();
 
-  const handleUNameChange = (text) => {
-    setUserName(text);
-  };
-
-  const handlePhNumberChange = (text) => {
-    setPhnumber(text);
-  };
-
-  const UNameCheck = (UserName) => {
-    handleUNameChange(UserName);
-    const reg = /^[a-zA-Z0-9]{2,20}$/;
-    if (reg.test(UserName) === true) {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
-  };
-  const PhNumCheck = (text) => {
-    handlePhNumberChange(text);
-    const reg = /^[0-9]{10,11}$/;
-    if (reg.test(text) === true) {
-      setDisable(false);
-    } else {
-      setDisable(true);
-    }
-  };
-
-  useEffect(() => {
-    console.log("hi");
-  }, []);
+  const navigation = useNavigation();
 
   const UName = () => {
+    const [disable, setDisable] = useState(true);
+
+    const UNameCheck = (id) => {
+      setId(id);
+
+      if (reg[0].test(id) === true) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    };
+
     return (
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="이름을 입력하세요."
-          onChangeText={UNameCheck}
-          value={UserName}
-        />
-      </View>
+      <>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder={pHolder[0]}
+            onChangeText={(e) => {
+              UNameCheck(e);
+            }}
+            value={id}
+          />
+        </View>
+        <View style={styles.middleView}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.btn,
+              Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+              disable ? { opacity: 0.5 } : {},
+            ]}
+            disabled={disable}
+            android_ripple={{ color: "#FFF" }}
+            onPress={locate}
+          >
+            <Text style={styles.btn_txt}>다음</Text>
+          </Pressable>
+        </View>
+      </>
     );
   };
   const PhNum = () => {
+    const [disable, setDisable] = useState(true);
+
+    const PhNumCheck = (phNumber) => {
+      setPhNumber(phNumber);
+
+      if (reg[1].test(phNumber) === true) {
+        setDisable(false);
+      } else {
+        setDisable(true);
+      }
+    };
+
     return (
-      <View>
-        <TextInput
-          style={styles.input}
-          placeholder="전화번호를 입력하세요."
-          onChangeText={PhNumCheck}
-          value={phNumber}
-        />
-      </View>
+      <>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder={pHolder[1]}
+            onChangeText={(e) => PhNumCheck(e)}
+            value={phNumber}
+          />
+        </View>
+        <View style={styles.middleView}>
+          <Pressable
+            style={({ pressed }) => [
+              styles.btn,
+              Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+              disable ? { opacity: 0.5 } : {},
+            ]}
+            onPress={locate}
+            disabled={disable}
+            android_ripple={{ color: "#FFF" }}
+          >
+            <Text style={styles.btn_txt} onPress={locate}>
+              다음
+            </Text>
+          </Pressable>
+        </View>
+      </>
     );
   };
 
@@ -79,17 +113,19 @@ const ErrTab = () => {
     <>
       <View
         style={{
-          height: 100,
+          height: 320,
           width: "100%",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Tab.Navigator
           screenOptions={({ route }) => ({
-            tabBarActiveTintColor: "#fff",
-            tabBarInactiveTintColor: "#fff",
+            tabBarActiveTintColor: "#F00",
+            tabBarInactiveTintColor: "#f00",
             tabBarIndicatorStyle: {
-              backgroundColor: "#fff",
+              backgroundColor: "#f00",
+              height: 2.5,
             },
             tabBarLabelStyle: {
               fontSize: 16,
@@ -98,15 +134,13 @@ const ErrTab = () => {
             tabBarStyle: {
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
-              backgroundColor: "#fff",
-              width: 300,
-              // marginLeft: 45,
-              // alignItems: "center",
+              backgroundColor: "tomato",
+              width: 350,
             },
             tabBarLabel: ({ focused, color }) => {
-              if (route.name === "사용자 이름") {
+              if (route.name === { names }.names[0]) {
                 color = focused ? "black" : "gray";
-              } else if (route.name === "전화번호") {
+              } else if (route.name === { names }.names[1]) {
                 color = focused ? "black" : "gray";
               }
 
@@ -114,26 +148,13 @@ const ErrTab = () => {
             },
           })}
         >
-          <Tab.Screen name="사용자 이름" component={UName} />
-          <Tab.Screen name="전화번호" component={PhNum} />
+          <Tab.Screen name={names[0]} component={UName} />
+          <Tab.Screen name={names[1]} component={PhNum} />
         </Tab.Navigator>
-      </View>
-      <View style={styles.middleView}>
-        <Pressable
-          style={({ pressed }) => [
-            styles.btn,
-            Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
-            disable ? { opacity: 0.5 } : {},
-          ]}
-          disabled={disable}
-          android_ripple={{ color: "#FFF" }}
-        >
-          <Text style={styles.btn_txt}>다음</Text>
-        </Pressable>
       </View>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   middleView: {
@@ -149,7 +170,7 @@ const styles = StyleSheet.create({
     color: "black",
   },
   input: {
-    width: 300,
+    width: 350,
     height: 45,
     backgroundColor: "#fff",
     borderRadius: 5,

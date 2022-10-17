@@ -14,12 +14,15 @@ import BirthdayScreen from "../screens/BirthdayScreen";
 import AnotherAcc from "../screens/AnotherAcc";
 import LoginEr from "../screens/LoginEr";
 import ErrTab from "../components/ErrTab";
+import CodeCheck from "../screens/CodeCheck";
+import CodeInput from "../screens/CodeInput";
+import PwRe from "../screens/PwRe";
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
     <Stack.Navigator
-      initialRouteName="LoginEr"
+      initialRouteName="SignUp"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="BottomTab" component={BottomTabScreen} />
@@ -36,6 +39,9 @@ function RootStack() {
       <Stack.Screen name="AnotherAcc" component={AnotherAcc} />
       <Stack.Screen name="LoginEr" component={LoginEr} />
       <Stack.Screen name="ErrTab" component={ErrTab} />
+      <Stack.Screen name="CodeCheck" component={CodeCheck} />
+      <Stack.Screen name="CodeInput" component={CodeInput} />
+      <Stack.Screen name="PwRe" component={PwRe} />
     </Stack.Navigator>
   );
 }

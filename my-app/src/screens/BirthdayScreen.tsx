@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dateBotton: {
-    backgroundColor: "#3333FF",
+    backgroundColor: "cyan",
     borderRadius: 50,
     width: "60%",
     height: 35,
