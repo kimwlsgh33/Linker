@@ -37,7 +37,10 @@ const screenOptions = ({ navigation, route }) => {
 
 function RootStack() {
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator
+      screenOptions={screenOptions}
+      // initialRouteName="SignUp"
+    >
       <Stack.Group>
         <Stack.Screen
           name="HomeTab"
@@ -48,15 +51,12 @@ function RootStack() {
         <Stack.Screen name="Details" component={DetailScreen} />
         <Stack.Screen name="Post" component={PostScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
-        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
       </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
+
+      <Stack.Group screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );

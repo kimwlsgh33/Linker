@@ -42,7 +42,7 @@ const SignUp = () => {
       <View style={styles.inputContainer}>
         <Text
           style={{
-            fontFamily: "BackToSchool",
+            fontFamily: "BackToSchoolRegular",
             fontSize: 50,
             textAlign: "center",
             marginBottom: 15,
@@ -79,7 +79,7 @@ const SignUp = () => {
                 color: "gray",
                 marginTop: 10,
                 marginBottom: 10,
-                fontFamily: "강원교육모두 Bold",
+                fontFamily: "GangwonEduAllBold",
                 fontSize: 15,
               }}
             >
@@ -132,11 +132,8 @@ const SignUp = () => {
         <Text style={styles.policyText}>다.</Text>
       </View>
       <View style={styles.bottomView}>
-        <Text style={{ fontFamily: "강원교육모두 Bold" }}>
-          계정이 있으신가요?{" "}
-          <Text onPress={goLogin} style={styles.gologin}>
-            로그인
-          </Text>
+        <Text style={{ fontFamily: "GangwonEduAllBold" }}>
+          계정이 있으신가요? <Text style={styles.gologin}>로그인</Text>
         </Text>
       </View>
     </KeyboardAvoidingView>
@@ -160,7 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
     marginBottom: 10,
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
   },
   buttonContainer: {
     justifyContent: "center",
@@ -205,7 +202,7 @@ const styles = StyleSheet.create({
   buttonOutlineText: {
     color: "#FFF",
     fontSize: 15,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   buttonOutline2: {
     backgroundColor: "#0782F9",
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     color: "#999",
     textAlign: "center",
     marginBottom: 5,
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   policyView: {
     marginTop: 15,
@@ -232,7 +229,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#999",
     textAlign: "center",
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
   },
   policyTextIm: {
     fontWeight: "bold",
