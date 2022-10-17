@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    fontFamily: "BackToSchool",
+    fontFamily: "BackToSchoolRegular",
     color: "black",
     fontSize: 50,
     marginBottom: 18,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   input: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     backgroundColor: "#ccc",
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   barText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     width: 50,
     textAlign: "center",
     color: "gray",
@@ -261,24 +261,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "white",
     fontSize: 16,
   },
   text: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     color: "#404040",
     fontSize: 11,
     padding: 13,
     textAlign: "center",
   },
   link: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "#404040",
     fontSize: 11,
   },
   buttonOutlineText: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "#0782F9",
     fontSize: 13,
   },
@@ -294,19 +294,19 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   text2: {
-    fontFamily: "강원교육모두 Light",
+    fontFamily: "GangwonEduAllLight",
     color: "gray",
     fontSize: 11,
     position: "absolute",
-    marginTop: 143,
+    marginTop: 148,
     paddingRight: 40,
   },
   text3: {
-    fontFamily: "강원교육모두 Bold",
+    fontFamily: "GangwonEduAllBold",
     color: "#404040",
     fontSize: 11,
     position: "absolute",
-    marginTop: 143,
+    marginTop: 148,
     marginLeft: 20,
   },
 });
