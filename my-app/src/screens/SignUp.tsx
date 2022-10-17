@@ -59,11 +59,11 @@ const SignUp = () => {
     console.log("TOS");
     await DataStore.save(
       new User({
-        username: "testing name",
-        email: "testing@naver.com",
-        password: "1234",
-        followersID: "1234",
-        likepostID: "1234",
+        username: name,
+        email: id,
+        password: password,
+        followersID: "12",
+        likepostID: "12",
       })
     );
     navigation.navigate("TOS" as any);
