@@ -1,6 +1,9 @@
 import { FunctionComponent } from "react";
-import { View, Modal, Pressable } from "react-native";
-
+import { View, Modal as DefaultModal, Pressable } from "react-native";
+// import { Modal } from "../components/Modal";
+// import {Modal as DefaultModal} from "react-native";
+// 해당 스크린에 직접 창 만들어야함(사이즈, 위치, 스타일 등 자유롭게)
+// 모달 안쪽 창을 눌러도 닫힘 => 모달 창 전체를 pressable로 감싸서 width: "100%"설정
 type ModalProps = {
   activator?: FunctionComponent<{ handleOpen: () => void }>;
   children: React.ReactNode;
@@ -8,7 +11,7 @@ type ModalProps = {
   setVisible: (value: boolean) => void;
 };
 
-function MyModal({
+export function Modal({
   activator: Activator,
   children,
   Visible,
@@ -16,24 +19,28 @@ function MyModal({
 }: ModalProps) {
   return (
     <View>
-      <Modal visible={Visible} transparent={true} animationType="fade">
+      <DefaultModal visible={Visible} transparent={true} animationType={"fade"}>
         <Pressable
-          style={{
-            flex: 1,
-            backgroundColor: "rgba(0,0,0,0.5)",
-          }}
+          style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.3)" }}
         ></Pressable>
-      </Modal>
-      <Modal visible={Visible} transparent={true} animationType="slide">
+      </DefaultModal>
+      <DefaultModal
+        visible={Visible}
+        transparent={true}
+        animationType={"slide"}
+      >
         <Pressable
-          style={{ flex: 1, width: "100%", justifyContent: "flex-end" }}
+          style={{ flex: 1, justifyContent: "flex-end" }}
           onPress={() => setVisible(false)}
         >
-          {children}
+          <View>{children}</View>
         </Pressable>
-      </Modal>
+      </DefaultModal>
+      {Activator ? (
+        <Activator handleOpen={() => setVisible(true)} />
+      ) : (
+        <Pressable onPress={() => setVisible(true)} />
+      )}
     </View>
   );
 }
-
-export default MyModal;
