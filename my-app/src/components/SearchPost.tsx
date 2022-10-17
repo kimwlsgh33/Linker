@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { TPost } from "../screens/screen";
+import { TPost } from "../global";
 
 type SearchPostProps = {
   post: TPost;

@@ -1,9 +1,9 @@
-type Followers @model @auth(rules: [{allow: public}]) {
+type Followers @model @auth(rules: [{ allow: public }]) {
   id: ID!
   Users: [User] @hasMany(indexName: "byFollowers", fields: ["id"])
 }
 
-type Comment @model @auth(rules: [{allow: public}]) {
+type Comment @model @auth(rules: [{ allow: public }]) {
   id: ID!
   comment: String
   Post: [Post] @hasMany(indexName: "byComment", fields: ["id"])
@@ -11,18 +11,18 @@ type Comment @model @auth(rules: [{allow: public}]) {
   Likes: Likes @hasOne
 }
 
-type Likes @model @auth(rules: [{allow: public}]) {
+type Likes @model @auth(rules: [{ allow: public }]) {
   id: ID!
   Users: [User] @hasMany(indexName: "byLikes", fields: ["id"])
 }
 
-type Image @model @auth(rules: [{allow: public}]) {
+type Image @model @auth(rules: [{ allow: public }]) {
   id: ID!
   uri: String
   Post: Post @hasOne
 }
 
-type Post @model @auth(rules: [{allow: public}]) {
+type Post @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String
   textcontent: String
@@ -33,12 +33,12 @@ type Post @model @auth(rules: [{allow: public}]) {
   Likes: Likes @hasOne
 }
 
-type Followings @model @auth(rules: [{allow: public}]) {
+type Followings @model @auth(rules: [{ allow: public }]) {
   id: ID!
   Influencer: [Influencer] @hasMany(indexName: "byFollowings", fields: ["id"])
 }
 
-type Influencer @model @auth(rules: [{allow: public}]) {
+type Influencer @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   insta: String
@@ -47,7 +47,7 @@ type Influencer @model @auth(rules: [{allow: public}]) {
   Followers: Followers @hasOne
 }
 
-type User @model @auth(rules: [{allow: public}]) {
+type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   username: String
   email: String
@@ -57,5 +57,5 @@ type User @model @auth(rules: [{allow: public}]) {
   Followings: Followings @hasOne
   followersID: ID! @index(name: "byFollowers")
   likepostID: ID! @index(name: "byLikes")
+  password: String
 }
- 

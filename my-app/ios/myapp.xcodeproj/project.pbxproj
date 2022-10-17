@@ -14,26 +14,29 @@
 		2284878F8F434C3CA320150C /* GangwonEduAllBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 582C5A68FBBC4C4CA24D8F52 /* GangwonEduAllBold.ttf */; };
 		22D825A316034F7A88D5B58D /* GangwonEduAllLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2EDF903188F64D3686327C4F /* GangwonEduAllLight.ttf */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		7172BDBDFECD4119913DCC02 /* NotoSerifKR-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 052770F1BDE04ECF9FB1AF0B /* NotoSerifKR-ExtraLight.otf */; };
 		7DF3A45C50EA4F11AD247658 /* BungeeSpice-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E25DE0676D20463689F2B4A6 /* BungeeSpice-Regular.ttf */; };
+
 		8410BB8FF5564740A55BB707 /* BackToSchoolRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4179AE4F4F432B950FCEAB /* BackToSchoolRegular.ttf */; };
 		845D7860E91644CD9EA22B21 /* NotoSerifKR-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7D1792851C774000BFB3ED63 /* NotoSerifKR-Bold.otf */; };
+
 		96905EF65AED1B983A6B3ABC /* libPods-myapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-myapp.a */; };
-		A80AA08A16CC40B68F1E3019 /* NotoSerifKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = A4FC482DEA7D45F9A50D9A4D /* NotoSerifKR-Medium.otf */; };
-		AABA0ADF9EE545EBAB62C3B8 /* NotoSerifKR-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5A8898D06E143DCAAC557C1 /* NotoSerifKR-SemiBold.otf */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
-		B465D9E5F66C426DBB802042 /* NotoSerifKR-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = E92959933896463A837F3456 /* NotoSerifKR-Black.otf */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+
 		BD556B4986774CBE9F1219B6 /* 강원교육현옥샘.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F8473A35FEC44E9BB9E3AC0 /* 강원교육현옥샘.ttf */; };
 		DC90075AEE6F4247905C98AB /* 강원교육새음.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E651C383F8EB4D078DD01E0E /* 강원교육새음.ttf */; };
+
 		DF79CBEB12EA426482E1F02A /* Lobster-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2C356FF376B4C328A1B6D9C /* Lobster-Regular.ttf */; };
-		E53195E3DBC6471BB6C1494F /* NotoSerifKR-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = AAE0D04577714C1EB36EB1B0 /* NotoSerifKR-Light.otf */; };
-		E6536CE45BD84B809A33FC8D /* NotoSerifKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = BA9EA1775B6C4906B6B2CC58 /* NotoSerifKR-Regular.otf */; };
+		7F9001C7A4954D27A647443C /* BackToSchoolRegular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D15F3E246E243FBA2EB7F46 /* BackToSchoolRegular.ttf */; };
+		6F15F8DD5541444D807326FA /* GangwonEduAllBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85D236800FE241ADB565C147 /* GangwonEduAllBold.ttf */; };
+		A2E65B5DF22245FE994A1CF4 /* GangwonEduAllLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B64C0816F8E8492E8E7C2F2F /* GangwonEduAllLight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+
 		052770F1BDE04ECF9FB1AF0B /* NotoSerifKR-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerifKR-ExtraLight.otf"; path = "../assets/fonts/NotoSerifKR-ExtraLight.otf"; sourceTree = "<group>"; };
+
 		13B07F961A680F5B00A75B9A /* myapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = myapp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = myapp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -60,7 +63,11 @@
 		E92959933896463A837F3456 /* NotoSerifKR-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerifKR-Black.otf"; path = "../assets/fonts/NotoSerifKR-Black.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F5A8898D06E143DCAAC557C1 /* NotoSerifKR-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSerifKR-SemiBold.otf"; path = "../assets/fonts/NotoSerifKR-SemiBold.otf"; sourceTree = "<group>"; };
+
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-myapp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		0D15F3E246E243FBA2EB7F46 /* BackToSchoolRegular.ttf */ = {isa = PBXFileReference; name = "BackToSchoolRegular.ttf"; path = "../assets/fonts/BackToSchoolRegular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		85D236800FE241ADB565C147 /* GangwonEduAllBold.ttf */ = {isa = PBXFileReference; name = "GangwonEduAllBold.ttf"; path = "../assets/fonts/GangwonEduAllBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		B64C0816F8E8492E8E7C2F2F /* GangwonEduAllLight.ttf */ = {isa = PBXFileReference; name = "GangwonEduAllLight.ttf"; path = "../assets/fonts/GangwonEduAllLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,21 +109,12 @@
 		7C3F2919DBF44052BA774214 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E92959933896463A837F3456 /* NotoSerifKR-Black.otf */,
-				7D1792851C774000BFB3ED63 /* NotoSerifKR-Bold.otf */,
-				052770F1BDE04ECF9FB1AF0B /* NotoSerifKR-ExtraLight.otf */,
-				AAE0D04577714C1EB36EB1B0 /* NotoSerifKR-Light.otf */,
-				A4FC482DEA7D45F9A50D9A4D /* NotoSerifKR-Medium.otf */,
-				BA9EA1775B6C4906B6B2CC58 /* NotoSerifKR-Regular.otf */,
-				F5A8898D06E143DCAAC557C1 /* NotoSerifKR-SemiBold.otf */,
 				E25DE0676D20463689F2B4A6 /* BungeeSpice-Regular.ttf */,
 				A2C356FF376B4C328A1B6D9C /* Lobster-Regular.ttf */,
-				3C4179AE4F4F432B950FCEAB /* BackToSchoolRegular.ttf */,
-				582C5A68FBBC4C4CA24D8F52 /* GangwonEduAllBold.ttf */,
-				2EDF903188F64D3686327C4F /* GangwonEduAllLight.ttf */,
-				E651C383F8EB4D078DD01E0E /* 강원교육새음.ttf */,
-				601CD91633C2420FAED954F6 /* 강원교육튼튼.ttf */,
-				1F8473A35FEC44E9BB9E3AC0 /* 강원교육현옥샘.ttf */,
+				CC1217F9BD014547A598B9C1 /* BackToSchoolRegular.ttf */,
+				4FE8235F4E064FA2BBB49A06 /* GangwonEduAllBold.ttf */,
+				C15D9A6BD3DB4BA6A7F1A4E0 /* GangwonEduAllLight.ttf */,
+
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -186,6 +184,29 @@
 			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
+		7C3F2919DBF44052BA774214 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				E25DE0676D20463689F2B4A6 /* BungeeSpice-Regular.ttf */,
+				A1D8305DCB8647F79D6F28A4 /* NotoSerifKR-Black.otf */,
+				E05132513E524CDE89033850 /* NotoSerifKR-Bold.otf */,
+				18EED64312C747E69844FD3F /* NotoSerifKR-ExtraLight.otf */,
+				045C4A7F789F48A6BC044153 /* NotoSerifKR-Light.otf */,
+				F009B49B6D0E47018EB3CA86 /* NotoSerifKR-Medium.otf */,
+				33B9E37CA350497281D415D1 /* NotoSerifKR-Regular.otf */,
+				F10EC4C65653462180B5E766 /* NotoSerifKR-SemiBold.otf */,
+				DF7DA55621BB4191AE2A2D31 /* BackToSchoolRegular.ttf */,
+				119F751CDA4846F3A65EEAC7 /* GangwonEduAllBold.ttf */,
+				7611D55F2A5F495CADBE50D3 /* GangwonEduAllLight.ttf */,
+				023C900BEDA341BDB377A62A /* Lobster-Regular.ttf */,
+				9815CA0F873B4BD096571F3A /* 강원교육새음.ttf */,
+				A60C78FA95BA4FFE8022A521 /* 강원교육튼튼.ttf */,
+				F52768E4CCBA4527A46103F8 /* 강원교육현옥샘.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -249,21 +270,11 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				B465D9E5F66C426DBB802042 /* NotoSerifKR-Black.otf in Resources */,
-				845D7860E91644CD9EA22B21 /* NotoSerifKR-Bold.otf in Resources */,
-				7172BDBDFECD4119913DCC02 /* NotoSerifKR-ExtraLight.otf in Resources */,
-				E53195E3DBC6471BB6C1494F /* NotoSerifKR-Light.otf in Resources */,
-				A80AA08A16CC40B68F1E3019 /* NotoSerifKR-Medium.otf in Resources */,
-				E6536CE45BD84B809A33FC8D /* NotoSerifKR-Regular.otf in Resources */,
-				AABA0ADF9EE545EBAB62C3B8 /* NotoSerifKR-SemiBold.otf in Resources */,
 				7DF3A45C50EA4F11AD247658 /* BungeeSpice-Regular.ttf in Resources */,
 				DF79CBEB12EA426482E1F02A /* Lobster-Regular.ttf in Resources */,
-				8410BB8FF5564740A55BB707 /* BackToSchoolRegular.ttf in Resources */,
-				2284878F8F434C3CA320150C /* GangwonEduAllBold.ttf in Resources */,
-				22D825A316034F7A88D5B58D /* GangwonEduAllLight.ttf in Resources */,
-				DC90075AEE6F4247905C98AB /* 강원교육새음.ttf in Resources */,
-				11B5D9B8B04641B18B3B9633 /* 강원교육튼튼.ttf in Resources */,
-				BD556B4986774CBE9F1219B6 /* 강원교육현옥샘.ttf in Resources */,
+				7963A69D539A48E88FA81CAC /* BackToSchoolRegular.ttf in Resources */,
+				CC480A365C6A4956A7F2FAFE /* GangwonEduAllBold.ttf in Resources */,
+				A293B456824C4CFDA859AE67 /* GangwonEduAllLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
