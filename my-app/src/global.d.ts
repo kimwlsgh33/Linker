@@ -17,6 +17,12 @@ export type TPost = {
   createdAt: string;
 };
 
+export type TStory = {
+  name: data.name;
+  image: data.image;
+  userName: data.userName;
+};
+
 export type TRecomment = {
   id: number;
   recomment: string;

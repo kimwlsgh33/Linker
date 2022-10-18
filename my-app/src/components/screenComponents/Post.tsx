@@ -24,7 +24,7 @@ import FollowModal from "../modalScreen/FollowModal";
 import { TPost1 } from "../../global";
 import { User } from "../../models";
 
-const postInfo: TPost1[] = [
+export const postInfo: TPost1[] = [
   // postInfo라는 배열에 객체(데이터)를 넣어줌.
   {
     // postInfo[0]
@@ -147,7 +147,7 @@ const Post = () => {
   }, []);
 
   useEffect(() => {
-    console.log(datas[0]?.followList[0]);
+    console.log(JSON.stringify(datas, null, "\t"));
   }, []);
 
   const bookMarkPressed = useCallback(

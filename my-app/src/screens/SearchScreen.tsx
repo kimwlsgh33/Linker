@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
@@ -14,6 +14,7 @@ import {
   View,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import EntryIcon from "react-native-vector-icons/Entypo";
 
 import PostAndReels from "../components/PostAndReels";
@@ -23,6 +24,7 @@ import { useStyle } from "../hooks/useStyle";
 import { interpolate } from "../utils/interpolate";
 import SearchProfile from "../components/SearchProfile";
 import { TPost, TPostAndReels, TReel } from "../global";
+import UserBar from "../components/UserBar";
 
 //================================================================================================
 // data sets & types
@@ -66,6 +68,10 @@ function SearchScreen() {
   const [visible, setVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const inputRef = useRef<TextInput>(null);
+
+  const [users, setUsers] = useState<string[]>([]);
+  useEffect(() => {
+    axios
 
   // 만약에 포스트, 릴스가 없으면, 내용이 없다는 문구를 보여준다.
   if (paR.length === 0) {
@@ -128,19 +134,25 @@ function SearchScreen() {
     modalAnim();
   };
 
+  // 사용자가 입력을 멈추었을때, 검색 로직을 실행하기 위한 timeout 변수
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  const searchStart = () => {
+    setLoading(true);
+    searchTimeout.current = setTimeout(() => {
+      console.log("search");
+      setLoading(false);
+    }, 1000);
+  };
+
   // 검색창에 글자를 입력할때마다 실행되는 함수
   const search = (text: string) => {
-    // 검색창 글자 변경
     setSearchText(text);
-
-    // 로딩 화면 보여주기 위해, 상태값 변경
-    setLoading(true);
-    //TODO: 이전 검사 로직 중지
-
-    const search = setTimeout(() => {
-      setLoading(false);
-      console.log("loaded");
-    }, 10000);
+    // 이전에 실행되고 있는 타임아웃을 제거
+    if (searchTimeout.current) {
+      clearTimeout(searchTimeout.current);
+    }
+    searchStart();
   };
 
   return (
@@ -155,7 +167,7 @@ function SearchScreen() {
             onFocus={open}
             returnKeyType="search"
             value={searchText}
-            onChangeText={setSearchText}
+            onChangeText={search}
             ref={inputRef}
           />
           {searchText && (
@@ -215,20 +227,15 @@ function SearchScreen() {
         ]}
       >
         {loading ? (
-          <View>
+          <Animated.View style={[styles.loading]}>
             <Text>loading...</Text>
-          </View>
+          </Animated.View>
         ) : (
           searchText && (
-            <View>
+            <>
               <Pressable
                 style={({ pressed }) => [
-                  {
-                    flexDirection: "row",
-                    alignItems: "center",
-                    paddingVertical: 5,
-                    paddingLeft: 15,
-                  },
+                  styles.searchedIconView,
                   pressed && {
                     backgroundColor: "#eee",
                   },
@@ -236,20 +243,20 @@ function SearchScreen() {
               >
                 <View
                   style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 25,
-                    justifyContent: "center",
+                    width: 50,
                     alignItems: "center",
-                    borderWidth: 1,
-                    borderColor: "#eee",
-                    marginRight: 10,
                   }}
                 >
-                  <Icon name="search" size={23} />
+                  <View style={styles.searchedIcon}>
+                    <Icon name="search" size={23} />
+                  </View>
                 </View>
                 <Text>{searchText}</Text>
               </Pressable>
+
+              <UserBar />
+              <UserBar isOutline />
+
               <Pressable
                 onPress={() => console.log("presseds")}
                 style={({ pressed }) => [
@@ -259,7 +266,7 @@ function SearchScreen() {
               >
                 <Text style={styles.resultAllText}>결과 모두 보기</Text>
               </Pressable>
-            </View>
+            </>
           )
         )}
       </Animated.View>
@@ -331,6 +338,38 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#eee",
   },
+  searchedIconView: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 3,
+    paddingHorizontal: 10,
+  },
+  searchedIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+  profpic: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+  username: {
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  nickname: {
+    fontSize: 13,
+    color: "#666",
+  },
   resultAll: {
     height: 50,
     width: "100%",
@@ -340,6 +379,10 @@ const styles = StyleSheet.create({
   resultAllText: {
     color: "blue",
     fontWeight: "700",
+  },
+  loading: {
+    flex: 1,
+    backgroundColor: "yellow",
   },
 });
 
