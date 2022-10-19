@@ -5,7 +5,7 @@ import type {
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
-import { TPost } from "../global";
+import { TPost, TComment } from "../global";
 
 // 스택 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
 // key: 스크린 이름
@@ -15,7 +15,7 @@ export type RootStackParamList = {
   Welcome: undefined;
   Details: undefined;
   Post: undefined;
-  Story: undefined;
+  Story: any;
   SignUp: undefined;
   Login: undefined;
   EditProfile: any;
@@ -25,6 +25,9 @@ export type RootStackParamList = {
   FollowTab: NavigatorScreenParams<FollowTabParamList>;
   Discover: { post: TPost };
   NotFound: undefined;
+  Comment: TComment;
+  Setting: undefined;
+  User2: undefined;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것

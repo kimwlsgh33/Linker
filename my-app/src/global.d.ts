@@ -17,6 +17,43 @@ export type TPost = {
   createdAt: string;
 };
 
+export type TRecomment = {
+  id: number;
+  recomment: string;
+  recommentLike: boolean;
+  recommentLikeCount: number;
+};
+
+export type TFollowList = {
+  userId: string;
+  follow: boolean;
+};
+
+export type TPost1 = {
+  id: number;
+  userId: string;
+  postPersonImage: ImageSourcePropType;
+  postImage: ImageSourcePropType;
+  likes: number;
+  isLiked: boolean;
+  bookMark: boolean;
+  comment: string;
+  recommentCount: number;
+  recomment: TRecomment[];
+  favorite: boolean;
+  followList: TFollowList[];
+};
+
+export type TComment = {
+  comment: string;
+  userId: string;
+  postPersonImage: TImage;
+  myId: string;
+  mypostPersonImage: TImage;
+  id: number;
+  recomment: data.recomment;
+};
+
 export type TReel = {
   id: string;
   type: string;
@@ -29,4 +66,3 @@ export type TPostAndReels = {
   posts: TPost[];
   reels: TReel[];
 };
-
