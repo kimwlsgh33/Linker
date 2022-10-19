@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
@@ -15,8 +15,8 @@ import {
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Modal } from "../components/Modal";
-import events from "../libs/eventEmitter";
+import { Modal } from "../Modal";
+import events from "../../libs/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
@@ -99,20 +99,16 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image
-              source={profileImage}
-              style={styles.profileImage}
-            />
+            <Image source={profileImage} style={styles.profileImage} />
             <Modal
               Visible={Visible}
               setVisible={setVisible}
               activator={({ handleOpen }) => (
                 <Pressable
-                  onPress={() => handleOpen()}
+                  onPress={handleOpen}
                   style={({ pressed }) => [
                     {
                       opacity: pressed ? 0.2 : 1,
-                      width: "100%",
                     },
                   ]}
                 >
@@ -121,45 +117,38 @@ const EditProfile = ({ route, navigation }) => {
               )}
             >
               <View style={styles.modal}>
-                <View>
-                  <Icon
-                    name="ios-remove-outline"
-                    size={50}
-                    color="gray"
-                    style={{ top: -15, left: 170 }}
-                  />
+                <View style={{ alignItems: "center" }}>
+                  <View style={styles.miniBar} />
                   <Text style={styles.modalText}>프로필 사진 변경</Text>
                   <View style={styles.modalBar}></View>
-                  <View style={{ marginTop: 10 }}>
-                    <Pressable
-                      style={({ pressed }) => [
-                        {
-                          opacity: pressed ? 0.2 : 1,
-                          width: "100%",
-                        },
-                      ]}
-                    >
-                      <View style={{ flexDirection: "row" }}>
-                        <Text style={styles.modalText2}>새 프로필 사진</Text>
-                      </View>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        // onDelete();
-                        setVisible(false);
-                      }}
-                      style={({ pressed }) => [
-                        {
-                          opacity: pressed ? 0.2 : 1,
-                          top: 20,
-                        },
-                      ]}
-                    >
-                      <View style={{ flexDirection: "row" }}>
-                        <Text style={styles.modalText2}>프로필 사진 삭제</Text>
-                      </View>
-                    </Pressable>
-                  </View>
+                </View>
+                <View style={styles.menu}>
+                  <Pressable
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={styles.modalText}>새 프로필 사진</Text>
+                    </View>
+                  </Pressable>
+                  <Pressable
+                    onPress={() => {
+                      onDelete();
+                      setVisible(false);
+                    }}
+                    style={({ pressed }) => [
+                      {
+                        opacity: pressed ? 0.2 : 1,
+                      },
+                    ]}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={styles.modalText}>프로필 사진 삭제</Text>
+                    </View>
+                  </Pressable>
                 </View>
               </View>
             </Modal>
@@ -282,24 +271,29 @@ const styles = StyleSheet.create({
   },
   modal: {
     backgroundColor: "white",
-    height: 150,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
-  modalText: {
-    top: -30,
-    left: 153,
-    fontFamily: "GangwonEduAllBold",
+  miniBar: {
+    backgroundColor: "gray",
+    height: 3,
+    width: 30,
+    marginTop: 15,
+    marginBottom: 5,
   },
   modalBar: {
     borderWidth: 0.3,
     width: "100%",
     opacity: 0.3,
-    top: -20,
+    marginTop: 10,
   },
-  modalText2: {
-    left: 20,
-    top: -6,
+  menu: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    height: 120,
+    justifyContent: "space-around",
+  },
+  modalText: {
     fontFamily: "GangwonEduAllBold",
   },
   text: {

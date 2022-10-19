@@ -10,9 +10,9 @@ import PostScreen from "../screens/PostScreen";
 import StoryScreen from "../screens/StoryScreen";
 import SignUp from "../screens/SignUp";
 import LoginScreen from "../screens/LoginScreen";
-import EditProfile from "../screens/EditProfile";
-import ProfileTopTab from "../components/ProfileTopTab";
-import FollowTab from "../components/FollowTab";
+import EditProfile from "../components/profileComponents/EditProfile";
+import ProfileTopTab from "./ProfileTopTab";
+import FollowTab from "../components/profileComponents/FollowTab";
 import DiscoverScreen from "../screens/DiscoverScreen";
 import HeaderBar from "../components/HeaderBar";
 import TOSScreen from "../screens/TOSScreen";
@@ -50,7 +50,7 @@ const screenOptions = ({ navigation, route }) => {
   } else if (route.name === "Discover") {
     title = "탐색 탭";
   } else if (route.name === "FollowTab") {
-    title = "userId33";
+    title = "Follow";
   }
 
   return {

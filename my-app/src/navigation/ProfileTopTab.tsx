@@ -1,12 +1,25 @@
-import React from "react";
-import { View, ScrollView, Image, Pressable } from "react-native";
+import React, {useCallback} from "react";
+import { View, ScrollView, Image, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const ProfileTopTab = () => {
+const ProfileTopTab = ({user}) => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
+
+  const storyPressed = useCallback(
+    (id) => {
+      if (user.id === id) {
+        return {
+          ...user,
+          show: true,
+        };
+      }
+      return user;
+    },
+    [user]
+  );
 
   let squares = [];
   let numberOfSquare = 9;
@@ -25,7 +38,12 @@ const ProfileTopTab = () => {
         >
           <Pressable
             onPress={() => {
-              navigation.navigate("Story");
+              navigation.navigate("Story", {
+                name: user[0].name,
+                image: user[0].image,
+                userName: user[0].userName,
+              });
+              storyPressed(user.id);
             }}
             style={({ pressed }) => [
               {
@@ -47,73 +65,22 @@ const ProfileTopTab = () => {
 
   const Posts = () => {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white",
-            flexWrap: "wrap",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          {squares}
-        </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        <View style={styles.squares}>{squares}</View>
       </ScrollView>
     );
   };
   const Video = () => {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white",
-            flexWrap: "wrap",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          {squares}
-        </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        <View style={styles.squares}>{squares}</View>
       </ScrollView>
     );
   };
   const Tags = () => {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-            height: "100%",
-            backgroundColor: "white",
-            flexWrap: "wrap",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          {squares}
-        </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+        <View style={styles.squares}>{squares}</View>
       </ScrollView>
     );
   };
@@ -149,5 +116,20 @@ const ProfileTopTab = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: "100%",
+  },
+  squares: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "white",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+});
 
 export default ProfileTopTab;

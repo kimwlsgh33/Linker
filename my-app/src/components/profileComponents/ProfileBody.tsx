@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -9,13 +9,26 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 
 // 부모컴포넌트로부터 props전달받음
-export const ProfileBody = ({ data }) => {
+export const ProfileBody = ({ data, user }) => {
   const navigation = useNavigation();
+
+  const storyPressed = useCallback(
+    (id) => {
+      if (user.id === id) {
+        return {
+          ...user,
+          show: true,
+        };
+      }
+      return user;
+    },
+    [user]
+  );
 
   return (
     <SafeAreaView key={data.accountName}>
@@ -24,7 +37,13 @@ export const ProfileBody = ({ data }) => {
           <View>
             <Pressable
               onPress={() => {
-                navigation.navigate("Story");
+                navigation.navigate("Story", {
+                  name: user[0].name,
+                  image: user[0].image,
+                  userName: user[0].userName,
+                });
+                // 누른 스토리 유저의 id를 함수의 인자로 받아올 수 있다.
+                storyPressed(user.id);
               }}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
@@ -141,7 +160,12 @@ export const ProfileBody = ({ data }) => {
           <View style={styles.roundView}>
             <Pressable
               onPress={() => {
-                navigation.navigate("Story");
+                navigation.navigate("Story", {
+                  name: user[0].name,
+                  image: user[0].image,
+                  userName: user[0].userName,
+                });
+                storyPressed(user.id);
               }}
               style={({ pressed }) => [
                 {
@@ -149,13 +173,13 @@ export const ProfileBody = ({ data }) => {
                 },
               ]}
             >
-              <View>
+              <View style={{ alignItems: "center" }}>
                 <Image
                   source={{ uri: "https://source.unsplash.com/random/100x102" }}
                   style={styles.round1}
                 />
+                <Text style={styles.roundText}>취미</Text>
               </View>
-              <Text style={styles.roundText}>취미</Text>
             </Pressable>
             <Pressable
               style={({ pressed }) => [
@@ -164,10 +188,12 @@ export const ProfileBody = ({ data }) => {
                 },
               ]}
             >
-              <View style={styles.round2}>
-                <Entypo name="plus" style={{ fontSize: 20, color: "#000" }} />
+              <View style={{ alignItems: "center" }}>
+                <View style={styles.round2}>
+                  <Entypo name="plus" style={{ fontSize: 20 }} />
+                </View>
+                <Text style={styles.roundText}>신규</Text>
               </View>
-              <Text style={styles.roundText}>신규</Text>
             </Pressable>
           </View>
         </ScrollView>
@@ -249,8 +275,6 @@ const styles = StyleSheet.create({
   },
   roundText: {
     fontSize: 11,
-    left: 20,
-    top: 8,
     fontFamily: "GangwonEduAllBold",
   },
 });
