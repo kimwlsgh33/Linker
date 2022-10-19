@@ -5,7 +5,7 @@ import type {
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
-import { TPost } from "../global";
+import { TPost, TComment } from "../global";
 
 // 스택 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
 // key: 스크린 이름

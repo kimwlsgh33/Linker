@@ -18,6 +18,10 @@ import { User } from "../models";
 function HomeScreen() {
   const navigation = useNavigation();
 
+  const goLogin = () => {
+    navigation.navigate("Login" as any);
+  };
+
   return (
     <SafeAreaView>
       <View
@@ -30,7 +34,7 @@ function HomeScreen() {
       >
         <FontAwesome name="plus-square-o" style={{ fontSize: 24 }} />
         <Text
-          onPress={() => navigation.navigate("Login")}
+          onPress={goLogin}
           style={{
             fontFamily: "Lobster-Regular",
             fontSize: 25,

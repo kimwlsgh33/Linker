@@ -20,6 +20,10 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
 
+  const goHome = () => {
+    navigation.navigate("HomeTab" as any);
+  };
+
   const handleIdChange = (text) => {
     setId(text);
   };

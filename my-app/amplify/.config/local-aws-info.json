@@ -1,7 +1,7 @@
 {
-  "dev": {
+  "staging": {
     "configLevel": "project",
     "useProfile": false,
-    "awsConfigFilePath": "C:\\Users\\EZEN\\.amplify\\awscloudformation\\AY1OPKbSa4"
+    "awsConfigFilePath": "C:\\Users\\EZEN\\.amplify\\awscloudformation\\RUEO70WdHz"
   }
 }

@@ -32,6 +32,7 @@ import Safety2 from "../screens/Safety2";
 import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
+import AuthComp from "../screens/AuthComp";
 const Stack = createNativeStackNavigator();
 
 const screenOptions = ({ navigation, route }) => {
@@ -58,9 +59,6 @@ const screenOptions = ({ navigation, route }) => {
     ),
   };
 };
-
-
-
 
 function RootStack() {
   const navigation = useNavigation();
@@ -94,6 +92,7 @@ function RootStack() {
         <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
+        <Stack.Screen name="AuthComp" component={AuthComp} />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
@@ -241,7 +240,6 @@ function RootStack() {
             ),
           }}
         />
-
       </Stack.Group>
     </Stack.Navigator>
   );

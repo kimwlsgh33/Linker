@@ -22,7 +22,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DataStore } from "@aws-amplify/datastore";
-import { User } from "../models";
+import Amplify, { Auth } from "aws-amplify";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -30,11 +30,20 @@ import { User } from "../models";
 
 const SignUp = () => {
   const [id, setId] = useState("");
+  // const [phone_number, setPhone_number] = useState("");
   const [name, setName] = useState("");
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
   const [number, setNumber] = useState(1);
+  // const [email, setEmail] = useState("");
+  const [idCheck, setIdCheck] = useState(false);
+  // const [phoneCheck, setPhoneCheck] = useState(false);
+  const [nameCheck, setNameCheck] = useState(false);
+  const [nickCheck, setNickCheck] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [emailOrPhone, setEmailOrPhone] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
@@ -46,108 +55,135 @@ const SignUp = () => {
 
   const navigation = useNavigation();
 
-  const goHome = () => {
-    navigation.navigate("BottomTab" as any);
-  };
-
   const goLogin = () => {
     navigation.navigate("Login" as any);
   };
 
-  const goTOS = async () => {
-    console.log("TOS");
-    await DataStore.save(
-      new User({
-        username: name,
-        email: id,
-        password: password,
-        followersID: "12",
-        likepostID: "12",
-      })
-    );
-    navigation.navigate("TOS" as any);
-  };
-
-  function counter() {
-    const boot = useEffect(() => {
-      increaseNumber(number);
-    });
-  }
-
-  const handleIdChange = (text) => {
-    setId(text);
-  };
-
-  const handleNameChange = (text) => {
-    setName(text);
-  };
-
-  const handleNickChange = (text) => {
-    setNick(text);
-  };
-
-  const handlePwChange = (text) => {
-    setPassword(text);
-  };
-
-  const idCheck = (id) => {
-    handleIdChange(id);
+  // 회원가입 로직.
+  const goCodeInput = async () => {
+    // console.log("email : " + email);
+    // console.log("phone_number : " + phone_number);
 
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+
+    const SignUpEmail = async () => {
+      try {
+        const { user } = await Auth.signUp({
+          username: id,
+          password: password,
+          attributes: {
+            email: id,
+            name: name,
+            nickname: nick,
+          },
+        });
+        console.log(user);
+      } catch (error) {
+        console.log("error signing up:", error);
+      }
+    };
+    const SignUpPhoneNumber = async () => {
+      try {
+        const { user } = await Auth.signUp({
+          username: "+82" + id,
+          password: password,
+          attributes: {
+            phone_number: "+82" + id,
+            name: name,
+            nickname: nick,
+          },
+        });
+        console.log(user);
+      } catch (error) {
+        console.log("error signing up:", error);
+      }
+    };
+    if (regExp.test(id)) {
+      SignUpEmail();
+    } else {
+      SignUpPhoneNumber();
+    }
+    navigation.navigate("CodeInput" as any, {
+      id: id,
+      // phone_number: id,
+      name: name,
+      nick: nick,
+      password: password,
+    });
+  };
+
+  // 이메일 인지 전화번호인지 체크하여 상태 저장해서 문구띄워줄때 사용.
+  const handleIdChange = (text) => {
+    setErrorMsg("");
+    const reg = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
     const phnum = /^[0-9]{10,11}$/;
 
-    if (regExp.test(id) || phnum.test(id)) {
-      increaseNumber(number);
-      console.log(number);
+    // email check
+    if (!reg.test(text) && !phnum.test(text)) {
+      setErrorMsg("올바른 형식이 아닙니다.");
+      // setEmailOrPhone(true);
+      // setId(text);
+      // setIdCheck(true);
     } else {
-      setDisable(true);
+      setIdCheck(true);
     }
+    // else {
+    //   // setIdCheck(false);
+    // }
+
+    // if () {
+    //   setEmailOrPhone(false);
+    //   setPhone_number(text);
+    //   setPhoneCheck(true);
+    // } else {
+    //   setPhoneCheck(false);
+    // }
   };
 
-  const nameCheck = (name) => {
-    handleNameChange(name);
+  // 여기부터 검사
+  // const idCheck = (text) => {
+  //   handleIdChange(text);
+  // };
 
-    const regExp = /^[a-zA-Z]{2,30}$/;
-
+  const nmCheck = (text) => {
+    setName(text);
+    const regExp = /^[a-zA-Z0-9]{2,30}$/;
     if (regExp.test(name)) {
-      increaseNumber(number);
-      console.log(number);
+      setNameCheck(true);
     } else {
-      setDisable(true);
+      setNameCheck(false);
     }
   };
 
-  const nickCheck = (nick) => {
-    handleNickChange(nick);
-
-    const regExp = /^[a-zA-Z0-9%-_]{1,10}$/;
-
+  const nkCheck = (nick) => {
+    setNick(nick);
+    const regExp = /^[a-zA-Z0-9%-_]{1,20}$/;
     if (regExp.test(nick)) {
-      increaseNumber(number);
-      console.log(number);
+      setNickCheck(true);
     } else {
-      setDisable(true);
+      setNickCheck(false);
     }
   };
 
   const pwCheck = (password) => {
-    handlePwChange(password);
+    setPassword(password);
     const reg =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,30}$/;
     if (reg.test(password)) {
-      increaseNumber(number);
-      console.log(number);
-      if (number >= 4) {
-        if (name != null) setDisable(false);
-      } else {
-        setDisable(true);
-      }
+      setPasswordCheck(true);
+    } else {
+      setPasswordCheck(false);
+    }
+  };
+
+  // 버튼을 활성화 하는 함수
+  const allCheck = () => {
+    if (idCheck && nameCheck && nickCheck && passwordCheck) {
+      setDisable(false);
     } else {
       setDisable(true);
     }
   };
-
-  const increaseNumber = (number) => setNumber(number + 1);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -161,7 +197,7 @@ const SignUp = () => {
               marginBottom: 15,
             }}
           >
-            Instagram
+            LINKER
           </Text>
           <Text style={[styles.recommadText]}>
             친구들의 사진과 동영상을 보려면
@@ -225,9 +261,26 @@ const SignUp = () => {
               ref={ref_input[0]}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
+                handleIdChange(id);
               }}
-              onEndEditing={(e) => idCheck(e.nativeEvent.text)}
+              // onEndEditing={(e) => {
+              //   idCheck(e.nativeEvent.text);
+              // }}
+              onChangeText={setId}
             />
+            {/* {emailOrPhone ? (
+              emailCheck ? (
+                <Text style={styles.descb}>사용 가능한 이메일입니다.</Text>
+              ) : (
+                <Text style={styles.descr}>이메일을 다시 확인해주세요.</Text>
+              )
+            ) : phoneCheck ? (
+              <Text style={styles.descb}>사용 가능한 전화번호입니다.</Text>
+            ) : (
+              <Text style={styles.descr}>전화번호를 다시 확인해주세요.</Text>
+              )} */}
+
+            {errorMsg && <Text style={styles.descr}>{errorMsg}</Text>}
             <TextInput
               placeholder="성명"
               style={[styles.input, styles.buttonOutline]}
@@ -236,8 +289,21 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[2].current.focus();
               }}
-              onEndEditing={(e) => nameCheck(e.nativeEvent.text)}
+              onChangeText={nmCheck}
             />
+            {name !== "" && (
+              <Text style={styles.input}>
+                {nameCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 이름 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자 2~30자로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
             <TextInput
               placeholder="사용자 이름"
               style={[styles.input, styles.buttonOutline]}
@@ -246,16 +312,43 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[3].current.focus();
               }}
-              onEndEditing={(e) => nickCheck(e.nativeEvent.text)}
+              onChangeText={nkCheck}
             />
+            {nick !== "" && (
+              <Text style={styles.input}>
+                {nickCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 사용자 이름 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자 1~20자로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
             <TextInput
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
               secureTextEntry
               ref={ref_input[3]}
               //onSubmitEditing={Keyboard.dismiss}
-              onChangeText={(e) => pwCheck(e)}
+              onChangeText={pwCheck}
+              onEndEditing={allCheck}
             />
+            {password !== "" && (
+              <Text style={styles.input}>
+                {passwordCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 비밀번호 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자, 특수문자를 포함한 8자 이상으로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <Pressable
@@ -267,7 +360,7 @@ const SignUp = () => {
               ]}
               android_ripple={{ color: "#FFF" }}
               disabled={disable}
-              onPress={goTOS}
+              onPress={goCodeInput}
             >
               <Text style={styles.buttonOutlineText}>가입</Text>
             </Pressable>
@@ -275,7 +368,7 @@ const SignUp = () => {
         </View>
         <View style={styles.policyView}>
           <Text style={styles.policyText}>
-            가입하면 Instagram의{" "}
+            가입하면 LINKER의{" "}
             <Text style={styles.policyTextIm}>약관, 데이터</Text>
           </Text>
           <Text style={styles.policyText}>
@@ -389,6 +482,18 @@ const styles = StyleSheet.create({
   },
   policyTextIm: {
     fontWeight: "bold",
+  },
+  descr: {
+    fontFamily: "GangwonEduAllLight",
+    fontSize: 12,
+    textAlign: "center",
+    color: "red",
+  },
+  descb: {
+    fontFamily: "GangwonEduAllLight",
+    fontSize: 12,
+    textAlign: "center",
+    color: "#0782F9",
   },
 });
 export default SignUp;
