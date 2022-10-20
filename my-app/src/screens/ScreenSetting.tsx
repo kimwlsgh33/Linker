@@ -91,7 +91,7 @@ const navbars = [
 ];
 
 export default function ScreenSetting({ navigation, route }) {
-  const [text, onChangeText] = useState("Useless Text");
+  const [text, onChangeText] = useState("");
   const [ModalVisible, setModalVisible] = useState(false);
 
   return (
@@ -271,6 +271,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-  } // Test
+  }
 
 });

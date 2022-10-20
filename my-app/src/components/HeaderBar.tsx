@@ -31,19 +31,19 @@ function HeaderBar({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#000000",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 10,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#000000",
   },
   sameWidth: {
     width: "33%",
     justifyContent: "center",
   },
-  title: { textAlign: "center", fontSize: 16, fontWeight: "700" },
+  title: { textAlign: "center", fontSize: 16, fontWeight: "700", color:"#FFFAFA",},
 });
 
 export default HeaderBar;

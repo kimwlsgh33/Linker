@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/ionicons";
 
 function IconLeft({ iconName, iconSize, text }) {
   return (

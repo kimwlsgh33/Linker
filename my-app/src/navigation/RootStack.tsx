@@ -32,10 +32,11 @@ import Safety2 from "../screens/Safety2";
 import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
-const Stack = createNativeStackNavigator();
+import HeaderOption from "../components/HeaderOption";
 
 const screenOptions = ({ navigation, route }) => {
   let title;
+
   if (route.name === "Welcome") {
     title = "Welcome";
   } else if (route.name === "Detail") {
@@ -50,6 +51,24 @@ const screenOptions = ({ navigation, route }) => {
     title = "탐색 탭";
   } else if (route.name === "FollowTab") {
     title = "userId33";
+  } else if (route.name === "Setting") {
+    title = "설정";
+  } else if (route.name === "AddUser2") {
+    title = "친구 팔로우 및 초대";
+  } else if (route.name === "Bells2") {
+    title = "알림";
+  } else if (route.name === "Lock2") {
+    title = "개인정보 보호";
+  } else if (route.name === "team2") {
+    title = "관리 감독";
+  } else if (route.name === "Safety2") {
+    title = "보안";
+  } else if (route.name === "User2") {
+    title = "계정";
+  } else if (route.name === "thema2") {
+    title = "테마";
+  } else if (route.name === "PersonalData") {
+    title = "개인정보";
   }
 
   return {
@@ -59,15 +78,12 @@ const screenOptions = ({ navigation, route }) => {
   };
 };
 
-import SignUp from "../screens/SignUp";
-import LoginScreen from "../screens/LoginScreen";
-
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="SignUp">
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Setting">
       <Stack.Group>
         <Stack.Screen
           name="HomeTab"
@@ -81,6 +97,14 @@ function RootStack() {
         <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
       </Stack.Group>
 
       <Stack.Group screenOptions={{ headerShown: false }}>
@@ -96,154 +120,6 @@ function RootStack() {
         <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name="Setting"
-          component={ScreenSetting}
-          options={{
-            title: "설정",
-            headerTitleAlign: "center",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="AddUser2"
-          component={AddUser2}
-          options={{
-            title: "친구 팔로우 및 초대",
-            headerTitleAlign: "center",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Bells2"
-          component={Bells2}
-          options={{
-            title: "알림",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Lock2"
-          component={Lock2}
-          options={{
-            title: "개인정보 보호",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Safety2"
-          component={Safety2}
-          options={{
-            title: "보안",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="User2"
-          component={User2}
-          options={{
-            title: "계정",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Thema2"
-          component={Thema2}
-          options={{
-            title: "테마 설정",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="PersonalData"
-          component={PersonalData}
-          options={{
-            title: "개인정보",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
       </Stack.Group>
     </Stack.Navigator>
   );

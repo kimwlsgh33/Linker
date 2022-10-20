@@ -43,7 +43,7 @@ function HomeScreen() {
       </View>
       <ScrollView>
         <Stories />
-        <Post />
+        {/* <Post /> */}
       </ScrollView>
     </SafeAreaView>
   );
