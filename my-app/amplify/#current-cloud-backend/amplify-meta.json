@@ -43,7 +43,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "linker"
       },
-      "lastPushTimeStamp": "2022-10-19T09:14:27.054Z",
+      "lastPushTimeStamp": "2022-10-20T12:26:22.509Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/auth/linker-cloudformation-template.json",
         "logicalId": "authlinker"
@@ -74,12 +74,12 @@
         "GraphQLAPIEndpointOutput": "https://46qnnhfol5hhlio5gbefnwmlwi.appsync-api.ap-northeast-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-oyf3gn4mvjegncssywryhfhol4"
       },
-      "lastPushTimeStamp": "2022-10-19T09:14:27.116Z",
+      "lastPushTimeStamp": "2022-10-20T12:26:22.568Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilinker"
       },
-      "lastPushDirHash": "O86Dw9KSOii8ZzGA7LVkVl97t0I="
+      "lastPushDirHash": "ABUX9bSOku3x8htpjEEENDvxiyk="
     }
   }
 }

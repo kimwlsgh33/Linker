@@ -1,0 +1,18 @@
+{
+  "resourceName": "dynamo3c785779",
+  "tableName": "dynamo3c785779",
+  "partitionKey": {
+    "fieldName": "test1",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "testGSI",
+      "partitionKey": {
+        "fieldName": "test1",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}

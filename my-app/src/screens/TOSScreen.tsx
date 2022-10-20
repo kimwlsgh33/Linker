@@ -11,6 +11,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import TOS from "../components/TOS";
 import { useNavigation } from "@react-navigation/native";
+import { DataStore } from "aws-amplify";
+import { Terms } from "../models";
 
 const datas = [
   {
@@ -57,16 +59,28 @@ const datas = [
   },
 ];
 
-const TOSScreen = () => {
-  const navigation = useNavigation();
-
-  const goCreateName = () => {
-    navigation.navigate("CreateName" as any);
-  };
-
+const TOSScreen = ({ route }) => {
   const [disable, setDisable] = useState(true);
   const [toss, setToss] = useState(datas);
   const [all, setAll] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const [event, setEvent] = useState(false);
+  const [night, setNight] = useState(false);
+
+  const navigation = useNavigation();
+
+  const goHome = async () => {
+    await DataStore.save(
+      new Terms({
+        User: User,
+        Required: terms,
+        Event: event,
+        Night: night,
+      })
+    );
+    console.log("executed");
+    navigation.navigate("Welcome" as any);
+  };
 
   useEffect(() => {
     TOSCheck();
@@ -104,9 +118,16 @@ const TOSScreen = () => {
       toss[2].state === true &&
       toss[3].state === true
     ) {
+      setTerms(true);
       setDisable(false);
     } else {
       setDisable(true);
+    }
+    if (toss[4].state === true) {
+      setEvent(true);
+    }
+    if (toss[5].state === true) {
+      setNight(true);
     }
   }, [toss, setDisable]);
 
@@ -226,7 +247,7 @@ const TOSScreen = () => {
           ]}
           android_ripple={{ color: "#FFF" }}
           disabled={disable}
-          onPress={goCreateName}
+          onPress={goHome}
         >
           <Text
             style={{
@@ -282,7 +303,6 @@ const styles = StyleSheet.create({
   bottomBar: {
     alignItems: "center",
     justifyContent: "center",
-    //position: "absolute",
     width: "100%",
     height: "15%",
     bottom: 0,

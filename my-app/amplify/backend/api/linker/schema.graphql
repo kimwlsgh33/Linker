@@ -3,6 +3,7 @@ type Terms @model @auth(rules: [{allow: public}]) {
   Required: Boolean
   Event: Boolean
   Night: Boolean
+  User: User! @hasOne
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
@@ -24,5 +25,6 @@ type User @model @auth(rules: [{allow: public}]) {
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   followings: [String]
   followers: [String]
+  birthday: AWSDate
 }
  

@@ -16,56 +16,33 @@ const CodeInput = ({ route }) => {
   const [code, setCode] = useState("");
   const [disable, setDisable] = useState(true);
 
-  async function confirmSignUp() {
-    try {
-      await Auth.confirmSignUp(username, code);
-    } catch (error) {
-      console.log("error confirming sign up", error);
-    }
-  }
-
   const navigation = useNavigation();
-  // const email = route.params.email;
-  // const phone_number = "+82" + route.params.phone_number;
-  const id = route.params.id;
+  const username = route.params.username;
   const name = route.params.name;
   const nick = route.params.nick;
   const password = route.params.password;
 
-  const username = id;
-
+  async function confirmSignUp() {
+    try {
+      await Auth.confirmSignUp(username, code);
+      navigation.navigate("Birthday" as any, {
+        username: username,
+        name: name,
+        nick: nick,
+        password: password,
+      });
+    } catch (error) {
+      console.log("error confirming sign up", error);
+    }
+  }
   const codeCheck = (code) => {
     setCode(code);
     const reg = /^[0-9]{6}$/;
     if (reg.test(code)) {
-      confirmSignUp();
       setDisable(false);
     } else {
       setDisable(true);
     }
-  };
-  const codeContrast = (code) => {
-    async function confirmSignUp() {
-      try {
-        await Auth.confirmSignUp(username, code);
-        if (confirmSignUp) {
-          navigation.navigate("AuthComp" as any, {
-            username: username,
-            name: name,
-            nick: nick,
-            password: password,
-          });
-        }
-      } catch (error) {
-        console.log("error confirming sign up", error);
-      }
-    }
-    // if (code === "123456") {
-    //   navigation.navigate("PwRe" as any);
-    // } else {
-    //   alert("인증번호가 일치하지 않습니다.");
-    // }
-    confirmSignUp();
   };
 
   async function resendConfirmationCode() {
@@ -112,7 +89,7 @@ const CodeInput = ({ route }) => {
           ]}
           disabled={disable}
           android_ripple={{ color: "#FFF" }}
-          onPress={() => codeContrast(code)}
+          onPress={confirmSignUp}
         >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>

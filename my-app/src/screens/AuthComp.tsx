@@ -6,30 +6,20 @@ import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
-import { DataStore } from "aws-amplify";
-import { User } from "../models";
 
-const authComp = ({ route }) => {
+const AuthComp = () => {
   const navigation = useNavigation();
 
-  const goTOS = async () => {
-    await DataStore.save(
-      new User({
-        username: route.params.username,
-        name: route.params.name,
-        nickname: route.params.nick,
-        password: route.params.password,
-      })
-    );
-
+  const goSignUp = () => {
+    navigation.navigate("SignUp" as any);
+  };
+  const goTOS = () => {
     navigation.navigate("TOS" as any);
   };
 
   const LinearGradientProps = {
     colors: ["#FFB6C1", "#FFA07A"],
   };
-
-  const username = route.params.username;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,7 +29,7 @@ const authComp = ({ route }) => {
             Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
           ]}
           android_ripple={{ color: "#CCC" }}
-          onPress={goTOS}
+          onPress={goSignUp}
         >
           <Feather name="x" size={40} color="#000" />
         </Pressable>
@@ -167,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default authComp;
+export default AuthComp;

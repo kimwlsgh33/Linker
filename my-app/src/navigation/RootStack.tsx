@@ -33,6 +33,7 @@ import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
 import AuthComp from "../screens/AuthComp";
+
 const Stack = createNativeStackNavigator();
 
 const screenOptions = ({ navigation, route }) => {
@@ -63,7 +64,7 @@ const screenOptions = ({ navigation, route }) => {
 function RootStack() {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="SignUp">
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="TOS">
       <Stack.Group>
         <Stack.Screen
           name="HomeTab"

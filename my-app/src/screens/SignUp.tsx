@@ -51,21 +51,23 @@ const SignUp = () => {
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
 
-  const Stack = createNativeStackNavigator();
-
   const navigation = useNavigation();
 
   const goLogin = () => {
     navigation.navigate("Login" as any);
   };
 
+  // 핸드폰 번호를 국가번호와 함께 가져오기 위한 함수
+  const forPhone = (id) => {
+    const result = "+82" + id.slice(1);
+    return result;
+  };
+
   // 회원가입 로직.
   const goCodeInput = async () => {
-    // console.log("email : " + email);
-    // console.log("phone_number : " + phone_number);
-
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
 
+    // amplify email 가입
     const SignUpEmail = async () => {
       try {
         const { user } = await Auth.signUp({
@@ -81,14 +83,26 @@ const SignUp = () => {
       } catch (error) {
         console.log("error signing up:", error);
       }
+      navigation.navigate("CodeInput" as any, {
+        username: id,
+        // phone_number: id,
+        name: name,
+        nick: nick,
+        password: password,
+      });
     };
+
+    // amplify phone 가입
     const SignUpPhoneNumber = async () => {
+      // 전화번호 포맷 수정
+      const formattedPhone = forPhone(id);
+      // 가입 로직
       try {
         const { user } = await Auth.signUp({
-          username: "+82" + id,
+          username: formattedPhone,
           password: password,
           attributes: {
-            phone_number: "+82" + id,
+            phone_number: formattedPhone,
             name: name,
             nickname: nick,
           },
@@ -97,19 +111,21 @@ const SignUp = () => {
       } catch (error) {
         console.log("error signing up:", error);
       }
+      navigation.navigate("CodeInput" as any, {
+        username: formattedPhone,
+        // phone_number: id,
+        name: name,
+        nick: nick,
+        password: password,
+      });
     };
+
+    // 형식 검사 후, 가입 로직 실행.
     if (regExp.test(id)) {
       SignUpEmail();
     } else {
       SignUpPhoneNumber();
     }
-    navigation.navigate("CodeInput" as any, {
-      id: id,
-      // phone_number: id,
-      name: name,
-      nick: nick,
-      password: password,
-    });
   };
 
   // 이메일 인지 전화번호인지 체크하여 상태 저장해서 문구띄워줄때 사용.
@@ -180,6 +196,7 @@ const SignUp = () => {
   const allCheck = () => {
     if (idCheck && nameCheck && nickCheck && passwordCheck) {
       setDisable(false);
+      console.log(id);
     } else {
       setDisable(true);
     }

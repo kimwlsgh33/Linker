@@ -43,7 +43,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "linker"
       },
-      "lastPushTimeStamp": "2022-10-19T09:15:18.256Z",
+      "lastPushTimeStamp": "2022-10-20T12:27:48.866Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/auth/linker-cloudformation-template.json",
         "logicalId": "authlinker"
@@ -74,12 +74,39 @@
         "GraphQLAPIEndpointOutput": "https://46qnnhfol5hhlio5gbefnwmlwi.appsync-api.ap-northeast-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-oyf3gn4mvjegncssywryhfhol4"
       },
-      "lastPushTimeStamp": "2022-10-19T09:15:18.263Z",
+      "lastPushTimeStamp": "2022-10-20T12:27:48.877Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apilinker"
       },
-      "lastPushDirHash": "O86Dw9KSOii8ZzGA7LVkVl97t0I="
+      "lastPushDirHash": "ABUX9bSOku3x8htpjEEENDvxiyk="
+    }
+  },
+  "storage": {
+    "dynamo3c785779": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "linker0982ef59": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "dynamo3c785779",
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "attributeEnvMap": {
+            "Name": "TABLE_NAME",
+            "Arn": "TABLE_ARN"
+          }
+        }
+      ]
     }
   }
 }
