@@ -8,13 +8,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
 import { User } from "../models";
+import { LinearGradient } from "expo-linear-gradient";
 
 const BirthdayScreen = ({ route }) => {
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
@@ -25,21 +25,26 @@ const BirthdayScreen = ({ route }) => {
 
   const navigation = useNavigation();
 
-  const goTOS = async () => {
-    navigation.navigate("TOS" as any, {
-      username: username,
-      name: name,
-      nick: nick,
-      password: password,
-      birthday: birthday,
-    });
+  const forPhone = (id) => {
+    const result = "+82" + id.slice(1);
+    return result;
   };
-
-  const username = route.params.username;
-  const name = route.params.name;
-  const nick = route.params.nick;
-  const password = route.params.password;
-  const birthday = dateStr;
+  const goTOS = async () => {
+    try {
+      const user = await DataStore.save(
+        new User({
+          username: route.params.username,
+          name: route.params.name,
+          nickname: route.params.nick,
+          password: route.params.password,
+          birthday: dateStr,
+        })
+      );
+      navigation.navigate("TOS" as any, { user: user });
+    } catch (e) {
+      console.log("error creating user", JSON.stringify(e, null, 2));
+    }
+  };
 
   const onPressDate = () => {
     // 날짜 클릭 시
@@ -62,69 +67,69 @@ const BirthdayScreen = ({ route }) => {
 
   // 선택한 날짜를 표시할 문자열을 생성
   return (
-    <>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.header}>
-            <FontAwesomeIcon name="birthday-cake" size={80} />
-            <Text style={styles.Title}>생일 추가</Text>
-            <Text style={styles.desc}>
-              공개 프로필에 포함되지 않습니다. 왜 생일을 입력해야 하나요?
-            </Text>
-            <View style={styles.dateView}>
-              <Pressable
-                style={({ pressed }) => [
-                  styles.dateButton,
-                  Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
-                ]}
-                android_ripple={{ color: "#FFF" }}
-                onPress={onPressDate}
-              >
-                <Text style={styles.dateTitle}>
-                  {format(new Date(date), "PPP")}
-                </Text>
-              </Pressable>
-              <Text style={styles.desc}>날짜를 눌러 생일을 입력하세요.</Text>
-              <Text style={styles.descb}>{dateStr}</Text>
-            </View>
-          </View>
-          <View style={styles.footer}>
-            <Text style={styles.footerText}>
-              비즈니스나 반려동물 등을 위한 계정인 경우에도 회원님의 생일을
-              사용하세요.
-            </Text>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
+        <View style={styles.header}>
+          <FontAwesomeIcon name="birthday-cake" size={80} />
+          <Text style={styles.Title}>생일 추가</Text>
+          <Text style={styles.desc}>
+            공개 프로필에 포함되지 않습니다. 왜 생일을 입력해야 하나요?
+          </Text>
+          <View style={styles.dateView}>
             <Pressable
               style={({ pressed }) => [
-                styles.button,
+                styles.dateButton,
                 Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
               ]}
               android_ripple={{ color: "#FFF" }}
-              onPress={goTOS}
+              onPress={onPressDate}
             >
-              <Text style={styles.buttonText}>다음</Text>
+              <Text style={styles.dateTitle}>
+                {format(new Date(date), "PPP")}
+              </Text>
             </Pressable>
+            <Text style={styles.desc}>날짜를 눌러 생일을 입력하세요.</Text>
+            <Text style={styles.descb}>{dateStr}</Text>
           </View>
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
-      <DateTimePickerModal
-        isVisible={visible}
-        mode="date"
-        onConfirm={onConfirm}
-        onCancel={onCancel}
-        date={date}
-      />
-    </>
+        </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            비즈니스나 반려동물 등을 위한 계정인 경우에도 회원님의 생일을
+            사용하세요.
+          </Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.button,
+              Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+            ]}
+            android_ripple={{ color: "#FFF" }}
+            onPress={goTOS}
+          >
+            <Text style={styles.buttonText}>다음</Text>
+          </Pressable>
+        </View>
+        <DateTimePickerModal
+          isVisible={visible}
+          mode="date"
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          date={date}
+        />
+      </LinearGradient>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  back: {
-    flex: 1,
-  },
-  container: {
+  LinearGradient: {
     flex: 1,
     alignItems: "center",
-    marginHorizontal: 30,
   },
   header: {
     alignItems: "center",
@@ -171,18 +176,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "100%",
     marginBottom: 20,
+    alignItems: "center",
   },
   footerText: {
     fontSize: 14,
     color: "#8e8e8e",
     textAlign: "center",
-    marginHorizontal: 25,
+    marginHorizontal: 60,
     fontFamily: "GangwonEduAllLight",
   },
   button: {
     backgroundColor: "#0782F9",
     borderRadius: 5,
-    width: "100%",
+    width: "85%",
     height: 35,
     justifyContent: "center",
     alignItems: "center",

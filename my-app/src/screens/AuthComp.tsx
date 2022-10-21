@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Platform } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
@@ -10,11 +9,8 @@ import MaskedView from "@react-native-masked-view/masked-view";
 const AuthComp = () => {
   const navigation = useNavigation();
 
-  const goSignUp = () => {
-    navigation.navigate("SignUp" as any);
-  };
-  const goTOS = () => {
-    navigation.navigate("TOS" as any);
+  const goWelcome = () => {
+    navigation.navigate("Welcome" as any);
   };
 
   const LinearGradientProps = {
@@ -22,14 +18,20 @@ const AuthComp = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <LinearGradient
+      colors={["#ffb6c1", "white", "#e774fb"]}
+      style={styles.container}
+      locations={[0, 0.5, 1]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
       <View style={styles.TopBar}>
         <Pressable
           style={({ pressed }) => [
             Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
           ]}
           android_ripple={{ color: "#CCC" }}
-          onPress={goSignUp}
+          onPress={goWelcome}
         >
           <Feather name="x" size={40} color="#000" />
         </Pressable>
@@ -84,12 +86,12 @@ const AuthComp = () => {
             Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
           ]}
           android_ripple={{ color: "#FFF" }}
-          onPress={goTOS}
+          onPress={goWelcome}
         >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>
       </View>
-    </SafeAreaView>
+    </LinearGradient>
   );
 };
 

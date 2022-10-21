@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CodeInput = ({ route }) => {
   const [code, setCode] = useState("");
@@ -64,7 +65,13 @@ const CodeInput = ({ route }) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
         <Text style={styles.title}>
           {username} 으로 전송된 인증 코드를 입력하세요.
         </Text>
@@ -93,24 +100,23 @@ const CodeInput = ({ route }) => {
         >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>
-      </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  LinearGradient: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 30,
   },
   title: {
     fontSize: 24,
     fontFamily: "GangwonEduAllBold",
     marginBottom: 20,
     marginTop: 20,
-    marginHorizontal: 5,
+    marginHorizontal: 35,
   },
   desc: {
     fontSize: 16,
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0782F9",
     padding: 10,
     borderRadius: 5,
-    width: "100%",
+    width: "85%",
     alignItems: "center",
     marginTop: 20,
   },
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     color: "#0782F9",
   },
   input: {
-    width: "100%",
+    width: "85%",
     height: 45,
     backgroundColor: "#fff",
     borderRadius: 5,

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
+import { Auth, DataStore } from "aws-amplify";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -22,6 +23,42 @@ const LoginScreen = () => {
 
   const goHome = () => {
     navigation.navigate("HomeTab" as any);
+  };
+
+  const username = id;
+
+  const forPhone = (id) => {
+    const result = "+82" + id.slice(1);
+    return result;
+  };
+
+  const SignIn = async () => {
+    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+
+    const SignInEmail = async () => {
+      try {
+        const user = await Auth.signIn(username, password);
+      } catch (error) {
+        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        console.log("error signing in", error);
+        return;
+      }
+    };
+    const SignInPhone = async () => {
+      try {
+        const user = await Auth.signIn(forPhone(username), password);
+      } catch (error) {
+        alert("전화번호 또는 비밀번호가 일치하지 않습니다.");
+        console.log("error signing in", error);
+        return;
+      }
+      navigation.navigate("Welcome" as any);
+    };
+    if (regExp.test(username)) {
+      SignInEmail();
+    } else {
+      SignInPhone();
+    }
   };
 
   const handleIdChange = (text) => {
@@ -70,7 +107,7 @@ const LoginScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.logo}>instagram</Text>
+        <Text style={styles.logo}>LINKER</Text>
         <View style={styles.inputContainer}>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "height" : undefined}
@@ -100,9 +137,10 @@ const LoginScreen = () => {
             />
             <View style={styles.buttonContainer}>
               <Pressable
-                onPress={() => {
-                  navigation.navigate("HomeTab"), onReset();
-                }}
+                // onPress={() => {
+                //   navigation.navigate("Welcome"), onReset();
+                // }}
+                onPress={SignIn}
                 style={({ pressed }) => [
                   styles.button,
                   Platform.select({

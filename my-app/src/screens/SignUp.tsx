@@ -20,9 +20,8 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { DataStore } from "@aws-amplify/datastore";
-import Amplify, { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
+import { LinearGradient } from "expo-linear-gradient";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -30,19 +29,14 @@ import Amplify, { Auth } from "aws-amplify";
 
 const SignUp = () => {
   const [id, setId] = useState("");
-  // const [phone_number, setPhone_number] = useState("");
   const [name, setName] = useState("");
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
-  const [number, setNumber] = useState(1);
-  // const [email, setEmail] = useState("");
   const [idCheck, setIdCheck] = useState(false);
-  // const [phoneCheck, setPhoneCheck] = useState(false);
   const [nameCheck, setNameCheck] = useState(false);
   const [nickCheck, setNickCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
-  const [emailOrPhone, setEmailOrPhone] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
@@ -85,7 +79,6 @@ const SignUp = () => {
       }
       navigation.navigate("CodeInput" as any, {
         username: id,
-        // phone_number: id,
         name: name,
         nick: nick,
         password: password,
@@ -113,7 +106,6 @@ const SignUp = () => {
       }
       navigation.navigate("CodeInput" as any, {
         username: formattedPhone,
-        // phone_number: id,
         name: name,
         nick: nick,
         password: password,
@@ -130,6 +122,7 @@ const SignUp = () => {
 
   // 이메일 인지 전화번호인지 체크하여 상태 저장해서 문구띄워줄때 사용.
   const handleIdChange = (text) => {
+    console.log(text);
     setErrorMsg("");
     const reg = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
     const phnum = /^[0-9]{10,11}$/;
@@ -137,33 +130,14 @@ const SignUp = () => {
     // email check
     if (!reg.test(text) && !phnum.test(text)) {
       setErrorMsg("올바른 형식이 아닙니다.");
-      // setEmailOrPhone(true);
-      // setId(text);
-      // setIdCheck(true);
     } else {
       setIdCheck(true);
     }
-    // else {
-    //   // setIdCheck(false);
-    // }
-
-    // if () {
-    //   setEmailOrPhone(false);
-    //   setPhone_number(text);
-    //   setPhoneCheck(true);
-    // } else {
-    //   setPhoneCheck(false);
-    // }
   };
-
-  // 여기부터 검사
-  // const idCheck = (text) => {
-  //   handleIdChange(text);
-  // };
 
   const nmCheck = (text) => {
     setName(text);
-    const regExp = /^[a-zA-Z0-9]{2,30}$/;
+    const regExp = /^[a-zA-Z0-9\s]{2,30}$/;
     if (regExp.test(name)) {
       setNameCheck(true);
     } else {
@@ -173,7 +147,7 @@ const SignUp = () => {
 
   const nkCheck = (nick) => {
     setNick(nick);
-    const regExp = /^[a-zA-Z0-9%-_]{1,20}$/;
+    const regExp = /^[a-zA-Z0-9%-_\s]{1,20}$/;
     if (regExp.test(nick)) {
       setNickCheck(true);
     } else {
@@ -201,10 +175,19 @@ const SignUp = () => {
       setDisable(true);
     }
   };
+  useEffect(() => {
+    allCheck();
+  }, [idCheck, nameCheck, nickCheck, passwordCheck]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
         <View style={styles.inputContainer}>
           <Text
             style={{
@@ -273,30 +256,15 @@ const SignUp = () => {
             <TextInput
               placeholder="휴대폰 번호 또는 이메일 주소"
               style={[styles.input, styles.buttonOutline]}
-              // value={id}
               returnKeyType="next"
               ref={ref_input[0]}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
                 handleIdChange(id);
               }}
-              // onEndEditing={(e) => {
-              //   idCheck(e.nativeEvent.text);
-              // }}
               onChangeText={setId}
+              onEndEditing={() => handleIdChange(id)}
             />
-            {/* {emailOrPhone ? (
-              emailCheck ? (
-                <Text style={styles.descb}>사용 가능한 이메일입니다.</Text>
-              ) : (
-                <Text style={styles.descr}>이메일을 다시 확인해주세요.</Text>
-              )
-            ) : phoneCheck ? (
-              <Text style={styles.descb}>사용 가능한 전화번호입니다.</Text>
-            ) : (
-              <Text style={styles.descr}>전화번호를 다시 확인해주세요.</Text>
-              )} */}
-
             {errorMsg && <Text style={styles.descr}>{errorMsg}</Text>}
             <TextInput
               placeholder="성명"
@@ -401,15 +369,14 @@ const SignUp = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  LinearGradient: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -429,7 +396,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
-    // backgroundColor: "#0782F9",
     height: 50,
   },
   button: {

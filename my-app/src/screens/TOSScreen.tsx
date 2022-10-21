@@ -8,11 +8,12 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import TOS from "../components/TOS";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
 import { Terms } from "../models";
+import { LinearGradient } from "expo-linear-gradient";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const datas = [
   {
@@ -66,20 +67,22 @@ const TOSScreen = ({ route }) => {
   const [terms, setTerms] = useState(false);
   const [event, setEvent] = useState(false);
   const [night, setNight] = useState(false);
-
+  const User = route.params.user;
   const navigation = useNavigation();
 
-  const goHome = async () => {
+  const goAuthComp = async () => {
+    console.log(terms, event, night);
     await DataStore.save(
       new Terms({
         User: User,
         Required: terms,
         Event: event,
         Night: night,
+        termsUserId: User.id,
       })
     );
     console.log("executed");
-    navigation.navigate("Welcome" as any);
+    navigation.navigate("AuthComp" as any);
   };
 
   useEffect(() => {
@@ -102,12 +105,12 @@ const TOSScreen = ({ route }) => {
     },
     [toss, setToss]
   );
-  console.log("====================================");
-  console.log(toss[0].state);
-  console.log(toss[1].state);
-  console.log(toss[2].state);
-  console.log(toss[3].state);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log(toss[0].state);
+  // console.log(toss[1].state);
+  // console.log(toss[2].state);
+  // console.log(toss[3].state);
+  // console.log("====================================");
 
   //
 
@@ -200,7 +203,7 @@ const TOSScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ borderBottomWidth: 1, backgroundColor: "#ddd" }}>
+      <View style={{ borderBottomWidth: 1, backgroundColor: "#a5ff61" }}>
         <Text
           style={{
             fontSize: 20,
@@ -247,7 +250,7 @@ const TOSScreen = ({ route }) => {
           ]}
           android_ripple={{ color: "#FFF" }}
           disabled={disable}
-          onPress={goHome}
+          onPress={goAuthComp}
         >
           <Text
             style={{
@@ -271,10 +274,12 @@ const TOSScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "pink",
   },
   scrollview: {
     marginHorizontal: 15,
     marginBottom: 10,
+    backgroundColor: "pink",
   },
   TopBar: {
     flex: 0.15,
@@ -307,8 +312,8 @@ const styles = StyleSheet.create({
     height: "15%",
     bottom: 0,
     borderTopWidth: 1,
-    borderTopColor: "#AAA",
-    backgroundColor: "#ddd",
+    borderTopColor: "pink",
+    backgroundColor: "#ffb6c1",
   },
   bottomText: {
     fontFamily: "GangwonEduAllLight",
