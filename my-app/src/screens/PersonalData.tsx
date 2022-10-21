@@ -1,25 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   View,
   StyleSheet,
-  ScrollView,
-  TextInput,
-  Pressable,
-  Linking,
-  Modal,
-  ImageBackground,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/Ionicons";
-import TextAndIcon from "../components/TextAndIcon";
-import IconLeft from "../components/IconLeft";
-import TextStyle from "../components/TextStyle";
+
 
 
 function PersonalData() {
-
-  const [text, onChangeText] = useState("Useless Text");
 
   return (
     <View style={styles.container}>
@@ -28,14 +17,32 @@ function PersonalData() {
             <Text style={styles.PersonalTop}>비즈니스나 반려동물 등에 사용된 계정인 경우에도 회원님의 개인 정보를 입력하세요. 공개 프로필에 포함되지 않습니다.</Text>
         </View>
     </View>
-    <View>
-      <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            value={text}
-            placeholder="검색"
-            placeholderTextColor="#FFFAFA"
-      />
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>이메일 주소</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>전화번호</Text>
+        <Text style={styles.inputText}>+821012345678</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>성별</Text>
+        <Text style={styles.inputText}>밝히고 싶지 않음</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>생일</Text>
+        <Text style={styles.inputText}>1996.5.4</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
     </View>
     </View>
   );
@@ -66,7 +73,23 @@ const styles = StyleSheet.create({
     borderTopColor: "#333333",
     borderBottomColor: "#333333",
     padding: 5,
-  }
+  },
+
+  inputText: {
+    color:"#333333"
+  },
+
+  inputBox: {
+    flexDirection: "row", 
+    justifyContent:"space-between",
+    alignItems:"center",
+    width:"90%",
+    borderWidth:1, 
+    borderBottomColor:"#FFFAFA",
+    paddingBottom:10,
+    marginTop:10,
+  },
+  
 
 });
 

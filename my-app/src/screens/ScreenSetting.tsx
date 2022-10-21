@@ -9,6 +9,7 @@ import {
   Linking,
   Modal,
   ImageBackground,
+  SafeAreaView,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/Ionicons";
@@ -93,6 +94,7 @@ const navbars = [
 export default function ScreenSetting({ navigation, route }) {
   const [text, onChangeText] = useState("");
   const [ModalVisible, setModalVisible] = useState(false);
+  const [ModalVisible2, setModalVisible2] = useState(false);
 
   return (
     <ScrollView style={styles.container}>
@@ -131,9 +133,10 @@ export default function ScreenSetting({ navigation, route }) {
             visible={ModalVisible}
             transparent={true}
           >
+            <SafeAreaView/>
             <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible(false)}>
               <View style={styles.ModalBox}>
-                <ImageBackground source={require("../components/Meridian.jpg")} style={styles.bgImage}>
+                <ImageBackground source={require("../../assets/images/Meridian.jpg")} style={styles.bgImage}>
                     <View style={{marginLeft:5}}>
                       <Ionic name="md-close-outline" size={30} color="#FFFAFA"/>
                     </View>
@@ -195,7 +198,7 @@ export default function ScreenSetting({ navigation, route }) {
           style={({ pressed }) => [pressed && { opacity: 0.4 }]}
           onPress={() => Linking.openURL("https://naver.com")}
           >
-          <TextStyle text="계정 센터" />
+          <Text style={styles.Pressabletext}>계정 센터</Text>
         </Pressable>
         <Text style={styles.footertext}>
           {`스토리 및 게시물 공유, 로그인 등 Instagram, Facebook 앱,\nMessenger간에 연결된 환경에 대한 설정을 관리하세요.`}
@@ -203,9 +206,31 @@ export default function ScreenSetting({ navigation, route }) {
       </View>
       <View style={styles.Overfooterbox}>
         <Text style={styles.Overfootertext}>로그인</Text>
-        <Text style={styles.Overfootertext}>계정 추가</Text>
-        <Text style={styles.Overfootertext}>로그아웃</Text>
+        <Pressable onPress={() =>setModalVisible2(true)}>
+        <Text style={styles.Pressabletext}>계정 추가</Text>
+        </Pressable>
+        <Text style={styles.Pressabletext}>로그아웃</Text>
       </View>
+      <Modal 
+          animationType="slide" 
+          visible={ModalVisible2}
+          transparent={true}>
+        <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible2(false)}/>
+        <View style={{backgroundColor:"green",height:"18%",alignItems:"center"}}>
+          <View style={{borderBottomWidth:1,borderBottomColor:"red", height:"40%",width:"100%", alignItems:"center",justifyContent:"space-around", backgroundColor:"gray"}}>
+            <Ionic name="ios-remove-outline" size={35} color="white" />
+            <Text style={{color: "#FFFAFA", backgroundColor:"red"}}>계정 추가</Text>
+          </View>
+          <View style={{alignItems:"center", padding: 5, width: "100%", height:"100%",}}>
+            <Pressable style={styles.ModalButton} onPress={() => console.log("click1")}>
+            <Text style={styles.Modaltext}>기존 계정으로 로그인</Text>
+            </Pressable>
+            <View style={{marginTop:10}}>
+            <Text style={{color:"#013ADF"}}>새 계정 만들기</Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -245,6 +270,13 @@ const styles = StyleSheet.create({
     margin: 15,
   },
 
+  Pressabletext: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#013ADF",
+    margin: 15,
+  },
+
   input: {
     fontWeight: "bold",
     paddingLeft: 10,
@@ -271,6 +303,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+  },
+
+  ModalButton: {
+    backgroundColor: "#0174DF",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#0174DF",
+    width: "95%",
+    height: "30%",
+    alignItems:"center",
+    justifyContent:"center"
+  },
+
+  Modaltext: {
+    color: "#FFFAFA",
   }
 
 });
