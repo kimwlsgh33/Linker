@@ -16,7 +16,7 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Modal } from "../components/Modal";
-import events from "../lib/eventEmitter";
+import events from "../libs/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
@@ -99,10 +99,7 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image
-              source={profileImage}
-              style={styles.profileImage}
-            />
+            <Image source={profileImage} style={styles.profileImage} />
             <Modal
               Visible={Visible}
               setVisible={setVisible}

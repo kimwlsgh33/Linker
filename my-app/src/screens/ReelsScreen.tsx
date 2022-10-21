@@ -1,35 +1,59 @@
-import React from "react";
+import { Auth } from "aws-amplify";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Animated,
+  useWindowDimensions,
 } from "react-native";
 import { useAnimationValue } from "../hooks/useAnimationValue";
 
 function ReelsScreen() {
   const animValue = useAnimationValue(0);
-  const [isPressed, setIsPressed] = React.useState(false);
 
-  const biggerText = () => {
+  const { width } = useWindowDimensions();
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const animation = () => {
     Animated.timing(animValue, {
-      toValue: isPressed ? 0 : 40,
+      toValue: isPlaying ? 0 : width,
       duration: 3000,
       useNativeDriver: false,
-    }).start(() => {
-      setIsPressed((prev) => !prev);
-    });
+    }).start(() => setIsPlaying(!isPlaying));
   };
+
+  // useEffect(() => {
+  //   animValue.addListener(({ value }) => {
+  //     if (value === width) {
+  //       setIsPlaying(false);
+  //     }
+  //   });
+  // }, []);
+
+  const signOut = async () => {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log("Error signing out: ", error);
+    }
+  };
+
+  const pn = "01091186277";
+
+  console.log("+82" + pn.slice(1, -1));
 
   return (
     <View style={styles.container}>
-      <Animated.Text style={{ fontSize: animValue }}>
-        Reels Screen
-      </Animated.Text>
+      <View style={{ width: "100%" }}>
+        <Animated.View
+          style={{ backgroundColor: "gray", width: animValue, height: 100 }}
+        />
+      </View>
       <TouchableOpacity
         style={{ backgroundColor: "yellow", marginTop: 10 }}
-        onPress={biggerText}
+        onPress={signOut}
       >
         <Text>Size Up</Text>
       </TouchableOpacity>

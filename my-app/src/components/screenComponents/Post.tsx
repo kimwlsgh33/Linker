@@ -13,7 +13,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-import events from "../../lib/eventEmiiter";
+import events from "../../libs/eventEmitter";
 import Modal from "../Modal";
 import ModalScreen from "../modalScreen/ModalScreen";
 import ShareModal from "../modalScreen/ShareModal";
@@ -144,10 +144,6 @@ const Post = () => {
       })
     );
     setIsFollowed((prev) => !prev);
-  }, []);
-
-  useEffect(() => {
-    console.log(JSON.stringify(datas, null, "\t"));
   }, []);
 
   const bookMarkPressed = useCallback(

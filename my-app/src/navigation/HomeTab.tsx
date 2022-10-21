@@ -1,15 +1,19 @@
-import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React, { useCallback } from "react";
+import {
+  BottomTabNavigationOptions,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import SearchScreen from "../screens/SearchScreen";
+import SearchScreen from "../screens/search/SearchScreen";
 import ReelsScreen from "../screens/ReelsScreen";
 import Ionic from "react-native-vector-icons/Ionicons";
+import { Dimensions, Platform, View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
-const screenOptions = ({ route }) => ({
+const screenOptions = ({ route }): BottomTabNavigationOptions => ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarIcon: ({ focused, color, size }) => {
@@ -29,17 +33,35 @@ const screenOptions = ({ route }) => ({
     }
     return <Ionic name={iconName} size={size} color={color} />;
   },
+  tabBarStyle: {
+    position: "absolute",
+    bottom: Platform.OS === "ios" ? 0 : 24,
+  },
 });
 
+const { height, width } = Dimensions.get("window");
+
 const HomeTab = () => {
-  return (
-    <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name="Instagram" component={HomeScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Reels" component={ReelsScreen} />
-      <Tab.Screen name="Detail" component={DetailScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
-    </Tab.Navigator>
+  const Navs = useCallback(
+    () => (
+      <Tab.Navigator screenOptions={screenOptions}>
+        <Tab.Screen name="Instagram" component={HomeScreen} />
+        <Tab.Screen name="Search" component={SearchScreen} />
+        <Tab.Screen name="Reels" component={ReelsScreen} />
+        <Tab.Screen name="Detail" component={DetailScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    ),
+    []
+  );
+
+  // Android에서 Tab 네비게이션이 키보드에 가려지도록 설정
+  return Platform.OS === "android" ? (
+    <View style={{ height, width }}>
+      <Navs />
+    </View>
+  ) : (
+    <Navs />
   );
 };
 

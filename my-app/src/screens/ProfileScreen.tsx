@@ -1,3 +1,4 @@
+// React Basic
 import React, { useState, useEffect } from "react";
 import {
   ImageSourcePropType,
@@ -7,20 +8,24 @@ import {
   StyleSheet,
   Text,
   View,
-  Modal as DefaultModal,
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+// Icons
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ProfileBody from "../components/ProfileBody";
-import ProfileTopTab from "../components/ProfileTopTab";
+// Navigation
+import ProfileTopTab from "../navigation/ProfileTopTab";
+import { useNavigation } from "@react-navigation/native";
+// Components
+import ProfileBody from "../components/profileScreen/ProfileBody";
 import { Modal } from "../components/Modal";
-import events from "../lib/eventEmitter";
+// libs
+import events from "../libs/eventEmitter";
 
 const ProfileScreen = () => {
+  // 더미데이터
   const userInfo = {
     accountName: "userId33",
     name: "user_name",
@@ -146,7 +151,10 @@ const ProfileScreen = () => {
                     ]}
                   >
                     <View style={styles.modalIcon2}>
-                      <Entypo name="plus" style={{ fontSize: 20, color: "#000" }}/>
+                      <Entypo
+                        name="plus"
+                        style={{ fontSize: 20, color: "#000" }}
+                      />
                     </View>
                     <Text style={styles.modalText}>계정 추가</Text>
                   </Pressable>

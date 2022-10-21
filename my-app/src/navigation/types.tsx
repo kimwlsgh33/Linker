@@ -2,7 +2,7 @@ import type {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from "@react-navigation/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { TPost, TComment, TStory } from "../global";
@@ -12,7 +12,6 @@ import { TPost, TComment, TStory } from "../global";
 // value: 스크린에 전달할 파라미터들의 타입
 export type RootStackParamList = {
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
-  Welcome: undefined;
   Details: undefined;
   Post: undefined;
   Story: TStory;
@@ -26,11 +25,13 @@ export type RootStackParamList = {
   Discover: { post: TPost };
   NotFound: undefined;
   Comment: TComment;
+  UploadImage: undefined;
+  TestModal: undefined;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>;
+  StackScreenProps<RootStackParamList, T>;
 
 //================================================================================================
 // 탭 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성

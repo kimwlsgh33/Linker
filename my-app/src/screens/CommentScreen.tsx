@@ -11,9 +11,8 @@ import {
   StyleSheet,
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import events from "../lib/eventEmiiter";
+import events from "../libs/eventEmitter";
 
 const CommentScreen = ({ route, Navigation }) => {
   const {
@@ -82,26 +81,6 @@ const CommentScreen = ({ route, Navigation }) => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.view1}>
-        <TouchableOpacity
-          onPress={() => {
-            return navigation.navigate("HomeTab");
-          }}
-        >
-          <Ionic name="chevron-back-outline" style={{ fontSize: 30 }} />
-        </TouchableOpacity>
-        <View>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>댓글</Text>
-        </View>
-        <View>
-          <Feather
-            name="send"
-            style={{
-              fontSize: 23,
-            }}
-          />
-        </View>
-      </View>
       <ScrollView style={{ flex: 0.8 }}>
         <View style={styles.view2}>
           <View>

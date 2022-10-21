@@ -1,12 +1,14 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import { JUser } from "../global";
 
 type Props = {
   isOutline?: boolean;
+  user: JUser;
 };
 
-function UserBar({ isOutline }: Props) {
+function UserBar({ isOutline, user }: Props) {
   return (
     <Pressable
       style={({ pressed }) => [
@@ -24,8 +26,8 @@ function UserBar({ isOutline }: Props) {
         </View>
       </View>
       <View>
-        <Text style={styles.username}>username</Text>
-        <Text style={styles.nickname}>nickname</Text>
+        <Text style={styles.username}>{user.name}</Text>
+        <Text style={styles.nickname}>{user.username}</Text>
       </View>
     </Pressable>
   );
@@ -35,12 +37,11 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 3,
+    paddingVertical: 5,
     paddingHorizontal: 10,
   },
   profpicView: {
     width: 50,
-    alignItems: "center",
   },
   profpicOutline: {
     width: 45,

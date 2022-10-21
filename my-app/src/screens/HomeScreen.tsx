@@ -5,6 +5,9 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Pressable,
+  Platform,
+  Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Stories from "../components/screenComponents/Stories";
@@ -14,37 +17,58 @@ import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../models";
+import { Swipeable } from "react-native-gesture-handler";
+import UploadImageScreen from "./UploadImageScreen";
+
+const { width } = Dimensions.get("screen");
 
 function HomeScreen() {
   const navigation = useNavigation();
 
   return (
-    <SafeAreaView>
-      <View
-        style={{
-          justifyContent: "space-between",
-          flexDirection: "row",
-          paddingHorizontal: 15,
-          alignItems: "center",
+    <SafeAreaView style={{ zIndex: 1 }}>
+      <Swipeable
+        renderLeftActions={UploadImageScreen}
+        leftThreshold={width / 3}
+        onSwipeableOpen={() => {
+          console.log("Opened");
         }}
+        containerStyle={{ zIndex: 0 }}
       >
-        <FontAwesome name="plus-square-o" style={{ fontSize: 24 }} />
-        <Text
-          onPress={() => navigation.navigate("Login")}
+        <View
           style={{
-            fontFamily: "Lobster-Regular",
-            fontSize: 25,
-            fontWeight: "500",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            paddingHorizontal: 15,
+            alignItems: "center",
           }}
         >
-          Instagram
-        </Text>
-        <Feather name="send" style={{ fontSize: 24 }} />
-      </View>
-      <ScrollView>
-        <Stories />
-        <Post />
-      </ScrollView>
+          <Pressable
+            style={({ pressed }) => [
+              Platform.OS === "ios" && pressed && { opacity: 0.5 },
+            ]}
+            android_ripple={{ color: "#ccc" }}
+            onPress={() => navigation.navigate("UploadImage")}
+          >
+            <FontAwesome name="plus-square-o" style={{ fontSize: 24 }} />
+          </Pressable>
+          <Text
+            onPress={() => navigation.navigate("Login")}
+            style={{
+              fontFamily: "BackToSchoolRegular",
+              fontSize: 25,
+              fontWeight: "500",
+            }}
+          >
+            Instagram
+          </Text>
+          <Feather name="send" style={{ fontSize: 24 }} />
+        </View>
+        <ScrollView>
+          <Stories />
+          <Post />
+        </ScrollView>
+      </Swipeable>
     </SafeAreaView>
   );
 }
