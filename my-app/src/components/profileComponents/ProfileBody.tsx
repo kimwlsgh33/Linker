@@ -30,21 +30,29 @@ export const ProfileBody = ({ data, user }) => {
     [user]
   );
 
+  const goToStory = () => {
+    navigation.navigate("Story", {
+      name: user[0].name,
+      image: user[0].image,
+      userName: user[0].userName,
+    });
+    storyPressed(user.id);
+  };
+
+  const goToEditProfile = () =>
+    navigation.navigate("EditProfile", {
+      name: data.name,
+      accountName: data.accountName,
+      profileImage: data.profileImage,
+    });
+
   return (
-    <SafeAreaView key={data.accountName}>
+    <SafeAreaView>
       <View>
         <View style={styles.profileHeader}>
           <View>
             <Pressable
-              onPress={() => {
-                navigation.navigate("Story", {
-                  name: user[0].name,
-                  image: user[0].image,
-                  userName: user[0].userName,
-                });
-                // 누른 스토리 유저의 id를 함수의 인자로 받아올 수 있다.
-                storyPressed(user.id);
-              }}
+              onPress={goToStory}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -53,7 +61,7 @@ export const ProfileBody = ({ data, user }) => {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
-              <Image source={data.profileImage} style={styles.profileStyle} />
+              <Image source={data.profileImage ? {uri: data.profileImage} : null} style={styles.profileStyle} />
               <Text style={styles.profileText}>{data.name}</Text>
             </Pressable>
           </View>
@@ -108,13 +116,7 @@ export const ProfileBody = ({ data, user }) => {
         <View style={styles.profileButton}>
           <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
             <Pressable
-              onPress={() =>
-                navigation.navigate("EditProfile", {
-                  name: data.name,
-                  accountName: data.accountName,
-                  profileImage: data.profileImage,
-                })
-              }
+              onPress={goToEditProfile}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -159,14 +161,7 @@ export const ProfileBody = ({ data, user }) => {
         >
           <View style={styles.roundView}>
             <Pressable
-              onPress={() => {
-                navigation.navigate("Story", {
-                  name: user[0].name,
-                  image: user[0].image,
-                  userName: user[0].userName,
-                });
-                storyPressed(user.id);
-              }}
+              onPress={goToStory}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

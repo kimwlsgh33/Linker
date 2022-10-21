@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ImageSourcePropType,
   SafeAreaView,
   StyleSheet,
   View,
 } from "react-native";
-import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileHeader from "../components/profileComponents/ProfileHeader";
+import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileTopTab from "../navigation/ProfileTopTab";
 import events from "../libs/eventEmitter";
 
@@ -61,16 +61,19 @@ const ProfileScreen = () => {
     post: 123,
     follower: 456,
     following: 789,
-    profileImage: require("../../assets/images/profile.png"),
+    profileImage: null,
+    // profileImage: require("../../assets/images/user.png")
   };
 
   const [data, setData] = useState(userInfo);
   const onEdit = ({
     accountName,
     name,
+    profileImage,
   }: {
     accountName: string;
     name: string;
+    profileImage: string;
   }) => {
     console.log("Edit Profile");
     setData((data) => {
@@ -78,16 +81,17 @@ const ProfileScreen = () => {
         ...data,
         accountName: accountName,
         name: name,
+        profileImage: profileImage,
       };
     });
   };
 
-  const onDelete = ({
+  const onChange = ({
     profileImage,
   }: {
     profileImage: ImageSourcePropType;
   }) => {
-    console.log("Edit Image");
+    console.log("Change Profile");
     setData((data) => {
       return {
         ...data,
@@ -98,9 +102,11 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     events.addListener("saveEdit", onEdit);
-    events.addListener("deleteImage", onDelete);
+    events.addListener("changeImage", onChange);
+    events.addListener("deleteImage", onChange);
     return () => {
       events.removeListener("saveEdit");
+      events.removeListener("changeImage");
       events.removeListener("deleteImage");
     };
   }, []);
@@ -109,8 +115,8 @@ const ProfileScreen = () => {
     <SafeAreaView>
       <View style={styles.container}>
         <ProfileHeader data={data} user={user} />
-        <ProfileBody data={data} user={user}/>
-        <ProfileTopTab user={user}/>
+        <ProfileBody data={data} user={user} />
+        <ProfileTopTab user={user} />
       </View>
     </SafeAreaView>
   );

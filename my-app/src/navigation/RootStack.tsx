@@ -33,6 +33,7 @@ import Thema2 from "../screens/Thema2";
 import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
 import CommentScreen from "../screens/CommentScreen";
+import ProfileModal4 from "../screens/ProfileModal4";
 const Stack = createNativeStackNavigator();
 
 const screenOptions = ({ navigation, route }) => {
@@ -69,6 +70,14 @@ function RootStack() {
           name="HomeTab"
           component={HomeTab}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProfileModal4"
+          component={ProfileModal4}
+          options={{
+            presentation: "transparentModal",
+            animation: "slide_from_bottom",
+          }}
         />
         <Stack.Screen name="Welcome" component={WelcomeScreen} />
         <Stack.Screen name="Details" component={DetailScreen} />

@@ -1,21 +1,21 @@
 import React, { useState, useCallback } from "react";
 import {
+  SafeAreaView,
   Pressable,
   StyleSheet,
   Text,
   View,
-  Modal as DefaultModal,
+  Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { Modal } from "../Modal";
 
 export const ProfileModal2 = ({ user }) => {
   const navigation = useNavigation();
 
-  const [Visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const storyPressed = useCallback(
     (id) => {
@@ -36,6 +36,7 @@ export const ProfileModal2 = ({ user }) => {
       image: user[0].image,
       userName: user[0].userName,
     });
+    // 누른 스토리 유저의 id를 함수의 인자로 받아올 수 있다.
     storyPressed(user.id);
     setVisible(false);
   };
@@ -46,7 +47,6 @@ export const ProfileModal2 = ({ user }) => {
       image: user[0].image,
       userName: user[0].userName,
     });
-    // 누른 스토리 유저의 id를 함수의 인자로 받아올 수 있다.
     storyPressed(user.id);
     setVisible(false);
   };
@@ -62,81 +62,81 @@ export const ProfileModal2 = ({ user }) => {
   };
 
   return (
-    <Modal
-      Visible={Visible}
-      setVisible={setVisible}
-      activator={({ handleOpen }) => (
+    <SafeAreaView>
+      <Pressable
+        onPress={() => setVisible(true)}
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.2 : 1,
+          },
+        ]}
+      >
+        <FontAwesome name="plus-square-o" style={{ fontSize: 22, left: 90 }} />
+      </Pressable>
+      <Modal visible={visible} transparent={true} animationType={"fade"}>
         <Pressable
-          onPress={handleOpen}
-          style={({ pressed }) => [
-            {
-              opacity: pressed ? 0.2 : 1,
-            },
-          ]}
-        >
-          <View>
-            <FontAwesome
-              name="plus-square-o"
-              style={{ fontSize: 22, left: 90 }}
-            />
+          style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.3)" }}
+        ></Pressable>
+      </Modal>
+      <Modal visible={visible} transparent={true} animationType={"slide"}>
+        <Pressable
+          style={{ flex: 1, justifyContent: "flex-end" }}
+          onPress={() => setVisible(false)}
+        ></Pressable>
+        <View style={styles.modal2}>
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.miniBar} />
+            <Text style={{ fontFamily: "GangwonEduAllBold" }}>만들기</Text>
           </View>
-        </Pressable>
-      )}
-    >
-      <View style={styles.modal2}>
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.miniBar} />
-          <Text style={{ fontFamily: "GangwonEduAllBold" }}>만들기</Text>
+          <View style={styles.modalBar} />
+          <View style={styles.menu}>
+            <Pressable
+              onPress={goToReels}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Icon name="ios-play-circle-outline" size={25} color="black" />
+                <Text style={styles.text}>릴스</Text>
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={goToPost}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <MaterialCommunityIcons name="grid" size={25} color="black" />
+                <Text style={styles.text}>게시물</Text>
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={goToStory}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <MaterialCommunityIcons
+                  name="plus-circle-outline"
+                  size={25}
+                  color="black"
+                />
+                <Text style={styles.text}>스토리</Text>
+              </View>
+            </Pressable>
+          </View>
         </View>
-        <View style={styles.modalBar} />
-        <View style={styles.menu}>
-          <Pressable
-            onPress={goToReels}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Icon name="ios-play-circle-outline" size={25} color="black" />
-              <Text style={styles.text}>릴스</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={goToPost}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <MaterialCommunityIcons name="grid" size={25} color="black" />
-              <Text style={styles.text}>게시물</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            onPress={goToStory}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-                //   top: 40,
-              },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <MaterialCommunityIcons
-                name="plus-circle-outline"
-                size={25}
-                color="black"
-              />
-              <Text style={styles.text}>스토리</Text>
-            </View>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
+      </Modal>
+    </SafeAreaView>
   );
 };
 
