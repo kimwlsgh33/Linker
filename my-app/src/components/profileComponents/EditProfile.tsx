@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
 import events from "../../libs/eventEmitter";
+import { launchImageLibrary } from "react-native-image-picker";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
@@ -27,6 +28,7 @@ const EditProfile = ({ route, navigation }) => {
   const [edit, setEdit] = useState(""); // accountName이 저장되는 상태
   const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
   const [image, setImage] = useState(profileImage); // image가 저장되는 상태
+  // const [response, setResponse] = useState(null); // 갤러리image가 저장되는 상태
 
   // 저장 버튼 누르면
   const onEdit = () => {
@@ -36,26 +38,42 @@ const EditProfile = ({ route, navigation }) => {
     });
   };
 
-  const onChange = () => {
-    setImage({ uri: "https://source.unsplash.com/random/100x101" });
-    events.emit("changeImage", {
-      profileImage: image,
-    });
+  const onSelectImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        maxWidth: 512,
+        maxHeight: 512,
+        includeBase64: Platform.OS === "android",
+      },
+      (res) => {
+        if (res.didCancel) {
+          // 취소했을 경우
+          return;
+        }
+        setImage(res);
+      }
+    );
   };
 
-  const onDelete = () => {
-    setImage(null);
-    events.emit("deleteImage", {
-      profileImage: image,
-    });
-  };
+  // const onChange = () => {
+  //   events.emit("changeImage", {
+  //     profileImage: image
+  //   });
+  // };
+
+  // const onDelete = () => {
+  //   events.emit("deleteImage", {
+  //     profileImage: image,
+  //   });
+  // };
 
   const editComplete = () => {
     TostMessage();
     navigation.goBack();
     onEdit();
-    onChange();
-    onDelete();
+    // onChange();
+    // onDelete();
   };
 
   // 길이가 8자 미만이면 pressable (view)비활성화
@@ -109,7 +127,14 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image source={image} style={styles.profileImage} />
+            <Image
+              source={
+                image
+                  ? { uri: image?.assets[0]?.uri }
+                  : require("../../../assets/images/user.png")
+              }
+              style={styles.profileImage}
+            />
             <Pressable
               onPress={() => setVisible(true)}
               style={({ pressed }) => [
@@ -139,7 +164,7 @@ const EditProfile = ({ route, navigation }) => {
                 <View style={styles.menu}>
                   <Pressable
                     onPress={() => {
-                      onChange();
+                      onSelectImage();
                       setVisible(false);
                     }}
                     style={({ pressed }) => [
@@ -154,7 +179,7 @@ const EditProfile = ({ route, navigation }) => {
                   </Pressable>
                   <Pressable
                     onPress={() => {
-                      onDelete();
+                      // setImage(require("../../../assets/images/user.png"));
                       setVisible(false);
                     }}
                     style={({ pressed }) => [

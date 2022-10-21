@@ -57,7 +57,7 @@ const AnimTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 // 화면 크기 구하기
 const { width, height } = Dimensions.get("window");
 
-function SearchScreen() {
+function SearchScreen({ navigation }) {
   const [searchText, setSearchText] = useState<string>("");
   // useEffect(() => {
   //   console.log("searchText", searchText);
@@ -166,7 +166,10 @@ function SearchScreen() {
         </Animated.View>
 
         <View style={styles.iconView}>
-          <AnimTouchableOpacity style={beforeIconAnimStyle}>
+          <AnimTouchableOpacity
+            style={beforeIconAnimStyle}
+            onPress={() => navigation.navigate("ProfileModal4")}
+          >
             <View>
               <EntryIcon name="location" size={20} color="rgba(0,0,0,0.5)" />
             </View>

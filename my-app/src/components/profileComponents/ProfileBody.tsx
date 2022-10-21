@@ -61,7 +61,7 @@ export const ProfileBody = ({ data, user }) => {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
-              <Image source={data.profileImage} style={styles.profileStyle} />
+              <Image source={data.profileImage ? {uri: data.profileImage} : null} style={styles.profileStyle} />
               <Text style={styles.profileText}>{data.name}</Text>
             </Pressable>
           </View>

@@ -61,16 +61,19 @@ const ProfileScreen = () => {
     post: 123,
     follower: 456,
     following: 789,
-    profileImage: require("../../assets/images/profile.png"),
+    profileImage: null,
+    // profileImage: require("../../assets/images/user.png")
   };
 
   const [data, setData] = useState(userInfo);
   const onEdit = ({
     accountName,
     name,
+    profileImage,
   }: {
     accountName: string;
     name: string;
+    profileImage: string;
   }) => {
     console.log("Edit Profile");
     setData((data) => {
@@ -78,6 +81,7 @@ const ProfileScreen = () => {
         ...data,
         accountName: accountName,
         name: name,
+        profileImage: profileImage,
       };
     });
   };
@@ -87,6 +91,7 @@ const ProfileScreen = () => {
   }: {
     profileImage: ImageSourcePropType;
   }) => {
+    console.log("Change Profile");
     setData((data) => {
       return {
         ...data,
@@ -110,8 +115,8 @@ const ProfileScreen = () => {
     <SafeAreaView>
       <View style={styles.container}>
         <ProfileHeader data={data} user={user} />
-        <ProfileBody data={data} user={user}/>
-        <ProfileTopTab user={user}/>
+        <ProfileBody data={data} user={user} />
+        <ProfileTopTab user={user} />
       </View>
     </SafeAreaView>
   );
