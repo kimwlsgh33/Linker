@@ -1,22 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Pressable,
   ScrollView,
 } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/Ionicons";
-import TextAndIcon from "../components/TextAndIcon";
-import IconLeft from "../components/IconLeft";
-import TextStyle from "../components/TextStyle";
-import ScreenSetting from "./ScreenSetting";
 import { RadioButton } from 'react-native-paper';
 
 function Thema2({ navigation, route }) {

@@ -5,7 +5,7 @@ import {
   Keyboard,
   Platform,
   StyleSheet,
-  Modal as DefaultModal,
+  Modal,
   View,
   Text,
   Pressable,
@@ -14,13 +14,11 @@ import {
   TextInput,
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
-import Icon from "react-native-vector-icons/Ionicons";
-import { Modal } from "../Modal";
 import events from "../../libs/eventEmitter";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
-  const [Visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [disable, setDisable] = useState(true);
 
   const TostMessage = () => {
@@ -38,10 +36,26 @@ const EditProfile = ({ route, navigation }) => {
     });
   };
 
+  const onChange = () => {
+    setImage({ uri: "https://source.unsplash.com/random/100x101" });
+    events.emit("changeImage", {
+      profileImage: image,
+    });
+  };
+
   const onDelete = () => {
+    setImage(null);
     events.emit("deleteImage", {
       profileImage: image,
     });
+  };
+
+  const editComplete = () => {
+    TostMessage();
+    navigation.goBack();
+    onEdit();
+    onChange();
+    onDelete();
   };
 
   // 길이가 8자 미만이면 pressable (view)비활성화
@@ -78,19 +92,15 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
             <Text style={styles.headerText}>프로필 편집</Text>
             <Pressable
-              onPress={() => {
-                TostMessage();
-                navigation.goBack();
-                onEdit();
-              }}
+              onPress={editComplete}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
                 },
                 disable ? { opacity: 0.5 } : {},
               ]}
-              // eidt이 8자 미만이면 onPress 비활성화
-              disabled={edit.length < 8 || edit2 === ""}
+              // eidt이 8자 미만, edit2가 4자 미만이면 기능 비활성화
+              disabled={edit.length < 8 || edit2.length < 4}
             >
               <Ionic
                 name="checkmark"
@@ -99,23 +109,27 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
           </View>
           <View style={{ padding: 20, alignItems: "center" }}>
-            <Image source={profileImage} style={styles.profileImage} />
-            <Modal
-              Visible={Visible}
-              setVisible={setVisible}
-              activator={({ handleOpen }) => (
-                <Pressable
-                  onPress={handleOpen}
-                  style={({ pressed }) => [
-                    {
-                      opacity: pressed ? 0.2 : 1,
-                    },
-                  ]}
-                >
-                  <Text style={styles.profileText}>프로필 사진 변경</Text>
-                </Pressable>
-              )}
+            <Image source={image} style={styles.profileImage} />
+            <Pressable
+              onPress={() => setVisible(true)}
+              style={({ pressed }) => [
+                {
+                  opacity: pressed ? 0.2 : 1,
+                },
+              ]}
             >
+              <Text style={styles.profileText}>프로필 사진 변경</Text>
+            </Pressable>
+            <Modal visible={visible} transparent={true} animationType={"fade"}>
+              <Pressable
+                style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.3)" }}
+              ></Pressable>
+            </Modal>
+            <Modal visible={visible} transparent={true} animationType={"slide"}>
+              <Pressable
+                style={{ flex: 1, justifyContent: "flex-end" }}
+                onPress={() => setVisible(false)}
+              ></Pressable>
               <View style={styles.modal}>
                 <View style={{ alignItems: "center" }}>
                   <View style={styles.miniBar} />
@@ -124,6 +138,10 @@ const EditProfile = ({ route, navigation }) => {
                 </View>
                 <View style={styles.menu}>
                   <Pressable
+                    onPress={() => {
+                      onChange();
+                      setVisible(false);
+                    }}
                     style={({ pressed }) => [
                       {
                         opacity: pressed ? 0.2 : 1,
@@ -176,11 +194,17 @@ const EditProfile = ({ route, navigation }) => {
               />
             </View>
             <View style={{ paddingVertical: 10 }}>
-              <Text style={styles.text}>이름</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.text}>이름</Text>
+                <Text style={styles.text2}>(4자 이상 10자 미만)</Text>
+              </View>
               <TextInput
+                maxLength={10}
                 placeholder={name}
                 value={edit2}
-                onChangeText={(text) => setEdit2(text)}
+                onChangeText={(text) => {
+                  setEdit2(text);
+                }}
                 returnKeyType="next"
                 ref={ref_input[1]}
                 onSubmitEditing={() => {
@@ -216,7 +240,6 @@ const EditProfile = ({ route, navigation }) => {
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
-                  width: "100%",
                 },
               ]}
             >
@@ -224,10 +247,12 @@ const EditProfile = ({ route, navigation }) => {
             </Pressable>
             <View style={styles.bar} />
             <Pressable
+              onPress={() => {
+                navigation.navigate("Setting");
+              }}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
-                  width: "100%",
                 },
               ]}
             >

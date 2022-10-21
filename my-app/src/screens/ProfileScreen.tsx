@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ImageSourcePropType,
   SafeAreaView,
   StyleSheet,
   View,
 } from "react-native";
-import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileHeader from "../components/profileComponents/ProfileHeader";
+import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileTopTab from "../navigation/ProfileTopTab";
 import events from "../libs/eventEmitter";
 
@@ -82,12 +82,11 @@ const ProfileScreen = () => {
     });
   };
 
-  const onDelete = ({
+  const onChange = ({
     profileImage,
   }: {
     profileImage: ImageSourcePropType;
   }) => {
-    console.log("Edit Image");
     setData((data) => {
       return {
         ...data,
@@ -98,9 +97,11 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     events.addListener("saveEdit", onEdit);
-    events.addListener("deleteImage", onDelete);
+    events.addListener("changeImage", onChange);
+    events.addListener("deleteImage", onChange);
     return () => {
       events.removeListener("saveEdit");
+      events.removeListener("changeImage");
       events.removeListener("deleteImage");
     };
   }, []);
