@@ -8,13 +8,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export const ProfileModal3 = () => {
   const navigation = useNavigation();
-
   const [visible, setVisible] = useState(false);
 
   return (
     <SafeAreaView>
       <Pressable
-        onPress={() => setVisible(true)}
+        onPress={() => navigation.navigate("Modal3")}
+        // onPress={() => setVisible(true)}
         style={({ pressed }) => [
           {
             opacity: pressed ? 0.2 : 1,

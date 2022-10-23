@@ -28,6 +28,7 @@ export type RootStackParamList = {
   Comment: TComment;
   Setting: undefined;
   User2: undefined;
+  Modal3: undefined;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것

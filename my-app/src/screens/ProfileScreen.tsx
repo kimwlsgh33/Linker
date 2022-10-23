@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   ImageSourcePropType,
+  ImageURISource,
   SafeAreaView,
   StyleSheet,
   View,
@@ -9,6 +10,7 @@ import ProfileHeader from "../components/profileComponents/ProfileHeader";
 import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileTopTab from "../navigation/ProfileTopTab";
 import events from "../libs/eventEmitter";
+import { ImagePickerResponse } from "react-native-image-picker";
 
 const ProfileScreen = () => {
   const storyInfo = [
@@ -61,19 +63,17 @@ const ProfileScreen = () => {
     post: 123,
     follower: 456,
     following: 789,
-    profileImage: null,
-    // profileImage: require("../../assets/images/user.png")
+    profileImage: require("../../assets/images/user.png"),
+    // profileImage: null,
   };
 
   const [data, setData] = useState(userInfo);
   const onEdit = ({
     accountName,
     name,
-    profileImage,
   }: {
     accountName: string;
     name: string;
-    profileImage: string;
   }) => {
     console.log("Edit Profile");
     setData((data) => {
@@ -81,7 +81,6 @@ const ProfileScreen = () => {
         ...data,
         accountName: accountName,
         name: name,
-        profileImage: profileImage,
       };
     });
   };
@@ -91,7 +90,6 @@ const ProfileScreen = () => {
   }: {
     profileImage: ImageSourcePropType;
   }) => {
-    console.log("Change Profile");
     setData((data) => {
       return {
         ...data,
