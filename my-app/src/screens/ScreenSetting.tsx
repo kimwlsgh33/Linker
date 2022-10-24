@@ -15,7 +15,6 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/Ionicons";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
-import TextStyle from "../components/TextStyle";
 
 
 const navbars = [
@@ -140,7 +139,7 @@ export default function ScreenSetting({ navigation, route }) {
                     <View style={{marginLeft:5}}>
                       <Ionic name="md-close-outline" size={30} color="#FFFAFA"/>
                     </View>
-                    <View style={{height: 200, padding: 15, justifyContent: 'space-around' }}>
+                    <View style={styles.ModalBox1}>
                       <View style={{flexDirection: "row"}}>
                         <Ionic name="ios-infinite-outline" size={20} color="#FFFAFA"/>
                         <Text style={{color:"#FFFAFA"}}>Meta</Text>
@@ -161,27 +160,27 @@ export default function ScreenSetting({ navigation, route }) {
                       </View>
                     </View>
                     <View style={{alignItems:'center'}}>
-                    <View style={{paddingTop: 20, paddingBottom: 20, paddingLeft: 10, backgroundColor:"#769188",width:"93%", borderRadius:10}}>
+                    <View style={styles.AddAccount}>
                       <Pressable style={({ pressed }) => [pressed && { opacity: 0.4 },]}
                         onPress={() => Linking.openURL("https://naver.com")}>
                           <Text style={{color:"#013ADF",}}>계정 추가</Text>
                       </Pressable>
                     </View>
                     </View>
-                    <View style={{marginLeft: 15, marginTop:20, marginBottom:10, width:"18%",}}>
-                      <Text style={{fontWeight:"bold", fontSize: 15, color:"#FFFAFA"}}>리소스</Text>
+                    <View style={styles.ResourceBox}>
+                      <Text style={styles.ResourceText}>리소스</Text>
                     </View>
                     <View style={{alignItems:"center"}}>
-                      <View style={{padding: 8, borderRadius:10, backgroundColor: "#769188", width: "95%", height:"45%", justifyContent:"space-around"}}>
-                        <View style={{flexDirection: "row", justifyContent:"space-between"}}>
+                      <View style={styles.ModalBox2}>
+                        <View style={styles.ModalInnerBox2}>
                           <Text style={{color:"#FFFAFA"}}>교육 허브</Text>
                           <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
                         </View>
-                        <View style={{flexDirection: "row", justifyContent:"space-between"}}>
+                        <View style={styles.ModalInnerBox2}>
                           <Text style={{color:"#FFFAFA"}}>고객 센터</Text>
                           <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
                         </View>
-                        <View style={{flexDirection: "row", justifyContent:"space-between"}}>
+                        <View style={styles.ModalInnerBox2}>
                           <Text style={{color:"#FFFAFA"}}>Instagram 안전</Text>
                           <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
                         </View>
@@ -216,17 +215,19 @@ export default function ScreenSetting({ navigation, route }) {
           visible={ModalVisible2}
           transparent={true}>
         <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible2(false)}/>
-        <View style={{backgroundColor:"green",height:"18%",alignItems:"center"}}>
-          <View style={{borderBottomWidth:1,borderBottomColor:"red", height:"40%",width:"100%", alignItems:"center",justifyContent:"space-around", backgroundColor:"gray"}}>
-            <Ionic name="ios-remove-outline" size={35} color="white" />
-            <Text style={{color: "#FFFAFA", backgroundColor:"red"}}>계정 추가</Text>
+        <View style={styles.Modal2Box}>
+          <View style={styles.Modal2ViewBox1}>
+            <Ionic name="ios-remove-outline" size={35} color="gray" />
+            <Text style={{color: "#FFFAFA",marginBottom:15,fontWeight:"bold"}}>계정 추가</Text>
           </View>
-          <View style={{alignItems:"center", padding: 5, width: "100%", height:"100%",}}>
-            <Pressable style={styles.ModalButton} onPress={() => console.log("click1")}>
+          <View style={styles.Modal2ViewBox2}>
+            <Pressable style={styles.ModalButton} onPress={() => [navigation.navigate("AnotherAc"),setModalVisible2(false)]}>
             <Text style={styles.Modaltext}>기존 계정으로 로그인</Text>
             </Pressable>
             <View style={{marginTop:10}}>
+            <Pressable onPress={() => [navigation.navigate("SignUp"),setModalVisible2(false)]}>
             <Text style={{color:"#013ADF"}}>새 계정 만들기</Text>
+            </Pressable>
             </View>
           </View>
         </View>
@@ -318,6 +319,76 @@ const styles = StyleSheet.create({
 
   Modaltext: {
     color: "#FFFAFA",
+    fontWeight: "bold",
+  },
+
+  ModalInnerBox2: {
+    flexDirection: "row",
+    justifyContent:"space-between"
+  },
+
+  ModalBox2: {
+    padding: 8,
+    borderRadius:10,
+    backgroundColor: "#769188",
+    width: "95%", height:"45%",
+    justifyContent:"space-around"
+  },
+
+  ResourceBox: {
+    marginLeft: 15,
+    marginTop:20,
+    marginBottom:10, 
+    width:"18%",
+  },
+
+  ResourceText: {
+    fontWeight:"bold",
+    fontSize: 15,
+    color:"#FFFAFA"
+  },
+
+  AddAccount: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 10,
+    backgroundColor:"#769188",
+    width:"93%",
+    borderRadius:10
+  },
+
+  ModalBox1: {
+    height: 200,
+    padding: 15,
+    justifyContent: 'space-around'
+  },
+
+  Modal2Box: {
+    backgroundColor:"#0a0a0a",
+    height:"18%",
+    alignItems:"center",
+    width:"100%",
+    borderTopLeftRadius:20,
+    borderTopRightRadius:20
+  },
+
+  Modal2ViewBox1: {
+    borderBottomWidth:1,
+    borderBottomColor:"#666666",
+    height:"40%",
+    width:"100%",
+    alignItems:"center",
+    justifyContent:"space-around",
+    backgroundColor:"#0a0a0a",
+    borderTopLeftRadius:20,
+    borderTopRightRadius:20
+  },
+
+  Modal2ViewBox2: {
+    alignItems:"center",
+    padding: 5,
+    width: "100%",
+    height:"100%",
   }
 
 });
