@@ -1,12 +1,16 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import RootStack from "./src/navigation/RootStack";
-import { withAuthenticator } from "aws-amplify-react-native";
+import { UserContextProvider } from "./src/hooks/UserContext";
+
+export const UserDispatch = createContext(null);
 
 function App() {
   return (
     <NavigationContainer>
-      <RootStack />
+      <UserContextProvider>
+        <RootStack />
+      </UserContextProvider>
     </NavigationContainer>
   );
 }

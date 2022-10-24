@@ -64,7 +64,7 @@ const screenOptions = ({ navigation, route }) => {
 function RootStack() {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Login">
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName="SignUp">
       <Stack.Group>
         <Stack.Screen
           name="HomeTab"

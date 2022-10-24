@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useContext } from "react";
 import React from "react";
 import {
   TouchableWithoutFeedback,
@@ -13,7 +13,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Auth, DataStore } from "aws-amplify";
+import { Auth } from "aws-amplify";
+import { useUserContext } from "../hooks/UserContext";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -21,6 +22,7 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
 
+  const { setUser } = useUserContext();
   const goHome = () => {
     navigation.navigate("HomeTab" as any);
   };
@@ -39,16 +41,24 @@ const LoginScreen = () => {
       try {
         const user = await Auth.signIn(username, password);
       } catch (error) {
-        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        alert("이메일 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);
         return;
       }
+      navigation.navigate("Welcome" as any);
     };
     const SignInPhone = async () => {
       try {
         const user = await Auth.signIn(forPhone(username), password);
+        const test = {
+          username: user.attributes.phone_number,
+          name: user.attributes.name,
+          nickname: user.attributes.nickname,
+          password: user.attributes.password,
+        };
+        setUser(test);
       } catch (error) {
-        alert("전화번호 또는 비밀번호가 일치하지 않습니다.");
+        alert("전화번호 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);
         return;
       }
