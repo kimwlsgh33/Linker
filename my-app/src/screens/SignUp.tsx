@@ -1,11 +1,5 @@
 //import { useNavigation } from "@react-navigation/native";
-import React, {
-  useState,
-  useCallback,
-  Component,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -22,6 +16,9 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { LinearGradient } from "expo-linear-gradient";
+import CryptoJS, { SHA256 } from "crypto-js";
+import { DataStore } from "aws-amplify";
+import { User } from "../models";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -38,6 +35,11 @@ const SignUp = () => {
   const [nickCheck, setNickCheck] = useState(false);
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  function getHashedPassword(password) {
+    let random = CryptoJS.lib.WordArray.random(128 / 8);
+    return CryptoJS.SHA256(password, random).toString();
+  }
 
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
@@ -64,16 +66,20 @@ const SignUp = () => {
     // amplify email 가입
     const SignUpEmail = async () => {
       try {
-        const { user } = await Auth.signUp({
-          username: id,
-          password: password,
-          attributes: {
-            email: id,
-            name: name,
-            nickname: nick,
-          },
-        });
-        console.log(user);
+        const newPW = getHashedPassword(password);
+        if (DataStore.query(User, (user) => user.username("eq", id))) {
+          alert("이미 존재하는 아이디입니다.");
+        } else {
+          const { user } = await Auth.signUp({
+            username: id,
+            password: newPW,
+            attributes: {
+              email: id,
+              name: name,
+              nickname: nick,
+            },
+          });
+        }
       } catch (error) {
         console.log("error signing up:", error);
       }
@@ -100,7 +106,6 @@ const SignUp = () => {
             nickname: nick,
           },
         });
-        console.log(user);
       } catch (error) {
         console.log("error signing up:", error);
       }
@@ -200,9 +205,9 @@ const SignUp = () => {
             LINKER
           </Text>
           <Text style={[styles.recommadText]}>
-            친구들의 사진과 동영상을 보려면
+            인플루언서와 소비자를 연결해주는
           </Text>
-          <Text style={[styles.recommadText]}>가입하세요.</Text>
+          <Text style={[styles.recommadText]}>당신의 링크를 공유해보세요.</Text>
           <View style={styles.buttonContainer}>
             <Pressable
               style={({ pressed }) => [
@@ -354,13 +359,13 @@ const SignUp = () => {
         <View style={styles.policyView}>
           <Text style={styles.policyText}>
             가입하면 LINKER의{" "}
-            <Text style={styles.policyTextIm}>약관, 데이터</Text>
+            <Text style={styles.policyTextIm}>데이터 정책</Text>
           </Text>
           <Text style={styles.policyText}>
-            <Text style={styles.policyTextIm}>정책</Text> 및{" "}
-            <Text style={styles.policyTextIm}>쿠키 정책</Text>에 동의하게 됩니
+            {" "}
+            및 <Text style={styles.policyTextIm}>쿠키 정책</Text>에 동의하게
+            됩니다.
           </Text>
-          <Text style={styles.policyText}>다.</Text>
         </View>
         <View style={styles.bottomView}>
           <TouchableOpacity onPress={goLogin}>

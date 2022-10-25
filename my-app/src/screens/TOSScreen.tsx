@@ -12,7 +12,6 @@ import TOS from "../components/TOS";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
 import { Terms } from "../models";
-import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const datas = [
@@ -71,7 +70,6 @@ const TOSScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const goAuthComp = async () => {
-    console.log(terms, event, night);
     await DataStore.save(
       new Terms({
         User: User,

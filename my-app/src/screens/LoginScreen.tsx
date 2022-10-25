@@ -15,6 +15,14 @@ import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
 import { useUserContext } from "../hooks/UserContext";
+import CryptoJS from "crypto-js";
+
+function getHashedPassword(pw) {
+  let random = CryptoJS.lib.WordArray.random(128 / pw.length);
+  return CryptoJS.PBKDF2(pw, random, {
+    keySize: 256 / 32,
+  }).toString();
+}
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -36,10 +44,17 @@ const LoginScreen = () => {
 
   const SignIn = async () => {
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
-
+    const newPW = getHashedPassword(password);
     const SignInEmail = async () => {
       try {
-        const user = await Auth.signIn(username, password);
+        const user = await Auth.signIn(username, newPW);
+        const UserInfo = {
+          username: user.attributes.phone_number,
+          name: user.attributes.name,
+          nickname: user.attributes.nickname,
+          password: user.attributes.password,
+        };
+        setUser(UserInfo);
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);
@@ -50,13 +65,14 @@ const LoginScreen = () => {
     const SignInPhone = async () => {
       try {
         const user = await Auth.signIn(forPhone(username), password);
-        const test = {
+        const UserInfo = {
           username: user.attributes.phone_number,
           name: user.attributes.name,
           nickname: user.attributes.nickname,
           password: user.attributes.password,
         };
-        setUser(test);
+        setUser(UserInfo);
+        console.log(user);
       } catch (error) {
         alert("전화번호 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);

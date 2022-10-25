@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
 import { User } from "../models";
 import { LinearGradient } from "expo-linear-gradient";
+import { useUserContext } from "../hooks/UserContext";
 
 const BirthdayScreen = ({ route }) => {
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
@@ -25,6 +26,7 @@ const BirthdayScreen = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const { setUser } = useUserContext();
   const forPhone = (id) => {
     const result = "+82" + id.slice(1);
     return result;
@@ -40,6 +42,8 @@ const BirthdayScreen = ({ route }) => {
           birthday: dateStr,
         })
       );
+      setUser(user);
+      console.log(user);
       navigation.navigate("TOS" as any, { user: user });
     } catch (e) {
       console.log("error creating user", JSON.stringify(e, null, 2));
