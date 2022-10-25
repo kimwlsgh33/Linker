@@ -16,6 +16,7 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import events from "../../libs/eventEmitter";
 import { launchImageLibrary } from "react-native-image-picker";
+// import EditImage from "./EditImage";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
@@ -28,13 +29,13 @@ const EditProfile = ({ route, navigation }) => {
   const [edit, setEdit] = useState(""); // accountName이 저장되는 상태
   const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
   const [image, setImage] = useState(profileImage); // image가 저장되는 상태
-  const [response, setResponse] = useState(null); // 갤러리image가 저장되는 상태
 
   // 저장 버튼 누르면
   const onEdit = () => {
     events.emit("saveEdit", {
       accountName: edit,
       name: edit2,
+      profileImage: image,
     });
   };
 
@@ -51,16 +52,10 @@ const EditProfile = ({ route, navigation }) => {
           // 취소했을 경우
           return;
         }
-        setResponse(res);
+        console.log(Object.keys(res.assets[0]));
+        setImage(res.assets[0].uri);
       }
     );
-  };
-
-  const onChange = () => {
-    events.emit("changeImage", {
-      // profileImage: { uri: response?.assets[0]?.uri },
-      profileImage: image,
-    });
   };
 
   const onDelete = () => {
@@ -73,7 +68,6 @@ const EditProfile = ({ route, navigation }) => {
     TostMessage();
     navigation.goBack();
     onEdit();
-    onChange();
     onDelete();
   };
 
@@ -127,18 +121,19 @@ const EditProfile = ({ route, navigation }) => {
               />
             </Pressable>
           </View>
+          {/* <EditImage route={profileImage} /> */}
           <View style={{ padding: 20, alignItems: "center" }}>
             <Image
-              // source={
-              //   response
-              //     ? { uri: response?.assets[0]?.uri }
-              //     : require("../../../assets/images/user.png")
-              // }
-              source={image}
+              source={
+                image
+                  ? { uri: image }
+                  : require("../../../assets/images/user.png")
+              }
               style={styles.profileImage}
             />
             <Pressable
               onPress={() => setVisible(true)}
+              // onPress={()=>navigation.navigate("Modal4", {image, setImage})}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
@@ -166,11 +161,7 @@ const EditProfile = ({ route, navigation }) => {
                 <View style={styles.menu}>
                   <Pressable
                     onPress={() => {
-                      // onSelectImage();
-                      // setImage({ uri: response?.assets[0]?.uri });
-                      setImage({
-                        uri: "https://source.unsplash.com/random/100x102",
-                      });
+                      onSelectImage();
                       setVisible(false);
                     }}
                     style={({ pressed }) => [
@@ -185,7 +176,7 @@ const EditProfile = ({ route, navigation }) => {
                   </Pressable>
                   <Pressable
                     onPress={() => {
-                      setImage(require("../../../assets/images/user.png"));
+                      setImage(null);
                       setVisible(false);
                     }}
                     style={({ pressed }) => [

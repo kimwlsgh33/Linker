@@ -1,22 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Animated,
   Dimensions,
   Pressable,
+  Platform,
   View,
   Text,
   StyleSheet,
 } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
-import Icon from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { launchImageLibrary } from "react-native-image-picker";
+import events from "../../libs/eventEmitter";
 
-// 문제1 navigate.goBack 했을 시 close 애니메이션 효과 적용 어떻게?
-// 문제2 모달 창에서 다른 screen으로 갔다가
-//  header에서 back버튼 누를 시 프로필 스크린이 아닌 modal3 스크린으로 돌아옴
 const { width, height } = Dimensions.get("window");
 
-function Modal3({ navigation }) {
+function Modal4({ route, navigation }) {
+  const { image, setImage } = route?.params || {};
   const opacity = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -39,6 +37,30 @@ function Modal3({ navigation }) {
     }).start(() => navigation.goBack());
   };
 
+  const onSelectImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+        maxWidth: 512,
+        maxHeight: 512,
+        includeBase64: Platform.OS === "android",
+      },
+      (res) => {
+        if (res.didCancel) {
+          // 취소했을 경우
+          return;
+        }
+        setImage(res.assets[0].uri);
+      }
+    );
+  };
+
+  const onEdit = () => {
+    events.emit("saveEdit", {
+      profileImage: image,
+    });
+  };
+
   return (
     <>
       <Animated.View style={{ position: "absolute", height, width, opacity }}>
@@ -53,15 +75,18 @@ function Modal3({ navigation }) {
           onPress={closeModal}
         />
       </Animated.View>
-      <View style={{ height: height - 165 }}></View>
-      <View style={styles.modal2}>
+      <View style={{ height: height - 190 }}></View>
+      <View style={styles.modal}>
         <View style={{ alignItems: "center" }}>
           <View style={styles.miniBar} />
+          <Text style={styles.modalText}>프로필 사진 변경</Text>
+          <View style={styles.modalBar}></View>
         </View>
         <View style={styles.menu}>
           <Pressable
             onPress={() => {
-              navigation.navigate("Setting");
+              onSelectImage();
+              closeModal();
             }}
             style={({ pressed }) => [
               {
@@ -70,13 +95,13 @@ function Modal3({ navigation }) {
             ]}
           >
             <View style={{ flexDirection: "row" }}>
-              <Icon name="ios-settings-sharp" size={25} color="black" />
-              <Text style={styles.text}>설정</Text>
+              <Text style={styles.modalText}>새 프로필 사진</Text>
             </View>
           </Pressable>
           <Pressable
             onPress={() => {
-              navigation.navigate("User2"); // 계정 스크린으로 이동
+              setImage(null);
+              closeModal();
             }}
             style={({ pressed }) => [
               {
@@ -85,24 +110,7 @@ function Modal3({ navigation }) {
             ]}
           >
             <View style={{ flexDirection: "row" }}>
-              <MaterialCommunityIcons
-                name="clock-time-eight-outline"
-                size={25}
-                color="black"
-              />
-              <Text style={styles.text}>내 활동</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Feather name="star" size={25} color="black" />
-              <Text style={styles.text}>즐겨찾기</Text>
+              <Text style={styles.modalText}>프로필 사진 삭제</Text>
             </View>
           </Pressable>
         </View>
@@ -112,7 +120,7 @@ function Modal3({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  modal2: {
+  modal: {
     backgroundColor: "white",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
@@ -124,10 +132,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
   },
-  text: {
-    fontFamily: "GangwonEduAllBold",
-    paddingLeft: 10,
-    paddingTop: 3,
+  modalBar: {
+    borderWidth: 0.3,
+    width: "100%",
+    opacity: 0.3,
+    marginTop: 10,
   },
   menu: {
     paddingHorizontal: 20,
@@ -135,6 +144,9 @@ const styles = StyleSheet.create({
     height: 120,
     justifyContent: "space-around",
   },
+  modalText: {
+    fontFamily: "GangwonEduAllBold",
+  },
 });
 
-export default Modal3;
+export default Modal4;

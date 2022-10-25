@@ -12,6 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
+// import { DataStore } from "@aws-amplify/datastore";
+// import { User } from "../../models";
 
 // 부모컴포넌트로부터 props전달받음
 export const ProfileBody = ({ data, user }) => {
@@ -61,7 +63,14 @@ export const ProfileBody = ({ data, user }) => {
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)", radius: 1 }}
             >
-              <Image source={data.profileImage} style={styles.profileStyle} />
+              <Image
+                source={
+                  data.profileImage
+                    ? { uri: data.profileImage }
+                    : require("../../../assets/images/user.png")
+                }
+                style={styles.profileStyle}
+              />
               <Text style={styles.profileText}>{data.name}</Text>
             </Pressable>
           </View>
@@ -83,6 +92,7 @@ export const ProfileBody = ({ data, user }) => {
             </View>
           </Pressable>
           <Pressable
+            // onPress={getUser}
             onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {

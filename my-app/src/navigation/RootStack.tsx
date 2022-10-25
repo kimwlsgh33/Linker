@@ -34,7 +34,10 @@ import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
 import CommentScreen from "../screens/CommentScreen";
 import ProfileModal4 from "../screens/ProfileModal4";
+import Modal2 from "../components/profileComponents/Modal2";
 import Modal3 from "../components/profileComponents/Modal3";
+import Modal from "../components/profileComponents/Modal";
+import Modal4 from "../components/profileComponents/Modal4";
 const Stack = createNativeStackNavigator();
 
 const screenOptions = ({ navigation, route }) => {
@@ -83,6 +86,33 @@ function RootStack() {
         <Stack.Screen
           name="Modal3"
           component={Modal3}
+          options={{
+            presentation: "transparentModal",
+            animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Modal2"
+          component={Modal2}
+          options={{
+            presentation: "transparentModal",
+            animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Modal"
+          component={Modal}
+          options={{
+            presentation: "transparentModal",
+            animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Modal4"
+          component={Modal4}
           options={{
             presentation: "transparentModal",
             animation: "slide_from_bottom",

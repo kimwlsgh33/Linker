@@ -11,6 +11,8 @@ import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileTopTab from "../navigation/ProfileTopTab";
 import events from "../libs/eventEmitter";
 import { ImagePickerResponse } from "react-native-image-picker";
+import { DataStore } from "@aws-amplify/datastore";
+import { User } from "../models";
 
 const ProfileScreen = () => {
   const storyInfo = [
@@ -63,17 +65,35 @@ const ProfileScreen = () => {
     post: 123,
     follower: 456,
     following: 789,
-    profileImage: require("../../assets/images/user.png"),
-    // profileImage: null,
+    profileImage: null,
   };
-
   const [data, setData] = useState(userInfo);
+  // let models;
+  // const [data, setData] = useState([]);
+
+  // const getUser = async () => {
+  //   models = await DataStore.query(User, (user) =>
+  //     user.username("eq", "abkorc33")
+  //   );
+  //   console.log(models);
+  //   setData(models);
+  // };
+
+  // useEffect(() => {
+  //   getUser();
+  //   data.map((dat) => {
+  //     console.log("안녕" + dat.username);
+  //   });
+  // }, []);
+
   const onEdit = ({
     accountName,
     name,
+    profileImage,
   }: {
     accountName: string;
     name: string;
+    profileImage: string;
   }) => {
     console.log("Edit Profile");
     setData((data) => {
@@ -81,15 +101,12 @@ const ProfileScreen = () => {
         ...data,
         accountName: accountName,
         name: name,
+        profileImage: profileImage,
       };
     });
   };
 
-  const onChange = ({
-    profileImage,
-  }: {
-    profileImage: ImageSourcePropType;
-  }) => {
+  const onChange = ({ profileImage }: { profileImage: string }) => {
     setData((data) => {
       return {
         ...data,
@@ -100,11 +117,9 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     events.addListener("saveEdit", onEdit);
-    events.addListener("changeImage", onChange);
     events.addListener("deleteImage", onChange);
     return () => {
       events.removeListener("saveEdit");
-      events.removeListener("changeImage");
       events.removeListener("deleteImage");
     };
   }, []);

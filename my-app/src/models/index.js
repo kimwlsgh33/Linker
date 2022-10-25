@@ -4,15 +4,11 @@ import { schema } from './schema';
 
 
 
-const { Followers, User, Post, Influencer, Likes, Comment, Followings, Image } = initSchema(schema);
+const { Tag, Post, Terms, User } = initSchema(schema);
 
 export {
-  Followers,
-  User,
+  Tag,
   Post,
-  Influencer,
-  Likes,
-  Comment,
-  Followings,
-  Image
+  Terms,
+  User
 };

@@ -1,19 +1,60 @@
 import React from "react";
-import { SafeAreaView, Pressable, StyleSheet, View } from "react-native";
-import ProfileModal from "./ProfileModal";
-import ProfileModal2 from "./ProfileModal2";
-import ProfileModal3 from "./ProfileModal3";
+import { SafeAreaView, Pressable, StyleSheet, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
 
 export const ProfileHeader = ({ data, user }) => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <ProfileModal data={data} />
+        <Pressable
+          onPress={() => navigation.navigate("Modal", { data })}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+          ]}
+        >
+          <Text style={styles.text}>
+            {data.accountName}
+            <Feather name="chevron-down" style={{ fontSize: 16 }} />
+          </Text>
+        </Pressable>
         <View>
-          <ProfileModal2 user={user} />
+          <Pressable
+            onPress={() => navigation.navigate("Modal2", { user })}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <FontAwesome
+              name="plus-square-o"
+              style={{ fontSize: 22, left: 90 }}
+            />
+          </Pressable>
         </View>
         <View>
-          <ProfileModal3 />
+          <Pressable
+            onPress={() => navigation.navigate("Modal3")}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <Icon
+              name="menu-outline"
+              style={{
+                fontSize: 29,
+              }}
+            />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -21,6 +62,10 @@ export const ProfileHeader = ({ data, user }) => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    fontFamily: "GangwonEduAllBold",
+    fontSize: 23,
+  },
   header: {
     justifyContent: "space-between",
     flexDirection: "row",

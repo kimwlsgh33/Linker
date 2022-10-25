@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import {
   Animated,
   Dimensions,
@@ -7,16 +7,13 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
-import Feather from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-// 문제1 navigate.goBack 했을 시 close 애니메이션 효과 적용 어떻게?
-// 문제2 모달 창에서 다른 screen으로 갔다가
-//  header에서 back버튼 누를 시 프로필 스크린이 아닌 modal3 스크린으로 돌아옴
 const { width, height } = Dimensions.get("window");
 
-function Modal3({ navigation }) {
+function Modal2({ navigation, route }) {
+  const { user } = route.params;
   const opacity = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -39,6 +36,45 @@ function Modal3({ navigation }) {
     }).start(() => navigation.goBack());
   };
 
+  const storyPressed = useCallback(
+    (id) => {
+      if (user.id === id) {
+        return {
+          ...user,
+          show: true,
+        };
+      }
+      return user;
+    },
+    [user]
+  );
+  const goToReels = () => {
+    navigation.navigate("Story", {
+      name: user[0].name,
+      image: user[0].image,
+      userName: user[0].userName,
+    });
+    storyPressed(user.id);
+  };
+
+  const goToPost = () => {
+    navigation.navigate("Story", {
+      name: user[0].name,
+      image: user[0].image,
+      userName: user[0].userName,
+    });
+    storyPressed(user.id);
+  };
+
+  const goToStory = () => {
+    navigation.navigate("Story", {
+      name: user[0].name,
+      image: user[0].image,
+      userName: user[0].userName,
+    });
+    storyPressed(user.id);
+  };
+
   return (
     <>
       <Animated.View style={{ position: "absolute", height, width, opacity }}>
@@ -53,16 +89,16 @@ function Modal3({ navigation }) {
           onPress={closeModal}
         />
       </Animated.View>
-      <View style={{ height: height - 165 }}></View>
+      <View style={{ height: height - 190 }}></View>
       <View style={styles.modal2}>
         <View style={{ alignItems: "center" }}>
           <View style={styles.miniBar} />
+          <Text style={{ fontFamily: "GangwonEduAllBold" }}>만들기</Text>
         </View>
+        <View style={styles.modalBar} />
         <View style={styles.menu}>
           <Pressable
-            onPress={() => {
-              navigation.navigate("Setting");
-            }}
+            onPress={goToReels}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -70,14 +106,25 @@ function Modal3({ navigation }) {
             ]}
           >
             <View style={{ flexDirection: "row" }}>
-              <Icon name="ios-settings-sharp" size={25} color="black" />
-              <Text style={styles.text}>설정</Text>
+              <Icon name="ios-play-circle-outline" size={25} color="black" />
+              <Text style={styles.text}>릴스</Text>
             </View>
           </Pressable>
           <Pressable
-            onPress={() => {
-              navigation.navigate("User2"); // 계정 스크린으로 이동
-            }}
+            onPress={goToPost}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <View style={{ flexDirection: "row" }}>
+              <MaterialCommunityIcons name="grid" size={25} color="black" />
+              <Text style={styles.text}>게시물</Text>
+            </View>
+          </Pressable>
+          <Pressable
+            onPress={goToStory}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -86,30 +133,18 @@ function Modal3({ navigation }) {
           >
             <View style={{ flexDirection: "row" }}>
               <MaterialCommunityIcons
-                name="clock-time-eight-outline"
+                name="plus-circle-outline"
                 size={25}
                 color="black"
               />
-              <Text style={styles.text}>내 활동</Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={{ flexDirection: "row" }}>
-              <Feather name="star" size={25} color="black" />
-              <Text style={styles.text}>즐겨찾기</Text>
+              <Text style={styles.text}>스토리</Text>
             </View>
           </Pressable>
         </View>
       </View>
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modal2: {
@@ -124,6 +159,12 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 5,
   },
+  modalBar: {
+    borderWidth: 0.3,
+    width: "100%",
+    opacity: 0.3,
+    marginTop: 10,
+  },
   text: {
     fontFamily: "GangwonEduAllBold",
     paddingLeft: 10,
@@ -137,4 +178,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Modal3;
+export default Modal2;
