@@ -37,6 +37,7 @@ export type RootStackParamList = {
   UploadImage: undefined;
   TestModal: undefined;
   SearchResult: undefined;
+  ProfileUser: any;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것

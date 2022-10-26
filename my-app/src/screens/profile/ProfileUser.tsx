@@ -8,15 +8,15 @@ import {
 // Navigation
 import ProfileTopTab from "../../navigation/ProfileTopTab";
 // Components
-import ProfileHeader from "../../components/profileComponents/ProfileHeader";
-import ProfileBody from "../../components/profileComponents/ProfileBody";
+import ProfileUserHeader from "../../components/profileComponents/ProfileUserHeader";
+import ProfileUserBody from "../../components/profileComponents/ProfileUserBody";
 // libs
 import events from "../../libs/eventEmitter";
 // database
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
 
-const ProfileScreen = () => {
+const ProfileUser = () => {
   // 더미데이터
   const storyInfo = [
     {
@@ -129,8 +129,8 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <ProfileHeader data={data} user={user} />
-        <ProfileBody data={data} user={user} />
+        <ProfileUserHeader data={data} user={user} />
+        <ProfileUserBody data={data} user={user} />
         <ProfileTopTab user={user} />
       </View>
     </SafeAreaView>
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default ProfileUser;

@@ -16,7 +16,7 @@ import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
 
 // 부모컴포넌트로부터 props전달받음
-export const ProfileBody = ({ data, user }) => {
+export const ProfileUserBody = ({ data, user }) => {
   const navigation = useNavigation();
 
   const storyPressed = useCallback(
@@ -117,7 +117,7 @@ export const ProfileBody = ({ data, user }) => {
           </Pressable>
           <Pressable
             // onPress={() => navigation.navigate("FollowTab")}
-            onPress={() => navigation.navigate("ProfileUser", { user })}
+            onPress={() => navigation.navigate("ProfileUser" as any, { user })}
             // 다른 user profile
             style={({ pressed }) => [
               {
@@ -143,7 +143,26 @@ export const ProfileBody = ({ data, user }) => {
                     opacity: pressed ? 0.2 : 1,
                   },
                 {
-                  width: "100%",
+                  width: "50%",
+                  backgroundColor: "#f5f5f5",
+                },
+              ]}
+              android_ripple={{ color: "rgba(0,0,0,0.1)" }}
+            >
+              <View style={styles.profileButtonView}>
+                <Text style={styles.profileButtonText}>프로필편집</Text>
+              </View>
+            </Pressable>
+          </View>
+          <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
+            <Pressable
+              style={({ pressed }) => [
+                Platform.OS === "ios" &&
+                  pressed && {
+                    opacity: pressed ? 0.2 : 1,
+                  },
+                {
+                  width: "50%",
                   backgroundColor: "#f5f5f5",
                 },
               ]}
@@ -294,4 +313,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileBody;
+export default ProfileUserBody;
