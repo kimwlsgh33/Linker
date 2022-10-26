@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  ImageSourcePropType,
-  ImageURISource,
   SafeAreaView,
   StyleSheet,
   View,
@@ -10,7 +8,6 @@ import ProfileHeader from "../components/profileComponents/ProfileHeader";
 import ProfileBody from "../components/profileComponents/ProfileBody";
 import ProfileTopTab from "../navigation/ProfileTopTab";
 import events from "../libs/eventEmitter";
-import { ImagePickerResponse } from "react-native-image-picker";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../models";
 

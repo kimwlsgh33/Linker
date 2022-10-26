@@ -12,8 +12,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
-// import { DataStore } from "@aws-amplify/datastore";
-// import { User } from "../../models";
+import { DataStore } from "@aws-amplify/datastore";
+import { User } from "../../models";
 
 // 부모컴포넌트로부터 props전달받음
 export const ProfileBody = ({ data, user }) => {
@@ -47,6 +47,14 @@ export const ProfileBody = ({ data, user }) => {
       accountName: data.accountName,
       profileImage: data.profileImage,
     });
+
+  let models;
+  const getUser = async () => {
+    models = await DataStore.query(User, (user) =>
+      user.username("eq", "abkorc33")
+    );
+    console.log(models);
+  };
 
   return (
     <SafeAreaView>
@@ -92,8 +100,8 @@ export const ProfileBody = ({ data, user }) => {
             </View>
           </Pressable>
           <Pressable
-            // onPress={getUser}
-            onPress={() => navigation.navigate("FollowTab")}
+            onPress={getUser}
+            // onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,

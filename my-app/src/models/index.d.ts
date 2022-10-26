@@ -1,5 +1,13 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
+type StoryMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type CommentMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type TagMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -16,6 +24,28 @@ type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+export declare class Story {
+  readonly id: string;
+  readonly imageUrl: string[];
+  readonly userID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Story, StoryMetaData>);
+  static copyOf(source: Story, mutator: (draft: MutableModel<Story, StoryMetaData>) => MutableModel<Story, StoryMetaData> | void): Story;
+}
+
+export declare class Comment {
+  readonly id: string;
+  readonly text: string;
+  readonly userID: string;
+  readonly postID: string;
+  readonly recomment?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Comment, CommentMetaData>);
+  static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
+}
+
 export declare class Tag {
   readonly id: string;
   readonly tagname: string;
@@ -29,12 +59,11 @@ export declare class Tag {
 export declare class Post {
   readonly id: string;
   readonly imageUri?: string | null;
-  readonly title: string;
   readonly link: string;
   readonly text: string;
   readonly userID: string;
   readonly tagID: string;
-  readonly likes?: (string | null)[] | null;
+  readonly Comments?: (Comment | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Post, PostMetaData>);
@@ -68,6 +97,12 @@ export declare class User {
   readonly following?: (string | null)[] | null;
   readonly followers?: (string | null)[] | null;
   readonly profpic?: string | null;
+  readonly favoriteMenu?: (string | null)[] | null;
+  readonly likeposts?: (Post | null)[] | null;
+  readonly likePosts?: (Post | null)[] | null;
+  readonly likeStories?: (Story | null)[] | null;
+  readonly Stories?: (Story | null)[] | null;
+  readonly showStories?: (Story | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);

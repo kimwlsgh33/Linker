@@ -13,12 +13,74 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
+import { DataStore } from "@aws-amplify/datastore";
+import { User } from "../models";
+import { Auth } from "aws-amplify";
+import { useUserContext } from "../hooks/UserContext";
+import CryptoJS from "crypto-js";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
+
+  const { setUser } = useUserContext();
+  const goHome = () => {
+    navigation.navigate("HomeTab" as any);
+  };
+
+  const username = id;
+
+  const forPhone = (id) => {
+    const result = "+82" + id.slice(1);
+    return result;
+  };
+
+  const SignIn = async () => {
+    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+    // const newPW = getHashedPassword(password);
+    const SignInEmail = async () => {
+      try {
+        const user = await Auth.signIn(username, password);
+        const UserInfo = {
+          username: user.attributes.phone_number,
+          name: user.attributes.name,
+          nickname: user.attributes.nickname,
+          password: user.attributes.password,
+        };
+        setUser(UserInfo);
+      } catch (error) {
+        alert("이메일 또는 비밀번호를 확인해 주세요.");
+        console.log("error signing in", error);
+        return;
+      }
+      navigation.navigate("Welcome" as any);
+    };
+    const SignInPhone = async () => {
+      try {
+        const user = await Auth.signIn(forPhone(username), password);
+        const UserInfo = {
+          username: user.attributes.phone_number,
+          name: user.attributes.name,
+          nickname: user.attributes.nickname,
+          password: user.attributes.password,
+        };
+        setUser(UserInfo);
+        console.log(user);
+      } catch (error) {
+        alert("전화번호 또는 비밀번호를 확인해 주세요.");
+        console.log("error signing in", error);
+        return;
+      }
+      navigation.navigate("Welcome" as any);
+    };
+    if (regExp.test(username)) {
+      SignInEmail();
+    } else {
+      SignInPhone();
+    }
+  };
 
   const handleIdChange = (text) => {
     setId(text);
@@ -66,7 +128,7 @@ const LoginScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <Text style={styles.logo}>instagram</Text>
+        <Text style={styles.logo}>LINKER</Text>
         <View style={styles.inputContainer}>
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "height" : undefined}
@@ -97,7 +159,7 @@ const LoginScreen = () => {
             <View style={styles.buttonContainer}>
               <Pressable
                 onPress={() => {
-                  navigation.navigate("HomeTab"), onReset();
+                  navigation.navigate("HomeTab"), onReset(), SignIn();
                 }}
                 style={({ pressed }) => [
                   styles.button,
