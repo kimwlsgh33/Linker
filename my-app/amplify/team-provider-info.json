@@ -14,6 +14,9 @@
     "categories": {
       "auth": {
         "linker": {}
+      },
+      "storage": {
+        "s3linkerstorage480f1d79": {}
       }
     }
   }
