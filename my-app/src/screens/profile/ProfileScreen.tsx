@@ -1,10 +1,6 @@
 // React Basic
 import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 // Navigation
 import ProfileTopTab from "../../navigation/ProfileTopTab";
 // Components
@@ -27,40 +23,9 @@ const ProfileScreen = () => {
       userName: "nieoodie",
       image: require("../../../assets/images/jinho.jpeg"),
     },
-    {
-      id: 2,
-      isYou: false,
-      show: false,
-      name: "kwonwoo",
-      userName: "kwonwoo",
-      image: require("../../../assets/images/woo.jpeg"),
-    },
-    {
-      id: 3,
-      isYou: false,
-      show: false,
-      name: "pizza",
-      userName: "Domino",
-      image: require("../../../assets/images/pizza.jpeg"),
-    },
-    {
-      id: 4,
-      isYou: false,
-      show: false,
-      name: "hyunsu",
-      userName: "hyunsu",
-      image: require("../../../assets/images/hyunsu.jpeg"),
-    },
-    {
-      id: 5,
-      isYou: false,
-      show: false,
-      name: "jongin",
-      userName: "jeongjongin",
-      image: require("../../../assets/images/jongin.jpeg"),
-    },
   ];
   const [user, setUser] = useState(storyInfo);
+
   const userInfo = {
     id: "27391827319872319283",
     email: "abkorc33@gmail.com",
@@ -71,10 +36,10 @@ const ProfileScreen = () => {
     password: "123456789a!",
     birthday: null,
     profpic: null,
-    following: [],
-    followers: [],
-    favorite: null,
+    following: ["123", "456", "789", "1", "2"],
+    followers: ["123", "456", "789"],
     Posts: [],
+    favorite: null,
     BookMark: [],
     Stories: [],
     likePosts: [],

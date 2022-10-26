@@ -9,22 +9,15 @@ export const ProfileUserHeader = ({ data, user }) => {
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <Pressable
-          onPress={() => navigation.navigate("Modal", { data })}
-          style={({ pressed }) => [
-            {
-              opacity: pressed ? 0.2 : 1,
-            },
-          ]}
+        <View
+          style={{
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Feather name="arrow-left" style={{ fontSize: 20 }} />
-            <Text style={styles.text}>{data.accountName}</Text>
-          </View>
-        </Pressable>
-        <View>
           <Pressable
-            onPress={() => navigation.navigate("Modal2", { user })}
+            onPress={() => navigation.goBack()}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -32,14 +25,25 @@ export const ProfileUserHeader = ({ data, user }) => {
             ]}
           >
             <Feather
-              name="bell"
-              style={{ fontSize: 22, left: 70 }}
+              name="arrow-left"
+              style={{ fontSize: 20, marginRight: 20 }}
             />
           </Pressable>
+          <Text style={styles.text}>{data.username}</Text>
         </View>
-        <View>
+        <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
           <Pressable
-            onPress={() => navigation.navigate("Modal3")}
+            // onPress={() => navigation.navigate("Modal2", { user })}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <Feather name="bell" style={{ fontSize: 22, marginRight: 20 }} />
+          </Pressable>
+          <Pressable
+            // onPress={() => navigation.navigate("Modal3")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -49,7 +53,7 @@ export const ProfileUserHeader = ({ data, user }) => {
             <Feather
               name="more-vertical"
               style={{
-                fontSize: 20,
+                fontSize: 22,
               }}
             />
           </Pressable>
@@ -63,7 +67,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "GangwonEduAllBold",
     fontSize: 23,
-    marginLeft: 20,
   },
   header: {
     justifyContent: "space-between",

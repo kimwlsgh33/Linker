@@ -41,21 +41,6 @@ export const ProfileUserBody = ({ data, user }) => {
     storyPressed(user.id);
   };
 
-  const goToEditProfile = () =>
-    navigation.navigate("EditProfile", {
-      name: data.name,
-      accountName: data.accountName,
-      profileImage: data.profileImage,
-    });
-
-  let models;
-  const getUser = async () => {
-    models = await DataStore.query(User, (user) =>
-      user.username("eq", "abkorc33")
-    );
-    console.log(models);
-  };
-
   return (
     <SafeAreaView>
       <View>
@@ -73,8 +58,8 @@ export const ProfileUserBody = ({ data, user }) => {
             >
               <Image
                 source={
-                  data.profileImage
-                    ? { uri: data.profileImage }
+                  data.profpic
+                    ? { uri: data.profpic }
                     : require("../../../assets/images/user.png")
                 }
                 style={styles.profileStyle}
@@ -94,14 +79,13 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.post}
+                {data.Posts.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
           </Pressable>
           <Pressable
-            onPress={getUser}
-            // onPress={() => navigation.navigate("FollowTab")}
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -110,15 +94,13 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.follower}
+                {data.followers.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
           </Pressable>
           <Pressable
-            // onPress={() => navigation.navigate("FollowTab")}
-            onPress={() => navigation.navigate("ProfileUser" as any, { user })}
-            // 다른 user profile
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -127,33 +109,39 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.following}
+                {data.following.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>
           </Pressable>
         </View>
         <View style={styles.profileButton}>
-          <View style={{ borderRadius: 5, overflow: "hidden", width: "50%" }}>
+          <View style={{ borderRadius: 5, overflow: "hidden", width: "40%" }}>
             <Pressable
+              onPress={() => navigation.navigate("FollowTab")}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
                     opacity: pressed ? 0.2 : 1,
                   },
                 {
-                  width: "50%",
                   backgroundColor: "#f5f5f5",
                 },
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)" }}
             >
-              <View style={styles.profileButtonView}>
-                <Text style={styles.profileButtonText}>프로필편집</Text>
+              <View
+                style={[
+                  styles.profileButtonView,
+                  { flexDirection: "row", alignItems: "center" },
+                ]}
+              >
+                <Text style={styles.profileButtonText}>팔로잉</Text>
+                <Feather name="chevron-down" style={{ fontSize: 16 }} />
               </View>
             </Pressable>
           </View>
-          <View style={{ borderRadius: 5, overflow: "hidden", width: "50%" }}>
+          <View style={{ borderRadius: 5, overflow: "hidden", width: "40%" }}>
             <Pressable
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
@@ -161,14 +149,13 @@ export const ProfileUserBody = ({ data, user }) => {
                     opacity: pressed ? 0.2 : 1,
                   },
                 {
-                  width: "50%",
                   backgroundColor: "#f5f5f5",
                 },
               ]}
               android_ripple={{ color: "rgba(0,0,0,0.1)" }}
             >
               <View style={styles.profileButtonView}>
-                <Text style={styles.profileButtonText}>프로필편집</Text>
+                <Text style={styles.profileButtonText}>메시지</Text>
               </View>
             </Pressable>
           </View>

@@ -8,10 +8,12 @@ import {
   StyleSheet,
 } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useNavigation } from "@react-navigation/native";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const FollowTab = () => {
+const FollowTab = ({ user }) => {
   const Tab = createMaterialTopTabNavigator();
+  const navigation = useNavigation();
 
   let circuls = [];
   let numberOfCirculs = 15;
@@ -22,6 +24,8 @@ const FollowTab = () => {
         {index === 0 ? (
           <View style={{ flexDirection: "row" }}>
             <Pressable
+              onPress={() => navigation.navigate("ProfileUser", { user })}
+              // 다른 user profile
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
@@ -39,6 +43,8 @@ const FollowTab = () => {
         ) : (
           <View style={{ flexDirection: "row" }}>
             <Pressable
+              onPress={() => navigation.navigate("ProfileUser", { user })}
+              // 다른 user profile
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

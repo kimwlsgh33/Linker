@@ -48,14 +48,6 @@ export const ProfileBody = ({ data, user }) => {
       profpic: data.profpic,
     });
 
-  let models;
-  const getUser = async () => {
-    models = await DataStore.query(User, (user) =>
-      user.username("eq", "abkorc33")
-    );
-    console.log(models);
-  };
-
   return (
     <SafeAreaView>
       <View>
@@ -94,14 +86,13 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.Posts}
+                {data.Posts.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
           </Pressable>
           <Pressable
-            onPress={getUser}
-            // onPress={() => navigation.navigate("FollowTab")}
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -110,15 +101,13 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.followers}
+                {data.followers.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
           </Pressable>
           <Pressable
-            // onPress={() => navigation.navigate("FollowTab")}
-            onPress={() => navigation.navigate("ProfileUser", { user })}
-            // 다른 user profile
+            onPress={() => navigation.navigate("FollowTab")}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -127,7 +116,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.following}
+                {data.following.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>

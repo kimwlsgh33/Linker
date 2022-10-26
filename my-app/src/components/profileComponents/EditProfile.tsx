@@ -51,7 +51,7 @@ const EditProfile = ({ route, navigation }) => {
           // 취소했을 경우
           return;
         }
-        console.log(Object.keys(res.assets[0]));
+        // console.log(Object.keys(res.assets[0]));
         setImage(res.assets[0].uri);
       }
     );

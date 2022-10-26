@@ -11,7 +11,7 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
@@ -159,7 +159,7 @@ const LoginScreen = () => {
             <View style={styles.buttonContainer}>
               <Pressable
                 onPress={() => {
-                  navigation.navigate("HomeTab" as any), onReset(), SignIn();
+                  navigation.navigate("HomeTab"), onReset(), SignIn();
                 }}
                 style={({ pressed }) => [
                   styles.button,

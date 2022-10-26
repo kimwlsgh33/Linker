@@ -6,6 +6,7 @@ import {
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 // navigation
+import HomeTab from "./HomeTab";
 import OuterHomeTab from "./OuterHomeTab";
 import ProfileTopTab from "./ProfileTopTab";
 import FollowTab from "../components/profileComponents/FollowTab";
@@ -33,7 +34,7 @@ import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
-
+import UploadPost from "../screens/UploadPost";
 import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
 import Modal from "../components/profileComponents/Modal";
@@ -108,6 +109,7 @@ function RootStack() {
         {/*  */}
         <Stack.Screen name="TestStack" component={TestStack} />
         {/*  */}
+        <Stack.Screen name="HomeTab" component={HomeTab} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="ProfileUser" component={ProfileUser} />
@@ -119,11 +121,11 @@ function RootStack() {
         <Stack.Screen name="PwRe" component={PwRe} />
         <Stack.Screen name="CreateName" component={CreateNameScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
-
         <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="TOS" component={TOSScreen} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="SearchResult" component={SearchResultScreen} />
+        <Stack.Screen name="UploadPost" component={UploadPost} />
       </Stack.Group>
 
       <Stack.Group>

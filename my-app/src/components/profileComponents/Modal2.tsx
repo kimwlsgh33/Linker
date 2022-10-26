@@ -12,8 +12,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const { width, height } = Dimensions.get("window");
 
-function Modal2({ navigation, route }) {
-  const { user } = route.params;
+function Modal2({ navigation }) {
   const opacity = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -36,43 +35,16 @@ function Modal2({ navigation, route }) {
     }).start(() => navigation.goBack());
   };
 
-  const storyPressed = useCallback(
-    (id) => {
-      if (user.id === id) {
-        return {
-          ...user,
-          show: true,
-        };
-      }
-      return user;
-    },
-    [user]
-  );
   const goToReels = () => {
-    navigation.navigate("Story", {
-      name: user[0].name,
-      image: user[0].image,
-      userName: user[0].userName,
-    });
-    storyPressed(user.id);
+    navigation.navigate("UploadPost");
   };
 
   const goToPost = () => {
-    navigation.navigate("Story", {
-      name: user[0].name,
-      image: user[0].image,
-      userName: user[0].userName,
-    });
-    storyPressed(user.id);
+    navigation.navigate("UploadPost");
   };
 
   const goToStory = () => {
-    navigation.navigate("Story", {
-      name: user[0].name,
-      image: user[0].image,
-      userName: user[0].userName,
-    });
-    storyPressed(user.id);
+    navigation.navigate("UploadPost");
   };
 
   return (
@@ -144,7 +116,7 @@ function Modal2({ navigation, route }) {
       </View>
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   modal2: {

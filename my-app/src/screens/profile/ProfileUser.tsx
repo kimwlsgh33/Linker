@@ -11,6 +11,7 @@ import events from "../../libs/eventEmitter";
 // database
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
+import create from "zustand";
 
 const ProfileUser = () => {
   // 더미데이터
@@ -23,55 +24,23 @@ const ProfileUser = () => {
       userName: "nieoodie",
       image: require("../../../assets/images/jinho.jpeg"),
     },
-    {
-      id: 2,
-      isYou: false,
-      show: false,
-      name: "kwonwoo",
-      userName: "kwonwoo",
-      image: require("../../../assets/images/woo.jpeg"),
-    },
-    {
-      id: 3,
-      isYou: false,
-      show: false,
-      name: "pizza",
-      userName: "Domino",
-      image: require("../../../assets/images/pizza.jpeg"),
-    },
-    {
-      id: 4,
-      isYou: false,
-      show: false,
-      name: "hyunsu",
-      userName: "hyunsu",
-      image: require("../../../assets/images/hyunsu.jpeg"),
-    },
-    {
-      id: 5,
-      isYou: false,
-      show: false,
-      name: "jongin",
-      userName: "jeongjongin",
-      image: require("../../../assets/images/jongin.jpeg"),
-    },
   ];
   const [user, setUser] = useState(storyInfo);
 
   const userInfo = {
-    id: "27391827319872319283",
+    id: "5468456",
     email: "abkorc33@gmail.com",
     mobile: "010-2222-2222",
-    name: "name",
-    nickname: "name",
-    username: "abkorc33",
+    name: "user",
+    nickname: "user",
+    username: "user1234",
     password: "123456789a!",
     birthday: null,
     profpic: null,
     following: [],
     followers: [],
-    favorite: null,
     Posts: [],
+    favorite: null,
     BookMark: [],
     Stories: [],
     likePosts: [],
@@ -80,6 +49,11 @@ const ProfileUser = () => {
   } as User;
 
   const [data, setData] = useState(userInfo);
+
+  const useMeStore = create((set) => ({
+    me: null,
+    setMe: (state) => set({ me: state.me }),
+  }));
   // let models;
   // const [data, setData] = useState([]);
 
@@ -97,44 +71,6 @@ const ProfileUser = () => {
   //     console.log("안녕" + dat.username);
   //   });
   // }, []);
-
-  const onEdit = ({
-    username,
-    name,
-    profpic,
-  }: {
-    username: string;
-    name: string;
-    profpic: string;
-  }) => {
-    console.log("Edit Profile");
-    setData((data) => {
-      return {
-        ...data,
-        username: username,
-        name: name,
-        profpic: profpic,
-      };
-    });
-  };
-
-  const onChange = ({ profpic }: { profpic: string }) => {
-    setData((data) => {
-      return {
-        ...data,
-        profpic: profpic,
-      };
-    });
-  };
-
-  useEffect(() => {
-    events.addListener("saveEdit", onEdit);
-    events.addListener("deleteImage", onChange);
-    return () => {
-      events.removeListener("saveEdit");
-      events.removeListener("deleteImage");
-    };
-  }, []);
 
   return (
     <SafeAreaView>
