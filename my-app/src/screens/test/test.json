@@ -1,0 +1,15 @@
+{
+  "cause": {
+    "locations": null,
+    "message": "Cannot return null for non-nullable type: 'ID' within parent 'Post' (/syncPosts/items[0]/tagID)",
+    "path": ["syncPosts", "items", 0, "tagID"]
+  },
+  "errorType": "BadRecord",
+  "localModel": null,
+  "message": "Cannot return null for non-nullable type: 'ID' within parent 'Post' (/syncPosts/items[0]/tagID)",
+  "model": "Post",
+  "operation": "syncPosts",
+  "process": "sync",
+  "recoverySuggestion": "Ensure app code is up to date, auth directives exist and are correct on each model, and that server-side data has not been invalidated by a schema change. If the problem persists, search for or create an issue: https://github.com/aws-amplify/amplify-js/issues",
+  "remoteModel": null
+}

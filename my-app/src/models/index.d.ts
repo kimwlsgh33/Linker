@@ -1,22 +1,6 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
-type FollowersMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type UserMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type PostMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type InfluencerMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type LikesMetaData = {
+type StoryMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -24,111 +8,104 @@ type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type FollowingsMetaData = {
+type TagMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type ImageMetaData = {
+type PostMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class Followers {
-  readonly id: string;
-  readonly Users?: (User | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Followers, FollowersMetaData>);
-  static copyOf(source: Followers, mutator: (draft: MutableModel<Followers, FollowersMetaData>) => MutableModel<Followers, FollowersMetaData> | void): Followers;
+type TermsMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class User {
-  readonly id: string;
-  readonly username?: string | null;
-  readonly email?: string | null;
-  readonly created_at?: number | null;
-  readonly Posts?: (Post | null)[] | null;
-  readonly Comments?: (Comment | null)[] | null;
-  readonly Followings?: Followings | null;
-  readonly followersID: string;
-  readonly likepostID: string;
-  readonly password?: string | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly userFollowingsId?: string | null;
-  constructor(init: ModelInit<User, UserMetaData>);
-  static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+type UserMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class Post {
+export declare class Story {
   readonly id: string;
-  readonly title?: string | null;
-  readonly textcontent?: string | null;
-  readonly link?: string | null;
-  readonly Influencer?: Influencer | null;
-  readonly commentID: string;
+  readonly show?: string[] | null;
+  readonly imageUrl: string[];
   readonly userID: string;
-  readonly Likes?: Likes | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly postInfluencerId?: string | null;
-  readonly postLikesId?: string | null;
-  constructor(init: ModelInit<Post, PostMetaData>);
-  static copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
-}
-
-export declare class Influencer {
-  readonly id: string;
-  readonly name?: string | null;
-  readonly insta?: string | null;
-  readonly User?: User | null;
-  readonly followingsID: string;
-  readonly Followers?: Followers | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly influencerUserId?: string | null;
-  readonly influencerFollowersId?: string | null;
-  constructor(init: ModelInit<Influencer, InfluencerMetaData>);
-  static copyOf(source: Influencer, mutator: (draft: MutableModel<Influencer, InfluencerMetaData>) => MutableModel<Influencer, InfluencerMetaData> | void): Influencer;
-}
-
-export declare class Likes {
-  readonly id: string;
-  readonly Users?: (User | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Likes, LikesMetaData>);
-  static copyOf(source: Likes, mutator: (draft: MutableModel<Likes, LikesMetaData>) => MutableModel<Likes, LikesMetaData> | void): Likes;
+  constructor(init: ModelInit<Story, StoryMetaData>);
+  static copyOf(source: Story, mutator: (draft: MutableModel<Story, StoryMetaData>) => MutableModel<Story, StoryMetaData> | void): Story;
 }
 
 export declare class Comment {
   readonly id: string;
-  readonly comment?: string | null;
-  readonly Post?: (Post | null)[] | null;
+  readonly text: string;
   readonly userID: string;
-  readonly Likes?: Likes | null;
+  readonly postID: string;
+  readonly recomment?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly commentLikesId?: string | null;
   constructor(init: ModelInit<Comment, CommentMetaData>);
   static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
 }
 
-export declare class Followings {
+export declare class Tag {
   readonly id: string;
-  readonly Influencer?: (Influencer | null)[] | null;
+  readonly tagname: string;
+  readonly Posts?: (Post | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Followings, FollowingsMetaData>);
-  static copyOf(source: Followings, mutator: (draft: MutableModel<Followings, FollowingsMetaData>) => MutableModel<Followings, FollowingsMetaData> | void): Followings;
+  constructor(init: ModelInit<Tag, TagMetaData>);
+  static copyOf(source: Tag, mutator: (draft: MutableModel<Tag, TagMetaData>) => MutableModel<Tag, TagMetaData> | void): Tag;
 }
 
-export declare class Image {
+export declare class Post {
   readonly id: string;
-  readonly uri?: string | null;
-  readonly Post?: Post | null;
+  readonly imageUri?: string | null;
+  readonly link: string;
+  readonly text: string;
+  readonly userID: string;
+  readonly tagID: string;
+  readonly Comments?: (Comment | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly imagePostId?: string | null;
-  constructor(init: ModelInit<Image, ImageMetaData>);
-  static copyOf(source: Image, mutator: (draft: MutableModel<Image, ImageMetaData>) => MutableModel<Image, ImageMetaData> | void): Image;
+  constructor(init: ModelInit<Post, PostMetaData>);
+  static copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
+}
+
+export declare class Terms {
+  readonly id: string;
+  readonly Required: boolean;
+  readonly Event: boolean;
+  readonly Night: boolean;
+  readonly User?: User | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly termsUserId?: string | null;
+  constructor(init: ModelInit<Terms, TermsMetaData>);
+  static copyOf(source: Terms, mutator: (draft: MutableModel<Terms, TermsMetaData>) => MutableModel<Terms, TermsMetaData> | void): Terms;
+}
+
+export declare class User {
+  readonly id: string;
+  readonly email?: string | null;
+  readonly mobile?: string | null;
+  readonly name: string;
+  readonly nickname: string;
+  readonly username: string;
+  readonly Posts?: (Post | null)[] | null;
+  readonly password: string;
+  readonly birthday?: string | null;
+  readonly BookMark?: (Post | null)[] | null;
+  readonly following?: (string | null)[] | null;
+  readonly followers?: (string | null)[] | null;
+  readonly profpic?: string | null;
+  readonly favoriteMenu?: (string | null)[] | null;
+  readonly likeposts?: (Post | null)[] | null;
+  readonly likePosts?: (Post | null)[] | null;
+  readonly likeStories?: (Story | null)[] | null;
+  readonly Stories?: (Story | null)[] | null;
+  readonly showStories?: (Story | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<User, UserMetaData>);
+  static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
 }

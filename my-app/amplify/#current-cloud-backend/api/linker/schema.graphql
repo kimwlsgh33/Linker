@@ -1,61 +1,61 @@
-type Followers @model @auth(rules: [{allow: public}]) {
+type Story @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Users: [User] @hasMany(indexName: "byFollowers", fields: ["id"])
+  show: [ID!]
+  imageUrl: [String!]!
+  userID: ID! @index(name: "byUser")
 }
 
 type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
-  comment: String
-  Post: [Post] @hasMany(indexName: "byComment", fields: ["id"])
+  text: String!
   userID: ID! @index(name: "byUser")
-  Likes: Likes @hasOne
+  postID: ID! @index(name: "byPost")
+  recomment: [ID]
 }
 
-type Likes @model @auth(rules: [{allow: public}]) {
+type Tag @model @auth(rules: [{allow: public}]) {
   id: ID!
-  Users: [User] @hasMany(indexName: "byLikes", fields: ["id"])
+  tagname: String!
+  Posts: [Post] @hasMany(indexName: "byTag", fields: ["id"])
 }
 
-type Image @model @auth(rules: [{allow: public}]) {
+type Terms @model @auth(rules: [{allow: public}]) {
   id: ID!
-  uri: String
-  Post: Post @hasOne
+  Required: Boolean!
+  Event: Boolean!
+  Night: Boolean!
+  User: User @hasOne
 }
 
 type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
-  title: String
-  textcontent: String
-  link: String
-  Influencer: Influencer @hasOne
-  commentID: ID! @index(name: "byComment")
+  imageUri: String
+  link: String!
+  text: String!
   userID: ID! @index(name: "byUser")
-  Likes: Likes @hasOne
-}
-
-type Followings @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  Influencer: [Influencer] @hasMany(indexName: "byFollowings", fields: ["id"])
-}
-
-type Influencer @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  name: String
-  insta: String
-  User: User @hasOne
-  followingsID: ID! @index(name: "byFollowings")
-  Followers: Followers @hasOne
+  tagID: ID! @index(name: "byTag")
+  Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
 }
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  username: String
   email: String
-  created_at: AWSTimestamp
+  mobile: String
+  name: String!
+  nickname: String!
+  username: String!
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
-  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
-  Followings: Followings @hasOne
-  followersID: ID! @index(name: "byFollowers")
-  likepostID: ID! @index(name: "byLikes")
-  password: String
-} 
+  password: String!
+  birthday: AWSDate
+  BookMark: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  following: [ID]
+  followers: [ID]
+  profpic: String
+  favoriteMenu: [ID]
+  likeposts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  likePosts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  likeStories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
+  Stories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
+  showStories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
+}
+ 
