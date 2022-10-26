@@ -27,10 +27,6 @@ const BirthdayScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const { setUser } = useUserContext();
-  const forPhone = (id) => {
-    const result = "+82" + id.slice(1);
-    return result;
-  };
   const goTOS = async () => {
     try {
       const user = await DataStore.save(

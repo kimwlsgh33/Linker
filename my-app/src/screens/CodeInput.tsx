@@ -32,6 +32,7 @@ const CodeInput = ({ route }) => {
         nick: nick,
         password: password,
       });
+      console.log(password);
     } catch (error) {
       console.log("error confirming sign up", error);
     }

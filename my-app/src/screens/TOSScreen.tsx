@@ -54,7 +54,7 @@ const datas = [
     id: 6,
     state: false,
     title: "야간 알림 수신 동의[선택]",
-    desc: "0~6시 사이에 알림을 수신하는 데에 동의합니다.",
+    desc: "Meta Platforms, Inc.가 제공하는 야간(0~6시) 알림을 수신하는 데에 동의합니다.",
     link: "더 알아보기",
   },
 ];
@@ -201,7 +201,7 @@ const TOSScreen = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ borderBottomWidth: 1, backgroundColor: "#a5ff61" }}>
+      <View style={{ borderBottomWidth: 1, backgroundColor: "pink" }}>
         <Text
           style={{
             fontSize: 20,

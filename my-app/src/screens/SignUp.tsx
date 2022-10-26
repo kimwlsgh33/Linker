@@ -16,9 +16,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { LinearGradient } from "expo-linear-gradient";
-import CryptoJS, { SHA256 } from "crypto-js";
-import { DataStore } from "aws-amplify";
-import { User } from "../models";
+import { SHA256 } from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -36,11 +35,11 @@ const SignUp = () => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  function getHashedPassword(password) {
-    let random = CryptoJS.lib.WordArray.random(128 / 8);
-    return CryptoJS.SHA256(password, random).toString();
-  }
-
+  const hashDigest = SHA256("1234" + password);
+  // function getHashedPassword(password) {
+  //   let random = CryptoJS.lib.WordArray.random(128 / 8);
+  //   return CryptoJS.SHA256(password, random).toString();
+  // }
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
@@ -64,30 +63,38 @@ const SignUp = () => {
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
 
     // amplify email 가입
+    const newPw = Base64.stringify(hashDigest);
     const SignUpEmail = async () => {
       try {
-        const newPW = getHashedPassword(password);
-        if (DataStore.query(User, (user) => user.username("eq", id))) {
-          alert("이미 존재하는 아이디입니다.");
-        } else {
-          const { user } = await Auth.signUp({
-            username: id,
-            password: newPW,
-            attributes: {
-              email: id,
-              name: name,
-              nickname: nick,
-            },
-          });
-        }
+        // const newPW = getHashedPassword(password);
+        // if (DataStore.query(User, (user) => user.username("eq", id))) {
+        //   alert("이미 존재하는 아이디입니다.");
+        //   return;
+        // } else {
+        const { user } = await Auth.signUp({
+          username: id,
+          password: newPw,
+          attributes: {
+            email: id,
+            name: name,
+            nickname: nick,
+          },
+        });
       } catch (error) {
-        console.log("error signing up:", error);
+        // console.log("error signing up:", error);
+        if (error.code === "UsernameExistsException") {
+          alert("이미 존재하는 이메일입니다.");
+          return;
+        } else {
+          alert("Unknown error. ㅋㅋ");
+          return;
+        }
       }
       navigation.navigate("CodeInput" as any, {
         username: id,
         name: name,
         nick: nick,
-        password: password,
+        password: newPw,
       });
     };
 
@@ -106,14 +113,22 @@ const SignUp = () => {
             nickname: nick,
           },
         });
+        console.log("newPw", newPw);
       } catch (error) {
-        console.log("error signing up:", error);
+        // console.log("error signing up:", error);
+        if (error.code === "UsernameExistsException") {
+          alert("이미 존재하는 전화번호입니다.");
+          return;
+        } else {
+          alert("Unknown error. ㅋㅋ");
+          return;
+        }
       }
       navigation.navigate("CodeInput" as any, {
         username: formattedPhone,
         name: name,
         nick: nick,
-        password: password,
+        password: newPw,
       });
     };
 

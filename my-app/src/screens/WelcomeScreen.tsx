@@ -6,13 +6,14 @@ import { useUserContext } from "../hooks/UserContext";
 
 function WelcomeScreen() {
   const navigation = useNavigation();
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
 
-  console.log("우" + user.username);
+  console.log("유저정보" + user.username);
 
   const goSignOut = async () => {
     try {
       await Auth.signOut();
+      setUser(null);
     } catch (error) {
       console.log("error signing out: ", error);
     }

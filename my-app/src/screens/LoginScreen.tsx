@@ -15,14 +15,15 @@ import { useNavigation } from "@react-navigation/core";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
 import { useUserContext } from "../hooks/UserContext";
-import CryptoJS from "crypto-js";
+import { SHA256 } from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
 
-function getHashedPassword(pw) {
-  let random = CryptoJS.lib.WordArray.random(128 / pw.length);
-  return CryptoJS.PBKDF2(pw, random, {
-    keySize: 256 / 32,
-  }).toString();
-}
+// function getHashedPassword(pw) {
+//   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
+//   return CryptoJS.PBKDF2(pw, random, {
+//     keySize: 256 / 32,
+//   }).toString();
+// }
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -30,7 +31,10 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
 
+  const hashDigest = SHA256("1234" + password);
+
   const { setUser } = useUserContext();
+
   const goHome = () => {
     navigation.navigate("HomeTab" as any);
   };
@@ -42,12 +46,13 @@ const LoginScreen = () => {
     return result;
   };
 
+  const newPw = Base64.stringify(hashDigest);
+
   const SignIn = async () => {
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
-    const newPW = getHashedPassword(password);
     const SignInEmail = async () => {
       try {
-        const user = await Auth.signIn(username, newPW);
+        const user = await Auth.signIn(username, newPw);
         const UserInfo = {
           username: user.attributes.phone_number,
           name: user.attributes.name,
