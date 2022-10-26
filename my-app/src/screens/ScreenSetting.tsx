@@ -15,7 +15,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionic from "react-native-vector-icons/Ionicons";
 import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
-
+// import useUserContext from "../hooks/useUserContext";
+import { Auth } from "aws-amplify";
+import { DataStore } from 'aws-amplify';
 
 const navbars = [
   {
@@ -94,7 +96,17 @@ export default function ScreenSetting({ navigation, route }) {
   const [text, onChangeText] = useState("");
   const [ModalVisible, setModalVisible] = useState(false);
   const [ModalVisible2, setModalVisible2] = useState(false);
+  const [ModalVisible3, setModalVisible3] = useState(false);
 
+  // const [user, setUser] = useUserContext();
+  const signOut = async () => {
+    try {
+      await Auth.signOut({ global: true });
+      // setUser(null);
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }; 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.menutextbox}>
@@ -208,8 +220,13 @@ export default function ScreenSetting({ navigation, route }) {
         <Pressable onPress={() =>setModalVisible2(true)}>
         <Text style={styles.Pressabletext}>계정 추가</Text>
         </Pressable>
+        <Pressable
+        onPress={() => setModalVisible3(true)}
+        >
         <Text style={styles.Pressabletext}>로그아웃</Text>
+        </Pressable>
       </View>
+
       <Modal 
           animationType="slide" 
           visible={ModalVisible2}
@@ -232,6 +249,27 @@ export default function ScreenSetting({ navigation, route }) {
           </View>
         </View>
       </Modal>
+
+    <Modal
+        animationType="fade"
+        visible={ModalVisible3}
+        transparent={true}>
+    <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible2(false)}/>
+    <View style={{backgroundColor:"blue",justifyContent:"center", alignItems:"center", height:"30%", width:"30%",borderRadius:20}}>
+      <View>
+        <Text style={{color:"#FFFAFA", fontWeight:"bold",fontSize:20,justifyContent:"center"}}>LINKER에서 로그아웃하시겠어요?</Text>  
+      </View>
+      <Pressable
+        onPress={signOut}
+        style={{justifyContent:"center"}}
+        >
+        <Text style={{color:"#013ADF"}}>로그아웃</Text>
+      </Pressable>
+      <View>
+        <Text style={{color:"#FFFAFA",justifyContent:"center"}}>취소</Text>
+      </View>
+    </View>
+    </Modal>
     </ScrollView>
   );
 }
