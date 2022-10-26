@@ -16,12 +16,12 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import EntryIcon from "react-native-vector-icons/Entypo";
 
-import PostAndReels from "../components/PostAndReels";
+import PostAndReels from "../components/search/PostAndReels";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAnimationValue } from "../hooks/useAnimationValue";
 import { useStyle } from "../hooks/useStyle";
 import { interpolate } from "../utils/interpolate";
-import SearchProfile from "../components/SearchProfile";
+import SearchProfile from "../components/search/SearchProfile";
 import { TPost, TPostAndReels, TReel } from "../global";
 
 //================================================================================================

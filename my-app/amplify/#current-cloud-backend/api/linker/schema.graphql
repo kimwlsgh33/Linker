@@ -1,5 +1,6 @@
 type Story @model @auth(rules: [{allow: public}]) {
   id: ID!
+  show: [ID!]
   imageUrl: [String!]!
   userID: ID! @index(name: "byUser")
 }

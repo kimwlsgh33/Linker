@@ -27,7 +27,10 @@ const awsmobile = {
     "aws_appsync_authenticationType": "API_KEY",
     "aws_appsync_apiKey": "da2-oyf3gn4mvjegncssywryhfhol4",
     "aws_user_files_s3_bucket": "linker-storage-480f1d79114653-staging",
-    "aws_user_files_s3_bucket_region": "ap-northeast-2"
+    "aws_user_files_s3_bucket_region": "ap-northeast-2",
+    "Analytics": {
+        "disabled": true
+    }
 };
 
 

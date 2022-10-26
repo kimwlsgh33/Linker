@@ -26,6 +26,7 @@ type UserMetaData = {
 
 export declare class Story {
   readonly id: string;
+  readonly show?: string[] | null;
   readonly imageUrl: string[];
   readonly userID: string;
   readonly createdAt?: string | null;

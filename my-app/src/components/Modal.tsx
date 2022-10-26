@@ -45,3 +45,5 @@ export function Modal({
     </View>
   );
 }
+
+export default Modal;

@@ -1,94 +1,77 @@
+// React Basic
 import React from "react";
+// React Navigation
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
+// navigation
+import OuterHomeTab from "./OuterHomeTab";
+import ProfileTopTab from "./ProfileTopTab";
+import FollowTab from "../components/profileComponents/FollowTab";
+// 기타
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import DetailScreen from "../screens/DetailScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import ScreenSetting from "../screens/ScreenSetting";
+// Screens
+import ScreenSetting from "../screens/setting/ScreenSetting";
+import PostScreen from "../screens/home/PostScreen";
+import StoryScreen from "../screens/home/StoryScreen";
+import SignUp from "../screens/signUp/SignUp";
+import LoginScreen from "../screens/signIn/LoginScreen";
+import EditProfile from "../components/profileComponents//EditProfile";
+import DiscoverScreen from "../screens/search/DiscoverScreen";
+import TOSScreen from "../screens/signUp/TOSScreen";
+import CreateNameScreen from "../screens/signUp/CreateNameScreen";
+import NameConfirm from "../screens/signUp/NameConfirm";
+import BirthdayScreen from "../screens/signUp/BirthdayScreen";
+import CompleteNScreen from "../screens/signUp/CompleteNScreen";
+import LoginEr from "../screens/signUp/LoginEr";
+import CodeCheck from "../screens/signUp/CodeCheck";
+import CodeInput from "../screens/signUp/CodeInput";
+import PwRe from "../screens/signUp/PwRe";
+import AddUser2 from "../screens/setting/AddUser2";
+import Bells2 from "../screens/setting/Bells2";
+import Lock2 from "../screens/setting/Lock2";
+import Safety2 from "../screens/setting/Safety2";
+import Thema2 from "../screens/setting/Thema2";
+import User2 from "../screens/setting/User2";
+import PersonalData from "../screens/setting/PersonalData";
+import CommentScreen from "../screens/home/CommentScreen";
+import TestModal from "../screens/test/screens/TestModal";
+import Test from "../screens/test/screens/TestAnim";
 import HomeTab from "./HomeTab";
-import PostScreen from "../screens/PostScreen";
-import StoryScreen from "../screens/StoryScreen";
-import SignUp from "../screens/SignUp";
-import LoginScreen from "../screens/LoginScreen";
-import EditProfile from "../components/profileComponents/EditProfile";
-import ProfileTopTab from "./ProfileTopTab";
-import FollowTab from "../components/profileComponents/FollowTab";
-import DiscoverScreen from "../screens/DiscoverScreen";
 import HeaderBar from "../components/HeaderBar";
-import TOSScreen from "../screens/TOSScreen";
-import CreateNameScreen from "../screens/CreateNameScreen";
-import NameConfirm from "../screens/NameConfirm";
-import BirthdayScreen from "../screens/BirthdayScreen";
-import CompleteNScreen from "../screens/CompleteNScreen";
-import LoginEr from "../screens/LoginEr";
-import CodeCheck from "../screens/CodeCheck";
-import CodeInput from "../screens/CodeInput";
-import PwRe from "../screens/PwRe";
 import Icon from "react-native-vector-icons/AntDesign";
-import AddUser2 from "../screens/AddUser2";
-import Bells2 from "../screens/Bells2";
-import Lock2 from "../screens/Lock2";
-import Safety2 from "../screens/Safety2";
-import Thema2 from "../screens/Thema2";
-import User2 from "../screens/User2";
-import PersonalData from "../screens/PersonalData";
-import CommentScreen from "../screens/CommentScreen";
-import ProfileModal4 from "../screens/ProfileModal4";
 import Modal2 from "../components/profileComponents/Modal2";
 import Modal3 from "../components/profileComponents/Modal3";
 import Modal from "../components/profileComponents/Modal";
-import Modal4 from "../components/profileComponents/Modal4";
-const Stack = createNativeStackNavigator();
+// navigation header 옵션 설정 파일
+import { headerOptions } from "./navHeaderOptions";
+import TestStack from "../screens/test/TestStack";
+import SearchResultScreen from "../screens/search/SearchResultScreen";
 
-const screenOptions = ({ navigation, route }) => {
-  let title;
-  if (route.name === "Welcome") {
-    title = "Welcome";
-  } else if (route.name === "Detail") {
-    title = "Detail";
-  } else if (route.name === "Post") {
-    title = "New Post";
-  } else if (route.name === "Story") {
-    title = "Story";
-  } else if (route.name === "SignUp") {
-    title = "SignUp";
-  } else if (route.name === "Discover") {
-    title = "탐색 탭";
-  } else if (route.name === "FollowTab") {
-    title = "Follow";
-  }
-
-  return {
-    header: () => (
-      <HeaderBar title={title} leftIconPressed={navigation.goBack} />
-    ),
-  };
-};
+const Stack = createStackNavigator();
 
 function RootStack() {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator
+      screenOptions={{ ...headerOptions }}
+      initialRouteName="OuterHomeTab"
+    >
       <Stack.Group>
         <Stack.Screen
-          name="HomeTab"
-          component={HomeTab}
+          name="OuterHomeTab"
+          component={OuterHomeTab}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ProfileModal4"
-          component={ProfileModal4}
-          options={{
-            presentation: "transparentModal",
-            animation: "slide_from_bottom",
-          }}
         />
         <Stack.Screen
           name="Modal3"
           component={Modal3}
           options={{
             presentation: "transparentModal",
-            animation: "slide_from_bottom",
+            // animation: "slide_from_bottom",
             headerShown: false,
           }}
         />
@@ -97,7 +80,7 @@ function RootStack() {
           component={Modal2}
           options={{
             presentation: "transparentModal",
-            animation: "slide_from_bottom",
+            // animation: "slide_from_bottom",
             headerShown: false,
           }}
         />
@@ -106,21 +89,10 @@ function RootStack() {
           component={Modal}
           options={{
             presentation: "transparentModal",
-            animation: "slide_from_bottom",
+            // animation: "slide_from_bottom",
             headerShown: false,
           }}
         />
-        <Stack.Screen
-          name="Modal4"
-          component={Modal4}
-          options={{
-            presentation: "transparentModal",
-            animation: "slide_from_bottom",
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Details" component={DetailScreen} />
         <Stack.Screen name="Post" component={PostScreen} />
         <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
@@ -128,35 +100,49 @@ function RootStack() {
         <Stack.Screen name="FollowTab" component={FollowTab} />
       </Stack.Group>
 
+      <Stack.Group>
+        <Stack.Screen name="Post" component={PostScreen} />
+        <Stack.Screen name="Comment" component={CommentScreen} />
+        <Stack.Screen name="Discover" component={DiscoverScreen} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
+      </Stack.Group>
+
       <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        {/*  */}
+        <Stack.Screen name="TestStack" component={TestStack} />
+        {/*  */}
+        <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="LoginEr" component={LoginEr} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="CodeCheck" component={CodeCheck} />
         <Stack.Screen name="CodeInput" component={CodeInput} />
-        <Stack.Screen name="PwRe" component={PwRe} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="TOS" component={TOSScreen} />
-        <Stack.Screen name="CreateName" component={CreateNameScreen} />
-        <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
+        <Stack.Screen name="PwRe" component={PwRe} />
+        <Stack.Screen name="CreateName" component={CreateNameScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
         <Stack.Screen name="Comment" component={CommentScreen} />
+        <Stack.Screen name="NameConfirm" component={NameConfirm} />
+        <Stack.Screen name="TOS" component={TOSScreen} />
+        <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="SearchResult" component={SearchResultScreen} />
       </Stack.Group>
+
       <Stack.Group>
         <Stack.Screen
-          name="Setting"
-          component={ScreenSetting}
+          name="TestModal"
+          component={TestModal}
           options={{
-            title: "설정",
-            headerTitleAlign: "center",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
+            presentation: "transparentModal",
+            cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
           }}
         />
 

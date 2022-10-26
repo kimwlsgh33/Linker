@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import { View, ScrollView, Image, Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
@@ -27,15 +27,7 @@ const ProfileTopTab = ({user}) => {
   for (let index = 0; index < numberOfSquare; index++) {
     squares.push(
       <View key={index}>
-        <View
-        // style={{
-        //   width: 130,
-        //   height: 130,
-        //   marginVertical: 1,
-        //   backgroundColor: "black",
-        //   opacity: 0.1,
-        // }}
-        >
+        <View>
           <Pressable
             onPress={() => {
               navigation.navigate("Story", {

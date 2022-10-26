@@ -1,16 +1,19 @@
-import React, { createContext, useContext } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { createContext } from "react";
 import RootStack from "./src/navigation/RootStack";
-import { UserContextProvider } from "./src/hooks/UserContext";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UserContextProvider } from "./src/context/UserContext";
 
 export const UserDispatch = createContext(null);
 
-export default function App() {
+function App() {
   return (
-    <NavigationContainer>
-      <UserContextProvider>
-      <RootStack />
-      </UserContextProvider>
-    </NavigationContainer>
+      <SafeAreaProvider>
+        <UserContextProvider>
+          <RootStack />
+        </UserContextProvider>
+      </SafeAreaProvider>
+
   );
 }
+
+export default App;

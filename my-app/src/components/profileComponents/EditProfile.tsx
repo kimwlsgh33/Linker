@@ -16,7 +16,6 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import events from "../../libs/eventEmitter";
 import { launchImageLibrary } from "react-native-image-picker";
-// import EditImage from "./EditImage";
 
 const EditProfile = ({ route, navigation }) => {
   const { accountName, name, profileImage } = route?.params || {};
@@ -121,7 +120,6 @@ const EditProfile = ({ route, navigation }) => {
               />
             </Pressable>
           </View>
-          {/* <EditImage route={profileImage} /> */}
           <View style={{ padding: 20, alignItems: "center" }}>
             <Image
               source={
