@@ -62,13 +62,25 @@ const ProfileScreen = () => {
   ];
   const [user, setUser] = useState(storyInfo);
   const userInfo = {
-    accountName: "userId33",
-    name: "user_name",
-    post: 123,
-    follower: 456,
-    following: 789,
-    profileImage: null,
-  };
+    id: "27391827319872319283",
+    email: "abkorc33@gmail.com",
+    mobile: "010-2222-2222",
+    name: "name",
+    nickname: "name",
+    username: "abkorc33",
+    password: "123456789a!",
+    birthday: null,
+    profpic: null,
+    following: [],
+    followers: [],
+    favorite: null,
+    Posts: [],
+    BookMark: [],
+    Stories: [],
+    likePosts: [],
+    likeStories: [],
+    Comments: [],
+  } as User;
   const [data, setData] = useState(userInfo);
   // let models;
   // const [data, setData] = useState([]);
@@ -89,30 +101,30 @@ const ProfileScreen = () => {
   // }, []);
 
   const onEdit = ({
-    accountName,
+    username,
     name,
-    profileImage,
+    profpic,
   }: {
-    accountName: string;
+    username: string;
     name: string;
-    profileImage: string;
+    profpic: string;
   }) => {
     console.log("Edit Profile");
     setData((data) => {
       return {
         ...data,
-        accountName: accountName,
+        username: username,
         name: name,
-        profileImage: profileImage,
+        profpic: profpic,
       };
     });
   };
 
-  const onChange = ({ profileImage }: { profileImage: string }) => {
+  const onChange = ({ profpic }: { profpic: string }) => {
     setData((data) => {
       return {
         ...data,
-        profileImage: profileImage,
+        profpic: profpic,
       };
     });
   };

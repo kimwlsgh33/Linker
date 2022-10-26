@@ -69,12 +69,12 @@ function Modal({ navigation, route }) {
               <Image
                 style={styles.modalIcon1}
                 source={
-                  data.profileImage
-                    ? { uri: data.profileImage }
+                  data.profpic
+                    ? { uri: data.profpic }
                     : require("../../../assets/images/user.png")
                 }
               />
-              <Text style={styles.modalText}>{data.accountName}</Text>
+              <Text style={styles.modalText}>{data.username}</Text>
               <View style={{ marginLeft: "60%" }}>
                 <RadioButton
                   value="first"

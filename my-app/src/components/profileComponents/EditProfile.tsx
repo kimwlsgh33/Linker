@@ -18,23 +18,23 @@ import events from "../../libs/eventEmitter";
 import { launchImageLibrary } from "react-native-image-picker";
 
 const EditProfile = ({ route, navigation }) => {
-  const { accountName, name, profileImage } = route?.params || {};
+  const { username, name, profpic } = route?.params || {};
   const [visible, setVisible] = useState(false);
   const [disable, setDisable] = useState(true);
 
   const TostMessage = () => {
     ToastAndroid.show("Edited Sucessfully !", ToastAndroid.SHORT);
   };
-  const [edit, setEdit] = useState(""); // accountName이 저장되는 상태
+  const [edit, setEdit] = useState(""); // username 저장되는 상태
   const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
-  const [image, setImage] = useState(profileImage); // image가 저장되는 상태
+  const [image, setImage] = useState(profpic); // image가 저장되는 상태
 
   // 저장 버튼 누르면
   const onEdit = () => {
     events.emit("saveEdit", {
-      accountName: edit,
+      username: edit,
       name: edit2,
-      profileImage: image,
+      profpic: image,
     });
   };
 
@@ -59,7 +59,7 @@ const EditProfile = ({ route, navigation }) => {
 
   const onDelete = () => {
     events.emit("deleteImage", {
-      profileImage: image,
+      profpic: image,
     });
   };
 
@@ -199,7 +199,7 @@ const EditProfile = ({ route, navigation }) => {
               </View>
               <TextInput
                 maxLength={10}
-                placeholder={accountName}
+                placeholder={username}
                 value={edit}
                 onChangeText={(text) => {
                   setEdit(text);

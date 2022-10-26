@@ -20,7 +20,7 @@ export const ProfileHeader = ({ data, user }) => {
           ]}
         >
           <Text style={styles.text}>
-            {data.accountName}
+            {data.username}
             <Feather name="chevron-down" style={{ fontSize: 16 }} />
           </Text>
         </Pressable>

@@ -33,7 +33,7 @@ import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
-import CommentScreen from "../screens/home/CommentScreen";
+
 import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
 import Modal from "../components/profileComponents/Modal";
@@ -49,7 +49,6 @@ const Stack = createStackNavigator();
 
 function RootStack() {
   return (
-    
     <Stack.Navigator
       screenOptions={{ ...headerOptions }}
       initialRouteName="OuterHomeTab"
@@ -120,7 +119,7 @@ function RootStack() {
         <Stack.Screen name="PwRe" component={PwRe} />
         <Stack.Screen name="CreateName" component={CreateNameScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
-        <Stack.Screen name="Comment" component={CommentScreen} />
+
         <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="TOS" component={TOSScreen} />
         <Stack.Screen name="Test" component={Test} />
@@ -138,7 +137,6 @@ function RootStack() {
         />
       </Stack.Group>
     </Stack.Navigator>
-
   );
 }
 

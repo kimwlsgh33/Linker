@@ -44,8 +44,8 @@ export const ProfileBody = ({ data, user }) => {
   const goToEditProfile = () =>
     navigation.navigate("EditProfile", {
       name: data.name,
-      accountName: data.accountName,
-      profileImage: data.profileImage,
+      username: data.username,
+      profpic: data.profpic,
     });
 
   let models;
@@ -73,8 +73,8 @@ export const ProfileBody = ({ data, user }) => {
             >
               <Image
                 source={
-                  data.profileImage
-                    ? { uri: data.profileImage }
+                  data.profpic
+                    ? { uri: data.profpic }
                     : require("../../../assets/images/user.png")
                 }
                 style={styles.profileStyle}
@@ -94,7 +94,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.post}
+                {data.Posts}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -110,7 +110,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.follower}
+                {data.followers}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>

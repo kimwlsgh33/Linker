@@ -134,9 +134,8 @@ export const ProfileUserBody = ({ data, user }) => {
           </Pressable>
         </View>
         <View style={styles.profileButton}>
-          <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
+          <View style={{ borderRadius: 5, overflow: "hidden", width: "50%" }}>
             <Pressable
-              onPress={goToEditProfile}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -154,7 +153,7 @@ export const ProfileUserBody = ({ data, user }) => {
               </View>
             </Pressable>
           </View>
-          <View style={{ borderRadius: 5, overflow: "hidden", width: "80%" }}>
+          <View style={{ borderRadius: 5, overflow: "hidden", width: "50%" }}>
             <Pressable
               style={({ pressed }) => [
                 Platform.OS === "ios" &&

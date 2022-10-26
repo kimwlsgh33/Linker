@@ -1,26 +1,27 @@
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
-        "linker": {
+        "TheLinker": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
-        }
-    },
-    "api": {
-        "linker": {
-            "GraphQLAPIKeyOutput": "string",
-            "GraphQLAPIIdOutput": "string",
-            "GraphQLAPIEndpointOutput": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string"
         }
     },
     "storage": {
-        "s3linkerstorage480f1d79": {
+        "s3thelinkerstorage3f902eecthelinker": {
             "BucketName": "string",
             "Region": "string"
+        }
+    },
+    "api": {
+        "TheLinker": {
+            "GraphQLAPIKeyOutput": "string",
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
         }
     }
 }
