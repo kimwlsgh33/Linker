@@ -1,12 +1,9 @@
 import React, { useEffect } from "react";
 import HomeTab from "./HomeTab";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import Test from "../screens/test/screens/TestAnim";
 import { useNavigationState } from "@react-navigation/native";
-import UploadTab from "./UploadTab";
-import TopTabBar from "./tabBar/TopTabBar";
-import { RootStackScreenProps } from "./types";
-import Upload from "../screens/Upload";
+import UploadPost from "../screens/UploadPost";
+import UploadStory from "../screens/UploadStory";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,8 +23,9 @@ function OuterHomeTab() {
         swipeEnabled: currentIndex ? false : true,
       }}
     >
-      <Tab.Screen name="Upload" component={Upload} />
+      <Tab.Screen name="UploadPost" component={UploadPost} />
       <Tab.Screen name="HomeTab" component={HomeTab} />
+      <Tab.Screen name="UploadStory" component={UploadStory} />
       {/* <Tab.Screen name="Test" component={Test} /> */}
     </Tab.Navigator>
   );

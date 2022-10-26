@@ -23,10 +23,11 @@ import InputBar from "../components/upload/InputBar";
 import { useUserContext } from "../context/UserContext";
 import { DataStore } from "aws-amplify";
 import { Post, Tag } from "../models";
+import { Story } from "../models";
 
 const { width } = Dimensions.get("window");
 
-function Upload({ navigation }) {
+function UploadStory({ navigation }) {
   const { me } = useUserContext();
   const [asset, setAsset] = useState<Asset | null>(null);
 
@@ -159,8 +160,8 @@ function Upload({ navigation }) {
       }
 
       await DataStore.save(
-        new Post({
-          imageUri: asset.uri,
+        new Story({
+          imageUrl: [asset.uri],
           link,
           text,
           tagID: exists[0].id,
@@ -187,7 +188,7 @@ function Upload({ navigation }) {
           <Feather name="x" size={24} />
         </TouchableOpacity>
         <View style={[styles.sameWidth, { alignItems: "center" }]}>
-          <Text style={styles.title}>새 게시물</Text>
+          <Text style={styles.title}>새 스토리</Text>
         </View>
         <TouchableOpacity
           onPress={onSubmit}
@@ -384,4 +385,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Upload;
+export default UploadStory;
