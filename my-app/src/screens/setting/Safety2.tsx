@@ -16,7 +16,7 @@ import Ionic from "react-native-vector-icons/ionicons";
 import TextAndIcon from "../../components/TextAndIcon";
 import IconLeft from "../../components/IconLeft";
 import TextStyle from "../../components/TextStyle";
-import ScreenSetting from "../ScreenSetting";
+import ScreenSetting from "./ScreenSetting";
 // import IonicLeft from "../components/IonicLeft"
 
 const Stack = createNativeStackNavigator();

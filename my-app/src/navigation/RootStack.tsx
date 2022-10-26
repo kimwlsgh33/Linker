@@ -5,18 +5,18 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
-// Screens
-import DetailScreen from "../screens/DetailScreen";
-import ScreenSetting from "../screens/ScreenSetting";
-import HomeTab from "./HomeTab";
-import PostScreen from "../screens/PostScreen";
-import StoryScreen from "../screens/StoryScreen";
-import SignUp from "../screens/signUp/SignUp";
-import LoginScreen from "../screens/LoginScreen";
-import EditProfile from "../screens/EditProfile";
+// navigation
+import OuterHomeTab from "./OuterHomeTab";
 import ProfileTopTab from "./ProfileTopTab";
 import FollowTab from "../components/FollowTab";
-import DiscoverScreen from "../screens/DiscoverScreen";
+// Screens
+import ScreenSetting from "../screens/setting/ScreenSetting";
+import PostScreen from "../screens/home/PostScreen";
+import StoryScreen from "../screens/home/StoryScreen";
+import SignUp from "../screens/signUp/SignUp";
+import LoginScreen from "../screens/signIn/LoginScreen";
+import EditProfile from "../screens/profile/EditProfile";
+import DiscoverScreen from "../screens/search/DiscoverScreen";
 import TOSScreen from "../screens/signUp/TOSScreen";
 import CreateNameScreen from "../screens/signUp/CreateNameScreen";
 import NameConfirm from "../screens/signUp/NameConfirm";
@@ -32,73 +32,37 @@ import Lock2 from "../screens/setting/Lock2";
 import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
-import PersonalData from "../screens/PersonalData";
-import UploadImageScreen from "../screens/UploadImageScreen";
-import CommentScreen from "../screens/CommentScreen";
+import PersonalData from "../screens/setting/PersonalData";
+import CommentScreen from "../screens/home/CommentScreen";
+import TestModal from "../screens/test/screens/TestModal";
+import Test from "../screens/test/screens/TestAnim";
 // navigation header 옵션 설정 파일
 import { headerOptions } from "./navHeaderOptions";
-import TestModal from "../screens/TestModal";
-// import { Animated } from "react-native";
+import TestStack from "../screens/test/TestStack";
+import SearchResultScreen from "../screens/search/SearchResultScreen";
 
 const Stack = createStackNavigator();
-
-// const forFade = ({ current }) => ({
-//   cardStyle: {
-//     opacity: current.progress,
-//   },
-// });
-
-// const forSlide = ({ current, next, inverted, layouts: { screen } }) => {
-//   const progress = Animated.add(
-//     current.progress.interpolate({
-//       inputRange: [0, 1],
-//       outputRange: [0, 1],
-//       extrapolate: "clamp",
-//     }),
-//     next
-//       ? next.progress.interpolate({
-//           inputRange: [0, 1],
-//           outputRange: [0, 1],
-//           extrapolate: "clamp",
-//         })
-//       : 0
-//   );
-
-//   return {
-//     cardStyle: {
-//       transform: [
-//         {
-//           translateX: Animated.multiply(
-//             progress.interpolate({
-//               inputRange: [0, 1, 2],
-//               outputRange: [
-//                 screen.width, // Focused, but offscreen in the beginning
-//                 0, // Fully focused
-//                 screen.width * -0.3, // Fully unfocused
-//               ],
-//               extrapolate: "clamp",
-//             }),
-//             inverted
-//           ),
-//         },
-//       ],
-//     },
-//   };
-// };
 
 function RootStack() {
   return (
     <Stack.Navigator
       screenOptions={{ ...headerOptions }}
-      initialRouteName="HomeTab"
+      initialRouteName="OuterHomeTab"
     >
       <Stack.Group>
-        <Stack.Screen name="Comment" component={CommentScreen} />
-        <Stack.Screen name="Details" component={DetailScreen} />
-        <Stack.Screen name="Post" component={PostScreen} />
-        <Stack.Screen name="Discover" component={DiscoverScreen} />
+        <Stack.Screen
+          name="OuterHomeTab"
+          component={OuterHomeTab}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
+      </Stack.Group>
+
+      <Stack.Group>
+        <Stack.Screen name="Post" component={PostScreen} />
+        <Stack.Screen name="Comment" component={CommentScreen} />
+        <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="Setting" component={ScreenSetting} />
         <Stack.Screen name="AddUser2" component={AddUser2} />
         <Stack.Screen name="Bells2" component={Bells2} />
@@ -110,7 +74,9 @@ function RootStack() {
       </Stack.Group>
 
       <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="HomeTab" component={HomeTab} />
+        {/*  */}
+        <Stack.Screen name="TestStack" component={TestStack} />
+        {/*  */}
         <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Login" component={LoginScreen} />
@@ -124,15 +90,11 @@ function RootStack() {
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
         <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="TOS" component={TOSScreen} />
-        <Stack.Screen
-          name="UploadImage"
-          component={UploadImageScreen}
-          options={{
-            presentation: "card",
-            gestureDirection: "horizontal-inverted",
-            gestureEnabled: true,
-          }}
-        />
+        <Stack.Screen name="Test" component={Test} />
+        <Stack.Screen name="SearchResult" component={SearchResultScreen} />
+      </Stack.Group>
+
+      <Stack.Group>
         <Stack.Screen
           name="TestModal"
           component={TestModal}

@@ -1,13 +1,16 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import UserBar from "../../components/UserBar";
+import UserBar from "../../components/search/UserBar";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { HomeTabScreenProps } from "../../navigation/types";
+import { User } from "../../models";
 
 function SearchResult({ searchText, users }) {
   const navigation =
     useNavigation<HomeTabScreenProps<"Search">["navigation"]>();
+
+  const showUsers: User[] = users.length > 5 ? users.slice(0, 5) : users;
 
   return (
     <>
@@ -31,17 +34,27 @@ function SearchResult({ searchText, users }) {
         <Text>{searchText}</Text>
       </Pressable>
 
-      {users.length !== 0 &&
-        users.map((user) => <UserBar key={user.id} user={user} />)}
-      {/* <UserBar />
-    // <UserBar isOutline /> */}
-
-      <Pressable
-        onPress={() => navigation.navigate("TestModal")}
-        style={({ pressed }) => [styles.resultAll, pressed && { opacity: 0.5 }]}
-      >
-        <Text style={styles.resultAllText}>결과 모두 보기</Text>
-      </Pressable>
+      {showUsers.length !== 0 ? (
+        <View>
+          {showUsers.map((user) => (
+            <UserBar key={user.id} user={user} />
+          ))}
+          <Pressable
+            onPress={() => navigation.navigate("SearchResult")}
+            style={({ pressed }) => [
+              styles.resultAll,
+              pressed && { opacity: 0.5 },
+            ]}
+          >
+            <Text style={styles.resultAllText}>결과 모두 보기</Text>
+          </Pressable>
+        </View>
+      ) : (
+        <View style={{ alignItems: "center" }}>
+          <Text>유저가 존재하지 않습니다.</Text>
+        </View>
+      )}
+      {/* <UserBar isOutline /> */}
     </>
   );
 }

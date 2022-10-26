@@ -15,75 +15,22 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import events from "../../libs/eventEmitter";
 import Modal from "../Modal";
-import ModalScreen from "../modalScreen/ModalScreen";
-import ShareModal from "../modalScreen/ShareModal";
-import LinkModal from "../modalScreen/LinkModal";
-import QrModal from "../modalScreen/QrModal";
-import FavoirteModal from "../modalScreen/FavoriteModal";
-import FollowModal from "../modalScreen/FollowModal";
-import { TPost1 } from "../../global";
-import { User } from "../../models";
-
-export const postInfo: TPost1[] = [
-  // postInfo라는 배열에 객체(데이터)를 넣어줌.
-  {
-    // postInfo[0]
-    id: 1_8371923719238173,
-    userId: "nieoodie",
-    postPersonImage: require("../../../assets/images/jinho.jpeg"),
-    postImage: require("../../../assets/images/pizza.jpeg"),
-    likes: 0,
-    isLiked: false,
-    bookMark: false,
-    comment: "핡",
-    recommentCount: 0, //  이 친구는 recomment배열의 길이로 바꾸는게 깔끔할듯.
-    recomment: [],
-    favorite: false,
-    followList: [],
-  },
-  {
-    id: 2_192312937123871,
-    userId: "kwonwoo",
-    postPersonImage: require("../../../assets/images/woo.jpeg"),
-    postImage: require("../../../assets/images/kitty.jpeg"),
-    likes: 0,
-    isLiked: false,
-    bookMark: false,
-    comment: "웅앵",
-    recommentCount: 0,
-    recomment: [],
-    favorite: false,
-    followList: [],
-  },
-  {
-    id: 3_19248589574839,
-    userId: "hyunsu",
-    postPersonImage: require("../../../assets/images/hyunsu.jpeg"),
-    postImage: require("../../../assets/images/woo.jpeg"),
-    likes: 0,
-    isLiked: false,
-    bookMark: false,
-    comment: "흐규",
-    recommentCount: 0,
-    recomment: [],
-    favorite: false,
-    followList: [],
-  },
-  {
-    id: 4_38574857389,
-    userId: "jongin",
-    postPersonImage: require("../../../assets/images/jongin.jpeg"),
-    postImage: require("../../../assets/images/kitty.jpeg"),
-    likes: 0,
-    isLiked: false,
-    bookMark: false,
-    comment: "헐랭",
-    recommentCount: 0,
-    recomment: [],
-    favorite: false,
-    followList: [],
-  },
-];
+import ModalScreen from "../modal/ModalScreen";
+import ShareModal from "../modal/ShareModal";
+import LinkModal from "../modal/LinkModal";
+import QrModal from "../modal/QrModal";
+import FavoirteModal from "../modal/FavoriteModal";
+import FollowModal from "../modal/FollowModal";
+import { useAppDispatch, useAppSelector } from "../../store";
+import {
+  addPost,
+  bookMarkPost,
+  deleteAllPosts,
+  deletePost,
+  followPost,
+  favoritePost,
+  addComment,
+} from "../../store/slices";
 
 const Post = () => {
   const navigation = useNavigation(); // 네비게이션을 쓰기 위한 두가지 방법 중 하나 hook
@@ -95,8 +42,28 @@ const Post = () => {
     require("../../../assets/images/jinho.jpeg")
   ); // 내 프로필 사진
 
-  const [datas, setData] = useState(postInfo); // useState를 이용해 data라는 state를 만들어줌. postInfo를 넣어줌.
+  // const [datas, setData] = useState(postInfo); // useState를 이용해 data라는 state를 만들어줌. postInfo를 넣어줌.
+  //=======================================================
+  //=======================================================
+  //=======================================================
+  const datas = useAppSelector((state) => state.posts);
+  const dispatch = useAppDispatch();
 
+  const addPostFunc = () => {
+    dispatch(addPost);
+  };
+
+  const deletePostFunc = () => {
+    dispatch(deletePost);
+  };
+
+  const deleteAllPostsFunc = () => {
+    dispatch(deleteAllPosts);
+  };
+
+  //=======================================================
+  //=======================================================
+  //=======================================================
   const [modal, setModal] = useState<boolean>(false);
   const [shareModal, setShareModal] = useState<boolean>(false);
   const [linkModal, setLinkModal] = useState<boolean>(false);
@@ -106,6 +73,30 @@ const Post = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [follow, setFollow] = useState<boolean>(false);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
+
+  const bookMarkPressed = useCallback(
+    // 위와 같은 방식으로 북마크를 눌렀을 때의 함수를 만들어줌^^
+    (id) => {
+      dispatch(bookMarkPost(id));
+      setBookMark((prev) => !prev);
+    },
+    []
+  );
+
+  const favoriteItem = (id) => {
+    dispatch(favoritePost(id));
+    setFavorite((prev) => !prev);
+  };
+
+  const addRecomment = ({
+    recomment,
+    id,
+    recomment_id,
+  }: {
+    recomment: string;
+    id: any;
+    recomment_id: any;
+  }) => {};
 
   const likePressed = useCallback(
     // likePressed라는 함수를 usecallback을 이용해 만들어줌.
@@ -127,89 +118,6 @@ const Post = () => {
     },
     [datas, setData] // data와 setData를 의존성 배열에 넣어줌.
   );
-
-  const followPressed = useCallback((userId) => {
-    setData((datas) =>
-      datas.map((data) => {
-        if (data.userId === userId) {
-          return {
-            ...data,
-            followList: data.followList.includes(userId)
-              ? data.followList.filter((ids) => ids !== userId)
-              : [...data.followList, userId],
-          };
-        }
-
-        return data;
-      })
-    );
-    setIsFollowed((prev) => !prev);
-  }, []);
-
-  const bookMarkPressed = useCallback(
-    // 위와 같은 방식으로 북마크를 눌렀을 때의 함수를 만들어줌^^
-    (id) => {
-      setData((datas) =>
-        datas.map((data) => {
-          if (data.id === id) {
-            return {
-              ...data,
-              bookMark: !data.bookMark,
-            };
-          }
-          return data;
-        })
-      );
-      setBookMark((prev) => !prev);
-    },
-    [datas, setData]
-  );
-
-  const favoriteItem = (id) => {
-    setData((datas) =>
-      datas.map((data) => {
-        if (data.id === id) {
-          return {
-            ...data,
-            favorite: !data.favorite,
-          };
-        }
-        return data;
-      })
-    );
-    setFavorite((prev) => !prev);
-  };
-
-  const addRecomment = ({
-    recomment,
-    id,
-    recomment_id,
-  }: {
-    recomment: string;
-    id: any;
-    recomment_id: any;
-  }) => {
-    setData((prev) =>
-      prev.map((data) => {
-        if (id === data.id) {
-          return {
-            ...data,
-            recomment: [
-              ...data.recomment,
-              {
-                id: recomment_id,
-                recomment,
-                recommentLike: false,
-                recommentLikeCount: 0,
-              },
-            ],
-            recommentCount: data.recommentCount + 1,
-          };
-        }
-        return data;
-      })
-    );
-  };
 
   const shareModalState = () => {
     setModal(false);
@@ -241,32 +149,32 @@ const Post = () => {
   }, [datas[0].followList]);
 
   const followState = (userId) => {
-    followPressed(userId);
+    dispatch(followPost(userId));
     setModal(false);
     setFollow(true);
   };
 
-  useEffect(() => {
-    events.addListener("saveRecomment", addRecomment);
-    events.addListener("saveRecommentLike", addRecommentLike);
-    events.addListener("shareModal", shareModalState);
-    events.addListener("linkModal", linkModalState);
-    events.addListener("save", save);
-    events.addListener("qrModal", qrModalState);
-    events.addListener("favorite", favoriteState);
-    events.addListener("follow", followState);
+  // useEffect(() => {
+  //   events.addListener("saveComment", dispatch(addComment({})));
+  //   events.addListener("saveCommentLike", addRecommentLike);
+  //   events.addListener("shareModal", shareModalState);
+  //   events.addListener("linkModal", linkModalState);
+  //   events.addListener("save", save);
+  //   events.addListener("qrModal", qrModalState);
+  //   events.addListener("favorite", favoriteState);
+  //   events.addListener("follow", followState);
 
-    return () => {
-      events.removeListener("saveRecomment");
-      events.removeListener("saveRecommentLike");
-      events.removeListener("shareModal");
-      events.removeListener("linkModal");
-      events.removeListener("save");
-      events.removeListener("qrModal");
-      events.removeListener("favorite");
-      events.removeListener("follow");
-    };
-  }, []);
+  //   return () => {
+  //     events.removeListener("saveComment");
+  //     events.removeListener("saveCommentLike");
+  //     events.removeListener("shareModal");
+  //     events.removeListener("linkModal");
+  //     events.removeListener("save");
+  //     events.removeListener("qrModal");
+  //     events.removeListener("favorite");
+  //     events.removeListener("follow");
+  //   };
+  // }, []);
 
   const addRecommentLike = ({
     id,
@@ -380,13 +288,13 @@ const Post = () => {
                 <Feather
                   onPress={() => {
                     navigation.navigate("Comment", {
-                      comment: data.comment,
-                      userId: data.userId,
-                      postPersonImage: data.postPersonImage,
-                      myId: myId,
-                      mypostPersonImage: mypostPersonImage,
+                      user: data.user,
                       id: data.id,
-                      recomment: data.recomment,
+                      text: data.text,
+                      // userId: data.userId,
+                      // postPersonImage: data.postPersonImage,
+                      // me: me, <==== context
+                      comment: data.comment,
                     });
                   }}
                   name="message-circle"

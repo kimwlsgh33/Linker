@@ -260,6 +260,8 @@ PODS:
   - React-jsinspector (0.69.6)
   - React-logger (0.69.6):
     - glog
+  - react-native-image-picker (4.10.0):
+    - React-Core
   - react-native-ionicons (4.6.5):
     - React
   - react-native-netinfo (9.3.5):
@@ -422,6 +424,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-ionicons (from `../node_modules/react-native-ionicons`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -527,6 +530,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-ionicons:
     :path: "../node_modules/react-native-ionicons"
   react-native-netinfo:
@@ -619,6 +624,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: c61b60de03b3474e5749b8a8fd8e6507630d62c4
   React-jsinspector: eaacb698c5af7a99131bc1933806372c20222dfd
   React-logger: ebb4d31bbbe4f1a8a1a9b658d7429210b8f68160
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-ionicons: 7ce04a8e61c6de2fc3b6798e8b9621b865cb18b1
   react-native-netinfo: 85b2a435c4d3705c08b0c42ff2d6ef6b9622ea0a
   react-native-pager-view: 3051346698a0ba0c4e13e40097cc11b00ee03cca

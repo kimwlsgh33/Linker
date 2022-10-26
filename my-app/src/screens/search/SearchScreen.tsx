@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 
-import PostAndReels from "../../components/PostAndReels";
+import PostAndReels from "../../components/search/PostAndReels";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // import SearchProfile from "../../components/SearchProfile";
@@ -9,6 +9,18 @@ import { TPost, TPostAndReels, TReel } from "../../global";
 // libs
 import NotFound from "../NotFound";
 import SearchBar from "./SearchBar";
+import Animated, {
+  Easing,
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import useToggle from "../../hooks/useToggle";
+import { DataStore } from "aws-amplify";
+import { Post } from "../../models";
+import SearchPost from "../../components/search/SearchPost";
 //========================
 
 /*
@@ -81,28 +93,28 @@ stories.forEach((item, idx)=> {
 // data sets & types
 //================================================================================================
 
-const postsArray: TPost[] = new Array(50).fill(0).map((_, i) => ({
-  id: `${i}_post`,
-  user_id: `user_id_${i}`,
-  images: new Array(3).fill(0).map((_, i) => ({
-    id: `${i}_image`,
-    uri: "https://picsum.photos/600",
-  })),
-  createdAt: "6 minutes ago",
-}));
+// const postsArray: TPost[] = new Array(50).fill(0).map((_, i) => ({
+//   id: `${i}_post`,
+//   user_id: `user_id_${i}`,
+//   images: new Array(3).fill(0).map((_, i) => ({
+//     id: `${i}_image`,
+//     uri: "https://picsum.photos/600",
+//   })),
+//   createdAt: "6 minutes ago",
+// }));
 
-const reelsArray: TReel[] = new Array(20).fill(0).map((_, i) => ({
-  id: `${i}_reel`,
-  type: "ril",
-  uri: "https://picsum.photos/600",
-  createdAt: "6 minutes ago",
-}));
+// const reelsArray: TReel[] = new Array(20).fill(0).map((_, i) => ({
+//   id: `${i}_reel`,
+//   type: "ril",
+//   uri: "https://picsum.photos/600",
+//   createdAt: "6 minutes ago",
+// }));
 
-const postAndReels: TPostAndReels[] = new Array(10).fill(0).map((_, i) => ({
-  id: `${i}_postAndReels`,
-  posts: postsArray.slice(i * 4, (i + 1) * 4),
-  reels: reelsArray.slice(i, i + 1),
-}));
+// const postAndReels: TPostAndReels[] = new Array(10).fill(0).map((_, i) => ({
+//   id: `${i}_postAndReels`,
+//   posts: postsArray.slice(i * 4, (i + 1) * 4),
+//   reels: reelsArray.slice(i, i + 1),
+// }));
 //================================================================================================
 // animated Pressable 만들기
 
@@ -110,29 +122,49 @@ const postAndReels: TPostAndReels[] = new Array(10).fill(0).map((_, i) => ({
 
 function SearchScreen() {
   // 검색창 피드 데이터
-  const [paR, setPaR] = useState<TPostAndReels[]>(postAndReels);
+  const [paR, setPaR] = useState<any>([]);
 
-  // 만약에 포스트와 릴스가 없으면, 내용이 없다는 문구를 보여준다.
-  if (paR.length === 0) {
-    return <NotFound />;
-  }
+  // 결과창 표시 상태에 따라, 애니메이션을 변경하기 위한 상태값
+  const [contentsVisible, toggleContentsVisible] = useToggle(true);
+
+  const getPosts = async () => {
+    const posts = await DataStore.query(Post);
+
+    setPaR(posts);
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   return (
-    <SafeAreaView edges={["top"]} style={styles.container}>
-      <SearchBar />
-      <FlatList
-        data={paR}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => (
-          <PostAndReels posts={item.posts} reels={item.reels} index={index} />
-        )}
-        refreshControl={
-          <RefreshControl
-            refreshing={false}
-            onRefresh={() => console.log("검색창 새로고침")}
+    <SafeAreaView edges={["top"]} style={[styles.container]}>
+      <SearchBar toggleContentsVisible={toggleContentsVisible} />
+      {contentsVisible && (
+        <Animated.View entering={FadeIn} exiting={FadeOut} style={{ flex: 1 }}>
+          <FlatList
+            data={paR}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item, index }) => (
+              // <PostAndReels
+              //   posts={item.posts}
+              //   reels={item.reels}
+              //   index={index}
+              // />
+              <SearchPost post={item} key={index} />
+            )}
+            numColumns={3}
+            refreshControl={
+              <RefreshControl
+                refreshing={false}
+                onRefresh={() => console.log("검색창 새로고침")}
+              />
+            }
+            contentContainerStyle={{ paddingBottom: 100 }}
+            ListEmptyComponent={<NotFound />}
           />
-        }
-      />
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 }
@@ -142,7 +174,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
   },
 });
 

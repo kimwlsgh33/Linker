@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
+const { height } = Dimensions.get("window");
 
 function NotFound() {
   return (
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: height / 3,
   },
   text: {
     fontSize: 20,
