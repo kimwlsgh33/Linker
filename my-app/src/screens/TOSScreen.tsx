@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
 import { Terms } from "../models";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMeStore } from "../store";
 
 const datas = [
   {
@@ -69,6 +70,7 @@ const TOSScreen = ({ route }) => {
   const User = route.params.user;
   const navigation = useNavigation();
 
+  const { setMe } = useMeStore();
   const goAuthComp = async () => {
     await DataStore.save(
       new Terms({
@@ -79,6 +81,7 @@ const TOSScreen = ({ route }) => {
         termsUserId: User.id,
       })
     );
+    setMe(User);
     console.log("executed");
     navigation.navigate("AuthComp" as any);
   };

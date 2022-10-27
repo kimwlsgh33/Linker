@@ -81,7 +81,7 @@ const SignUp = () => {
           },
         });
       } catch (error) {
-        // console.log("error signing up:", error);
+        console.log("error signing up:", error);
         if (error.code === "UsernameExistsException") {
           alert("이미 존재하는 이메일입니다.");
           return;

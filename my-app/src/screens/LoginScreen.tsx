@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useContext } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import React from "react";
 import {
   TouchableWithoutFeedback,
@@ -17,6 +17,9 @@ import { Auth } from "aws-amplify";
 import { useUserContext } from "../hooks/UserContext";
 import { SHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
+import { useMeStore } from "../store";
+import { DataStore } from "aws-amplify";
+import { User } from "../models";
 
 // function getHashedPassword(pw) {
 //   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
@@ -30,14 +33,13 @@ const LoginScreen = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
+  const [idCheckIn, setIdCheckIn] = useState(false);
+  const [pwCheckIn, setPwCheckIn] = useState(false);
 
   const hashDigest = SHA256("1234" + password);
 
   const { setUser } = useUserContext();
-
-  const goHome = () => {
-    navigation.navigate("HomeTab" as any);
-  };
+  const { me, setMe } = useMeStore();
 
   const username = id;
 
@@ -53,13 +55,18 @@ const LoginScreen = () => {
     const SignInEmail = async () => {
       try {
         const user = await Auth.signIn(username, newPw);
-        const UserInfo = {
-          username: user.attributes.phone_number,
-          name: user.attributes.name,
-          nickname: user.attributes.nickname,
-          password: user.attributes.password,
-        };
-        setUser(UserInfo);
+        // const UserInfo = {
+        //   username: user.attributes.phone_number,
+        //   name: user.attributes.name,
+        //   nickname: user.attributes.nickname,
+        //   password: user.attributes.password,
+        // };
+        // setUser(UserInfo);
+        const realMe = await DataStore.query(User, (u) =>
+          u.username("eq", user.username)
+        );
+        setMe(realMe[0]);
+        console.log(realMe[0]);
       } catch (error) {
         alert("이메일 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);
@@ -67,6 +74,7 @@ const LoginScreen = () => {
       }
       navigation.navigate("Welcome" as any);
     };
+
     const SignInPhone = async () => {
       try {
         const user = await Auth.signIn(forPhone(username), password);
@@ -106,18 +114,18 @@ const LoginScreen = () => {
     const phnum = /^[0-9]{10,11}$/;
 
     if (regExp.test(id) || phnum.test(id)) {
-      setDisable(false);
+      setIdCheckIn(true);
     } else {
-      setDisable(true);
+      setIdCheckIn(false);
     }
   }, []);
 
   const pwCheck = useCallback((password) => {
     handlePwChange(password);
-    if (password.length < 8) {
-      setDisable(true);
+    if (password.length > 8) {
+      setPwCheckIn(true);
     } else {
-      setDisable(false);
+      setPwCheckIn(false);
     }
   }, []);
 
@@ -134,6 +142,17 @@ const LoginScreen = () => {
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
+
+  const allCheck = () => {
+    if (idCheckIn && pwCheckIn) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  };
+  useEffect(() => {
+    allCheck();
+  }, [idCheckIn, pwCheckIn]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

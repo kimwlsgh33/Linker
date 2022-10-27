@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, Pressable, Platform } from "react-native";
 import { Auth } from "aws-amplify";
 import { useNavigation } from "@react-navigation/native";
 import { useUserContext } from "../hooks/UserContext";
+import { useMeStore } from "../store";
 
 function WelcomeScreen() {
   const navigation = useNavigation();
-  const { user, setUser } = useUserContext();
-
-  console.log("유저정보" + user.username);
+  // const { user, setUser } = useUserContext();
+  const { me, setMe } = useMeStore();
 
   const goSignOut = async () => {
     try {
       await Auth.signOut();
-      setUser(null);
+      setMe(null);
     } catch (error) {
       console.log("error signing out: ", error);
     }
