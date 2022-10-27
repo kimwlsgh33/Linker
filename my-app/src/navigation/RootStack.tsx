@@ -33,7 +33,6 @@ import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
-import CommentScreen from "../screens/home/CommentScreen";
 import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
 // navigation header 옵션 설정 파일
@@ -61,7 +60,6 @@ function RootStack() {
 
       <Stack.Group>
         <Stack.Screen name="Post" component={PostScreen} />
-        <Stack.Screen name="Comment" component={CommentScreen} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="Setting" component={ScreenSetting} />
         <Stack.Screen name="AddUser2" component={AddUser2} />

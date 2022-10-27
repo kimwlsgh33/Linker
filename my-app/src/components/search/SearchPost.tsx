@@ -28,6 +28,7 @@ function SearchPost({ post, key }: SearchPostProps) {
         { marginRight: key % 3 === 2 ? 0 : 3 },
       ]}
       onPress={() => navigation.navigate("Discover", { post })}
+      key={key}
     >
       <Image
         source={{ uri: post.imageUri }}
