@@ -9,14 +9,14 @@ import {
 import HomeTab from "./HomeTab";
 import OuterHomeTab from "./OuterHomeTab";
 import ProfileTopTab from "./ProfileTopTab";
-import FollowTab from "../components/FollowTab";
+import FollowTab from "../components/profileComponents/FollowTab";
 // Screens
 import ScreenSetting from "../screens/setting/ScreenSetting";
 import PostScreen from "../screens/home/PostScreen";
 import StoryScreen from "../screens/home/StoryScreen";
 import SignUp from "../screens/signUp/SignUp";
 import LoginScreen from "../screens/signIn/LoginScreen";
-import EditProfile from "../screens/profile/EditProfile";
+import EditProfile from "../components/profileComponents/EditProfile";
 import DiscoverScreen from "../screens/search/DiscoverScreen";
 import TOSScreen from "../screens/signUp/TOSScreen";
 import CreateNameScreen from "../screens/signUp/CreateNameScreen";
@@ -38,6 +38,12 @@ import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
 // navigation header 옵션 설정 파일
 import { headerOptions } from "./navHeaderOptions";
+import HeaderBar from "../components/HeaderBar";
+import Modal from "../components/profileComponents/Modal";
+import Modal2 from "../components/profileComponents/Modal2";
+import Modal3 from "../components/profileComponents/Modal3";
+import ProfileUser from "../screens/profile/ProfileUser";
+import SearchResultScreen from "../screens/search/SearchResultScreen";
 
 const screenOptions = ({ navigation, route }) => {
   let title;
@@ -83,7 +89,7 @@ const screenOptions = ({ navigation, route }) => {
   };
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 function RootStack() {
   return (
@@ -166,9 +172,6 @@ function RootStack() {
       </Stack.Group>
 
       <Stack.Group screenOptions={{ headerShown: false }}>
-        {/*  */}
-        <Stack.Screen name="TestStack" component={TestStack} />
-        {/*  */}
         <Stack.Screen name="HomeTab" component={HomeTab} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Login" component={LoginScreen} />
@@ -185,128 +188,6 @@ function RootStack() {
         <Stack.Screen name="TOS" component={TOSScreen} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="SearchResult" component={SearchResultScreen} />
-      </Stack.Group>
-
-      <Stack.Group>
-        <Stack.Screen
-          name="TestModal"
-          component={TestModal}
-          options={{
-            title: "친구 팔로우 및 초대",
-            headerTitleAlign: "center",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Bells2"
-          component={Bells2}
-          options={{
-            title: "알림",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Lock2"
-          component={Lock2}
-          options={{
-            title: "개인정보 보호",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Safety2"
-          component={Safety2}
-          options={{
-            title: "보안",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="User2"
-          component={User2}
-          options={{
-            title: "계정",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="Thema2"
-          component={Thema2}
-          options={{
-            title: "테마 설정",
-            headerTitleAlign: "left",
-            headerTintColor: "#FFFAFA",
-            headerStyle: { backgroundColor: "#000000" },
-            headerLeft: () => (
-              <Pressable
-                onPress={() => navigation.goBack()}
-                style={styles.headertitle}
-              >
-                <Icon name={"left"} size={20} color="#FFFAFA" />
-              </Pressable>
-            ),
-          }}
-        />
-
-        <Stack.Screen
-          name="PersonalData"
-          component={PersonalData}
-          options={{
-            presentation: "transparentModal",
-            cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
-          }}
-        />
       </Stack.Group>
     </Stack.Navigator>
   );
