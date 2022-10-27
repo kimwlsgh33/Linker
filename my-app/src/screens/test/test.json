@@ -1,0 +1,19 @@
+{
+  "cause": {
+    "error": {},
+    "provider": {
+      "keepAliveAlertTimeoutId": 1244,
+      "keepAliveTimeout": 300000,
+      "keepAliveTimeoutId": 1243,
+      "socketStatus": 1
+    }
+  },
+  "errorType": "Unknown",
+  "localModel": null,
+  "message": "Connection failed: {\"errors\":[{\"message\":\"Validation error of type FieldUndefined: Field 'show' in type 'Story' is undefined @ 'onCreateStory/show'\"}]}",
+  "model": "Story",
+  "operation": "Create",
+  "process": "subscribe",
+  "recoverySuggestion": "Ensure app code is up to date, auth directives exist and are correct on each model, and that server-side data has not been invalidated by a schema change. If the problem persists, search for or create an issue: https://github.com/aws-amplify/amplify-js/issues",
+  "remoteModel": null
+}
