@@ -1,4 +1,4 @@
-import { DataStore, Predicates } from "aws-amplify";
+import { DataStore, Predicates, Storage } from "aws-amplify";
 import React, { useEffect } from "react";
 import { Dimensions, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -9,9 +9,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { User, Post, Terms } from "../../../models";
-
-const { width: screenWidth } = Dimensions.get("window");
+import { User } from "../../../models";
 
 function TestAnim() {
   const width = useSharedValue(50);
@@ -41,6 +39,11 @@ function TestAnim() {
   //   console.log("res: ", res);
   // };
 
+  const getImage = async () => {
+    const image = await Storage.get("testKey");
+    console.log(image);
+  };
+
   useEffect(() => {
     DataStore.start();
     return () => {
@@ -60,8 +63,9 @@ function TestAnim() {
         style={{ backgroundColor: "tomato", width: 100, height: 100 }}
         onPress={() => {
           width.value = Math.random() * 500;
-          getUser();
+          // getUser();
           // deletePost();
+          getImage();
         }}
       >
         <Text>애니메이션 실행</Text>

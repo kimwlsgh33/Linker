@@ -52,12 +52,5 @@
         }
       }
     }
-  },
-  "storage": {
-    "s3linkerstorage480f1d79": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    }
   }
 }

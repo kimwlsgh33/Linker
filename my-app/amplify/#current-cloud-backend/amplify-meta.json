@@ -94,25 +94,8 @@
       },
       "lastPushTimeStamp": "2022-10-27T07:33:18.906Z",
       "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/api/cloudformation-template.json",
-        "logicalId": "apilinker"
-      },
-      "lastPushDirHash": "PASGSwMYNiN5SmQPnWv1R+qKkOQ="
-    }
-  },
-  "storage": {
-    "s3linkerstorage480f1d79": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "output": {
-        "BucketName": "linker-storage-480f1d79114653-staging",
-        "Region": "ap-northeast-2"
-      },
-      "lastPushTimeStamp": "2022-10-25T12:26:26.899Z",
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-linker-staging-114653-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "logicalId": "storages3linkerstorage480f1d79"
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiTheLinker"
       }
     }
   }
