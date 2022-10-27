@@ -1,22 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   View,
   StyleSheet,
-  ScrollView,
-  TextInput,
-  Pressable,
-  Linking,
-  Modal,
-  ImageBackground,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/Ionicons";
-import TextAndIcon from "../../components/TextAndIcon";
-import IconLeft from "../../components/IconLeft";
-import TextStyle from "../../components/TextStyle";
+
+
 
 function PersonalData() {
+
   return (
     <View style={styles.container}>
       <View style={styles.PersonalTopViewBox}>
@@ -26,41 +19,81 @@ function PersonalData() {
             입력하세요. 공개 프로필에 포함되지 않습니다.
           </Text>
         </View>
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>이메일 주소</Text>
       </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>전화번호</Text>
+        <Text style={styles.inputText}>+821012345678</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>성별</Text>
+        <Text style={styles.inputText}>밝히고 싶지 않음</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
+    <View style={styles.inputBox}>
+      <View>
+        <Text style={styles.inputText}>생일</Text>
+        <Text style={styles.inputText}>1996.5.4</Text>
+      </View>
+      <AntDesign name={"right"} size={20} color="#333333" />
+    </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#000000",
+    flex:1,
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "flex-start",
   },
 
   PersonalTop: {
-    color: "#FFFAFA",
-    textAlign: "center",
-    fontWeight: "bold",
+    color:"#000000",
+    textAlign:"center",
   },
 
   PersonalTopView: {
-    // backgroundColor: "red",
     width: "78%",
-    borderWidth: 1,
   },
 
   PersonalTopViewBox: {
-    width: "100%",
-    alignItems: "center",
-    borderwidth: 1,
-    // borderTopColor: "#333333",
-    borderTopColor: "red",
-    borderBottomColor: "#333333",
-    // backgroundColor:"blue",
+    width:"100%",
+    alignItems:"center",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: "#d6d4d4",
+    borderBottomColor: "#d6d4d4",
     padding: 5,
   },
+
+  inputText: {
+    color:"#333333"
+  },
+
+  inputBox: {
+    flexDirection: "row", 
+    justifyContent:"space-between",
+    alignItems:"center",
+    width:"90%",
+    borderBottomWidth:1, 
+    borderBottomColor:"#d6d4d4",
+    paddingBottom:10,
+    marginTop:10,
+  },
+  
+
 });
 
 export default PersonalData;
