@@ -3,17 +3,14 @@
 
 const awsmobile = {
     "aws_project_region": "ap-northeast-2",
-    "aws_cognito_identity_pool_id": "ap-northeast-2:e0732c7d-889d-45f1-a03e-a1f0e0c121ac",
+    "aws_cognito_identity_pool_id": "ap-northeast-2:075d225a-173e-4efb-84d4-d55d9e6c4531",
     "aws_cognito_region": "ap-northeast-2",
-    "aws_user_pools_id": "ap-northeast-2_1K4ruwWF6",
-    "aws_user_pools_web_client_id": "6ue09c7cva7uoneq46gbno2kie",
+    "aws_user_pools_id": "ap-northeast-2_6Zok2rufE",
+    "aws_user_pools_web_client_id": "1crubscj7gcgjffpmd7fht7b6d",
     "oauth": {},
     "aws_cognito_username_attributes": [],
     "aws_cognito_social_providers": [],
-    "aws_cognito_signup_attributes": [
-        "EMAIL",
-        "PHONE_NUMBER"
-    ],
+    "aws_cognito_signup_attributes": [],
     "aws_cognito_mfa_configuration": "OFF",
     "aws_cognito_mfa_types": [
         "SMS"
@@ -25,7 +22,7 @@ const awsmobile = {
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
     ],
-    "aws_user_files_s3_bucket": "thelinker-storage-3f902eec-thelinker113213-staging",
+    "aws_user_files_s3_bucket": "thelinker-storage-584534aa-posts113213-staging",
     "aws_user_files_s3_bucket_region": "ap-northeast-2",
     "aws_appsync_graphqlEndpoint": "https://7an6z25pp5cstpevuzvd2cuuqe.appsync-api.ap-northeast-2.amazonaws.com/graphql",
     "aws_appsync_region": "ap-northeast-2",

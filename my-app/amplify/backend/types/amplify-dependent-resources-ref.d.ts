@@ -7,12 +7,11 @@ export type AmplifyDependentResourcesAttributes = {
             "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string",
-            "CreatedSNSRole": "string"
+            "AppClientID": "string"
         }
     },
     "storage": {
-        "s3thelinkerstorage3f902eecthelinker": {
+        "s3thelinkerstorage584534aaposts": {
             "BucketName": "string",
             "Region": "string"
         }

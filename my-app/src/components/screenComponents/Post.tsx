@@ -1,9 +1,68 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
+import Feather from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const Post = () => {
+import { useMeStore, useModalStore, usePostStore } from "../../store";
+import { DataStore, Storage } from "aws-amplify";
+import { User, Post as PPost } from "../../models";
+
+const Post = ({ post }: { post: PPost }) => {
+  const { me, setMe, addBookMark } = useMeStore();
+  const { posts, setPosts, addLikeUser } = usePostStore();
+
   const navigation = useNavigation();
+
+  const {
+    setModal,
+
+    setIsFavorite,
+  } = useModalStore();
+
+  const getUser = async () => {
+    const newUser = await DataStore.query(User, (user) =>
+      user.id("eq", "suntaliquaadipi")
+    );
+    return newUser[0];
+  };
+
+  // const getPost = async () => {
+  //   const newPost = await DataStore.query(PPost, (post) =>
+  //     post.link("eq", "inception.naver.com")
+  //   );
+  //   return newPost;
+  // };
+
+  const [image, setImage] = useState("");
+
+  const getImage = async (key: string) => {
+    return Storage.get(key, {
+      download: false,
+    });
+  };
+
+  useEffect(() => {
+    console.log(me);
+  }, [me]);
+  console.log("hi ");
+
+  useEffect(() => {
+    (async () => {
+      const newImage = await getImage(post.imageUri);
+      setImage(newImage);
+    })();
+  }, []);
+
   return (
     <View
       style={{
@@ -16,18 +75,18 @@ const Post = () => {
         <TouchableOpacity>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
-              source={data.postPersonImage}
+              source={{ uri: image }}
               style={{ width: 40, height: 40, borderRadius: 100 }}
             />
             <View style={{ paddingLeft: 5 }}>
               <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                {data.userId}
+                {post.userID}
               </Text>
             </View>
           </View>
         </TouchableOpacity>
         <View style={{ flexDirection: "row" }}>
-          {data.favorite ? (
+          {me?.favorite?.includes(post.userID) ? (
             <Pressable
               onPress={() => {
                 setIsFavorite(true);
@@ -42,8 +101,8 @@ const Post = () => {
           <Pressable
             onPress={() => {
               setModal(true);
-              setId(data.id);
-              setUserId(data.userId);
+              // setId(data.id);
+              // setUserId(data.userId);
             }}
           >
             <Feather name="more-horizontal" style={{ fontSize: 20 }} />
@@ -52,20 +111,20 @@ const Post = () => {
       </View>
 
       <View style={styles.view2}>
-        <Image source={data.postImage} style={{ width: "100%", height: 380 }} />
+        <Image source={{}} style={{ width: "100%", height: 380 }} />
       </View>
       <View style={styles.view3}>
         <TouchableOpacity
           onPress={() => {
-            likePressed(data.id); // likePressed 함수를 호출해줌. 인자로 data의 id를 넣어줌.
+            addLikeUser({ user_id: me.id, post_id: post.id });
           }}
         >
           <AntDesign
-            name={data.isLiked ? "heart" : "hearto"}
+            name={post?.likes?.includes(me.id) ? "heart" : "hearto"}
             style={{
               paddingRight: 10,
               fontSize: 25,
-              color: data.isLiked ? "red" : "black",
+              color: post?.likes?.includes(me.id) ? "red" : "black",
             }}
           />
         </TouchableOpacity>
@@ -73,13 +132,12 @@ const Post = () => {
           <Feather
             onPress={() => {
               navigation.navigate("Comment", {
-                user: data.user,
-                id: data.id,
-                text: data.text,
+                id: post.id,
+                text: post.text,
                 // userId: data.userId,
                 // postPersonImage: data.postPersonImage,
                 // me: me, <==== context
-                comment: data.comment,
+                comments: post.Comments,
               });
             }}
             name="message-circle"
@@ -91,11 +149,11 @@ const Post = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            bookMarkPressed(data.id);
+            addBookMark(post.id);
           }}
         >
           <FontAwesome
-            name={data.bookMark ? "bookmark" : "bookmark-o"}
+            name={me?.bookMark?.includes(post.id) ? "bookmark" : "bookmark-o"}
             style={{
               fontSize: 25,
               position: "absolute",
@@ -105,62 +163,63 @@ const Post = () => {
         </TouchableOpacity>
       </View>
       <View style={{ paddingLeft: 5 }}>
-        <Text style={{ fontWeight: "bold" }}>좋아요 {data.likes}개</Text>
+        <Text style={{ fontWeight: "bold" }}>
+          좋아요 {post.likes?.length}개
+        </Text>
       </View>
       <View style={{ flexDirection: "row", paddingLeft: 5 }}>
-        <Text style={{ fontWeight: "bold" }}>{data.userId}</Text>
+        <Text style={{ fontWeight: "bold" }}>{post.userID}</Text>
         <Text style={{ paddingLeft: 5, paddingRight: 5, flexShrink: 1 }}>
-          {data.comment}
+          {post.text}
         </Text>
       </View>
 
       <View style={styles.view3}>
-        {data.recomment[0]?.recomment == null ? null : (
+        {post?.Comments?.length > 0 && (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Comment", {
-                comment: data.comment, //data의 comment를 인자로 넘겨줌. --> 누른 친구의 comment
-                userId: data.userId, // data의 userId를 인자로 넘겨줌.
-                postPersonImage: data.postPersonImage, // data의 postPersonImage를 인자로 넘겨줌.
-                myId: myId, // myId를 인자로 넘겨줌.
-                mypostPersonImage: mypostPersonImage, // mypostPersonImage를 인자로 넘겨줌.
-                id: data.id, // data의 id를 인자로 넘겨줌.
-                recomment: data.recomment, // data의 recomment를 인자로 넘겨줌.
+                id: post.id,
+                text: post.text,
+                comments: post.Comments,
               });
             }}
           >
             <Text style={styles.text1}>
-              {data.recommentCount == 0
+              {post?.Comments?.length == 0
                 ? null
-                : `댓글 ${data.recommentCount} 개 모두 보기`}
+                : `댓글 ${post?.Comments?.length} 개 모두 보기`}
             </Text>
           </TouchableOpacity>
         )}
       </View>
       <View style={styles.view4}>
-        {data.recomment[0]?.recomment == null ? null : (
+        {post?.Comments?.length > 0 && (
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Comment", {
-                comment: data.comment,
-                userId: data.userId,
-                postPersonImage: data.postPersonImage,
-                myId: myId,
-                mypostPersonImage: mypostPersonImage,
-                id: data.id,
-                recomment: data.recomment,
+                // comment: data.comment,
+                // userId: data.userId,
+                // postPersonImage: data.postPersonImage,
+                // myId: myId,
+                // mypostPersonImage: mypostPersonImage,
+                // id: data.id,
+                // recomment: data.recomment,
+                id: post.id,
+                text: post.text,
+                comments: post.Comments,
               });
             }}
           >
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontWeight: "bold" }}>
-                {data.recomment[0]?.recomment == null ? null : data.userId}
+                {post?.Comments[0]?.text == null ? null : post.userID}
               </Text>
               <View style={styles.view5}>
-                <Text>{data.recomment[0]?.recomment}</Text>
+                <Text>{post?.Comments[0]?.text}</Text>
               </View>
               <View style={{ justifyContent: "center" }}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     addRecommentLike({
                       id: data.id,
@@ -173,7 +232,7 @@ const Post = () => {
                     color={data.recomment[0]?.recommentLike ? "red" : "black"}
                     style={{ paddingHorizontal: 7 }}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           </TouchableOpacity>

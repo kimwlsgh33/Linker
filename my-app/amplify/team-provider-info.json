@@ -16,7 +16,8 @@
         "TheLinker": {}
       },
       "storage": {
-        "s3thelinkerstorage3f902eecthelinker": {}
+        "s3thelinkerstorage3f902eecthelinker": {},
+        "s3thelinkerstorage584534aaposts": {}
       }
     }
   }

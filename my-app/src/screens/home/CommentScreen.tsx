@@ -13,51 +13,55 @@ import {
 import Ionic from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import events from "../../libs/eventEmitter";
-import { useAppDispatch } from "../../store";
-import { addComment } from "../../store/slices";
+import { useMeStore, usePostStore } from "../../store";
+import { DataStore } from "aws-amplify";
+import { Comment } from "../../models";
 
 const CommentScreen = ({ route, Navigation }) => {
-  const { id, text, comments: commentArray } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
+  const { id, text, comments: commentList } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
   const navigation = useNavigation();
   const [comment, setComment] = useState("");
-  const [commentList, setCommentList] = useState(commentArray);
-
-  const dispatch = useAppDispatch();
+  // const [commentList, setCommentList] = useState(commentArray);
+  const { addComment } = usePostStore();
+  const { me } = useMeStore();
+  const saveComment = async (text) => {
+    const newComment = await DataStore.save(
+      new Comment({ postID: id, userID: me.id, text: text })
+    );
+    return newComment;
+  };
 
   // 댓글 좋아요 bb
-  const commentLikePressed = (id) => {
-    const newLikePressed = commentList.map((comment) => {
-      if (comment.id === id) {
-        return {
-          ...comment,
-          commentLike: !comment.commentLike,
-          commentLikeCount: comment.commentLike
-            ? Number(comment.commentLikeCount) - 1
-            : Number(comment.commentLikeCount) + 1,
-        };
-      }
-      return comment;
-    });
-    setCommentList(newLikePressed);
-    saveCommentLike(id);
-  };
+  // const commentLikePressed = (id) => {
+  //   const newLikePressed = commentList.map((comment) => {
+  //     if (comment.id === id) {
+  //       return {
+  //         ...comment,
+  //         commentLike:
+  //       };
+  //     }
+  //     return comment;
+  //   });
+  //   setCommentList(newLikePressed);
+  // saveCommentLike(id);
+  // };
 
   // post에 댓글정보 전달.
-  const saveComment = () => {
-    events.emit("saveComment", {
-      comment,
-      id,
-      comment_id: commentList.length + 1,
-    });
-  };
+  // const saveComment = () => {
+  //   events.emit("saveComment", {
+  //     comment,
+  //     id,
+  //     comment_id: commentList.length + 1,
+  //   });
+  // };
 
   // post에 댓글 좋아요정보 전달.
-  const saveCommentLike = (comment_id) => {
-    events.emit("saveCommentLike", {
-      comment_id,
-      id,
-    });
-  };
+  // const saveCommentLike = (comment_id) => {
+  //   events.emit("saveCommentLike", {
+  //     comment_id,
+  //     id,
+  //   });
+  // };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -122,7 +126,7 @@ const CommentScreen = ({ route, Navigation }) => {
                 <View>{/* 답글달기 */}</View>
                 <TouchableOpacity
                   onPress={() => {
-                    commentLikePressed(comment.id);
+                    // commentLikePressed(comment.id);
                   }}
                   style={styles.touchable1}
                 >
@@ -154,9 +158,11 @@ const CommentScreen = ({ route, Navigation }) => {
             placeholderTextColor={"gray"}
             value={comment}
             onChangeText={(text) => setComment(text)}
-            onSubmitEditing={() =>
-              dispatch(addComment({ postId: id, comment }))
-            }
+            onSubmitEditing={() => {
+              saveComment(text).then((comment) =>
+                addComment({ comment: comment, postId: id })
+              );
+            }}
             style={styles.textInput1}
           ></TextInput>
         </View>

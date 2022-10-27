@@ -3,7 +3,7 @@
   "cognitoConfig": {
     "identityPoolName": "testAuthIdentityPool",
     "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "thelin5bd219a7",
+    "resourceNameTruncated": "thelind84adf11",
     "userPoolName": "TheLinker",
     "autoVerifiedAttributes": [
       "email"
@@ -19,18 +19,15 @@
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
-    "requiredAttributes": [
-      "email",
-      "phone_number"
-    ],
+    "requiredAttributes": [],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "TheLin5bd219a7_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "TheLind84adf11_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "5bd219a7",
+    "sharedId": "d84adf11",
     "resourceName": "TheLinker",
     "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",

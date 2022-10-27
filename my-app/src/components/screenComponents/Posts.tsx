@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   StyleSheet,
   Pressable,
+  FlatList,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -20,20 +21,11 @@ import LinkModal from "../modal/LinkModal";
 import QrModal from "../modal/QrModal";
 import FavoirteModal from "../modal/FavoriteModal";
 import FollowModal from "../modal/FollowModal";
-import { useAppDispatch, useAppSelector } from "../../store";
-import {
-  addPost,
-  bookMarkPost,
-  deleteAllPosts,
-  deletePost,
-  followPost,
-  favoritePost,
-  addComment,
-  commentLike,
-  PostLike,
-} from "../../store/slices";
-import { da } from "date-fns/locale";
+
 import Post from "./Post";
+import { usePostStore, useMeStore, useModalStore } from "../../store";
+import { DataStore } from "aws-amplify";
+import { Post as TPost, User } from "../../models";
 
 const Posts = () => {
   const navigation = useNavigation(); // 네비게이션을 쓰기 위한 두가지 방법 중 하나 hook
@@ -49,59 +41,77 @@ const Posts = () => {
   //=======================================================
   //=======================================================
   //=======================================================
-  const datas = useAppSelector((state) => state.posts);
-  const dispatch = useAppDispatch();
+  const { posts, setPosts } = usePostStore();
+  const { me, setMe, addBookMark, following } = useMeStore();
 
-  const addPostFunc = () => {
-    dispatch(addPost);
+  const getPost = async () => {
+    const newPost = await DataStore.query(TPost, (post) =>
+      post.link("eq", "inception.naver.com")
+    );
+    console.log(newPost);
+    return newPost;
   };
 
-  const deletePostFunc = () => {
-    dispatch(deletePost);
+  const getUser = async () => {
+    const newUser = await DataStore.query(User, (user) =>
+      user.id("eq", "suntaliquaadipi")
+    );
+    return newUser[0];
   };
 
-  const deleteAllPostsFunc = () => {
-    dispatch(deleteAllPosts);
-  };
+  useEffect(() => {
+    getPost().then((TPost) => setPosts(TPost));
+    getUser().then((me) => setMe(me));
+  }, []);
 
   //=======================================================
   //=======================================================
   //=======================================================
-  const [modal, setModal] = useState<boolean>(false);
-  const [shareModal, setShareModal] = useState<boolean>(false);
-  const [linkModal, setLinkModal] = useState<boolean>(false);
-  const [bookMark, setBookMark] = useState<boolean>(false);
-  const [qrModal, setQrModal] = useState<boolean>(false);
-  const [favorite, setFavorite] = useState<boolean>(false);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [follow, setFollow] = useState<boolean>(false);
-  const [isFollowed, setIsFollowed] = useState<boolean>(false);
+  const {
+    setModal,
+    setShareModal,
+    setLinkModal,
+    setBookMark,
+    setQrModal,
+    setFavorite,
+    setIsFavorite,
+    setFollow,
+    setIsFollowed,
+    modal,
+    shareModal,
+    linkModal,
+    bookMark,
+    qrModal,
+    favorite,
+    isFavorite,
+    follow,
+    isFollowed,
+  } = useModalStore();
 
   const bookMarkPressed = useCallback(
     // 위와 같은 방식으로 북마크를 눌렀을 때의 함수를 만들어줌^^
     (id) => {
-      dispatch(bookMarkPost(id));
-      setBookMark((prev) => !prev);
+      addBookMark(id);
     },
     []
   );
 
-  const favoriteItem = (id) => {
-    dispatch(favoritePost(id));
-    setFavorite((prev) => !prev);
-  };
+  // const favoriteItem = (id) => {
+  //   dispatch(favoritePost(id));
+  //   setFavorite((prev) => !prev);
+  // };
 
-  const addcomment = ({ text, id }: { text: string; id: any }) => {
-    dispatch(addComment({ postId: id, comment: text }));
-  };
+  // const addcomment = ({ text, id }: { text: string; id: any }) => {
+  //   dispatch(addComment({ postId: id, comment: text }));
+  // };
 
-  const likePressed = useCallback(
-    // likePressed라는 함수를 usecallback을 이용해 만들어줌.
-    ({ id, userId }) => {
-      dispatch(PostLike({ postId: id, userId: userId }));
-    },
-    [] // data와 setData를 의존성 배열에 넣어줌.
-  );
+  // const likePressed = useCallback(
+  //   // likePressed라는 함수를 usecallback을 이용해 만들어줌.
+  //   ({ id, userId }) => {
+  //     dispatch(PostLike({ postId: id, userId: userId }));
+  //   },
+  //   [] // data와 setData를 의존성 배열에 넣어줌.
+  // );
 
   const shareModalState = () => {
     setModal(false);
@@ -123,13 +133,8 @@ const Posts = () => {
     setQrModal(true);
   };
 
-  const favoriteState = (id) => {
-    setModal(false);
-    favoriteItem(id);
-  };
-
   const followState = (userId) => {
-    dispatch(followPost(userId));
+    following(userId);
     setModal(false);
     setFollow(true);
   };
@@ -156,31 +161,34 @@ const Posts = () => {
   //   };
   // }, []);
 
-  const addRecommentLike = ({
-    id,
-    comment_id,
-  }: {
-    id: any;
-    comment_id: any;
-  }) => {
-    dispatch(commentLike({ postId: id, commentId: comment_id }));
-  };
+  // const addRecommentLike = ({
+  //   id,
+  //   comment_id,
+  // }: {
+  //   id: any;
+  //   comment_id: any;
+  // }) => {
+  //   dispatch(commentLike({ postId: id, commentId: comment_id }));
+  // };
 
   return (
     <View style={{ paddingBottom: 40 }}>
-      {datas.map((data) => {
+      {/* {posts.map((data) => {
         // data라는 state를 map을 이용해 돌려줌.
-        <Post key={data.id} />;
-      })}
-
+        return <Post key={data.id} />;
+      })} */}
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <Post post={item} />}
+        ListEmptyComponent={() => (
+          <View>
+            <Text>try follow N get information you want!</Text>
+          </View>
+        )}
+      />
       <Modal Visible={modal} setVisible={setModal}>
-        <ModalScreen
-          id={id}
-          bookMark={bookMark}
-          favorite={favorite}
-          follow={isFollowed}
-          userId={userId}
-        />
+        <ModalScreen id={id} />
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />
@@ -195,7 +203,7 @@ const Posts = () => {
         <FavoirteModal />
       </Modal>
       <Modal Visible={follow} setVisible={setFollow}>
-        <FollowModal data={datas} />
+        <FollowModal data={posts} />
       </Modal>
     </View>
   );

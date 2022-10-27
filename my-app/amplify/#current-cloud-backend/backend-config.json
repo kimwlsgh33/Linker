@@ -8,10 +8,7 @@
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER"
-        ],
+        "signupAttributes": [],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
@@ -27,7 +24,7 @@
     }
   },
   "storage": {
-    "s3thelinkerstorage3f902eecthelinker": {
+    "s3thelinkerstorage584534aaposts": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": []

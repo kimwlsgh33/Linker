@@ -21,10 +21,7 @@
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER"
-        ],
+        "signupAttributes": [],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
@@ -38,16 +35,15 @@
         ]
       },
       "output": {
-        "CreatedSNSRole": "arn:aws:iam::936031063179:role/sns5bd219a7113213-staging",
-        "UserPoolId": "ap-northeast-2_1K4ruwWF6",
-        "AppClientIDWeb": "6ue09c7cva7uoneq46gbno2kie",
-        "AppClientID": "3r4eai76abo0bjchtv71l7qp20",
-        "IdentityPoolId": "ap-northeast-2:e0732c7d-889d-45f1-a03e-a1f0e0c121ac",
-        "UserPoolArn": "arn:aws:cognito-idp:ap-northeast-2:936031063179:userpool/ap-northeast-2_1K4ruwWF6",
+        "UserPoolId": "ap-northeast-2_6Zok2rufE",
+        "AppClientIDWeb": "1crubscj7gcgjffpmd7fht7b6d",
+        "AppClientID": "2pejf3sqv8glav2s2abqn6ha9a",
+        "IdentityPoolId": "ap-northeast-2:075d225a-173e-4efb-84d4-d55d9e6c4531",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-northeast-2:936031063179:userpool/ap-northeast-2_6Zok2rufE",
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "TheLinker"
       },
-      "lastPushTimeStamp": "2022-10-26T12:31:34.531Z",
+      "lastPushTimeStamp": "2022-10-27T19:58:42.477Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/auth/TheLinker-cloudformation-template.json",
         "logicalId": "authTheLinker"
@@ -55,18 +51,18 @@
     }
   },
   "storage": {
-    "s3thelinkerstorage3f902eecthelinker": {
+    "s3thelinkerstorage584534aaposts": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "output": {
-        "BucketName": "thelinker-storage-3f902eec-thelinker113213-staging",
+        "BucketName": "thelinker-storage-584534aa-posts113213-staging",
         "Region": "ap-northeast-2"
       },
-      "lastPushTimeStamp": "2022-10-26T12:31:34.805Z",
+      "lastPushTimeStamp": "2022-10-27T19:58:42.763Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
-        "logicalId": "storages3thelinkerstorage3f902eecthelinker"
+        "logicalId": "storages3thelinkerstorage584534aaposts"
       }
     }
   },
@@ -94,11 +90,12 @@
         "GraphQLAPIEndpointOutput": "https://7an6z25pp5cstpevuzvd2cuuqe.appsync-api.ap-northeast-2.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-w4ci546ednbpvoiga4sfa36tqy"
       },
-      "lastPushTimeStamp": "2022-10-26T12:31:34.533Z",
+      "lastPushTimeStamp": "2022-10-27T19:58:42.484Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiTheLinker"
-      }
+      },
+      "lastPushDirHash": "4C6+j171mCr1mNN+S4RHFRFmOL4="
     }
   }
 }

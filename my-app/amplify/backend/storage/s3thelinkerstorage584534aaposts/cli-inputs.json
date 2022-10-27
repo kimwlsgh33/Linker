@@ -1,7 +1,7 @@
 {
-  "resourceName": "s3thelinkerstorage3f902eecthelinker",
-  "bucketName": "thelinker-storage-3f902eec-thelinker",
-  "policyUUID": "65e88de1",
+  "resourceName": "s3thelinkerstorage584534aaposts",
+  "bucketName": "thelinker-storage-584534aa-posts",
+  "policyUUID": "09ef6e3f",
   "storageAccess": "authAndGuest",
   "guestAccess": [
     "CREATE_AND_UPDATE",

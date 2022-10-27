@@ -12,6 +12,7 @@ import Stories from "../../components/screenComponents/Stories";
 
 import Feather from "react-native-vector-icons/Feather";
 import Posts from "../../components/screenComponents/Posts";
+import TestPost from "../../components/screenComponents/TestPost";
 
 const { width } = Dimensions.get("screen");
 
@@ -51,10 +52,9 @@ function HomeScreen({ navigation }) {
           <Feather name="send" style={{ fontSize: 24 }} />
         </View>
       </View>
-      <ScrollView>
-        <Stories />
-        <Posts />
-      </ScrollView>
+
+      <Stories />
+      <Posts />
     </SafeAreaView>
   );
 }

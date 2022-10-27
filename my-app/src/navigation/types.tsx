@@ -26,7 +26,7 @@ export type RootStackParamList = {
   Video: undefined;
   Discover: { post: Post };
   NotFound: undefined;
-  Comment: undefined;
+  Comment: { text: string; comments: Comment[]; id: string };
   UploadImage: undefined;
   TestModal: undefined;
   SearchResult: undefined;
