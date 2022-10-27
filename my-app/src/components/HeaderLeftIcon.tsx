@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 function HeaderLeftIcon({ onPress }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.LeftIcon}>
-      <Icon name="chevron-back-outline" size={30} color="#FFFAFA" />
+      <Icon name="chevron-back-outline" size={30} color="#000000" />
     </TouchableOpacity>
   );
 }

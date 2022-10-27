@@ -22,7 +22,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DataStore } from "@aws-amplify/datastore";
-import { User } from "../models";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -54,19 +53,19 @@ const SignUp = () => {
     navigation.navigate("Login" as any);
   };
 
-  const goTOS = async () => {
-    console.log("TOS");
-    await DataStore.save(
-      new User({
-        username: "testing name",
-        email: "testing@naver.com",
-        password: "1234",
-        followersID: "1234",
-        likepostID: "1234",
-      })
-    );
-    navigation.navigate("TOS" as any);
-  };
+  // const goTOS = async () => {
+  //   console.log("TOS");
+  //   await DataStore.save(
+  //     new User({
+  //       username: "testing name",
+  //       email: "testing@naver.com",
+  //       password: "1234",
+  //       followersID: "1234",
+  //       likepostID: "1234",
+  //     })
+  //   );
+  //   navigation.navigate("TOS" as any);
+  // };
 
   function counter() {
     const boot = useEffect(() => {
@@ -258,7 +257,7 @@ const SignUp = () => {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <Pressable
+            {/* <Pressable
               style={({ pressed }) => [
                 styles.button,
                 styles.buttonOutline2,
@@ -270,7 +269,7 @@ const SignUp = () => {
               onPress={goTOS}
             >
               <Text style={styles.buttonOutlineText}>가입</Text>
-            </Pressable>
+            </Pressable> */}
           </View>
         </View>
         <View style={styles.policyView}>

@@ -10,17 +10,33 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Auth } from "aws-amplify";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CodeInput = ({ route }) => {
   const [code, setCode] = useState("");
   const [disable, setDisable] = useState(true);
 
-  console.log(route);
-
   const navigation = useNavigation();
-  const id = route.params.id;
-  const phNumber = route.params.phNumber;
+  const username = route.params.username;
+  const name = route.params.name;
+  const nick = route.params.nick;
+  const password = route.params.password;
 
+  async function confirmSignUp() {
+    try {
+      await Auth.confirmSignUp(username, code);
+      navigation.navigate("Birthday" as any, {
+        username: username,
+        name: name,
+        nick: nick,
+        password: password,
+      });
+      console.log(password);
+    } catch (error) {
+      console.log("error confirming sign up", error);
+    }
+  }
   const codeCheck = (code) => {
     setCode(code);
     const reg = /^[0-9]{6}$/;
@@ -30,24 +46,43 @@ const CodeInput = ({ route }) => {
       setDisable(true);
     }
   };
-  const codeContrast = (code) => {
-    if (code === "123456") {
-      navigation.navigate("PwRe" as any);
-    } else {
-      alert("인증번호가 일치하지 않습니다.");
+
+  async function resendConfirmationCode() {
+    try {
+      await Auth.resendSignUp(username);
+      console.log("code resent successfully");
+    } catch (err) {
+      alert(err.message);
     }
-  };
+  }
+
+  //  id로 인증번호를 분류하는 함수를 써야할수도있음.
+  // const typeCheck = (id) => {
+  //   setId(username);
+  //   const reg = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+  //   if(reg.test(id)) {
+
+  //   }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
         <Text style={styles.title}>
-          {id === "" ? phNumber + " 번" : id} 으로 전송된 인증 코드를
-          입력하세요.
+          {username} 으로 전송된 인증 코드를 입력하세요.
         </Text>
         <Text style={styles.desc}>
-          <Text style={styles.nomb}>전화번호 변경</Text> 또는{" "}
-          <Text style={styles.nomb}>SMS 재전송</Text>.
+          인증 코드는 6자리 숫자입니다. 인증 코드를 받지 못하셨다면 재전송을
+          눌러 다시 받으세요.
+        </Text>
+
+        <Text style={styles.nomb} onPress={resendConfirmationCode}>
+          재전송
         </Text>
         <TextInput
           style={styles.input}
@@ -62,41 +97,40 @@ const CodeInput = ({ route }) => {
           ]}
           disabled={disable}
           android_ripple={{ color: "#FFF" }}
-          onPress={() => codeContrast(code)}
+          onPress={confirmSignUp}
         >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>
-      </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  LinearGradient: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 30,
   },
   title: {
     fontSize: 24,
     fontFamily: "GangwonEduAllBold",
     marginBottom: 20,
     marginTop: 20,
-    marginHorizontal: 5,
+    marginHorizontal: 35,
   },
   desc: {
     fontSize: 16,
     fontFamily: "GangwonEduAllLight",
     marginBottom: 10,
     textAlign: "center",
-    marginHorizontal: 50,
+    marginHorizontal: 75,
   },
   button: {
     backgroundColor: "#0782F9",
     padding: 10,
     borderRadius: 5,
-    width: "100%",
+    width: "85%",
     alignItems: "center",
     marginTop: 20,
   },
@@ -111,7 +145,7 @@ const styles = StyleSheet.create({
     color: "#0782F9",
   },
   input: {
-    width: "100%",
+    width: "85%",
     height: 45,
     backgroundColor: "#fff",
     borderRadius: 5,

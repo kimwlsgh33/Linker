@@ -111,13 +111,13 @@ export default function ScreenSetting({ navigation, route }) {
     <ScrollView style={styles.container}>
       <View style={styles.menutextbox}>
         <View style={styles.InputView}>
-          <AntDesign name={"search1"} size={20} color="#FFFAFA" />
+          <AntDesign name={"search1"} size={20} color="#5c5c5c" />
           <TextInput
             style={styles.input}
             onChangeText={onChangeText}
             value={text}
             placeholder="검색"
-            placeholderTextColor="#FFFAFA"
+            placeholderTextColor="#5c5c5c"
           />
         </View>
         {navbars.map((item, index) => (
@@ -139,6 +139,7 @@ export default function ScreenSetting({ navigation, route }) {
             />
           </Pressable>
         ))}
+
           <Modal
             animationType="slide"
             visible={ModalVisible}
@@ -149,21 +150,21 @@ export default function ScreenSetting({ navigation, route }) {
               <View style={styles.ModalBox}>
                 <ImageBackground source={require("../../assets/images/Meridian.jpg")} style={styles.bgImage}>
                     <View style={{marginLeft:5}}>
-                      <Ionic name="md-close-outline" size={30} color="#FFFAFA"/>
+                      <Ionic name="md-close-outline" size={30} color="#ffffff"/>
                     </View>
                     <View style={styles.ModalBox1}>
                       <View style={{flexDirection: "row"}}>
-                        <Ionic name="ios-infinite-outline" size={20} color="#FFFAFA"/>
-                        <Text style={{color:"#FFFAFA"}}>Meta</Text>
+                        <Ionic name="ios-infinite-outline" size={20} color="#ffffff"/>
+                        <Text style={{color:"#ffffff"}}>Meta</Text>
                       </View>
                       <View>
-                        <Text style={{color:"#FFFAFA"}}>Instagram 관리 감독</Text>
+                        <Text style={{color:"#ffffff"}}>Instagram 관리 감독</Text>
                       </View>
                       <View>
-                        <Text style={{color:"#FFFAFA"}}>회원님이 관리 감독하는 계정</Text>
+                        <Text style={{color:"#ffffff"}}>회원님이 관리 감독하는 계정</Text>
                       </View>
                       <View>
-                        <Text style={{color:"#FFFAFA",marginBottom:5}}>회원님이 관리 감독하는 계정이 없습니다.</Text>
+                        <Text style={{color:"#ffffff",marginBottom:5}}>회원님이 관리 감독하는 계정이 없습니다.</Text>
                         <Pressable
                           style={({ pressed }) => [pressed && { opacity: 0.4 }]}
                           onPress={() => Linking.openURL("https://naver.com")}>
@@ -185,16 +186,16 @@ export default function ScreenSetting({ navigation, route }) {
                     <View style={{alignItems:"center"}}>
                       <View style={styles.ModalBox2}>
                         <View style={styles.ModalInnerBox2}>
-                          <Text style={{color:"#FFFAFA"}}>교육 허브</Text>
-                          <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
+                          <Text style={{color:"#ffffff"}}>교육 허브</Text>
+                          <Ionic name={"ios-open-outline"} size={20} color="#ffffff" />
                         </View>
                         <View style={styles.ModalInnerBox2}>
-                          <Text style={{color:"#FFFAFA"}}>고객 센터</Text>
-                          <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
+                          <Text style={{color:"#ffffff"}}>고객 센터</Text>
+                          <Ionic name={"ios-open-outline"} size={20} color="#ffffff" />
                         </View>
                         <View style={styles.ModalInnerBox2}>
-                          <Text style={{color:"#FFFAFA"}}>Instagram 안전</Text>
-                          <Ionic name={"ios-open-outline"} size={20} color="#FFFAFA" />
+                          <Text style={{color:"#ffffff"}}>Instagram 안전</Text>
+                          <Ionic name={"ios-open-outline"} size={20} color="#ffffff" />
                         </View>
                       </View>
                     </View>
@@ -202,7 +203,9 @@ export default function ScreenSetting({ navigation, route }) {
               </View>
             </Pressable>
           </Modal>
+
       </View>
+
       <View style={styles.footerContainer}>
         <IconLeft iconName={"rocket1"} iconSize={20} text="Meta" />
         <Pressable
@@ -221,7 +224,7 @@ export default function ScreenSetting({ navigation, route }) {
         <Text style={styles.Pressabletext}>계정 추가</Text>
         </Pressable>
         <Pressable
-        onPress={() => setModalVisible3(true)}
+        onPress={() => navigation.navigate("NavModal")}
         >
         <Text style={styles.Pressabletext}>로그아웃</Text>
         </Pressable>
@@ -235,7 +238,7 @@ export default function ScreenSetting({ navigation, route }) {
         <View style={styles.Modal2Box}>
           <View style={styles.Modal2ViewBox1}>
             <Ionic name="ios-remove-outline" size={35} color="gray" />
-            <Text style={{color: "#FFFAFA",marginBottom:15,fontWeight:"bold"}}>계정 추가</Text>
+            <Text style={{color: "#000000",marginBottom:15,fontWeight:"bold"}}>계정 추가</Text>
           </View>
           <View style={styles.Modal2ViewBox2}>
             <Pressable style={styles.ModalButton} onPress={() => [navigation.navigate("AnotherAc"),setModalVisible2(false)]}>
@@ -253,21 +256,23 @@ export default function ScreenSetting({ navigation, route }) {
     <Modal
         animationType="fade"
         visible={ModalVisible3}
-        transparent={true}>
-    <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible2(false)}/>
-    <View style={{backgroundColor:"blue",justifyContent:"center", alignItems:"center", height:"30%", width:"30%",borderRadius:20}}>
-      <View>
-        <Text style={{color:"#FFFAFA", fontWeight:"bold",fontSize:20,justifyContent:"center"}}>LINKER에서 로그아웃하시겠어요?</Text>  
-      </View>
-      <Pressable
-        onPress={signOut}
-        style={{justifyContent:"center"}}
+        transparent={true}
+        style={{backgroundColor:"red"}}
         >
-        <Text style={{color:"#013ADF"}}>로그아웃</Text>
-      </Pressable>
-      <View>
-        <Text style={{color:"#FFFAFA",justifyContent:"center"}}>취소</Text>
-      </View>
+    <Pressable style={{flex: 1, backgroundColor:'rgba(0,0,0,0.8)'}} onPress={() => setModalVisible3(false)}/>
+    <View style={{alignItems:"center"}}>
+        <View style={{backgroundColor:"#333333",height:"50%", width:"50%",borderRadius:20}}>
+            <Text style={{color:"#000000", fontWeight:"bold",fontSize:20}}>LINKER에서 로그아웃하시겠어요?</Text>  
+          
+          <Pressable
+            onPress={() => navigation.navigate("NavModal")}
+            >
+            <Text style={{color:"#013ADF"}}>로그아웃</Text>
+          </Pressable>
+          <View>
+            <Text style={{color:"#000000",}}>취소</Text>
+          </View>
+        </View>
     </View>
     </Modal>
     </ScrollView>
@@ -276,36 +281,31 @@ export default function ScreenSetting({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
-    borderBottomColor: "#333333",
+    backgroundColor: "#ffffff",
   },
 
   menutextbox: {
     borderTopColor: "#333333",
-    borderBottomColor: "#333333",
-    borderWidth: 1,
   },
 
   footerContainer: {
     justifyContent: "space-between",
-    borderBottomColor: "#333333",
-    borderWidth: 1,
   },
 
   footertext: {
     fontSize: 10,
-    color: "#FFFAFA",
+    color: "#000000",
     fontWeight: "bold",
     margin: 15,
   },
   Overfooterbox: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 
   Overfootertext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#FFFAFA",
+    color: "#000000",
     margin: 15,
   },
 
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingLeft: 4,
-    backgroundColor: "#333333",
+    backgroundColor: "#d1cdcd",
     borderRadius: 10,
   },
 
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
   },
 
   Modaltext: {
-    color: "#FFFAFA",
+    color: "#ffffff",
     fontWeight: "bold",
   },
 
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   ResourceText: {
     fontWeight:"bold",
     fontSize: 15,
-    color:"#FFFAFA"
+    color:"#ffffff"
   },
 
   AddAccount: {
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
   },
 
   Modal2Box: {
-    backgroundColor:"#0a0a0a",
+    backgroundColor:"#ffffff",
     height:"18%",
     alignItems:"center",
     width:"100%",
@@ -417,7 +417,7 @@ const styles = StyleSheet.create({
     width:"100%",
     alignItems:"center",
     justifyContent:"space-around",
-    backgroundColor:"#0a0a0a",
+    backgroundColor:"#ffffff",
     borderTopLeftRadius:20,
     borderTopRightRadius:20
   },

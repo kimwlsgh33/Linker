@@ -19,7 +19,7 @@ function Thema2() {
           <RadioButton
             value="first"
             color="#0080FF"
-            uncheckedColor="white"
+            uncheckedColor="#000000"
             status={ checked === 'first' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('first')}
           />
@@ -29,7 +29,7 @@ function Thema2() {
           <RadioButton
             value="second"
             color="#0080FF"
-            uncheckedColor="white"
+            uncheckedColor="#000000"
             status={ checked === 'second' ? 'checked' : 'unchecked' }
             onPress={() => setChecked('second')}
         />
@@ -39,7 +39,7 @@ function Thema2() {
           <RadioButton
             value="third"
             color="#0080FF"
-            uncheckedColor="white"
+            uncheckedColor="#000000"
             status={ checked === 'third' ? 'checked' : 'unchecked' }
             onPress={() => [
                             setChecked('third'),
@@ -53,12 +53,12 @@ function Thema2() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 
   Thema2Text: {
     fontSize: 20,
-    color: "#FFFAFA",
+    color: "#000000",
     },
 
   ThemaBox: {

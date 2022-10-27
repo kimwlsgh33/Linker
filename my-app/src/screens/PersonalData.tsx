@@ -51,15 +51,14 @@ function PersonalData() {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "flex-start",
   },
 
   PersonalTop: {
-    color:"#FFFAFA",
+    color:"#000000",
     textAlign:"center",
-    fontWeight:"bold",
   },
 
   PersonalTopView: {
@@ -69,9 +68,10 @@ const styles = StyleSheet.create({
   PersonalTopViewBox: {
     width:"100%",
     alignItems:"center",
-    borderWidth: 1,
-    borderTopColor: "#333333",
-    borderBottomColor: "#333333",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderTopColor: "#d6d4d4",
+    borderBottomColor: "#d6d4d4",
     padding: 5,
   },
 
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     justifyContent:"space-between",
     alignItems:"center",
     width:"90%",
-    borderWidth:1, 
-    borderBottomColor:"#FFFAFA",
+    borderBottomWidth:1, 
+    borderBottomColor:"#d6d4d4",
     paddingBottom:10,
     marginTop:10,
   },

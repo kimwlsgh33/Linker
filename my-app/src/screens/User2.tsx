@@ -1,29 +1,13 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   Pressable,
   ScrollView,
-  Switch,
-  Alert,
-  Modal,
 } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/Ionicons";
-import TextAndIcon from "../components/TextAndIcon";
-import IconLeft from "../components/IconLeft";
-import TextStyle from "../components/TextStyle";
-import ScreenSetting from "./ScreenSetting";
 
-const Stack = createNativeStackNavigator();
-
-function User2({ navigation, route }) {
+function User2({ navigation}) {
 
   return (
     <ScrollView style={styles.container}>
@@ -57,11 +41,11 @@ function User2({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 
   User2text: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 15,
     fontWeight: "bold",
     margin: 10,

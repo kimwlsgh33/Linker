@@ -8,34 +8,57 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
+import { DataStore } from "aws-amplify";
+import { User } from "../models";
+import { LinearGradient } from "expo-linear-gradient";
+import { useMeStore } from "../store";
 
-const BirthdayScreen = () => {
+const BirthdayScreen = ({ route }) => {
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
   const [date, onChangeDate] = useState(new Date()); // 선택 날짜
   const [mode, setMode] = useState("date"); // 모달 유형
   const [visible, setVisible] = useState(false); // 모달 노출 여부
+  const [dateStr, setDateStr] = useState(format(date, "yyyy-MM-dd")); // 화면에 노출 될 선택 날짜
 
   const navigation = useNavigation();
 
-  const goComplete = () => {
-    navigation.navigate("CompleteN" as any);
+  const { setMe } = useMeStore();
+
+  const goTOS = async () => {
+    try {
+      const user = await DataStore.save(
+        new User({
+          username: route.params.username,
+          name: route.params.name,
+          nickname: route.params.nick,
+          password: route.params.password,
+          birthday: dateStr,
+        })
+      );
+      setMe(user);
+      console.log(user);
+      navigation.navigate("Setting" as any, { user: user });
+    } catch (e) {
+      console.log("error creating user", JSON.stringify(e, null, 2));
+    }
   };
 
   const onPressDate = () => {
     // 날짜 클릭 시
     setMode("date"); // 모달 유형을 date로 변경
-    setVisible(true); // 모달 open
+    setVisible(!visible); // 모달 open
+    console.log("date " + visible);
   };
 
   const onConfirm = (selectedDate) => {
     // 날짜 또는 시간 선택 시
     setVisible(false); // 모달 close
     onChangeDate(selectedDate); // 선택한 날짜 변경
+    setDateStr(format(selectedDate, "yyyy-MM-dd")); // 날짜를 화면에 노출 될 포멧으로 변경
   };
 
   const onCancel = () => {
@@ -44,10 +67,15 @@ const BirthdayScreen = () => {
   };
 
   // 선택한 날짜를 표시할 문자열을 생성
-  const dateStr = date.toLocaleDateString();
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
         <View style={styles.header}>
           <FontAwesomeIcon name="birthday-cake" size={80} />
           <Text style={styles.Title}>생일 추가</Text>
@@ -55,15 +83,20 @@ const BirthdayScreen = () => {
             공개 프로필에 포함되지 않습니다. 왜 생일을 입력해야 하나요?
           </Text>
           <View style={styles.dateView}>
-            <Pressable onPress={onPressDate} style={styles.dateBotton}>
-              {/* 날짜 선택 영역 */}
+            <Pressable
+              style={({ pressed }) => [
+                styles.dateButton,
+                Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
+              ]}
+              android_ripple={{ color: "#FFF" }}
+              onPress={onPressDate}
+            >
               <Text style={styles.dateTitle}>
-                {format(new Date(date), "PPP")}{" "}
+                {format(new Date(date), "PPP")}
               </Text>
             </Pressable>
-            <Text></Text>
             <Text style={styles.desc}>날짜를 눌러 생일을 입력하세요.</Text>
-            <View />
+            <Text style={styles.descb}>{dateStr}</Text>
           </View>
         </View>
         <View style={styles.footer}>
@@ -77,30 +110,27 @@ const BirthdayScreen = () => {
               Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
             ]}
             android_ripple={{ color: "#FFF" }}
-            onPress={goComplete}
+            onPress={goTOS}
           >
             <Text style={styles.buttonText}>다음</Text>
           </Pressable>
-          <DateTimePickerModal
-            isVisible={visible}
-            onConfirm={onConfirm}
-            onCancel={onCancel}
-            date={date}
-          />
         </View>
-      </SafeAreaView>
+        <DateTimePickerModal
+          isVisible={visible}
+          mode="date"
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+          date={date}
+        />
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  back: {
-    flex: 1,
-  },
-  container: {
+  LinearGradient: {
     flex: 1,
     alignItems: "center",
-    marginHorizontal: 30,
   },
   header: {
     alignItems: "center",
@@ -131,6 +161,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginHorizontal: 80,
     fontFamily: "GangwonEduAllLight",
+    marginTop: 20,
   },
   input: {
     width: "100%",
@@ -146,18 +177,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "100%",
     marginBottom: 20,
+    alignItems: "center",
   },
   footerText: {
     fontSize: 14,
     color: "#8e8e8e",
     textAlign: "center",
-    marginHorizontal: 25,
+    marginHorizontal: 60,
     fontFamily: "GangwonEduAllLight",
   },
   button: {
     backgroundColor: "#0782F9",
     borderRadius: 5,
-    width: "100%",
+    width: "85%",
     height: 35,
     justifyContent: "center",
     alignItems: "center",
@@ -171,7 +203,7 @@ const styles = StyleSheet.create({
   dateView: {
     alignItems: "center",
   },
-  dateBotton: {
+  dateButton: {
     backgroundColor: "cyan",
     borderRadius: 50,
     width: "60%",
@@ -183,6 +215,14 @@ const styles = StyleSheet.create({
   dateText: {
     color: "#fff",
     fontSize: 14,
+    fontFamily: "GangwonEduAllLight",
+  },
+  descb: {
+    fontSize: 20,
+    color: "blue",
+    textAlign: "center",
+    marginBottom: 20,
+    marginHorizontal: 80,
     fontFamily: "GangwonEduAllLight",
   },
 });

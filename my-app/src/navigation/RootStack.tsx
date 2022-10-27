@@ -34,6 +34,7 @@ import User2 from "../screens/User2";
 import PersonalData from "../screens/PersonalData";
 import HeaderOption from "../components/HeaderOption";
 import AnotherAc from "../screens/AnotherAc";
+import NavModal from "../screens/NavModal";
 
 const screenOptions = ({ navigation, route }) => {
   let title;
@@ -122,6 +123,7 @@ function RootStack() {
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
         <Stack.Screen name="AnotherAc" component={AnotherAc} />
+        <Stack.Screen name="NavModal" component={NavModal} options={{presentation: "transparentModal"}} />
       </Stack.Group>
     </Stack.Navigator>
   );

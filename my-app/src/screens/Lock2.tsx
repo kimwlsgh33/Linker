@@ -4,23 +4,14 @@ import {
   View,
   StyleSheet,
   ScrollView,
-  TextInput,
   Pressable,
-  Linking,
-  Button,
   Switch,
   Modal,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/Ionicons";
-import TextAndIcon from "../components/TextAndIcon";
 import IconLeft from "../components/IconLeft";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Stack = createNativeStackNavigator();
-
-
-function Lock2({ navigation, route }) {
+function Lock2() {
 
   const [isEnabled, setIsEnabled] = useState(false);
   
@@ -53,7 +44,7 @@ function Lock2({ navigation, route }) {
               <View style={styles.ModalInnerBox}>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>회원님의 팔로워만 회원님의 사진과 동영상을 볼 수 있습니다.</Text>
@@ -61,7 +52,7 @@ function Lock2({ navigation, route }) {
                 </View>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>회원님을 태그, @언급하거나 회원님에게 메시지를 보낼 수 있는 사람은 변경되지 않습니다.</Text>
@@ -98,7 +89,7 @@ function Lock2({ navigation, route }) {
               <View style={styles.ModalInnerBox}>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>누구나 회원님의 게시물, 릴스 및 스토리를 볼 수 있으며  회원님의 원본 오디오를 사용할 수 있습니다.</Text>
@@ -106,7 +97,7 @@ function Lock2({ navigation, route }) {
                 </View>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>회원님에게 메시지를 보내거나 회원님을 태그 또는 @언급할 수 있는 사람은 변경되지 않습니다.</Text>
@@ -114,7 +105,7 @@ function Lock2({ navigation, route }) {
                 </View>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>대기 중인 팔로워 요청은 삭제하지 않을 경우 모두 승인됩니다.</Text>
@@ -122,7 +113,7 @@ function Lock2({ navigation, route }) {
                 </View>
                 <View style={{flexDirection: "row"}}>
                   <View style={styles.ViewPadding}>
-                    <AntDesign name={"lock"} size={20} color="#FFFAFA" />
+                    <AntDesign name={"lock"} size={20} color="#000000" />
                   </View>
                   <View style={styles.ViewPadding}>
                     <Text style={styles.ModalIconText}>사람들이 회원님의 릴스를 리믹스하거나 리믹스의 일부로 다운로드할 수 있습니다. 설정에서 언제든지 이 옵션을 변경할 수 있습니다.</Text>
@@ -156,7 +147,7 @@ function Lock2({ navigation, route }) {
           />
       </View>
     </View>
-    <View style={styles.BorderBox}>
+    <View>
         <Text style={styles.lock2Text}>활동</Text>
           <View style={styles.Rightbox}>
             <IconLeft iconName={"exclamationcircleo"} iconSize={20} text={"일시 제한"} />
@@ -188,13 +179,12 @@ function Lock2({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:  "#000000",
+    backgroundColor:  "#ffffff",
   },
 
   lock2Text: {
     fontSize: 15,
-    color: "#FFFAFA",
-    fontWeight: "bold",
+    color: "#000000",
     margin: 15,
   },
 
@@ -209,14 +199,13 @@ const styles = StyleSheet.create({
   },
 
   BorderBox: {
-    borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomWidth: 1,
+    borderBottomColor: "#bababa",
   },
 
   ModalView: {
     width: "100%",
-    backgroundColor: '#151515',
-    borderWidth: 1,
+    backgroundColor: '#ffffff',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
@@ -228,12 +217,12 @@ const styles = StyleSheet.create({
   },
 
   ModalInnerBox: {
-    borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d6d4d4",
   },
 
   ModalBoxText: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 17,
     fontWeight: "bold",
     textAlign: 'center',
@@ -253,7 +242,7 @@ const styles = StyleSheet.create({
   },
 
   ModalButtonText: {
-    color: "#FFFAFA",
+    color: "#ffffff",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 15,
@@ -261,9 +250,7 @@ const styles = StyleSheet.create({
 
   ModalIconText: {
     fontSize: 15,
-    color: "#FFFAFA",
-    fontWeight: "bold",
-
+    color: "#000000",
   },
 
   ViewPadding: {
