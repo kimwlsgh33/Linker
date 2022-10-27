@@ -6,14 +6,13 @@ import ProfileTopTab from "../../navigation/ProfileTopTab";
 // Components
 import ProfileUserHeader from "../../components/profileComponents/ProfileUserHeader";
 import ProfileUserBody from "../../components/profileComponents/ProfileUserBody";
-// libs
-import events from "../../libs/eventEmitter";
 // database
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
-import create from "zustand";
+import { useMeStore } from "../../store";
 
-const ProfileUser = () => {
+const ProfileUser = ({ route }) => {
+  const { user: OpUser } = route.params;
   // 더미데이터
   const storyInfo = [
     {
@@ -26,14 +25,26 @@ const ProfileUser = () => {
     },
   ];
   const [user, setUser] = useState(storyInfo);
+  // const { me, setMe } = useMeStore();
+
+  // const users = async () => {
+  //   const newUser = DataStore.query(User, (test) =>
+  //     test.name("contains", "rlawlsgh97")
+  //   );
+  //   return newUser[0];
+  // };
+
+  // useEffect(() => {
+  //   users().then((test) => setMe(test));
+  // }, []);
 
   const userInfo = {
-    id: "5468456",
-    email: "abkorc33@gmail.com",
+    id: "54545",
+    email: "524648",
     mobile: "010-2222-2222",
-    name: "user",
+    name: "다른유저",
     nickname: "user",
-    username: "user1234",
+    username: "useruser",
     password: "123456789a!",
     birthday: null,
     profpic: null,
@@ -48,29 +59,8 @@ const ProfileUser = () => {
     Comments: [],
   } as User;
 
+  // const [data, setData] = useState(OpUser);
   const [data, setData] = useState(userInfo);
-
-  const useMeStore = create((set) => ({
-    me: null,
-    setMe: (state) => set({ me: state.me }),
-  }));
-  // let models;
-  // const [data, setData] = useState([]);
-
-  // const getUser = async () => {
-  //   models = await DataStore.query(User, (user) =>
-  //     user.username("eq", "abkorc33")
-  //   );
-  //   console.log(models);
-  //   setData(models);
-  // };
-
-  // useEffect(() => {
-  //   getUser();
-  //   data.map((dat) => {
-  //     console.log("안녕" + dat.username);
-  //   });
-  // }, []);
 
   return (
     <SafeAreaView>

@@ -11,7 +11,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
-import Entypo from "react-native-vector-icons/Entypo";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
 
@@ -195,13 +194,14 @@ export const ProfileUserBody = ({ data, user }) => {
             >
               <View style={{ alignItems: "center" }}>
                 <Image
-                  source={{ uri: "https://source.unsplash.com/random/100x102" }}
+                  source={{ uri: "https://source.unsplash.com/random/100x103" }}
                   style={styles.round1}
                 />
                 <Text style={styles.roundText}>취미</Text>
               </View>
             </Pressable>
             <Pressable
+              onPress={goToStory}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
@@ -209,10 +209,11 @@ export const ProfileUserBody = ({ data, user }) => {
               ]}
             >
               <View style={{ alignItems: "center" }}>
-                <View style={styles.round2}>
-                  <Entypo name="plus" style={{ fontSize: 20 }} />
-                </View>
-                <Text style={styles.roundText}>신규</Text>
+                <Image
+                  source={{ uri: "https://source.unsplash.com/random/100x109" }}
+                  style={styles.round1}
+                />
+                <Text style={styles.roundText}>취미</Text>
               </View>
             </Pressable>
           </View>

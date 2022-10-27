@@ -14,8 +14,8 @@ import {
   TextInput,
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
-import events from "../../libs/eventEmitter";
 import { launchImageLibrary } from "react-native-image-picker";
+import { useMeStore } from "../../store";
 
 const EditProfile = ({ route, navigation }) => {
   const { username, name, profpic } = route?.params || {};
@@ -28,14 +28,22 @@ const EditProfile = ({ route, navigation }) => {
   const [edit, setEdit] = useState(""); // username 저장되는 상태
   const [edit2, setEdit2] = useState(""); // name이 저장되는 상태
   const [image, setImage] = useState(profpic); // image가 저장되는 상태
+  const { me, setMe } = useMeStore();
 
-  // 저장 버튼 누르면
   const onEdit = () => {
-    events.emit("saveEdit", {
+    console.log("Edit Profile", edit, edit2, image);
+    setMe({
+      ...me,
       username: edit,
       name: edit2,
       profpic: image,
     });
+  };
+
+  const editComplete = () => {
+    TostMessage();
+    navigation.goBack();
+    onEdit();
   };
 
   const onSelectImage = () => {
@@ -55,19 +63,6 @@ const EditProfile = ({ route, navigation }) => {
         setImage(res.assets[0].uri);
       }
     );
-  };
-
-  const onDelete = () => {
-    events.emit("deleteImage", {
-      profpic: image,
-    });
-  };
-
-  const editComplete = () => {
-    TostMessage();
-    navigation.goBack();
-    onEdit();
-    onDelete();
   };
 
   // 길이가 8자 미만이면 pressable (view)비활성화
@@ -131,7 +126,6 @@ const EditProfile = ({ route, navigation }) => {
             />
             <Pressable
               onPress={() => setVisible(true)}
-              // onPress={()=>navigation.navigate("Modal4", {image, setImage})}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

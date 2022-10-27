@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -14,10 +14,21 @@ import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import { DataStore } from "@aws-amplify/datastore";
 import { User } from "../../models";
+import { useMeStore } from "../../store";
 
 // 부모컴포넌트로부터 props전달받음
 export const ProfileBody = ({ data, user }) => {
   const navigation = useNavigation();
+
+  const { me, setMe } = useMeStore();
+
+  const users = async () => {
+    const newUser = await DataStore.query(User, (test) =>
+      test.name("contains", "kimwlsgh")
+    );
+    console.log(newUser);
+    return newUser[0];
+  };
 
   const storyPressed = useCallback(
     (id) => {
@@ -47,6 +58,10 @@ export const ProfileBody = ({ data, user }) => {
       username: data.username,
       profpic: data.profpic,
     });
+
+  const onSetMe = () => {
+    users().then((test) => setMe(test));
+  };
 
   return (
     <SafeAreaView>
@@ -86,7 +101,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.Posts.length}
+                {data.Posts?.length}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -186,6 +201,7 @@ export const ProfileBody = ({ data, user }) => {
               </View>
             </Pressable>
             <Pressable
+              onPress={onSetMe}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
