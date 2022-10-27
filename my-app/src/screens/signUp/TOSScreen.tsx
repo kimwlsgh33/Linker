@@ -8,12 +8,12 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import TOS from "../components/TOS";
+import TOS from "../../components/TOS";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
-import { Terms } from "../models";
+import { Terms } from "../../models";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useMeStore } from "../store";
+import { useMeStore } from "../../store";
 
 const datas = [
   {

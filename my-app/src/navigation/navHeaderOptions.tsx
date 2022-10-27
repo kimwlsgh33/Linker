@@ -35,8 +35,9 @@ export const headerOptions = ({
     title = "SignUp";
   } else if (route.name === "Discover") {
     title = "탐색 탭";
-  } else if (route.name === "FollowTab") {
-    title = "userId33";
+  } else if (route.name === "Comment") {
+    title = "댓글";
+    headerRight = <CommentHeaderRignt />;
   } else if (route.name === "Setting") {
     title = "설정";
   } else if (route.name === "AddUser2") {
@@ -45,17 +46,16 @@ export const headerOptions = ({
     title = "알림";
   } else if (route.name === "Lock2") {
     title = "개인정보 보호";
+  } else if (route.name === "team2") {
+    title = "관리 감독";
   } else if (route.name === "Safety2") {
     title = "보안";
   } else if (route.name === "User2") {
     title = "계정";
-  } else if (route.name === "Thema2") {
-    title = "테마 설정";
+  } else if (route.name === "thema2") {
+    title = "테마";
   } else if (route.name === "PersonalData") {
     title = "개인정보";
-  } else if (route.name === "Comment") {
-    title = "댓글";
-    headerRight = <CommentHeaderRignt />;
   }
 
   return {
