@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useEffect, useEffect } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import React from "react";
 import {
   TouchableWithoutFeedback,
@@ -14,12 +14,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
-import { useUserContext } from "../hooks/UserContext";
 import { SHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
-import { useMeStore } from "../store";
+import { useMeStore } from "../../store";
 import { DataStore } from "aws-amplify";
-import { User } from "../models";
+import { User } from "../../models";
 
 // function getHashedPassword(pw) {
 //   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
@@ -29,7 +28,6 @@ import { User } from "../models";
 // }
 
 const LoginScreen = () => {
-
   // const { me, setMe } = useMeStore();
 
   // const users = async () => {
@@ -52,7 +50,6 @@ const LoginScreen = () => {
 
   const hashDigest = SHA256("1234" + password);
 
-  const { setUser } = useUserContext();
   const { me, setMe } = useMeStore();
 
   const username = id;
@@ -92,14 +89,16 @@ const LoginScreen = () => {
     const SignInPhone = async () => {
       try {
         const user = await Auth.signIn(forPhone(username), password);
-        const UserInfo = {
-          username: user.attributes.phone_number,
-          name: user.attributes.name,
-          nickname: user.attributes.nickname,
-          password: user.attributes.password,
-        };
-        setUser(UserInfo);
-        console.log(user);
+        // const UserInfo = {
+        //   username: user.attributes.phone_number,
+        //   name: user.attributes.name,
+        //   nickname: user.attributes.nickname,
+        //   password: user.attributes.password,
+        // };
+        const realMe = await DataStore.query(User, (u) =>
+          u.username("eq", user.username)
+        );
+        setMe(realMe[0]);
       } catch (error) {
         alert("전화번호 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);

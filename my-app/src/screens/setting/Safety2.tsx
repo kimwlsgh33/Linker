@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
-import IconLeft from "../components/IconLeft";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import IconLeft from "../../components/IconLeft";
 
 function Safety2() {
-  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Safety2textBox}>

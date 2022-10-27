@@ -356,7 +356,7 @@ const SignUp = () => {
             )}
           </View>
           <View style={styles.buttonContainer}>
-            {/* <Pressable
+            <Pressable
               style={({ pressed }) => [
                 styles.button,
                 styles.buttonOutline2,
@@ -368,7 +368,7 @@ const SignUp = () => {
               onPress={goCodeInput}
             >
               <Text style={styles.buttonOutlineText}>가입</Text>
-            </Pressable> */}
+            </Pressable>
           </View>
         </View>
         <View style={styles.policyView}>

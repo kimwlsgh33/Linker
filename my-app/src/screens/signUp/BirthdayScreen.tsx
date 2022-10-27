@@ -13,9 +13,9 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
 import { useNavigation } from "@react-navigation/native";
 import { DataStore } from "aws-amplify";
-import { User } from "../models";
+import { User } from "../../models";
 import { LinearGradient } from "expo-linear-gradient";
-import { useMeStore } from "../store";
+import { useMeStore } from "../../store";
 
 const BirthdayScreen = ({ route }) => {
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성

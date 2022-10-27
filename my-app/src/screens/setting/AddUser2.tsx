@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-} from "react-native";
-import TextAndIcon from "../components/TextAndIcon";
+import { StyleSheet, View, ScrollView } from "react-native";
+import TextAndIcon from "../../components/TextAndIcon";
 
 function AddUser2() {
   return (
