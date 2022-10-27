@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { useNavigationState } from "@react-navigation/native";
 import UploadPost from "../screens/UploadPost";
 import UploadStory from "../screens/UploadStory";
+import TestAnim from "../screens/test/screens/TestAnim";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -23,10 +24,10 @@ function OuterHomeTab() {
         swipeEnabled: currentIndex ? false : true,
       }}
     >
+      <Tab.Screen name="Test" component={TestAnim} />
       <Tab.Screen name="UploadPost" component={UploadPost} />
       <Tab.Screen name="HomeTab" component={HomeTab} />
       <Tab.Screen name="UploadStory" component={UploadStory} />
-      {/* <Tab.Screen name="Test" component={Test} /> */}
     </Tab.Navigator>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -20,20 +20,22 @@ import Feather from "react-native-vector-icons/Feather";
 import MaterialCmnt from "react-native-vector-icons/MaterialCommunityIcons";
 import MyPressable from "../components/MyPressable";
 import InputBar from "../components/upload/InputBar";
-import { useUserContext } from "../context/UserContext";
-import { DataStore } from "aws-amplify";
+import { DataStore, Storage } from "aws-amplify";
 import { Post, Tag } from "../models";
-import { Story } from "../models";
+import { v4 as uuidv4 } from "uuid";
+import { useMeStore, usePostStore } from "../store";
 
 const { width } = Dimensions.get("window");
 
 function UploadStory({ navigation }) {
-  const { me } = useUserContext();
+  const { me } = useMeStore();
+  const { addPost } = usePostStore();
   const [asset, setAsset] = useState<Asset | null>(null);
 
   const [tag, setTag] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [text, setText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onCamera = () => {
     launchCamera(
@@ -92,23 +94,54 @@ function UploadStory({ navigation }) {
       console.log("ImagePicker Error: ", result.errorCode);
     } else {
       const data = result.assets[0];
+      console.log(result.assets[0].uri);
       setAsset(data);
       // console.log(Object.keys(result));
     }
   };
 
-  useEffect(() => {
-    // onSelectImage();
-    // console.log(Platform.OS, "documentDir", FileSystem.documentDirectory);
-    // console.log(Platform.OS, "documentDir", FileSystem.cacheDirectory);
-  }, []);
+  const onUpload = async () => {
+    if (!asset) {
+      Alert.alert("Please select an image");
+      return;
+    }
 
-  useEffect(() => {
-    console.log(JSON.stringify(me, null, 2));
-  }, [me]);
+    try {
+      const response = await fetch(asset.uri);
+      const blob = await response.blob();
+      const urlParts = asset.uri.split(".");
+      const extensions = urlParts.pop();
+      const key = `${uuidv4()}.${extensions}`;
+
+      return Storage.put(key, blob, {
+        contentType: `image/${extensions}`,
+      });
+    } catch (err) {
+      Alert.alert("업로드 실패 : " + err);
+    }
+  };
 
   const onSubmit = async () => {
-    if (link == "") {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    if (asset === null) {
+      Alert.alert(
+        "에러!",
+        "사진을 선택해주세요",
+        [
+          {
+            text: "확인",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+        ],
+        { cancelable: false }
+      );
+      setLoading(false);
+      return;
+    } else if (link == "") {
       Alert.alert(
         "에러!",
         "링크를 입력해주세요",
@@ -121,6 +154,7 @@ function UploadStory({ navigation }) {
         ],
         { cancelable: false }
       );
+      setLoading(false);
       return;
     } else if (tag == "") {
       Alert.alert(
@@ -135,11 +169,12 @@ function UploadStory({ navigation }) {
         ],
         { cancelable: false }
       );
+      setLoading(false);
       return;
     } else if (text == "") {
       Alert.alert(
         "에러!",
-        "게시글을 입력해주세요",
+        "스토리를 입력해주세요",
         [
           {
             text: "확인",
@@ -149,33 +184,41 @@ function UploadStory({ navigation }) {
         ],
         { cancelable: false }
       );
+      setLoading(false);
       return;
     }
 
-    try {
-      let exists = await DataStore.query(Tag, (t) => t.tagname("eq", tag));
+    // S3 저장소에 이미지 업로드, key값 가져옴
+    const image = await onUpload();
+    console.log("image", image);
 
-      if (exists.length == 0) {
-        exists[0] = await DataStore.save(new Tag({ tagname: tag }));
-      }
+    // 태그 존재하는지 확인
+    let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
 
-      await DataStore.save(
-        new Story({
-          imageUrl: [asset.uri],
-          link,
-          text,
-          tagID: exists[0].id,
-          userID: me.id,
-        })
-      );
-      setText("");
-      setLink("");
-      setTag("");
-      setAsset(null);
-      navigation.navigate("HomeTab");
-    } catch (e) {
-      alert(e);
+    console.log("exists tag : ", exists);
+
+    // 태그 없으면, 새로운 태그 만듬
+    if (!exists) {
+      exists[0] = await DataStore.save(new Tag({ name: tag }));
     }
+
+    const post = await DataStore.save(
+      new Post({
+        imageUri: image.key,
+        link,
+        text,
+        Tag: exists[0],
+        userID: me.id,
+      })
+    );
+
+    addPost(post);
+    setText("");
+    setLink("");
+    setTag("");
+    setAsset(null);
+    setLoading(false);
+    navigation.navigate("HomeTab");
   };
 
   return (
@@ -188,7 +231,7 @@ function UploadStory({ navigation }) {
           <Feather name="x" size={24} />
         </TouchableOpacity>
         <View style={[styles.sameWidth, { alignItems: "center" }]}>
-          <Text style={styles.title}>새 스토리</Text>
+          <Text style={styles.title}>새 게시물</Text>
         </View>
         <TouchableOpacity
           onPress={onSubmit}

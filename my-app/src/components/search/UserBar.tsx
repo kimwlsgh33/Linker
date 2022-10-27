@@ -2,9 +2,10 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import { useUserContext } from "../../context/UserContext";
+
 import { User } from "../../models";
 import { HomeTabScreenProps } from "../../navigation/types";
+import { useMeStore } from "../../store";
 
 type Props = {
   isOutline?: boolean;
@@ -15,8 +16,7 @@ function UserBar({ isOutline, user }: Props) {
   const navigation =
     useNavigation<HomeTabScreenProps<"Search">["navigation"]>();
 
-  const { setMe } = useUserContext();
-
+  const { setMe } = useMeStore();
   const onPress = () => {
     //TODO: 유저 프로필을 보여주어야함 ( statck screen )
     navigation.navigate("ProfileUser", { user });

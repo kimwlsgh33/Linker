@@ -1,19 +1,23 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-linker-staging-114653-authRole",
-      "UnauthRoleArn": "arn:aws:iam::936031063179:role/amplify-linker-staging-114653-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::936031063179:role/amplify-linker-staging-114653-authRole",
+      "AuthRoleName": "amplify-thelinker-staging-113213-authRole",
+      "UnauthRoleArn": "arn:aws:iam::936031063179:role/amplify-thelinker-staging-113213-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::936031063179:role/amplify-thelinker-staging-113213-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-linker-staging-114653-deployment",
-      "UnauthRoleName": "amplify-linker-staging-114653-unauthRole",
-      "StackName": "amplify-linker-staging-114653",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:936031063179:stack/amplify-linker-staging-114653/8fb9d0f0-4eda-11ed-bb35-029c4e8815f2",
-      "AmplifyAppId": "d84i9ba8plu1p"
+      "DeploymentBucketName": "amplify-thelinker-staging-113213-deployment",
+      "UnauthRoleName": "amplify-thelinker-staging-113213-unauthRole",
+      "StackName": "amplify-thelinker-staging-113213",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:936031063179:stack/amplify-thelinker-staging-113213/d697fcc0-5521-11ed-b812-0242bbba68e8",
+      "AmplifyAppId": "d3qdgm03q6p6ej"
     },
     "categories": {
       "auth": {
-        "linker": {}
+        "TheLinker": {}
+      },
+      "storage": {
+        "s3thelinkerstorage3f902eecthelinker": {},
+        "s3thelinkerstorage584534aaposts": {}
       }
     }
   }

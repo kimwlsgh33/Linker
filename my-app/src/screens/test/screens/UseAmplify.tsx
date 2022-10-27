@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import { useUserContext } from "../../../context/UserContext";
 
 import { DataStore } from "aws-amplify";
 import { Post, Tag, User } from "../../../models";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useMeStore } from "../../../store";
 
 function UseAmplify() {
-  const { me, setMe } = useUserContext();
+  const { me, setMe } = useMeStore();
   const [text, setText] = useState("");
-  const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
 
   const createPost = async () => {
     const tag = await DataStore.save(
       new Tag({
-        tagname: "IU",
+        name: "IU",
       })
     );
 
     await DataStore.save(
       new Post({
+        imageUri: "none",
         userID: me.id,
-        tagID: tag.id,
+        Tag: tag,
         text,
-        title,
         link,
       })
     );
