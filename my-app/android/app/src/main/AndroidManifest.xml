@@ -2,6 +2,18 @@
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <!-- OPTIONAL PERMISSIONS, REMOVE WHATEVER YOU DO NOT NEED -->
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- Expo Camera -->
+  <uses-permission android:name="android.permission.CAMERA" />
+  <uses-permission android:name="android.permission.RECORD_AUDIO" />
+  <!-- Expo FileSystem -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
   <uses-permission android:name="android.permission.VIBRATE"/>
   <!-- These require runtime permissions on M -->

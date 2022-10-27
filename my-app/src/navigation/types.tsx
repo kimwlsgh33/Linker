@@ -2,18 +2,25 @@ import type {
   CompositeScreenProps,
   NavigatorScreenParams,
 } from "@react-navigation/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
+<<<<<<< HEAD
 import { TPost, TComment } from "../global";
+=======
+import { Post, Story } from "../models";
+>>>>>>> 60c4501136423448532c4e663e703067213ebacd
 
-// 스택 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
+//=======[ Stack Navigation ]===================================================
+//================================================================================================
+//================================================================================================
+// 스택 네비게이터에 있는 스크린들의 타입을 정의
 // key: 스크린 이름
 // value: 스크린에 전달할 파라미터들의 타입
 export type RootStackParamList = {
-  HomeTab: NavigatorScreenParams<HomeTabParamList>;
-  Welcome: undefined;
-  Details: undefined;
+  OuterHomeTab: NavigatorScreenParams<OuterHomeTabParamList>;
+  ProfileTopTab: NavigatorScreenParams<ProfileTopTabParamList>;
+  FollowTab: NavigatorScreenParams<FollowTabParamList>;
   Post: undefined;
   Story: undefined;
   SignUp: undefined;
@@ -21,60 +28,95 @@ export type RootStackParamList = {
   EditProfile: any;
   Posts: undefined;
   Video: undefined;
-  ProfileTopTab: NavigatorScreenParams<ProfileTopTabParamList>;
-  FollowTab: NavigatorScreenParams<FollowTabParamList>;
-  Discover: { post: TPost };
+  Discover: { post: Post };
   NotFound: undefined;
-  Comment: TComment;
+  Comment: undefined;
+  UploadImage: undefined;
+  TestModal: undefined;
+  SearchResult: undefined;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것
 export type RootStackScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>;
+  StackScreenProps<RootStackParamList, T>;
 
+//=======[ Outer Home Tab Navigation ]===================================================
 //================================================================================================
-// 탭 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
-// key: 스크린 이름
-// value: 스크린에 전달할 파라미터들의 타입
+//================================================================================================
+export type OuterHomeTabParamList = {
+  UploadTab: undefined;
+  HomeTab: NavigatorScreenParams<HomeTabParamList>;
+  Test: undefined;
+};
+
+export type OuterHomeTabScreenProps<T extends keyof OuterHomeTabParamList> =
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<OuterHomeTabParamList, T>,
+    RootStackScreenProps<keyof RootStackParamList>
+  >;
+
+//=======[ Home Tab Navigation ]===================================================
+//================================================================================================
+//================================================================================================
 export type HomeTabParamList = {
-  Instagram: undefined;
+  Home: undefined;
   Search: undefined;
   Reels: undefined;
-  Detail: undefined;
+  Alert: undefined;
   Profile: undefined;
 };
 
-// 탭 네비게이터 > 스크린 > props의 타입 - 건드리지 말것
 export type HomeTabScreenProps<T extends keyof HomeTabParamList> =
   CompositeScreenProps<
     BottomTabScreenProps<HomeTabParamList, T>,
-    RootStackScreenProps<keyof RootStackParamList>
+    OuterHomeTabScreenProps<keyof OuterHomeTabParamList>
   >;
-//================================================================================================
 
-// Profile 탑 탭 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
+//=======[ Profile Top Tab Navigation ]===================================================
+//================================================================================================
+//================================================================================================
 export type ProfileTopTabParamList = {
   Posts: undefined;
   Video: undefined;
   Tags: undefined;
 };
 
-// Profile 탑 탭 네비게이터 > 스크린 > props의 타입 - 건드리지 말것
 export type ProfileBottomTabScreenProps<
   T extends keyof ProfileTopTabParamList
-> = MaterialTopTabScreenProps<ProfileTopTabParamList, T>;
-//================================================================================================
+> = CompositeScreenProps<
+  MaterialTopTabScreenProps<ProfileTopTabParamList, T>,
+  HomeTabScreenProps<keyof HomeTabParamList>
+>;
 
-// Follow 탑 탭 네비게이터에 있는 스크린들의 타입을 정의 - TODO: 화면 추가시, 작성
+//=======[ Follow Tab Navigation ]===================================================
+//================================================================================================
+//================================================================================================
 export type FollowTabParamList = {
   followers: undefined;
   following: undefined;
 };
 
-// Follow 탑 탭 네비게이터 > 스크린 > props의 타입 - 건드리지 말것
 export type FollowTabScreenProps<T extends keyof FollowTabParamList> =
-  MaterialTopTabScreenProps<FollowTabParamList, T>;
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<FollowTabParamList, T>,
+    HomeTabScreenProps<keyof HomeTabParamList>
+  >;
 
+//=======[ Upload Tab Navigation ]===================================================
+//================================================================================================
+//================================================================================================
+export type UploadTabParamList = {
+  TakePicture: undefined;
+  UploadImage: undefined;
+};
+
+export type UploadTabScreenProps<T extends keyof UploadTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<UploadTabParamList, T>,
+    OuterHomeTabScreenProps<keyof OuterHomeTabParamList>
+  >;
+
+//================================================================================================
 //================================================================================================
 
 // 기본 네비게이션 타입 지정 - 건드리지 말것
