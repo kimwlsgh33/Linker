@@ -1,27 +1,14 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Pressable,
   ScrollView,
-  Switch,
 } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionic from "react-native-vector-icons/ionicons";
-import TextAndIcon from "../../components/TextAndIcon";
-import IconLeft from "../../components/IconLeft";
-import TextStyle from "../../components/TextStyle";
-import ScreenSetting from "./ScreenSetting";
-// import IonicLeft from "../components/IonicLeft"
+import IconLeft from "../components/IconLeft";
 
-const Stack = createNativeStackNavigator();
-
-function Safety2({ navigation, route }) {
+function Safety2() {
+  
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Safety2textBox}>
@@ -49,19 +36,19 @@ function Safety2({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 
   Safety2text: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 15,
     fontWeight: "bold",
     margin: 10,
   },
 
   Safety2textBox: {
-    borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomWidth: 1,
+    borderBottomColor: "#d6d4d4",
   },
 });
 

@@ -9,14 +9,14 @@ import {
 import HomeTab from "./HomeTab";
 import OuterHomeTab from "./OuterHomeTab";
 import ProfileTopTab from "./ProfileTopTab";
-import FollowTab from "../components/profileComponents/FollowTab";
+import FollowTab from "../components/FollowTab";
 // Screens
 import ScreenSetting from "../screens/setting/ScreenSetting";
 import PostScreen from "../screens/home/PostScreen";
 import StoryScreen from "../screens/home/StoryScreen";
 import SignUp from "../screens/signUp/SignUp";
 import LoginScreen from "../screens/signIn/LoginScreen";
-import EditProfile from "../components/profileComponents//EditProfile";
+import EditProfile from "../screens/profile/EditProfile";
 import DiscoverScreen from "../screens/search/DiscoverScreen";
 import TOSScreen from "../screens/signUp/TOSScreen";
 import CreateNameScreen from "../screens/signUp/CreateNameScreen";
@@ -34,19 +34,56 @@ import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
-import UploadPost from "../screens/UploadPost";
 import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
-import Modal from "../components/profileComponents/Modal";
-import Modal2 from "../components/profileComponents/Modal2";
-import Modal3 from "../components/profileComponents/Modal3";
-import ProfileUser from "../screens/profile/ProfileUser";
 // navigation header 옵션 설정 파일
 import { headerOptions } from "./navHeaderOptions";
-import TestStack from "../screens/test/TestStack";
-import SearchResultScreen from "../screens/search/SearchResultScreen";
 
-const Stack = createStackNavigator();
+const screenOptions = ({ navigation, route }) => {
+  let title;
+
+  if (route.name === "Welcome") {
+    title = "Welcome";
+  } else if (route.name === "Detail") {
+    title = "Detail";
+  } else if (route.name === "Post") {
+    title = "New Post";
+  } else if (route.name === "Story") {
+    title = "Story";
+  } else if (route.name === "SignUp") {
+    title = "SignUp";
+  } else if (route.name === "Discover") {
+    title = "탐색 탭";
+  } else if (route.name === "FollowTab") {
+    title = "userId33";
+  } else if (route.name === "Setting") {
+    title = "설정";
+  } else if (route.name === "AddUser2") {
+    title = "친구 팔로우 및 초대";
+  } else if (route.name === "Bells2") {
+    title = "알림";
+  } else if (route.name === "Lock2") {
+    title = "개인정보 보호";
+  } else if (route.name === "team2") {
+    title = "관리 감독";
+  } else if (route.name === "Safety2") {
+    title = "보안";
+  } else if (route.name === "User2") {
+    title = "계정";
+  } else if (route.name === "thema2") {
+    title = "테마";
+  } else if (route.name === "PersonalData") {
+    title = "개인정보";
+  }
+
+  return {
+    header: () => (
+      <HeaderBar title={title} leftIconPressed={navigation.goBack} />
+    ),
+  };
+};
+
+const Stack = createNativeStackNavigator();
 
 function RootStack() {
   return (
@@ -92,6 +129,29 @@ function RootStack() {
         <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
+      </Stack.Group>
+
+      <Stack.Group>
+        <Stack.Screen name="Post" component={PostScreen} />
+        <Stack.Screen name="Discover" component={DiscoverScreen} />
+        <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
+        <Stack.Screen name="FollowTab" component={FollowTab} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
       </Stack.Group>
 
       <Stack.Group>
@@ -125,7 +185,6 @@ function RootStack() {
         <Stack.Screen name="TOS" component={TOSScreen} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="SearchResult" component={SearchResultScreen} />
-        <Stack.Screen name="UploadPost" component={UploadPost} />
       </Stack.Group>
 
       <Stack.Group>
