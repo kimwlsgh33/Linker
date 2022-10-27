@@ -43,6 +43,7 @@
         "IdentityPoolName": "testAuthIdentityPool__staging",
         "UserPoolName": "TheLinker"
       },
+
       "lastPushTimeStamp": "2022-10-27T07:34:57.310Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/auth/TheLinker-cloudformation-template.json",
@@ -56,7 +57,9 @@
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
+
       "lastPushTimeStamp": "2022-10-27T07:34:57.557Z",
+
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-thelinker-staging-113213-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3thelinkerstorage584534aaposts"

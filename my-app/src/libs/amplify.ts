@@ -29,6 +29,39 @@ async function signOut() {
   }
 }
 
+<<<<<<< HEAD
+// Confirm Sign Up
+try {
+  await Auth.confirmSignUp(username, code);
+}
+
+// Resend Sign Up Code
+try {
+  await Auth.resendSignUp(username);
+}
+
+// Forgot Password
+try {
+  await Auth.forgotPassword(username);
+}
+
+// Confirm Forgot Password
+try {
+  await Auth.forgotPasswordSubmit(username, code, password);
+}
+
+// Change Password
+try {
+  await Auth.changePassword(user, oldPassword, newPassword);
+}
+
+// Get User
+try {
+  const user = await Auth.currentAuthenticatedUser();
+} catch (error) {
+  console.log(error);
+}
+=======
 async function uploadImage(filePath) {
   try {
     const response = await fetch(filePath);
@@ -83,3 +116,4 @@ async function createPost({
 // Query
 // const posts = await DataStore.query(Post);
 // console.log(posts);
+>>>>>>> 60c4501136423448532c4e663e703067213ebacd

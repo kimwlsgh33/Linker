@@ -1,11 +1,5 @@
 //import { useNavigation } from "@react-navigation/native";
-import React, {
-  useState,
-  useCallback,
-  Component,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -20,8 +14,10 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { DataStore } from "@aws-amplify/datastore";
+import { Auth } from "aws-amplify";
+import { LinearGradient } from "expo-linear-gradient";
+import { SHA256 } from "crypto-js";
+import Base64 from "crypto-js/enc-base64";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -33,124 +29,185 @@ const SignUp = () => {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
-  const [number, setNumber] = useState(1);
+  const [idCheck, setIdCheck] = useState(false);
+  const [nameCheck, setNameCheck] = useState(false);
+  const [nickCheck, setNickCheck] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
+  const hashDigest = SHA256("1234" + password);
+  // function getHashedPassword(password) {
+  //   let random = CryptoJS.lib.WordArray.random(128 / 8);
+  //   return CryptoJS.SHA256(password, random).toString();
+  // }
   const ref_input: Array<React.RefObject<TextInput>> = [];
   ref_input[0] = useRef(null);
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
 
-  const Stack = createNativeStackNavigator();
-
   const navigation = useNavigation();
-
-  const goHome = () => {
-    navigation.navigate("BottomTab" as any);
-  };
 
   const goLogin = () => {
     navigation.navigate("Login" as any);
   };
 
-  const goTOS = async () => {
-    console.log("TOS");
-    // await DataStore.save(
-    //   new User({
-    //     username: "testing name",
-    //     email: "testing@naver.com",
-    //     password: "1234",
-    //     followersID: "1234",
-    //     likepostID: "1234",
-    //   })
-    // );
-    // navigation.navigate("TOS" as any);
+  // 핸드폰 번호를 국가번호와 함께 가져오기 위한 함수
+  const forPhone = (id) => {
+    const result = "+82" + id.slice(1);
+    return result;
   };
 
-  function counter() {
-    const boot = useEffect(() => {
-      increaseNumber(number);
-    });
-  }
-
-  const handleIdChange = (text) => {
-    setId(text);
-  };
-
-  const handleNameChange = (text) => {
-    setName(text);
-  };
-
-  const handleNickChange = (text) => {
-    setNick(text);
-  };
-
-  const handlePwChange = (text) => {
-    setPassword(text);
-  };
-
-  const idCheck = (id) => {
-    handleIdChange(id);
-
+  // 회원가입 로직.
+  const goCodeInput = async () => {
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+
+    // amplify email 가입
+    const newPw = Base64.stringify(hashDigest);
+    const SignUpEmail = async () => {
+      try {
+        // const newPW = getHashedPassword(password);
+        // if (DataStore.query(User, (user) => user.username("eq", id))) {
+        //   alert("이미 존재하는 아이디입니다.");
+        //   return;
+        // } else {
+        const { user } = await Auth.signUp({
+          username: id,
+          password: newPw,
+          attributes: {
+            email: id,
+            name: name,
+            nickname: nick,
+          },
+        });
+      } catch (error) {
+        console.log("error signing up:", error);
+        if (error.code === "UsernameExistsException") {
+          alert("이미 존재하는 이메일입니다.");
+          return;
+        } else {
+          alert("Unknown error. ㅋㅋ");
+          return;
+        }
+      }
+      navigation.navigate("CodeInput" as any, {
+        username: id,
+        name: name,
+        nick: nick,
+        password: newPw,
+      });
+    };
+
+    // amplify phone 가입
+    const SignUpPhoneNumber = async () => {
+      // 전화번호 포맷 수정
+      const formattedPhone = forPhone(id);
+      // 가입 로직
+      try {
+        const { user } = await Auth.signUp({
+          username: formattedPhone,
+          password: password,
+          attributes: {
+            phone_number: formattedPhone,
+            name: name,
+            nickname: nick,
+          },
+        });
+        console.log("newPw", newPw);
+      } catch (error) {
+        // console.log("error signing up:", error);
+        if (error.code === "UsernameExistsException") {
+          alert("이미 존재하는 전화번호입니다.");
+          return;
+        } else {
+          alert("Unknown error. ㅋㅋ");
+          return;
+        }
+      }
+      navigation.navigate("CodeInput" as any, {
+        username: formattedPhone,
+        name: name,
+        nick: nick,
+        password: newPw,
+      });
+    };
+
+    // 형식 검사 후, 가입 로직 실행.
+    if (regExp.test(id)) {
+      SignUpEmail();
+    } else {
+      SignUpPhoneNumber();
+    }
+  };
+
+  // 이메일 인지 전화번호인지 체크하여 상태 저장해서 문구띄워줄때 사용.
+  const handleIdChange = (text) => {
+    console.log(text);
+    setErrorMsg("");
+    const reg = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
     const phnum = /^[0-9]{10,11}$/;
 
-    if (regExp.test(id) || phnum.test(id)) {
-      increaseNumber(number);
-      console.log(number);
+    // email check
+    if (!reg.test(text) && !phnum.test(text)) {
+      setErrorMsg("올바른 형식이 아닙니다.");
     } else {
-      setDisable(true);
+      setIdCheck(true);
     }
   };
 
-  const nameCheck = (name) => {
-    handleNameChange(name);
-
-    const regExp = /^[a-zA-Z]{2,30}$/;
-
+  const nmCheck = (text) => {
+    setName(text);
+    const regExp = /^[a-zA-Z0-9\s]{2,30}$/;
     if (regExp.test(name)) {
-      increaseNumber(number);
-      console.log(number);
+      setNameCheck(true);
     } else {
-      setDisable(true);
+      setNameCheck(false);
     }
   };
 
-  const nickCheck = (nick) => {
-    handleNickChange(nick);
-
-    const regExp = /^[a-zA-Z0-9%-_]{1,10}$/;
-
+  const nkCheck = (nick) => {
+    setNick(nick);
+    const regExp = /^[a-zA-Z0-9%-_\s]{1,20}$/;
     if (regExp.test(nick)) {
-      increaseNumber(number);
-      console.log(number);
+      setNickCheck(true);
     } else {
-      setDisable(true);
+      setNickCheck(false);
     }
   };
 
   const pwCheck = (password) => {
-    handlePwChange(password);
+    setPassword(password);
     const reg =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,30}$/;
     if (reg.test(password)) {
-      increaseNumber(number);
-      console.log(number);
-      if (number >= 4) {
-        if (name != null) setDisable(false);
-      } else {
-        setDisable(true);
-      }
+      setPasswordCheck(true);
+    } else {
+      setPasswordCheck(false);
+    }
+  };
+
+  // 버튼을 활성화 하는 함수
+  const allCheck = () => {
+    if (idCheck && nameCheck && nickCheck && passwordCheck) {
+      setDisable(false);
+      console.log(id);
     } else {
       setDisable(true);
     }
   };
-
-  const increaseNumber = (number) => setNumber(number + 1);
+  useEffect(() => {
+    allCheck();
+  }, [idCheck, nameCheck, nickCheck, passwordCheck]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
+      <LinearGradient
+        colors={["pink", "white"]}
+        style={styles.LinearGradient}
+        locations={[0, 0.9]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      >
         <View style={styles.inputContainer}>
           <Text
             style={{
@@ -160,12 +217,12 @@ const SignUp = () => {
               marginBottom: 15,
             }}
           >
-            Instagram
+            LINKER
           </Text>
           <Text style={[styles.recommadText]}>
-            친구들의 사진과 동영상을 보려면
+            인플루언서와 소비자를 연결해주는
           </Text>
-          <Text style={[styles.recommadText]}>가입하세요.</Text>
+          <Text style={[styles.recommadText]}>당신의 링크를 공유해보세요.</Text>
           <View style={styles.buttonContainer}>
             <Pressable
               style={({ pressed }) => [
@@ -219,14 +276,16 @@ const SignUp = () => {
             <TextInput
               placeholder="휴대폰 번호 또는 이메일 주소"
               style={[styles.input, styles.buttonOutline]}
-              // value={id}
               returnKeyType="next"
               ref={ref_input[0]}
               onSubmitEditing={() => {
                 ref_input[1].current.focus();
+                handleIdChange(id);
               }}
-              onEndEditing={(e) => idCheck(e.nativeEvent.text)}
+              onChangeText={setId}
+              onEndEditing={() => handleIdChange(id)}
             />
+            {errorMsg && <Text style={styles.descr}>{errorMsg}</Text>}
             <TextInput
               placeholder="성명"
               style={[styles.input, styles.buttonOutline]}
@@ -235,8 +294,21 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[2].current.focus();
               }}
-              onEndEditing={(e) => nameCheck(e.nativeEvent.text)}
+              onChangeText={nmCheck}
             />
+            {name !== "" && (
+              <Text style={styles.input}>
+                {nameCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 이름 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자 2~30자로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
             <TextInput
               placeholder="사용자 이름"
               style={[styles.input, styles.buttonOutline]}
@@ -245,16 +317,43 @@ const SignUp = () => {
               onSubmitEditing={() => {
                 ref_input[3].current.focus();
               }}
-              onEndEditing={(e) => nickCheck(e.nativeEvent.text)}
+              onChangeText={nkCheck}
             />
+            {nick !== "" && (
+              <Text style={styles.input}>
+                {nickCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 사용자 이름 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자 1~20자로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
             <TextInput
               placeholder="비밀번호"
               style={[styles.input, styles.buttonOutline]}
               secureTextEntry
               ref={ref_input[3]}
               //onSubmitEditing={Keyboard.dismiss}
-              onChangeText={(e) => pwCheck(e)}
+              onChangeText={pwCheck}
+              onEndEditing={allCheck}
             />
+            {password !== "" && (
+              <Text style={styles.input}>
+                {passwordCheck ? (
+                  <Text style={styles.descb}>
+                    사용하실 수 있는 비밀번호 입니다.
+                  </Text>
+                ) : (
+                  <Text style={styles.descr}>
+                    영문, 숫자, 특수문자를 포함한 8자 이상으로 입력해 주세요.
+                  </Text>
+                )}
+              </Text>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             <Pressable
@@ -266,7 +365,7 @@ const SignUp = () => {
               ]}
               android_ripple={{ color: "#FFF" }}
               disabled={disable}
-              onPress={goTOS}
+              onPress={goCodeInput}
             >
               <Text style={styles.buttonOutlineText}>가입</Text>
             </Pressable>
@@ -274,14 +373,14 @@ const SignUp = () => {
         </View>
         <View style={styles.policyView}>
           <Text style={styles.policyText}>
-            가입하면 Instagram의{" "}
-            <Text style={styles.policyTextIm}>약관, 데이터</Text>
+            가입하면 LINKER의{" "}
+            <Text style={styles.policyTextIm}>데이터 정책</Text>
           </Text>
           <Text style={styles.policyText}>
-            <Text style={styles.policyTextIm}>정책</Text> 및{" "}
-            <Text style={styles.policyTextIm}>쿠키 정책</Text>에 동의하게 됩니
+            {" "}
+            및 <Text style={styles.policyTextIm}>쿠키 정책</Text>에 동의하게
+            됩니다.
           </Text>
-          <Text style={styles.policyText}>다.</Text>
         </View>
         <View style={styles.bottomView}>
           <TouchableOpacity onPress={goLogin}>
@@ -290,15 +389,14 @@ const SignUp = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  LinearGradient: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -318,7 +416,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 10,
-    // backgroundColor: "#0782F9",
     height: 50,
   },
   button: {
@@ -388,6 +485,18 @@ const styles = StyleSheet.create({
   },
   policyTextIm: {
     fontWeight: "bold",
+  },
+  descr: {
+    fontFamily: "GangwonEduAllLight",
+    fontSize: 12,
+    textAlign: "center",
+    color: "red",
+  },
+  descb: {
+    fontFamily: "GangwonEduAllLight",
+    fontSize: 12,
+    textAlign: "center",
+    color: "#0782F9",
   },
 });
 export default SignUp;

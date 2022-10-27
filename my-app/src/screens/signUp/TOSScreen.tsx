@@ -8,9 +8,12 @@ import {
   Pressable,
   Platform,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import TOS from "../../components/TOS";
+import TOS from "../components/TOS";
 import { useNavigation } from "@react-navigation/native";
+import { DataStore } from "aws-amplify";
+import { Terms } from "../models";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useMeStore } from "../store";
 
 const datas = [
   {
@@ -52,21 +55,36 @@ const datas = [
     id: 6,
     state: false,
     title: "야간 알림 수신 동의[선택]",
-    desc: "0~6시 사이에 알림을 수신하는 데에 동의합니다.",
+    desc: "Meta Platforms, Inc.가 제공하는 야간(0~6시) 알림을 수신하는 데에 동의합니다.",
     link: "더 알아보기",
   },
 ];
 
-const TOSScreen = () => {
-  const navigation = useNavigation();
-
-  const goCreateName = () => {
-    navigation.navigate("CreateName" as any);
-  };
-
+const TOSScreen = ({ route }) => {
   const [disable, setDisable] = useState(true);
   const [toss, setToss] = useState(datas);
   const [all, setAll] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const [event, setEvent] = useState(false);
+  const [night, setNight] = useState(false);
+  const User = route.params.user;
+  const navigation = useNavigation();
+
+  const { setMe } = useMeStore();
+  const goAuthComp = async () => {
+    await DataStore.save(
+      new Terms({
+        User: User,
+        Required: terms,
+        Event: event,
+        Night: night,
+        termsUserId: User.id,
+      })
+    );
+    setMe(User);
+    console.log("executed");
+    navigation.navigate("AuthComp" as any);
+  };
 
   useEffect(() => {
     TOSCheck();
@@ -88,12 +106,12 @@ const TOSScreen = () => {
     },
     [toss, setToss]
   );
-  console.log("====================================");
-  console.log(toss[0].state);
-  console.log(toss[1].state);
-  console.log(toss[2].state);
-  console.log(toss[3].state);
-  console.log("====================================");
+  // console.log("====================================");
+  // console.log(toss[0].state);
+  // console.log(toss[1].state);
+  // console.log(toss[2].state);
+  // console.log(toss[3].state);
+  // console.log("====================================");
 
   //
 
@@ -104,9 +122,16 @@ const TOSScreen = () => {
       toss[2].state === true &&
       toss[3].state === true
     ) {
+      setTerms(true);
       setDisable(false);
     } else {
       setDisable(true);
+    }
+    if (toss[4].state === true) {
+      setEvent(true);
+    }
+    if (toss[5].state === true) {
+      setNight(true);
     }
   }, [toss, setDisable]);
 
@@ -179,7 +204,7 @@ const TOSScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ borderBottomWidth: 1, backgroundColor: "#ddd" }}>
+      <View style={{ borderBottomWidth: 1, backgroundColor: "pink" }}>
         <Text
           style={{
             fontSize: 20,
@@ -226,7 +251,7 @@ const TOSScreen = () => {
           ]}
           android_ripple={{ color: "#FFF" }}
           disabled={disable}
-          onPress={goCreateName}
+          onPress={goAuthComp}
         >
           <Text
             style={{
@@ -250,10 +275,12 @@ const TOSScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "pink",
   },
   scrollview: {
     marginHorizontal: 15,
     marginBottom: 10,
+    backgroundColor: "pink",
   },
   TopBar: {
     flex: 0.15,
@@ -282,13 +309,12 @@ const styles = StyleSheet.create({
   bottomBar: {
     alignItems: "center",
     justifyContent: "center",
-    //position: "absolute",
     width: "100%",
     height: "15%",
     bottom: 0,
     borderTopWidth: 1,
-    borderTopColor: "#AAA",
-    backgroundColor: "#ddd",
+    borderTopColor: "pink",
+    backgroundColor: "#ffb6c1",
   },
   bottomText: {
     fontFamily: "GangwonEduAllLight",
