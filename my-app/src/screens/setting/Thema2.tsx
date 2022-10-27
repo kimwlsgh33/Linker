@@ -1,10 +1,8 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Pressable,
   ScrollView,
 } from "react-native";
 import { createAppContainer } from "react-navigation";

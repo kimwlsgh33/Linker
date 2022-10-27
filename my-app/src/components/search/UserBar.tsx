@@ -19,7 +19,7 @@ function UserBar({ isOutline, user }: Props) {
   const { setMe } = useMeStore();
   const onPress = () => {
     //TODO: 유저 프로필을 보여주어야함 ( statck screen )
-    navigation.navigate("ProfileUser", { user });
+    navigation.navigate("ProfileUser" as any, { user });
   };
 
   return (

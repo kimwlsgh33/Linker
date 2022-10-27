@@ -6,16 +6,17 @@ import {
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 // navigation
+import HomeTab from "./HomeTab";
 import OuterHomeTab from "./OuterHomeTab";
 import ProfileTopTab from "./ProfileTopTab";
-import FollowTab from "../components/FollowTab";
+import FollowTab from "../components/profileComponents/FollowTab";
 // Screens
 import ScreenSetting from "../screens/setting/ScreenSetting";
 import PostScreen from "../screens/home/PostScreen";
 import StoryScreen from "../screens/home/StoryScreen";
 import SignUp from "../screens/signUp/SignUp";
 import LoginScreen from "../screens/signIn/LoginScreen";
-import EditProfile from "../screens/profile/EditProfile";
+import EditProfile from "../components/profileComponents//EditProfile";
 import DiscoverScreen from "../screens/search/DiscoverScreen";
 import TOSScreen from "../screens/signUp/TOSScreen";
 import CreateNameScreen from "../screens/signUp/CreateNameScreen";
@@ -33,8 +34,13 @@ import Safety2 from "../screens/setting/Safety2";
 import Thema2 from "../screens/setting/Thema2";
 import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
+import UploadPost from "../screens/UploadPost";
 import TestModal from "../screens/test/screens/TestModal";
 import Test from "../screens/test/screens/TestAnim";
+import Modal from "../components/profileComponents/Modal";
+import Modal2 from "../components/profileComponents/Modal2";
+import Modal3 from "../components/profileComponents/Modal3";
+import ProfileUser from "../screens/profile/ProfileUser";
 // navigation header 옵션 설정 파일
 import { headerOptions } from "./navHeaderOptions";
 import TestStack from "../screens/test/TestStack";
@@ -54,13 +60,41 @@ function RootStack() {
           component={OuterHomeTab}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Modal3"
+          component={Modal3}
+          options={{
+            presentation: "transparentModal",
+            // animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Modal2"
+          component={Modal2}
+          options={{
+            presentation: "transparentModal",
+            // animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Modal"
+          component={Modal}
+          options={{
+            presentation: "transparentModal",
+            // animation: "slide_from_bottom",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen name="Post" component={PostScreen} />
+        <Stack.Screen name="Story" component={StoryScreen} />
+        <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
       </Stack.Group>
 
       <Stack.Group>
-        <Stack.Screen name="Post" component={PostScreen} />
-        <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="Setting" component={ScreenSetting} />
         <Stack.Screen name="AddUser2" component={AddUser2} />
         <Stack.Screen name="Bells2" component={Bells2} />
@@ -75,9 +109,10 @@ function RootStack() {
         {/*  */}
         <Stack.Screen name="TestStack" component={TestStack} />
         {/*  */}
-        <Stack.Screen name="Story" component={StoryScreen} />
+        <Stack.Screen name="HomeTab" component={HomeTab} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="ProfileUser" component={ProfileUser} />
         <Stack.Screen name="LoginEr" component={LoginEr} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="CodeCheck" component={CodeCheck} />
@@ -90,6 +125,7 @@ function RootStack() {
         <Stack.Screen name="TOS" component={TOSScreen} />
         <Stack.Screen name="Test" component={Test} />
         <Stack.Screen name="SearchResult" component={SearchResultScreen} />
+        <Stack.Screen name="UploadPost" component={UploadPost} />
       </Stack.Group>
 
       <Stack.Group>

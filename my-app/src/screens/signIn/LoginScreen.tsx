@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useEffect } from "react";
+import { useCallback, useRef, useState, useEffect, useEffect } from "react";
 import React from "react";
 import {
   TouchableWithoutFeedback,
@@ -11,7 +11,7 @@ import {
   Keyboard,
   Pressable,
 } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
 import { useUserContext } from "../hooks/UserContext";
@@ -29,6 +29,20 @@ import { User } from "../models";
 // }
 
 const LoginScreen = () => {
+
+  // const { me, setMe } = useMeStore();
+
+  // const users = async () => {
+  //   const newUser = DataStore.query(User, (test) =>
+  //     test.name("contains", "rlawlsgh97")
+  //   );
+  //   return newUser[0];
+  // };
+
+  // useEffect(() => {
+  //   users().then((test) => setMe(test));
+  // }, []);
+
   const navigation = useNavigation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
