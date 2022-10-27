@@ -1,3 +1,4 @@
+import React from "react";
 import { FunctionComponent } from "react";
 import { View, Modal as DefaultModal, Pressable } from "react-native";
 // import { Modal } from "../components/Modal";
@@ -44,3 +45,5 @@ export function Modal({
     </View>
   );
 }
+
+export default Modal;

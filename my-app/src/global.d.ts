@@ -5,53 +5,49 @@
  * 스크린 외부에서, 하나의 파일로 관리한다.
  */
 
+import { ImageSourcePropType } from "react-native";
+
 export type TImage = {
   id: string;
   uri: string;
 };
 
-export type TPost = {
-  id: string;
-  user_id: string;
-  images: TImage[];
-  createdAt: string;
-};
-
-export type TRecomment = {
-  id: number;
-  recomment: string;
-  recommentLike: boolean;
-  recommentLikeCount: number;
-};
-
-export type TFollowList = {
-  userId: string;
-  follow: boolean;
-};
-
-export type TPost1 = {
-  id: number;
-  userId: string;
-  postPersonImage: ImageSourcePropType;
-  postImage: ImageSourcePropType;
-  likes: number;
-  isLiked: boolean;
-  bookMark: boolean;
-  comment: string;
-  recommentCount: number;
-  recomment: TRecomment[];
-  favorite: boolean;
-  followList: TFollowList[];
+export type TStory = {
+  name: data.name;
+  image: data.image;
+  userName: data.userName;
 };
 
 export type TComment = {
-  comment: string;
-  userId: string;
-  postPersonImage: TImage;
-  myId: string;
-  mypostPersonImage: TImage;
   id: number;
-  recomment: data.recomment;
+  text: string;
+  likes: string[];
+};
+
+export type TUser = {
+  id: number;
+  email?: string;
+  moblie?: string;
+  name: string;
+  nickname: string;
+  username: string;
+  password: string;
+  profpic: TImage;
+  following: string[];
+  followers: string[];
+  BookMark: string[];
+};
+
+export type TPost = {
+  id: number;
+  user: TUser;
+  imageUri: string;
+  title: string;
+  text: string;
+  link: string;
+  likes: string[];
+  comments: TComment[];
+  favorite: boolean;
 };
 
 export type TReel = {
@@ -65,4 +61,30 @@ export type TPostAndReels = {
   id: string;
   posts: TPost[];
   reels: TReel[];
+};
+
+// JSON placeholder
+
+export type JUser = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    };
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
 };

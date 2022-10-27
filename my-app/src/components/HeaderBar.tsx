@@ -1,12 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import HeaderLeftIcon from "./HeaderLeftIcon";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 type HeaderBarProps = {
   leftIconPressed?: () => void;
   title: string;
   headerRight?: React.ReactNode;
   noLeftIcon?: boolean;
+  isBlack?: boolean;
 };
 
 function HeaderBar({
@@ -14,17 +15,27 @@ function HeaderBar({
   title,
   headerRight,
   noLeftIcon,
+  isBlack,
 }: HeaderBarProps) {
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        isBlack ? { backgroundColor: "black" } : { backgroundColor: "white" },
+      ]}
+    >
       <View style={styles.sameWidth}>
-        {!noLeftIcon && <HeaderLeftIcon onPress={leftIconPressed} />}
+        {!noLeftIcon && (
+          <TouchableOpacity onPress={leftIconPressed}>
+            <Icon name="chevron-back-outline" size={30} color="black" />
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={styles.sameWidth}>
         <Text style={styles.title}>{title}</Text>
       </View>
-      <View style={styles.sameWidth}>{headerRight}</View>
+      <View style={[styles.sameWidth, styles.headerRight]}>{headerRight}</View>
     </View>
   );
 }
@@ -44,6 +55,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: { textAlign: "center", fontSize: 16, fontWeight: "700", color:"#000000",},
+  headerRight: {
+    alignItems: "flex-end",
+    paddingRight: 5,
+  },
 });
 
 export default HeaderBar;

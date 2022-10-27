@@ -1,34 +1,36 @@
+
+import React from "react";
 import create from "zustand";
-import { User } from "../models";
+import { Post, User } from "../models";
 
 type MeStoreType = {
-  me: User;
+  me?: User;
   setMe: (me: User) => void;
 };
 
 export const useMeStore = create<MeStoreType>((set) => ({
-  me: {
-    id: "",
-    email: "",
-    mobile: "",
-    name: "",
-    nickname: "",
-    username: "",
-    password: "",
-    birthday: null,
-    profpic: null,
-    following: [],
-    followers: [],
-    Posts: [],
-    favorite: null,
-    BookMark: [],
-    Stories: [],
-    likePosts: [],
-    likeStories: [],
-    Comments: [],
-  },
-  setMe: (me) =>
-    set({
-      me: me,
-    }),
+  me: null,
+  setMe: (me) => set(() => ({ me })),
+  addBookMark: (post: Post) =>
+    set((state) => ({
+      me: {
+        ...state.me,
+        BookMark: [...state.me.BookMark, post],
+      },
+    })),
+}));
+
+type PostStoreType = {
+  posts: Post[];
+  setPosts: (posts: Post[]) => void;
+  addPost: (post: Post) => void;
+};
+
+export const usePostStore = create<PostStoreType>((set) => ({
+  posts: [],
+  setPosts: (posts) => set(() => ({ posts: posts })),
+  addPost: (post) =>
+    set((state) => ({
+      posts: [...state.posts, post],
+    })),
 }));

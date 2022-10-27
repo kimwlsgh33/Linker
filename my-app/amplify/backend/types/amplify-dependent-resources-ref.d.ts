@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export type AmplifyDependentResourcesAttributes = {
     "auth": {
         "TheLinker": {
@@ -24,3 +25,5 @@ export type AmplifyDependentResourcesAttributes = {
         }
     }
 }
+=======
+>>>>>>> develop

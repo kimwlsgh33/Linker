@@ -1,17 +1,13 @@
+// React Basic
 import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import DetailScreen from "../screens/DetailScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import ScreenSetting from "../screens/ScreenSetting";
-import HomeTab from "./HomeTab";
-import PostScreen from "../screens/PostScreen";
-import StoryScreen from "../screens/StoryScreen";
-import SignUp from "../screens/SignUp";
-import LoginScreen from "../screens/LoginScreen";
-import EditProfile from "../screens/EditProfile";
-import ProfileTopTab from "../components/ProfileTopTab";
+// React Navigation
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
+// navigation
+import OuterHomeTab from "./OuterHomeTab";
+import ProfileTopTab from "./ProfileTopTab";
 import FollowTab from "../components/FollowTab";
 import DiscoverScreen from "../screens/DiscoverScreen";
 import HeaderBar from "../components/HeaderBar";
@@ -35,6 +31,7 @@ import PersonalData from "../screens/PersonalData";
 import HeaderOption from "../components/HeaderOption";
 import AnotherAc from "../screens/AnotherAc";
 import NavModal from "../screens/NavModal";
+import { headerOptions } from "./navHeaderOptions";
 
 const screenOptions = ({ navigation, route }) => {
   let title;
@@ -83,19 +80,31 @@ const screenOptions = ({ navigation, route }) => {
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
-  const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={screenOptions} initialRouteName="Setting">
+    <Stack.Navigator
+      screenOptions={{ ...headerOptions }}
+      initialRouteName="OuterHomeTab"
+    >
       <Stack.Group>
         <Stack.Screen
-          name="HomeTab"
-          component={HomeTab}
+          name="OuterHomeTab"
+          component={OuterHomeTab}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Details" component={DetailScreen} />
+        <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
+        <Stack.Screen name="FollowTab" component={FollowTab} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
+      </Stack.Group>
+
+      <Stack.Group>
         <Stack.Screen name="Post" component={PostScreen} />
-        <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="Discover" component={DiscoverScreen} />
         <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
         <Stack.Screen name="FollowTab" component={FollowTab} />
@@ -109,18 +118,33 @@ function RootStack() {
         <Stack.Screen name="PersonalData" component={PersonalData} />
       </Stack.Group>
 
+      <Stack.Group>
+        <Stack.Screen name="Post" component={PostScreen} />
+        <Stack.Screen name="Discover" component={DiscoverScreen} />
+        <Stack.Screen name="Setting" component={ScreenSetting} />
+        <Stack.Screen name="AddUser2" component={AddUser2} />
+        <Stack.Screen name="Bells2" component={Bells2} />
+        <Stack.Screen name="Lock2" component={Lock2} />
+        <Stack.Screen name="Safety2" component={Safety2} />
+        <Stack.Screen name="User2" component={User2} />
+        <Stack.Screen name="Thema2" component={Thema2} />
+        <Stack.Screen name="PersonalData" component={PersonalData} />
+      </Stack.Group>
+
       <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        {/*  */}
+        <Stack.Screen name="TestStack" component={TestStack} />
+        {/*  */}
+        <Stack.Screen name="Story" component={StoryScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="LoginEr" component={LoginEr} />
+        <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="CodeCheck" component={CodeCheck} />
         <Stack.Screen name="CodeInput" component={CodeInput} />
-        <Stack.Screen name="PwRe" component={PwRe} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="TOS" component={TOSScreen} />
-        <Stack.Screen name="CreateName" component={CreateNameScreen} />
-        <Stack.Screen name="NameConfirm" component={NameConfirm} />
         <Stack.Screen name="Birthday" component={BirthdayScreen} />
+        <Stack.Screen name="PwRe" component={PwRe} />
+        <Stack.Screen name="CreateName" component={CreateNameScreen} />
         <Stack.Screen name="CompleteN" component={CompleteNScreen} />
         <Stack.Screen name="AnotherAc" component={AnotherAc} />
         <Stack.Screen name="NavModal" component={NavModal} options={{presentation: "transparentModal"}} />
@@ -128,11 +152,5 @@ function RootStack() {
     </Stack.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  headertitle: {
-    marginRight: 20,
-  },
-});
 
 export default RootStack;
