@@ -1,6 +1,6 @@
 {
   "auth": {
-    "linker": {
+    "TheLinker": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -8,7 +8,10 @@
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [],
-        "signupAttributes": [],
+        "signupAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
@@ -23,8 +26,15 @@
       }
     }
   },
+  "storage": {
+    "s3thelinkerstorage3f902eecthelinker": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  },
   "api": {
-    "linker": {
+    "TheLinker": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -44,13 +54,6 @@
           ]
         }
       }
-    }
-  },
-  "storage": {
-    "s3linkerstorage480f1d79": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
     }
   }
 }

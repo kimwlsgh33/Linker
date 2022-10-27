@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "linker",
+  "projectName": "TheLinker",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
