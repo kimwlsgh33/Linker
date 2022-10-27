@@ -22,7 +22,7 @@ export type RootStackParamList = {
   ProfileTopTab: NavigatorScreenParams<ProfileTopTabParamList>;
   FollowTab: NavigatorScreenParams<FollowTabParamList>;
   Post: undefined;
-  Story: undefined;
+  Story: any;
   SignUp: undefined;
   Login: undefined;
   EditProfile: any;
@@ -30,10 +30,18 @@ export type RootStackParamList = {
   Video: undefined;
   Discover: { post: Post };
   NotFound: undefined;
+  Setting: undefined;
+  User2: undefined;
+  Modal: any;
+  Modal2: any;
+  Modal3: undefined;
+  Modal4: any;
   Comment: undefined;
   UploadImage: undefined;
   TestModal: undefined;
   SearchResult: undefined;
+  ProfileUser: any;
+  HomeTab: NavigatorScreenParams<HomeTabParamList>;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것

@@ -51,7 +51,7 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
       <ScrollView>
-        <Stories />
+        {/* <Stories /> */}
         {/* <Post /> */}
       </ScrollView>
     </SafeAreaView>
