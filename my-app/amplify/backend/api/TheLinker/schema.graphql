@@ -1,17 +1,18 @@
-type Comment @model @auth(rules: [{ allow: public }]) {
+type Comment @model @auth(rules: [{allow: public}]) {
   id: ID!
   text: String!
   recomment: [ID]
   userID: ID! @index(name: "byUser")
   postID: ID! @index(name: "byPost")
+  likes: [ID]
 }
 
-type Tag @model @auth(rules: [{ allow: public }]) {
+type Tag @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String
 }
 
-type Terms @model @auth(rules: [{ allow: public }]) {
+type Terms @model @auth(rules: [{allow: public}]) {
   id: ID!
   Required: Boolean!
   Event: Boolean
@@ -19,13 +20,14 @@ type Terms @model @auth(rules: [{ allow: public }]) {
   User: User @hasOne
 }
 
-type Story @model @auth(rules: [{ allow: public }]) {
+type Story @model @auth(rules: [{allow: public}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   imageUri: String
+  likes: [ID]
 }
 
-type Post @model @auth(rules: [{ allow: public }]) {
+type Post @model @auth(rules: [{allow: public}]) {
   id: ID!
   userID: ID! @index(name: "byUser")
   imageUri: String!
@@ -33,9 +35,10 @@ type Post @model @auth(rules: [{ allow: public }]) {
   text: String!
   Tag: Tag @hasOne
   Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  likes: [ID]
 }
 
-type User @model @auth(rules: [{ allow: public }]) {
+type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   email: String
   mobile: String
@@ -49,9 +52,8 @@ type User @model @auth(rules: [{ allow: public }]) {
   followers: [ID]
   favorite: [ID]
   Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
-  BookMark: [Post] @hasMany(indexName: "byUser", fields: ["id"])
   Stories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
-  likePosts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
-  likeStories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
   Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  bookMark: [ID]
 }
+ 

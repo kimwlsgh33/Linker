@@ -39,8 +39,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-<<<<<<< HEAD
-=======
                 "likes": {
                     "name": "likes",
                     "isArray": true,
@@ -49,7 +47,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
->>>>>>> d90ddebc67fb2582894e3b11c40867cddc086798
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -367,68 +364,6 @@ export const schema = {
                         "associatedWith": "userID"
                     }
                 },
-<<<<<<< HEAD
-                "BookMark": {
-                    "name": "BookMark",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
-                    }
-                },
-                "Stories": {
-                    "name": "Stories",
-                    "isArray": true,
-                    "type": {
-                        "model": "Story"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
-                    }
-                },
-                "likePosts": {
-                    "name": "likePosts",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
-                    }
-                },
-                "likeStories": {
-                    "name": "likeStories",
-                    "isArray": true,
-                    "type": {
-                        "model": "Story"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
-                    }
-                },
-                "Comments": {
-                    "name": "Comments",
-                    "isArray": true,
-                    "type": {
-=======
                 "Stories": {
                     "name": "Stories",
                     "isArray": true,
@@ -447,7 +382,6 @@ export const schema = {
                     "name": "Comments",
                     "isArray": true,
                     "type": {
->>>>>>> d90ddebc67fb2582894e3b11c40867cddc086798
                         "model": "Comment"
                     },
                     "isRequired": false,
@@ -574,8 +508,6 @@ export const schema = {
                         "associatedWith": "postID"
                     }
                 },
-<<<<<<< HEAD
-=======
                 "likes": {
                     "name": "likes",
                     "isArray": true,
@@ -584,7 +516,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
->>>>>>> d90ddebc67fb2582894e3b11c40867cddc086798
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -667,8 +598,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-<<<<<<< HEAD
-=======
                 "likes": {
                     "name": "likes",
                     "isArray": true,
@@ -677,7 +606,6 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
->>>>>>> d90ddebc67fb2582894e3b11c40867cddc086798
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -732,9 +660,6 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-<<<<<<< HEAD
-    "version": "7f7f00221e7752935575883ca769d7e5"
-=======
+    "codegenVersion": "3.3.1",
     "version": "d3b2dcc3de279cb7d1cc0912a4d60ac7"
->>>>>>> d90ddebc67fb2582894e3b11c40867cddc086798
 };

@@ -52,7 +52,7 @@ const HomeTab = () => {
   const Navs = useCallback(
     () => (
       <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen name="Home" component={TestPosts} />
+        <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Reels" component={ReelsScreen} />
         <Tab.Screen name="Alert" component={AlertScreen} />

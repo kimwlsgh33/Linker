@@ -5,8 +5,6 @@ import Modal from "../components/Modal";
 import { Comment } from "../models";
 
 import { User, Post } from "../models";
-import { postsSlice } from "./slices";
-
 type ModalStoreType = {
   modal: boolean;
   shareModal: boolean;
@@ -63,6 +61,7 @@ type MeStoreType = {
 type PostStoreType = {
   posts: Post[];
   setPosts: (posts: Post[]) => void;
+  addPost: (post: Post) => void;
   addComment: ({
     comment,
     postId,
@@ -131,6 +130,7 @@ export const useMeStore = create<MeStoreType>((set) => ({
 export const usePostStore = create<PostStoreType>((set) => ({
   posts: [],
   setPosts: (posts) => set(() => ({ posts })),
+  addPost: (post) => set((state) => ({ posts: [post, ...state.posts] })),
   addComment: ({ comment, postId }) =>
     set((state) => ({
       posts: state.posts.map((post) => {

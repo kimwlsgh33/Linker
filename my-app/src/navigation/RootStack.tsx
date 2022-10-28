@@ -46,7 +46,7 @@ const Stack = createStackNavigator();
 function RootStack() {
   const { me } = useMeStore();
   return (
-    <Stack.Navigator screenOptions={{ ...headerOptions }} initialRouteName="">
+    <Stack.Navigator screenOptions={{ ...headerOptions }}>
       {!me ? (
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={LoginScreen} />

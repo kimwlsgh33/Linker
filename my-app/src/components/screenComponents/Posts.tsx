@@ -1,18 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ImageSourcePropType,
-  StyleSheet,
-  Pressable,
-  FlatList,
-} from "react-native";
-import Feather from "react-native-vector-icons/Feather";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { View, Text, FlatList } from "react-native";
+
 import { useNavigation } from "@react-navigation/native";
 import Modal from "../Modal";
 import ModalScreen from "../modal/ModalScreen";
@@ -42,7 +30,7 @@ const Posts = () => {
   //=======================================================
   //=======================================================
   const { posts, setPosts } = usePostStore();
-  const { me, setMe, addBookMark, following } = useMeStore();
+  const { setMe, addBookMark, following } = useMeStore();
 
   const getPost = async () => {
     const newPost = await DataStore.query(TPost, (post) =>
@@ -52,16 +40,15 @@ const Posts = () => {
     return newPost;
   };
 
-  const getUser = async () => {
-    const newUser = await DataStore.query(User, (user) =>
-      user.id("eq", "suntaliquaadipi")
-    );
-    return newUser[0];
-  };
+  // const getUser = async () => {
+  //   const newUser = await DataStore.query(User, (user) =>
+  //     user.id("eq", "suntaliquaadipi")
+  //   );
+  //   return newUser[0];
+  // };
 
   useEffect(() => {
     getPost().then((TPost) => setPosts(TPost));
-    getUser().then((me) => setMe(me));
   }, []);
 
   //=======================================================

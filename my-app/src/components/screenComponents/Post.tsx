@@ -111,7 +111,7 @@ const Post = ({ post }: { post: PPost }) => {
       </View>
 
       <View style={styles.view2}>
-        <Image source={{}} style={{ width: "100%", height: 380 }} />
+        <Image source={{ uri: image }} style={{ width: "100%", height: 380 }} />
       </View>
       <View style={styles.view3}>
         <TouchableOpacity
