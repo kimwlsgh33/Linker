@@ -5,11 +5,7 @@ import type {
 import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
-<<<<<<< HEAD
-import { TPost, TComment } from "../global";
-=======
 import { Post, Story } from "../models";
->>>>>>> 60c4501136423448532c4e663e703067213ebacd
 
 //=======[ Stack Navigation ]===================================================
 //================================================================================================
@@ -42,6 +38,7 @@ export type RootStackParamList = {
   SearchResult: undefined;
   ProfileUser: any;
   HomeTab: NavigatorScreenParams<HomeTabParamList>;
+  ProfileScreen: any;
 };
 
 // 스택 네비게이터 > 스크린 > props의 타입 - 건드리지 말것

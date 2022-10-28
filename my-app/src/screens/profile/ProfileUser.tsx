@@ -1,5 +1,5 @@
 // React Basic
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 // Navigation
 import ProfileTopTab from "../../navigation/ProfileTopTab";
@@ -7,16 +7,19 @@ import ProfileTopTab from "../../navigation/ProfileTopTab";
 import ProfileUserHeader from "../../components/profileComponents/ProfileUserHeader";
 import ProfileUserBody from "../../components/profileComponents/ProfileUserBody";
 // database
+import { useMeStore } from "../../store";
+import { DataStore } from "aws-amplify";
+import { User } from "../../models";
 
-const ProfileUser = ({ route }) => {
-  const { user } = route.params;
+const ProfileUser = () => {
+  const { me, setMe } = useMeStore();
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <ProfileUserHeader data={user} user={user} />
-        <ProfileUserBody data={user} user={user} />
-        <ProfileTopTab user={user} />
+        <ProfileUserHeader user={me} />
+        <ProfileUserBody user={me} />
+        <ProfileTopTab user={me} />
       </View>
     </SafeAreaView>
   );

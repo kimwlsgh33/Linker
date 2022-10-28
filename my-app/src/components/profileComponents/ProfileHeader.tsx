@@ -24,7 +24,7 @@ export const ProfileHeader = ({ data, user }) => {
             <Feather name="chevron-down" style={{ fontSize: 16 }} />
           </Text>
         </Pressable>
-        <View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Pressable
             onPress={() => navigation.navigate("Modal2", { user })}
             style={({ pressed }) => [
@@ -35,11 +35,9 @@ export const ProfileHeader = ({ data, user }) => {
           >
             <FontAwesome
               name="plus-square-o"
-              style={{ fontSize: 22, left: 90 }}
+              style={{ fontSize: 22, marginRight: 20 }}
             />
           </Pressable>
-        </View>
-        <View>
           <Pressable
             onPress={() => navigation.navigate("Modal3")}
             style={({ pressed }) => [

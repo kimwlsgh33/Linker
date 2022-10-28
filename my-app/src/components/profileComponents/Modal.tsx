@@ -75,7 +75,7 @@ function Modal({ navigation, route }) {
                 }
               />
               <Text style={styles.modalText}>{data.username}</Text>
-              <View style={{ marginLeft: "60%" }}>
+              <View style={{ justifyContent: "flex-end" }}>
                 <RadioButton
                   value="first"
                   color="#0080FF"
@@ -87,9 +87,9 @@ function Modal({ navigation, route }) {
             </View>
           </Pressable>
           <Pressable
-            onPress={() => {
-              navigation.navigate("Login");
-            }}
+            // onPress={() => {
+            //   navigation.navigate("Login");
+            // }}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -101,7 +101,7 @@ function Modal({ navigation, route }) {
                 <Entypo name="plus" style={{ fontSize: 20 }} />
               </View>
               <Text style={styles.modalText}>계정 추가</Text>
-              <View style={{ marginLeft: "60%" }}>
+              <View style={{ justifyContent: "flex-end" }}>
                 <RadioButton
                   value="second"
                   color="#0080FF"

@@ -30,12 +30,12 @@ const ProfileTopTab = ({ user }) => {
         <View>
           <Pressable
             onPress={() => {
-              navigation.navigate("Story", {
-                name: user.name,
-                image: user.imageUri,
+              navigation.navigate("Story", /*{
                 userName: user.username,
-              });
-              storyPressed(user.id);
+                name: user.name,
+                image: user.profpic,
+              }*/);
+              // storyPressed(user.id);
             }}
             style={({ pressed }) => [
               {

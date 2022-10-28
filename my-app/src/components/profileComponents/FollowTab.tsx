@@ -10,10 +10,30 @@ import {
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useNavigation } from "@react-navigation/native";
 import Ionic from "react-native-vector-icons/Ionicons";
+import { useMeStore } from "../../store";
+import { DataStore } from "aws-amplify";
+import { User } from "../../models";
 
-const FollowTab = ({ user }) => {
+const FollowTab = () => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
+  const { me, setMe } = useMeStore();
+
+  const users = async () => {
+    const newUser = await DataStore.query(User, (test) =>
+      test.name("contains", "rlawlsgh")
+    );
+    console.log(newUser);
+    return newUser[0];
+  };
+  const onSetMe = () => {
+    users().then((test) => setMe(test));
+  };
+
+  const otherUser = () => {
+    navigation.navigate("ProfileUser");
+    onSetMe();
+  };
 
   let circuls = [];
   let numberOfCirculs = 15;
@@ -24,8 +44,6 @@ const FollowTab = ({ user }) => {
         {index === 0 ? (
           <View style={{ flexDirection: "row" }}>
             <Pressable
-              onPress={() => navigation.navigate("ProfileUser", { user })}
-              // 다른 user profile
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
@@ -43,8 +61,7 @@ const FollowTab = ({ user }) => {
         ) : (
           <View style={{ flexDirection: "row" }}>
             <Pressable
-              onPress={() => navigation.navigate("ProfileUser", { user })}
-              // 다른 user profile
+              onPress={otherUser}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

@@ -2,9 +2,29 @@ import React from "react";
 import { SafeAreaView, Pressable, StyleSheet, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
+import { useMeStore } from "../../store";
+import { DataStore } from "aws-amplify";
+import { User } from "../../models";
 
-export const ProfileUserHeader = ({ data, user }) => {
+export const ProfileUserHeader = ({ user }) => {
   const navigation = useNavigation();
+
+  const { me, setMe } = useMeStore();
+  const users = async () => {
+    const newUser = await DataStore.query(User, (test) =>
+      test.name("contains", "shkim")
+    );
+    console.log(newUser);
+    return newUser[4];
+  };
+  const onSetMe = () => {
+    users().then((test) => setMe(test));
+  };
+
+  const otherUser = () =>{
+    navigation.navigate("ProfileScreen");
+    onSetMe();
+  }
 
   return (
     <SafeAreaView>
@@ -17,7 +37,7 @@ export const ProfileUserHeader = ({ data, user }) => {
           }}
         >
           <Pressable
-            onPress={() => navigation.goBack()}
+            onPress={otherUser}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,
@@ -29,7 +49,7 @@ export const ProfileUserHeader = ({ data, user }) => {
               style={{ fontSize: 20, marginRight: 20 }}
             />
           </Pressable>
-          <Text style={styles.text}>{data.username}</Text>
+          <Text style={styles.text}>{user.username}</Text>
         </View>
         <View style={{ justifyContent: "flex-end", flexDirection: "row" }}>
           <Pressable

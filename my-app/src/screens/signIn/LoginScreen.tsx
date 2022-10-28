@@ -28,19 +28,6 @@ import { User } from "../../models";
 // }
 
 const LoginScreen = () => {
-  // const { me, setMe } = useMeStore();
-
-  // const users = async () => {
-  //   const newUser = DataStore.query(User, (test) =>
-  //     test.name("contains", "rlawlsgh97")
-  //   );
-  //   return newUser[0];
-  // };
-
-  // useEffect(() => {
-  //   users().then((test) => setMe(test));
-  // }, []);
-
   const navigation = useNavigation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");

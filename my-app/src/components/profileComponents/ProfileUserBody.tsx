@@ -11,32 +11,34 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
+import { useMeStore } from "../../store";
 
 // 부모컴포넌트로부터 props전달받음
-export const ProfileUserBody = ({ data, user }) => {
+export const ProfileUserBody = ({ user }) => {
   const navigation = useNavigation();
+  // const { me, setMe } = useMeStore();
 
-  const storyPressed = useCallback(
-    (id) => {
-      if (user.id === id) {
-        return {
-          ...user,
-          show: true,
-        };
-      }
-      return user;
-    },
-    [user]
-  );
+  // const storyPressed = useCallback(
+  //   (id) => {
+  //     if (user.id === id) {
+  //       return {
+  //         ...user,
+  //         show: true,
+  //       };
+  //     }
+  //     return user;
+  //   },
+  //   [user]
+  // );
 
-  const goToStory = () => {
-    navigation.navigate("Story", {
-      name: user.name,
-      image: user.image,
-      userName: user.userName,
-    });
-    storyPressed(user.id);
-  };
+  // const goToStory = () => {
+  //   navigation.navigate("Story", {
+  //     name: user.name,
+  //     image: user.image,
+  //     userName: user.userName,
+  //   });
+  //   storyPressed(user.id);
+  // };
 
   return (
     <SafeAreaView>
@@ -44,7 +46,7 @@ export const ProfileUserBody = ({ data, user }) => {
         <View style={styles.profileHeader}>
           <View>
             <Pressable
-              onPress={goToStory}
+              // onPress={goToStory}
               style={({ pressed }) => [
                 Platform.OS === "ios" &&
                   pressed && {
@@ -55,13 +57,13 @@ export const ProfileUserBody = ({ data, user }) => {
             >
               <Image
                 source={
-                  data.profpic
-                    ? { uri: data.profpic }
+                  user.profpic
+                    ? { uri: user.profpic }
                     : require("../../../assets/images/user.png")
                 }
                 style={styles.profileStyle}
               />
-              <Text style={styles.profileText}>{data.name}</Text>
+              <Text style={styles.profileText}>{user.name}</Text>
             </Pressable>
           </View>
           <Pressable
@@ -76,7 +78,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.Posts?.length || 0}
+                {user.Posts?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -91,7 +93,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.followers?.length || 0}
+                {user.followers?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
@@ -106,7 +108,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.following?.length || 0}
+                {user.following?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>
@@ -183,7 +185,7 @@ export const ProfileUserBody = ({ data, user }) => {
         >
           <View style={styles.roundView}>
             <Pressable
-              onPress={goToStory}
+              // onPress={goToStory}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,
@@ -199,7 +201,7 @@ export const ProfileUserBody = ({ data, user }) => {
               </View>
             </Pressable>
             <Pressable
-              onPress={goToStory}
+              // onPress={goToStory}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

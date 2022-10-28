@@ -38,6 +38,7 @@ import Modal2 from "../components/profileComponents/Modal2";
 import Modal3 from "../components/profileComponents/Modal3";
 import ProfileUser from "../screens/profile/ProfileUser";
 import SearchResultScreen from "../screens/search/SearchResultScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 import { useMeStore } from "../store";
 import Posts from "../components/screenComponents/Posts";
 
@@ -82,6 +83,7 @@ function RootStack() {
             <Stack.Screen name="HomeTab" component={HomeTab} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="ProfileUser" component={ProfileUser} />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="SearchResult" component={SearchResultScreen} />
           </Stack.Group>
 
