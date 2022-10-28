@@ -22,13 +22,13 @@ export const ProfileBody = ({ data, user }) => {
 
   const { me, setMe } = useMeStore();
 
-  const users = async () => {
-    const newUser = await DataStore.query(User, (test) =>
-      test.name("contains", "kimwlsgh")
-    );
-    console.log(newUser);
-    return newUser[0];
-  };
+  // const users = async () => {
+  //   const newUser = await DataStore.query(User, (test) =>
+  //     test.name("contains", "kimwlsgh")
+  //   );
+  //   console.log(newUser);
+  //   return newUser[0];
+  // };
 
   const storyPressed = useCallback(
     (id) => {
@@ -59,9 +59,9 @@ export const ProfileBody = ({ data, user }) => {
       profpic: data.profpic,
     });
 
-  const onSetMe = () => {
-    users().then((test) => setMe(test));
-  };
+  // const onSetMe = () => {
+  //   users().then((test) => setMe(test));
+  // };
 
   return (
     <SafeAreaView>
@@ -201,7 +201,7 @@ export const ProfileBody = ({ data, user }) => {
               </View>
             </Pressable>
             <Pressable
-              onPress={onSetMe}
+              // onPress={onSetMe}
               style={({ pressed }) => [
                 {
                   opacity: pressed ? 0.2 : 1,

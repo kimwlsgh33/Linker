@@ -30,6 +30,7 @@ export declare class Comment {
   readonly recomment?: (string | null)[] | null;
   readonly userID: string;
   readonly postID: string;
+  readonly likes?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Comment, CommentMetaData>);
@@ -72,11 +73,9 @@ export declare class User {
   readonly followers?: (string | null)[] | null;
   readonly favorite?: (string | null)[] | null;
   readonly Posts?: (Post | null)[] | null;
-  readonly BookMark?: (Post | null)[] | null;
   readonly Stories?: (Story | null)[] | null;
-  readonly likePosts?: (Post | null)[] | null;
-  readonly likeStories?: (Story | null)[] | null;
   readonly Comments?: (Comment | null)[] | null;
+  readonly bookMark?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -91,6 +90,7 @@ export declare class Post {
   readonly text: string;
   readonly Tag?: Tag | null;
   readonly Comments?: (Comment | null)[] | null;
+  readonly likes?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly postTagId?: string | null;
@@ -102,6 +102,7 @@ export declare class Story {
   readonly id: string;
   readonly userID: string;
   readonly imageUri?: string | null;
+  readonly likes?: (string | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Story, StoryMetaData>);

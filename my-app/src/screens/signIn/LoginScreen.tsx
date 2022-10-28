@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState, useEffect, useEffect } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import React from "react";
 import {
   TouchableWithoutFeedback,
@@ -14,12 +14,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
-import { useUserContext } from "../hooks/UserContext";
+import { useUserContext } from "../../hooks/UserContext";
 import { SHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
-import { useMeStore } from "../store";
+import { useMeStore } from "../../store";
 import { DataStore } from "aws-amplify";
-import { User } from "../models";
+import { User } from "../../models";
 
 // function getHashedPassword(pw) {
 //   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
@@ -29,7 +29,6 @@ import { User } from "../models";
 // }
 
 const LoginScreen = () => {
-
   // const { me, setMe } = useMeStore();
 
   // const users = async () => {

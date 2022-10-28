@@ -15,7 +15,7 @@ export const useMeStore = create<MeStoreType>((set) => ({
     set((state) => ({
       me: {
         ...state.me,
-        BookMark: [...state.me.BookMark, post],
+        BookMark: [...state.me.bookMark, post],
       },
     })),
 }));
