@@ -1,28 +1,28 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
 type CommentMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 type TagMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 type TermsMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 type UserMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 type PostMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 type StoryMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
+  readOnlyFields: "createdAt" | "updatedAt";
+};
 
 export declare class Comment {
   readonly id: string;
@@ -33,7 +33,12 @@ export declare class Comment {
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Comment, CommentMetaData>);
-  static copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
+  static copyOf(
+    source: Comment,
+    mutator: (
+      draft: MutableModel<Comment, CommentMetaData>
+    ) => MutableModel<Comment, CommentMetaData> | void
+  ): Comment;
 }
 
 export declare class Tag {
@@ -42,7 +47,12 @@ export declare class Tag {
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Tag, TagMetaData>);
-  static copyOf(source: Tag, mutator: (draft: MutableModel<Tag, TagMetaData>) => MutableModel<Tag, TagMetaData> | void): Tag;
+  static copyOf(
+    source: Tag,
+    mutator: (
+      draft: MutableModel<Tag, TagMetaData>
+    ) => MutableModel<Tag, TagMetaData> | void
+  ): Tag;
 }
 
 export declare class Terms {
@@ -55,7 +65,12 @@ export declare class Terms {
   readonly updatedAt?: string | null;
   readonly termsUserId?: string | null;
   constructor(init: ModelInit<Terms, TermsMetaData>);
-  static copyOf(source: Terms, mutator: (draft: MutableModel<Terms, TermsMetaData>) => MutableModel<Terms, TermsMetaData> | void): Terms;
+  static copyOf(
+    source: Terms,
+    mutator: (
+      draft: MutableModel<Terms, TermsMetaData>
+    ) => MutableModel<Terms, TermsMetaData> | void
+  ): Terms;
 }
 
 export declare class User {
@@ -80,7 +95,12 @@ export declare class User {
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<User, UserMetaData>);
-  static copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+  static copyOf(
+    source: User,
+    mutator: (
+      draft: MutableModel<User, UserMetaData>
+    ) => MutableModel<User, UserMetaData> | void
+  ): User;
 }
 
 export declare class Post {
@@ -95,7 +115,12 @@ export declare class Post {
   readonly updatedAt?: string | null;
   readonly postTagId?: string | null;
   constructor(init: ModelInit<Post, PostMetaData>);
-  static copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
+  static copyOf(
+    source: Post,
+    mutator: (
+      draft: MutableModel<Post, PostMetaData>
+    ) => MutableModel<Post, PostMetaData> | void
+  ): Post;
 }
 
 export declare class Story {
@@ -105,5 +130,10 @@ export declare class Story {
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Story, StoryMetaData>);
-  static copyOf(source: Story, mutator: (draft: MutableModel<Story, StoryMetaData>) => MutableModel<Story, StoryMetaData> | void): Story;
+  static copyOf(
+    source: Story,
+    mutator: (
+      draft: MutableModel<Story, StoryMetaData>
+    ) => MutableModel<Story, StoryMetaData> | void
+  ): Story;
 }

@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Stories from "../../components/screenComponents/Stories";
-import Post from "../../components/screenComponents/Post";
+
 import Feather from "react-native-vector-icons/Feather";
+import Posts from "../../components/screenComponents/Posts";
+import TestPost from "../../components/screenComponents/TestPost";
 
 const { width } = Dimensions.get("screen");
 
@@ -50,10 +52,9 @@ function HomeScreen({ navigation }) {
           <Feather name="send" style={{ fontSize: 24 }} />
         </View>
       </View>
-      <ScrollView>
-        {/* <Stories /> */}
-        {/* <Post /> */}
-      </ScrollView>
+
+      <Stories />
+      <Posts />
     </SafeAreaView>
   );
 }

@@ -36,7 +36,7 @@ export type RootStackParamList = {
   Modal2: any;
   Modal3: undefined;
   Modal4: any;
-  Comment: undefined;
+  Comment: { text: string; comments: Comment[]; id: string };
   UploadImage: undefined;
   TestModal: undefined;
   SearchResult: undefined;

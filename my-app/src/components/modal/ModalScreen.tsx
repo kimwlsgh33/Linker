@@ -11,212 +11,253 @@ import Orcticon from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import events from "../../libs/eventEmitter";
+import { useMeStore, useModalStore, usePostStore } from "../../store";
+import { Post, User } from "../../models";
 
 type ModalProps = {
   id: any;
-  bookMark: boolean;
-  favorite: boolean;
-  follow: boolean;
-  userId: string;
 };
 
-const ModalScreen = ({
-  id,
-  userId,
-  bookMark,
-  favorite,
-  follow,
-}: ModalProps) => {
-  return (
-    <View
-      style={{
-        backgroundColor: "#424242",
-        height: "60%",
-        borderTopEndRadius: 25,
-        borderTopStartRadius: 25,
-      }}
-    >
-      <View
-        style={{
-          width: "100%",
-          height: "30%",
-          flexDirection: "row",
-          marginTop: 20,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TouchableOpacity
-          style={[styles.topbox]}
-          onPress={() => {
-            events.emit("shareModal");
-          }}
-        >
-          <View>
-            <Entypo name="share-alternative" size={25} color="#fff" />
-            <Text style={styles.textColor}>공유</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.topbox]}
-          onPress={() => {
-            events.emit("linkModal");
-          }}
-        >
-          <View>
-            <AntDesign name="link" size={25} color="#fff" />
-            <Text style={styles.textColor}>링크</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.topbox]}
-          onPress={() => {
-            events.emit("save", id);
-          }}
-        >
-          {bookMark === false ? (
-            <View>
-              <Feather name="bookmark" size={25} color="#fff" />
-              <Text style={styles.textColor}>저장</Text>
-            </View>
-          ) : (
-            <View>
-              <Orcticon name="bookmark-slash" size={25} color="#fff" />
-              <Text style={styles.textColor}>취소</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.topbox]}
-          onPress={() => {
-            events.emit("qrModal");
-          }}
-        >
-          <View>
-            <Ionicons
-              name="qr-code-outline"
-              size={25}
-              color="#fff"
-              style={{ marginLeft: 10 }}
-            />
-            <Text style={styles.textColor}>QR코드</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+const ModalScreen = ({ id }: ModalProps) => {
+  const { me, setMe, following, addBookMark, favorite } = useMeStore();
+  const { posts, setPosts } = usePostStore();
+  const {
+    setModal,
+    setShareModal,
+    setLinkModal,
+    setBookMark,
+    setQrModal,
+    setFavorite,
+    setIsFavorite,
+    setFollow,
+    setIsFollowed,
+  } = useModalStore();
 
-      <View
-        style={{
-          width: "100%",
-          height: "27%",
-          alignItems: "center",
-        }}
-      >
+  const shareModalState = () => {
+    setModal(false);
+    setShareModal(true);
+  };
+
+  const linkModalState = () => {
+    setModal(false);
+    setLinkModal(true);
+  };
+
+  const save = (id) => {
+    setModal(false);
+    addBookMark(id);
+  };
+
+  const qrModalState = () => {
+    setModal(false);
+    setQrModal(true);
+  };
+
+  const favoriteState = (id) => {
+    setModal(false);
+    favorite(id);
+  };
+
+  const followState = (userId) => {
+    following(userId);
+    setModal(false);
+    setFollow(true);
+  };
+
+  return (
+    <>
+      {posts.map((post) => {
         <View
-          style={[
-            styles.centerBottomBox,
-            {
-              marginBottom: 3,
-            },
-          ]}
+          style={{
+            backgroundColor: "#424242",
+            height: "60%",
+            borderTopEndRadius: 25,
+            borderTopStartRadius: 25,
+          }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              events.emit("favorite", id);
+          <View
+            style={{
+              width: "100%",
+              height: "30%",
+              flexDirection: "row",
+              marginTop: 20,
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            {favorite === false ? (
-              <View style={{ flexDirection: "row" }}>
-                <AntDesign
-                  name="star"
+            <TouchableOpacity
+              style={[styles.topbox]}
+              onPress={() => {
+                shareModalState();
+              }}
+            >
+              <View>
+                <Entypo name="share-alternative" size={25} color="#fff" />
+                <Text style={styles.textColor}>공유</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.topbox]}
+              onPress={() => {
+                linkModalState();
+              }}
+            >
+              <View>
+                <AntDesign name="link" size={25} color="#fff" />
+                <Text style={styles.textColor}>링크</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.topbox]}
+              onPress={() => {
+                save(post.id);
+              }}
+            >
+              {me?.bookMark.includes(post.id) === false ? (
+                <View>
+                  <Feather name="bookmark" size={25} color="#fff" />
+                  <Text style={styles.textColor}>저장</Text>
+                </View>
+              ) : (
+                <View>
+                  <Orcticon name="bookmark-slash" size={25} color="#fff" />
+                  <Text style={styles.textColor}>취소</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.topbox]}
+              onPress={() => {
+                qrModalState();
+              }}
+            >
+              <View>
+                <Ionicons
+                  name="qr-code-outline"
                   size={25}
                   color="#fff"
                   style={{ marginLeft: 10 }}
                 />
-                <Text style={[styles.textColor, { marginLeft: 10 }]}>
-                  즐겨찾기에 추가
-                </Text>
+                <Text style={styles.textColor}>QR코드</Text>
               </View>
-            ) : (
-              <View style={{ flexDirection: "row" }}>
-                <MaterialCommunityIcons
-                  name="star-off-outline"
-                  size={25}
-                  color="#fff"
-                  style={{ marginLeft: 10 }}
-                />
-                <Text style={[styles.textColor, { marginLeft: 10 }]}>
-                  즐겨찾기에서 삭제
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-        <View style={styles.centerBottomBox}>
-          <TouchableOpacity
-            onPress={() => {
-              events.emit("follow", userId, follow);
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              width: "100%",
+              height: "27%",
+              alignItems: "center",
             }}
           >
-            {follow === true ? (
-              <View style={{ flexDirection: "row" }}>
-                <AntDesign
-                  name="deleteuser"
-                  size={25}
-                  color="#fff"
-                  style={{ marginLeft: 10 }}
-                />
-                <Text style={[styles.textColor, { marginLeft: 10 }]}>
-                  팔로우 취소
-                </Text>
-              </View>
-            ) : (
-              <View style={{ flexDirection: "row" }}>
-                <SimpleLineIcons
-                  name="user-follow"
-                  size={25}
-                  color="#fff"
-                  style={{ marginLeft: 10 }}
-                />
-                <Text style={[styles.textColor, { marginLeft: 10 }]}>
-                  팔로우
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={{ width: "100%", height: "27%", alignItems: "center" }}>
-        <View style={[styles.centerBottomBox, { marginBottom: 3 }]}>
-          <FontAweSome5
-            name="random"
-            size={25}
-            color="#fff"
-            style={{ marginLeft: 10 }}
-          />
-          <Text style={[styles.textColor, { marginLeft: 10 }]}>
-            이 게시물과 유사한 게시물
-          </Text>
-        </View>
-        <View style={[styles.centerBottomBox, { marginBottom: 3 }]}>
-          <Evilcons
-            name="sc-odnoklassniki"
-            size={25}
-            color="#fff"
-            style={{ marginLeft: 10 }}
-          />
-          <Text style={[styles.textColor, { marginLeft: 10 }]}>숨기기</Text>
-        </View>
-        <View style={styles.centerBottomBox}>
-          <MaterialIcons
-            name="report"
-            size={25}
-            color="#fff"
-            style={{ marginLeft: 10 }}
-          />
-          <Text style={[styles.textColor, { marginLeft: 10 }]}>신고</Text>
-        </View>
-      </View>
-    </View>
+            <View
+              style={[
+                styles.centerBottomBox,
+                {
+                  marginBottom: 3,
+                },
+              ]}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  favorite(post.userID);
+                }}
+              >
+                {me.favorite.includes(post.userID) === false ? (
+                  <View style={{ flexDirection: "row" }}>
+                    <AntDesign
+                      name="star"
+                      size={25}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                    />
+                    <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                      즐겨찾기에 추가
+                    </Text>
+                  </View>
+                ) : (
+                  <View style={{ flexDirection: "row" }}>
+                    <MaterialCommunityIcons
+                      name="star-off-outline"
+                      size={25}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                    />
+                    <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                      즐겨찾기에서 삭제
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+            <View style={styles.centerBottomBox}>
+              <TouchableOpacity
+                onPress={() => {
+                  followState(post.userID);
+                }}
+              >
+                {me.following.includes(post.userID) === true ? (
+                  <View style={{ flexDirection: "row" }}>
+                    <AntDesign
+                      name="deleteuser"
+                      size={25}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                    />
+                    <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                      팔로우 취소
+                    </Text>
+                  </View>
+                ) : (
+                  <View style={{ flexDirection: "row" }}>
+                    <SimpleLineIcons
+                      name="user-follow"
+                      size={25}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                    />
+                    <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                      팔로우
+                    </Text>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ width: "100%", height: "27%", alignItems: "center" }}>
+            <View style={[styles.centerBottomBox, { marginBottom: 3 }]}>
+              <FontAweSome5
+                name="random"
+                size={25}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={[styles.textColor, { marginLeft: 10 }]}>
+                이 게시물과 유사한 게시물
+              </Text>
+            </View>
+            <View style={[styles.centerBottomBox, { marginBottom: 3 }]}>
+              <Evilcons
+                name="sc-odnoklassniki"
+                size={25}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={[styles.textColor, { marginLeft: 10 }]}>숨기기</Text>
+            </View>
+            <View style={styles.centerBottomBox}>
+              <MaterialIcons
+                name="report"
+                size={25}
+                color="#fff"
+                style={{ marginLeft: 10 }}
+              />
+              <Text style={[styles.textColor, { marginLeft: 10 }]}>신고</Text>
+            </View>
+          </View>
+        </View>;
+      })}
+    </>
   );
 };
 
