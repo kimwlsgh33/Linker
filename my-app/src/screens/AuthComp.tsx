@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Platform } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { useMeStore } from "../store";
 
-const AuthComp = () => {
-  const navigation = useNavigation();
+const AuthComp = ({ route }) => {
+  const { setMe } = useMeStore();
 
-  const goWelcome = () => {
-    navigation.navigate("Welcome" as any);
+  const finalSignIn = () => {
+    setMe(route.params.user);
   };
 
   const LinearGradientProps = {
@@ -31,7 +31,7 @@ const AuthComp = () => {
             Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
           ]}
           android_ripple={{ color: "#CCC" }}
-          onPress={goWelcome}
+          onPress={finalSignIn}
         >
           <Feather name="x" size={40} color="#000" />
         </Pressable>
@@ -86,7 +86,7 @@ const AuthComp = () => {
             Platform.select({ ios: { opacity: pressed ? 0.5 : 1 } }),
           ]}
           android_ripple={{ color: "#FFF" }}
-          onPress={goWelcome}
+          onPress={finalSignIn}
         >
           <Text style={styles.buttonText}>다음</Text>
         </Pressable>

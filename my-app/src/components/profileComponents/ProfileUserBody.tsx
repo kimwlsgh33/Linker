@@ -11,8 +11,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
-import { DataStore } from "@aws-amplify/datastore";
-import { User } from "../../models";
 
 // 부모컴포넌트로부터 props전달받음
 export const ProfileUserBody = ({ data, user }) => {
@@ -33,9 +31,9 @@ export const ProfileUserBody = ({ data, user }) => {
 
   const goToStory = () => {
     navigation.navigate("Story", {
-      name: user[0].name,
-      image: user[0].image,
-      userName: user[0].userName,
+      name: user.name,
+      image: user.image,
+      userName: user.userName,
     });
     storyPressed(user.id);
   };
@@ -78,7 +76,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.Posts.length}
+                {data.Posts?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -93,7 +91,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.followers.length}
+                {data.followers?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
@@ -108,7 +106,7 @@ export const ProfileUserBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.following.length}
+                {data.following?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>

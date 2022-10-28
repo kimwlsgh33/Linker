@@ -5,7 +5,6 @@ import PostAndReels from "../../components/search/PostAndReels";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // import SearchProfile from "../../components/SearchProfile";
-import { TPost, TPostAndReels, TReel } from "../../global";
 // libs
 import NotFound from "../NotFound";
 import SearchBar from "./SearchBar";
@@ -19,8 +18,9 @@ import Animated, {
 } from "react-native-reanimated";
 import useToggle from "../../hooks/useToggle";
 import { DataStore } from "aws-amplify";
-import { Post } from "../../models";
+import { Post as TPost } from "../../models";
 import SearchPost from "../../components/search/SearchPost";
+import TestPost from "../test/screens/TestPost";
 //========================
 
 /*
@@ -123,13 +123,13 @@ stories.forEach((item, idx)=> {
 function SearchScreen() {
   // 검색창 피드 데이터
   const [paR, setPaR] = useState<any>([]);
+  const [refreshing, setRefreshing] = useState();
 
   // 결과창 표시 상태에 따라, 애니메이션을 변경하기 위한 상태값
   const [contentsVisible, toggleContentsVisible] = useToggle(true);
 
   const getPosts = async () => {
-    const posts = await DataStore.query(Post);
-
+    const posts = await DataStore.query(TPost);
     setPaR(posts);
   };
 
@@ -151,14 +151,11 @@ function SearchScreen() {
               //   reels={item.reels}
               //   index={index}
               // />
-              <SearchPost post={item} key={index} />
+              <SearchPost post={item} index={index} />
             )}
             numColumns={3}
             refreshControl={
-              <RefreshControl
-                refreshing={false}
-                onRefresh={() => console.log("검색창 새로고침")}
-              />
+              <RefreshControl refreshing={false} onRefresh={getPosts} />
             }
             contentContainerStyle={{ paddingBottom: 100 }}
             ListEmptyComponent={<NotFound />}

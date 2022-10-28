@@ -1,4 +1,3 @@
-
 import React from "react";
 import create from "zustand";
 import { Post, User } from "../models";
@@ -31,6 +30,6 @@ export const usePostStore = create<PostStoreType>((set) => ({
   setPosts: (posts) => set(() => ({ posts: posts })),
   addPost: (post) =>
     set((state) => ({
-      posts: [...state.posts, post],
+      posts: [post, ...state.posts],
     })),
 }));

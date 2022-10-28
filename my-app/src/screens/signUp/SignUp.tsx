@@ -13,7 +13,6 @@ import {
   Linking,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
 import { Auth } from "aws-amplify";
 import { LinearGradient } from "expo-linear-gradient";
 import { SHA256 } from "crypto-js";
@@ -23,7 +22,7 @@ import Base64 from "crypto-js/enc-base64";
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
 // }
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [nick, setNick] = useState("");
@@ -45,8 +44,6 @@ const SignUp = () => {
   ref_input[1] = useRef(null);
   ref_input[2] = useRef(null);
   ref_input[3] = useRef(null);
-
-  const navigation = useNavigation();
 
   const goLogin = () => {
     navigation.navigate("Login" as any);

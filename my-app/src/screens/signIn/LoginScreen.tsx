@@ -83,7 +83,7 @@ const LoginScreen = () => {
         console.log("error signing in", error);
         return;
       }
-      navigation.navigate("Welcome" as any);
+      // navigation.navigate("HomeTab" as any);
     };
 
     const SignInPhone = async () => {
@@ -104,7 +104,7 @@ const LoginScreen = () => {
         console.log("error signing in", error);
         return;
       }
-      navigation.navigate("Welcome" as any);
+      // navigation.navigate("Welcome" as any);
     };
     if (regExp.test(username)) {
       SignInEmail();

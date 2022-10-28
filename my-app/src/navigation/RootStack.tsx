@@ -62,12 +62,8 @@ function RootStack() {
         </Stack.Group>
       ) : (
         <>
-          <Stack.Group>
-            <Stack.Screen
-              name="OuterHomeTab"
-              component={OuterHomeTab}
-              options={{ headerShown: false }}
-            />
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
 
             <Stack.Screen name="Post" component={PostScreen} />
             <Stack.Screen name="Story" component={StoryScreen} />
