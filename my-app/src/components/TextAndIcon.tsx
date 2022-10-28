@@ -8,12 +8,12 @@ function TextAndIcon({ text, iconName, iconName2, iconSize }) {
     <View style={styles.container}>
       <View style={styles.LeftContent}>
         <View style={styles.IconLeft}>
-          <Icon name={iconName2} size={iconSize} color="#FFFAFA" />
+          <Icon name={iconName2} size={iconSize} color="#000000" />
         </View>
         <Text style={styles.menutext}>{text}</Text>
       </View>
       <View style={styles.IconRight}>
-        <Icon name={iconName} size={iconSize} color="#FFFAFA" />
+        <Icon name={iconName} size={iconSize} color="#000000" />
       </View>
     </View>
   );
@@ -22,14 +22,13 @@ function TextAndIcon({ text, iconName, iconName2, iconSize }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderWidth: 1,
     justifyContent: "space-between",
     margin: 15,
   },
   menutext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#FFFAFA",
+    color: "#000000",
     marginLeft: 10,
   },
   IconRight: {

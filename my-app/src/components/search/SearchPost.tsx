@@ -1,21 +1,36 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { Storage } from "aws-amplify";
+import React, { useEffect, useState } from "react";
 import { Dimensions, Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Post } from "../../models";
 
 type SearchPostProps = {
   post: Post;
-  key: number;
+  index: number;
 };
 
 const { width } = Dimensions.get("window");
 const POST_WIDTH = (width - 6) / 3;
 
-function SearchPost({ post, key }: SearchPostProps) {
+function SearchPost({ post, index }: SearchPostProps) {
   const navigation = useNavigation();
   // 0 ~ 3 random number
   // const random = Math.floor(Math.random() * 3);
+  const [image, setImage] = useState("");
+
+  const getImage = async (key: string) => {
+    return Storage.get(key, {
+      download: false,
+    });
+  };
+
+  useEffect(() => {
+    (async () => {
+      const newImage = await getImage(post.imageUri);
+      setImage(newImage);
+    })();
+  }, []);
 
   return (
     <TouchableOpacity
@@ -25,18 +40,20 @@ function SearchPost({ post, key }: SearchPostProps) {
           height: POST_WIDTH,
           marginBottom: 3,
         },
-        { marginRight: key % 3 === 2 ? 0 : 3 },
+        { marginRight: index % 3 === 2 ? 0 : 3 },
       ]}
       onPress={() => navigation.navigate("Discover", { post })}
-      key={key}
+      key={post.id}
     >
-      <Image
-        source={{ uri: post.imageUri }}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      />
+      {image && (
+        <Image
+          source={{ uri: image }}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        />
+      )}
       <View
         style={{
           position: "absolute",

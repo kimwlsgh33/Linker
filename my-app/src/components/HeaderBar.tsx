@@ -42,18 +42,19 @@ function HeaderBar({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#ffffff",
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 10,
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#ffffff",
   },
   sameWidth: {
     width: "33%",
     justifyContent: "center",
   },
-  title: { textAlign: "center", fontSize: 16, fontWeight: "700" },
+  title: { textAlign: "center", fontSize: 16, fontWeight: "700", color:"#000000",},
   headerRight: {
     alignItems: "flex-end",
     paddingRight: 5,

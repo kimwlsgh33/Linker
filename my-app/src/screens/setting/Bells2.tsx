@@ -1,28 +1,15 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
   Pressable,
   ScrollView,
   Switch,
-  Alert,
   Modal,
 } from "react-native";
-import { createAppContainer } from "react-navigation";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/AntDesign";
-import icon from "react-native-vector-icons/ionicons";
-import TextAndIcon from "../../components/TextAndIcon";
-import IconLeft from "../../components/IconLeft";
-import TextStyle from "../../components/TextStyle";
-import ScreenSetting from "./ScreenSetting";
 
-const Stack = createNativeStackNavigator();
-
-function Bells2({ navigation, route }) {
+function Bells2() {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
@@ -85,19 +72,17 @@ function Bells2({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 
   Bells2text: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 15,
     fontWeight: "bold",
     margin: 10,
   },
 
   Bells2textBox: {
-    borderWidth: 1,
-    borderBottomColor: "rgba(60,60,60,0.3)",
   },
 
   toggleBox: {
@@ -107,7 +92,7 @@ const styles = StyleSheet.create({
 
   ModalView: {
     width: "80%",
-    backgroundColor: "#151515",
+    backgroundColor: "#ffffff",
   },
 
   ModalBox: {
@@ -117,19 +102,18 @@ const styles = StyleSheet.create({
   },
 
   ModalText: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 15,
-    fontWeight: "bold",
     margin: 10,
   },
 
   ModalInnerBox: {
-    borderWidth: 1,
-    borderBottomColor: "#333333",
+    borderBottomWidth: 1,
+    borderBottomColor: "#bababa",
   },
 
   ModalBoxText: {
-    color: "#FFFAFA",
+    color: "#000000",
     fontSize: 13,
     fontWeight: "bold",
     textAlign: "center",

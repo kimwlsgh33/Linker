@@ -14,7 +14,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
-import { useUserContext } from "../../hooks/UserContext";
 import { SHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
 import { useMeStore } from "../../store";
@@ -51,7 +50,6 @@ const LoginScreen = () => {
 
   const hashDigest = SHA256("1234" + password);
 
-  const { setUser } = useUserContext();
   const { me, setMe } = useMeStore();
 
   const username = id;
@@ -85,26 +83,28 @@ const LoginScreen = () => {
         console.log("error signing in", error);
         return;
       }
-      navigation.navigate("Welcome" as any);
+      // navigation.navigate("HomeTab" as any);
     };
 
     const SignInPhone = async () => {
       try {
         const user = await Auth.signIn(forPhone(username), password);
-        const UserInfo = {
-          username: user.attributes.phone_number,
-          name: user.attributes.name,
-          nickname: user.attributes.nickname,
-          password: user.attributes.password,
-        };
-        setUser(UserInfo);
-        console.log(user);
+        // const UserInfo = {
+        //   username: user.attributes.phone_number,
+        //   name: user.attributes.name,
+        //   nickname: user.attributes.nickname,
+        //   password: user.attributes.password,
+        // };
+        const realMe = await DataStore.query(User, (u) =>
+          u.username("eq", user.username)
+        );
+        setMe(realMe[0]);
       } catch (error) {
         alert("전화번호 또는 비밀번호를 확인해 주세요.");
         console.log("error signing in", error);
         return;
       }
-      navigation.navigate("Welcome" as any);
+      // navigation.navigate("Welcome" as any);
     };
     if (regExp.test(username)) {
       SignInEmail();

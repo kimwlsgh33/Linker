@@ -201,7 +201,7 @@ function UploadPost({ navigation }) {
     console.log("exists tag : ", exists);
 
     // 태그 없으면, 새로운 태그 만듬
-    if (!exists) {
+    if (exists.length === 0) {
       exists[0] = await DataStore.save(new Tag({ name: tag }));
     }
 

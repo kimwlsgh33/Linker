@@ -1,12 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TextAndIcon from "../../components/TextAndIcon";
-import ScreenSetting from "./ScreenSetting";
 
-const Stack = createNativeStackNavigator();
-
-function AddUser2({ navigation, route }) {
+function AddUser2() {
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -44,7 +40,7 @@ function AddUser2({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#ffffff",
   },
 });
 

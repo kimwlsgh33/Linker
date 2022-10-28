@@ -1,7 +1,0 @@
-{
-  "staging": {
-    "configLevel": "project",
-    "useProfile": false,
-    "awsConfigFilePath": "C:\\Users\\EZEN\\.amplify\\awscloudformation\\2ekZjl7tQV"
-  }
-}
