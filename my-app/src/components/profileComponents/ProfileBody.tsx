@@ -101,7 +101,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.Posts?.length}
+                {data.Posts?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>게시물</Text>
             </View>
@@ -116,7 +116,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.followers.length}
+                {data.followers?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로워</Text>
             </View>
@@ -131,7 +131,7 @@ export const ProfileBody = ({ data, user }) => {
           >
             <View style={{ alignItems: "center" }}>
               <Text style={{ fontFamily: "GangwonEduAllBold", fontSize: 20 }}>
-                {data.following.length}
+                {data.following?.length || 0}
               </Text>
               <Text style={{ fontFamily: "GangwonEduAllBold" }}>팔로잉</Text>
             </View>

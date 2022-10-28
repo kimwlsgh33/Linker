@@ -1,10 +1,10 @@
-import React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import { View, ScrollView, Image, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
 
-const ProfileTopTab = ({user}) => {
+const ProfileTopTab = ({ user }) => {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
 
@@ -31,9 +31,9 @@ const ProfileTopTab = ({user}) => {
           <Pressable
             onPress={() => {
               navigation.navigate("Story", {
-                name: user[0].name,
-                image: user[0].image,
-                userName: user[0].userName,
+                name: user.name,
+                image: user.imageUri,
+                userName: user.username,
               });
               storyPressed(user.id);
             }}
@@ -45,7 +45,6 @@ const ProfileTopTab = ({user}) => {
           >
             <Image
               source={{ uri: "https://source.unsplash.com/daily" }}
-              // source={require("../../assets/images/profile.png")}
               style={{ width: 130, height: 130, marginVertical: 1 }}
               resizeMode="cover"
             />

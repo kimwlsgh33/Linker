@@ -89,7 +89,7 @@ function SearchBar({ toggleContentsVisible = () => {} }) {
         //   responseType: "json",
         // });
         const res = await DataStore.query(User, (user) =>
-          user.username("contains", searchText)
+          user.nickname("contains", searchText)
         );
         setUsers(res);
       } catch (e) {

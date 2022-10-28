@@ -11,37 +11,31 @@ import {
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { format } from "date-fns";
-import { useNavigation } from "@react-navigation/native";
+
 import { DataStore } from "aws-amplify";
 import { User } from "../../models";
 import { LinearGradient } from "expo-linear-gradient";
-import { useMeStore } from "../../store";
 
-const BirthdayScreen = ({ route }) => {
+const BirthdayScreen = ({ navigation, route }) => {
+  const { username, name, nick: nickname, password } = route.params;
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
   const [date, onChangeDate] = useState(new Date()); // 선택 날짜
   const [mode, setMode] = useState("date"); // 모달 유형
   const [visible, setVisible] = useState(false); // 모달 노출 여부
   const [dateStr, setDateStr] = useState(format(date, "yyyy-MM-dd")); // 화면에 노출 될 선택 날짜
 
-  const navigation = useNavigation();
-
-  const { setMe } = useMeStore();
-
   const goTOS = async () => {
     try {
       const user = await DataStore.save(
         new User({
-          username: route.params.username,
-          name: route.params.name,
-          nickname: route.params.nick,
-          password: route.params.password,
+          username,
+          name,
+          nickname,
+          password,
           birthday: dateStr,
         })
       );
-      setMe(user);
-      console.log(user);
-      navigation.navigate("TOS" as any, { user: user });
+      navigation.navigate("TOS" as any, { user });
     } catch (e) {
       console.log("error creating user", JSON.stringify(e, null, 2));
     }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import HomeTab from "./HomeTab";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useNavigationState } from "@react-navigation/native";
@@ -24,7 +24,6 @@ function OuterHomeTab() {
         swipeEnabled: currentIndex ? false : true,
       }}
     >
-      <Tab.Screen name="Test" component={TestAnim} />
       <Tab.Screen name="UploadPost" component={UploadPost} />
       <Tab.Screen name="HomeTab" component={HomeTab} />
       <Tab.Screen name="UploadStory" component={UploadStory} />

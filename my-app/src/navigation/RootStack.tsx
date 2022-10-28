@@ -9,7 +9,7 @@ import ProfileTopTab from "./ProfileTopTab";
 import FollowTab from "../components/profileComponents/FollowTab";
 // Screens
 import ScreenSetting from "../screens/setting/ScreenSetting";
-import PostScreen from "../screens/home/PostScreen";
+
 import StoryScreen from "../screens/home/StoryScreen";
 import SignUp from "../screens/signUp/SignUp";
 import LoginScreen from "../screens/signIn/LoginScreen";
@@ -39,13 +39,14 @@ import Modal3 from "../components/profileComponents/Modal3";
 import ProfileUser from "../screens/profile/ProfileUser";
 import SearchResultScreen from "../screens/search/SearchResultScreen";
 import { useMeStore } from "../store";
+import Posts from "../components/screenComponents/Posts";
 
 const Stack = createStackNavigator();
 
 function RootStack() {
   const { me } = useMeStore();
   return (
-    <Stack.Navigator screenOptions={{ ...headerOptions }} initialRouteName="">
+    <Stack.Navigator screenOptions={{ ...headerOptions }}>
       {!me ? (
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -62,14 +63,10 @@ function RootStack() {
         </Stack.Group>
       ) : (
         <>
-          <Stack.Group>
-            <Stack.Screen
-              name="OuterHomeTab"
-              component={OuterHomeTab}
-              options={{ headerShown: false }}
-            />
+          <Stack.Group screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
 
-            <Stack.Screen name="Post" component={PostScreen} />
+            <Stack.Screen name="Posts" component={Posts} />
             <Stack.Screen name="Story" component={StoryScreen} />
             <Stack.Screen name="Discover" component={DiscoverScreen} />
             <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />

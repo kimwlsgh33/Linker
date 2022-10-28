@@ -13,7 +13,9 @@ function TestPosts({ navigation }) {
   const { posts, setPosts } = usePostStore();
 
   const getPosts = async () => {
-    const posts = await DataStore.query(Post);
+    const posts = await DataStore.query(Post, (post) =>
+      post.userID("eq", me.id)
+    );
     if (!!posts) {
       console.log("posts : ", posts[0]?.imageUri);
       setPosts(posts);
@@ -25,18 +27,18 @@ function TestPosts({ navigation }) {
     console.log("result: ", result);
   };
 
-  const setUser = async () => {
-    const user = await DataStore.query(User, (user) =>
-      user.name("eq", "kimwlsgh97")
-    );
-    if (!!user) {
-      console.log(user[0]);
-      setMe(user[0]);
-    }
-  };
+  // const setUser = async () => {
+  //   const user = await DataStore.query(User, (user) =>
+  //     user.name("eq", "kimwlsgh97")
+  //   );
+  //   if (!!user) {
+  //     console.log(user[0]);
+  //     setMe(user[0]);
+  //   }
+  // };
 
   useEffect(() => {
-    setUser();
+    getPosts();
   }, []);
 
   return (
