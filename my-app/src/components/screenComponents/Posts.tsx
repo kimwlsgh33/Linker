@@ -182,8 +182,10 @@ const Posts = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <Post post={item} />}
         ListEmptyComponent={() => (
-          <View>
-            <Text>try follow N get information you want!</Text>
+          <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <Text style={{ fontSize: 40 }}>
+              try follow & get information you want!
+            </Text>
           </View>
         )}
       />
