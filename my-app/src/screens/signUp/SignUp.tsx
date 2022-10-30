@@ -11,6 +11,7 @@ import {
   Keyboard,
   Pressable,
   Linking,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Auth } from "aws-amplify";
@@ -60,23 +61,30 @@ const SignUp = ({ navigation }) => {
     const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
 
     // amplify email 가입
-    const newPw = Base64.stringify(hashDigest);
+    const crypedPW = Base64.stringify(hashDigest);
     const SignUpEmail = async () => {
       try {
-        // const newPW = getHashedPassword(password);
-        // if (DataStore.query(User, (user) => user.username("eq", id))) {
-        //   alert("이미 존재하는 아이디입니다.");
-        //   return;
-        // } else {
-        const { user } = await Auth.signUp({
+        await Auth.signUp({
           username: id,
-          password: newPw,
+          password: crypedPW,
           attributes: {
             email: id,
             name: name,
             nickname: nick,
           },
+          autoSignIn: {
+            enabled: true,
+          },
         });
+
+        navigation.navigate("CodeInput" as any, {
+          username: id,
+          name: name,
+          nick: nick,
+          password: crypedPW,
+        });
+
+        // console.log(JSON.stringify(user));
       } catch (error) {
         console.log("error signing up:", error);
         if (error.code === "UsernameExistsException") {
@@ -87,12 +95,6 @@ const SignUp = ({ navigation }) => {
           return;
         }
       }
-      navigation.navigate("CodeInput" as any, {
-        username: id,
-        name: name,
-        nick: nick,
-        password: newPw,
-      });
     };
 
     // amplify phone 가입
@@ -101,16 +103,23 @@ const SignUp = ({ navigation }) => {
       const formattedPhone = forPhone(id);
       // 가입 로직
       try {
-        const { user } = await Auth.signUp({
+        await Auth.signUp({
           username: formattedPhone,
-          password: password,
+          password,
           attributes: {
             phone_number: formattedPhone,
-            name: name,
+            name,
             nickname: nick,
           },
         });
-        console.log("newPw", newPw);
+        // console.log(JSON.stringify(user));
+
+        navigation.navigate("CodeInput" as any, {
+          username: formattedPhone,
+          name,
+          nick,
+          password: crypedPW,
+        });
       } catch (error) {
         // console.log("error signing up:", error);
         if (error.code === "UsernameExistsException") {
@@ -121,12 +130,6 @@ const SignUp = ({ navigation }) => {
           return;
         }
       }
-      navigation.navigate("CodeInput" as any, {
-        username: formattedPhone,
-        name: name,
-        nick: nick,
-        password: newPw,
-      });
     };
 
     // 형식 검사 후, 가입 로직 실행.

@@ -1,20 +1,16 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
+
+type StoryMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
 
 type CommentMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type TagMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type TermsMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
-}
-
-type UserMetaData = {
+type TermMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
@@ -22,17 +18,40 @@ type PostMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-type StoryMetaData = {
+type UserMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type EagerStory = {
+  readonly id: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly likes?: string | null;
+  readonly useID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyStory = {
+  readonly id: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly likes?: string | null;
+  readonly useID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Story = LazyLoading extends LazyLoadingDisabled ? EagerStory : LazyStory
+
+export declare const Story: (new (init: ModelInit<Story, StoryMetaData>) => Story) & {
+  copyOf(source: Story, mutator: (draft: MutableModel<Story, StoryMetaData>) => MutableModel<Story, StoryMetaData> | void): Story;
 }
 
 type EagerComment = {
   readonly id: string;
   readonly text: string;
-  readonly recomment?: (string | null)[] | null;
-  readonly userID: string;
-  readonly postID: string;
   readonly likes?: (string | null)[] | null;
+  readonly useID: string;
+  readonly postID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -40,10 +59,9 @@ type EagerComment = {
 type LazyComment = {
   readonly id: string;
   readonly text: string;
-  readonly recomment?: (string | null)[] | null;
-  readonly userID: string;
-  readonly postID: string;
   readonly likes?: (string | null)[] | null;
+  readonly useID: string;
+  readonly postID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -54,128 +72,52 @@ export declare const Comment: (new (init: ModelInit<Comment, CommentMetaData>) =
   copyOf(source: Comment, mutator: (draft: MutableModel<Comment, CommentMetaData>) => MutableModel<Comment, CommentMetaData> | void): Comment;
 }
 
-type EagerTag = {
+type EagerTerm = {
   readonly id: string;
-  readonly name?: string | null;
+  readonly required: boolean;
+  readonly event: boolean;
+  readonly night: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyTag = {
+type LazyTerm = {
   readonly id: string;
-  readonly name?: string | null;
+  readonly required: boolean;
+  readonly event: boolean;
+  readonly night: boolean;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type Tag = LazyLoading extends LazyLoadingDisabled ? EagerTag : LazyTag
+export declare type Term = LazyLoading extends LazyLoadingDisabled ? EagerTerm : LazyTerm
 
-export declare const Tag: (new (init: ModelInit<Tag, TagMetaData>) => Tag) & {
-  copyOf(source: Tag, mutator: (draft: MutableModel<Tag, TagMetaData>) => MutableModel<Tag, TagMetaData> | void): Tag;
-}
-
-type EagerTerms = {
-  readonly id: string;
-  readonly Required: boolean;
-  readonly Event?: boolean | null;
-  readonly Night?: boolean | null;
-  readonly User?: User | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly termsUserId?: string | null;
-}
-
-type LazyTerms = {
-  readonly id: string;
-  readonly Required: boolean;
-  readonly Event?: boolean | null;
-  readonly Night?: boolean | null;
-  readonly User: AsyncItem<User | undefined>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-  readonly termsUserId?: string | null;
-}
-
-export declare type Terms = LazyLoading extends LazyLoadingDisabled ? EagerTerms : LazyTerms
-
-export declare const Terms: (new (init: ModelInit<Terms, TermsMetaData>) => Terms) & {
-  copyOf(source: Terms, mutator: (draft: MutableModel<Terms, TermsMetaData>) => MutableModel<Terms, TermsMetaData> | void): Terms;
-}
-
-type EagerUser = {
-  readonly id: string;
-  readonly email?: string | null;
-  readonly mobile?: string | null;
-  readonly name: string;
-  readonly nickname: string;
-  readonly username: string;
-  readonly password: string;
-  readonly birthday?: string | null;
-  readonly profpic?: string | null;
-  readonly following?: (string | null)[] | null;
-  readonly followers?: (string | null)[] | null;
-  readonly favorite?: (string | null)[] | null;
-  readonly Posts?: (Post | null)[] | null;
-  readonly Stories?: (Story | null)[] | null;
-  readonly Comments?: (Comment | null)[] | null;
-  readonly bookMark?: (string | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyUser = {
-  readonly id: string;
-  readonly email?: string | null;
-  readonly mobile?: string | null;
-  readonly name: string;
-  readonly nickname: string;
-  readonly username: string;
-  readonly password: string;
-  readonly birthday?: string | null;
-  readonly profpic?: string | null;
-  readonly following?: (string | null)[] | null;
-  readonly followers?: (string | null)[] | null;
-  readonly favorite?: (string | null)[] | null;
-  readonly Posts: AsyncCollection<Post>;
-  readonly Stories: AsyncCollection<Story>;
-  readonly Comments: AsyncCollection<Comment>;
-  readonly bookMark?: (string | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser
-
-export declare const User: (new (init: ModelInit<User, UserMetaData>) => User) & {
-  copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
+export declare const Term: (new (init: ModelInit<Term, TermMetaData>) => Term) & {
+  copyOf(source: Term, mutator: (draft: MutableModel<Term, TermMetaData>) => MutableModel<Term, TermMetaData> | void): Term;
 }
 
 type EagerPost = {
   readonly id: string;
-  readonly userID: string;
-  readonly imageUri: string;
-  readonly link: string;
   readonly text: string;
-  readonly Tag?: Tag | null;
-  readonly Comments?: (Comment | null)[] | null;
+  readonly link: string;
+  readonly imageUrls?: (string | null)[] | null;
   readonly likes?: (string | null)[] | null;
+  readonly useID: string;
+  readonly Comments?: (Comment | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly postTagId?: string | null;
 }
 
 type LazyPost = {
   readonly id: string;
-  readonly userID: string;
-  readonly imageUri: string;
-  readonly link: string;
   readonly text: string;
-  readonly Tag: AsyncItem<Tag | undefined>;
-  readonly Comments: AsyncCollection<Comment>;
+  readonly link: string;
+  readonly imageUrls?: (string | null)[] | null;
   readonly likes?: (string | null)[] | null;
+  readonly useID: string;
+  readonly Comments: AsyncCollection<Comment>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly postTagId?: string | null;
 }
 
 export declare type Post = LazyLoading extends LazyLoadingDisabled ? EagerPost : LazyPost
@@ -184,26 +126,42 @@ export declare const Post: (new (init: ModelInit<Post, PostMetaData>) => Post) &
   copyOf(source: Post, mutator: (draft: MutableModel<Post, PostMetaData>) => MutableModel<Post, PostMetaData> | void): Post;
 }
 
-type EagerStory = {
+type EagerUser = {
   readonly id: string;
-  readonly userID: string;
-  readonly imageUri?: string | null;
-  readonly likes?: (string | null)[] | null;
+  readonly username: string;
+  readonly name: string;
+  readonly nickname: string;
+  readonly password: string;
+  readonly birthday?: string | null;
+  readonly Term: Term;
+  readonly Posts?: (Post | null)[] | null;
+  readonly Comments?: (Comment | null)[] | null;
+  readonly Stories?: (Story | null)[] | null;
+  readonly profpic?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userTermId: string;
 }
 
-type LazyStory = {
+type LazyUser = {
   readonly id: string;
-  readonly userID: string;
-  readonly imageUri?: string | null;
-  readonly likes?: (string | null)[] | null;
+  readonly username: string;
+  readonly name: string;
+  readonly nickname: string;
+  readonly password: string;
+  readonly birthday?: string | null;
+  readonly Term: AsyncItem<Term>;
+  readonly Posts: AsyncCollection<Post>;
+  readonly Comments: AsyncCollection<Comment>;
+  readonly Stories: AsyncCollection<Story>;
+  readonly profpic?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userTermId: string;
 }
 
-export declare type Story = LazyLoading extends LazyLoadingDisabled ? EagerStory : LazyStory
+export declare type User = LazyLoading extends LazyLoadingDisabled ? EagerUser : LazyUser
 
-export declare const Story: (new (init: ModelInit<Story, StoryMetaData>) => Story) & {
-  copyOf(source: Story, mutator: (draft: MutableModel<Story, StoryMetaData>) => MutableModel<Story, StoryMetaData> | void): Story;
+export declare const User: (new (init: ModelInit<User, UserMetaData>) => User) & {
+  copyOf(source: User, mutator: (draft: MutableModel<User, UserMetaData>) => MutableModel<User, UserMetaData> | void): User;
 }

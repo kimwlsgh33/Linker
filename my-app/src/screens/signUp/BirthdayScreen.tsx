@@ -17,7 +17,7 @@ import { User } from "../../models";
 import { LinearGradient } from "expo-linear-gradient";
 
 const BirthdayScreen = ({ navigation, route }) => {
-  const { username, name, nick: nickname, password } = route.params;
+  const { user } = route.params;
   // useState Hook를 사용하여 날짜와 모달 유형, 노출 여부를 설정할 변수를 생성
   const [date, onChangeDate] = useState(new Date()); // 선택 날짜
   const [mode, setMode] = useState("date"); // 모달 유형
@@ -26,16 +26,11 @@ const BirthdayScreen = ({ navigation, route }) => {
 
   const goTOS = async () => {
     try {
-      const user = await DataStore.save(
-        new User({
-          username,
-          name,
-          nickname,
-          password,
-          birthday: dateStr,
-        })
-      );
-      navigation.navigate("TOS" as any, { user });
+      const newUser = {
+        ...user,
+        birthday: dateStr,
+      };
+      navigation.navigate("TOS" as any, { user: newUser });
     } catch (e) {
       console.log("error creating user", JSON.stringify(e, null, 2));
     }

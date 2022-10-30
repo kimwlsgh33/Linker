@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#FFFAFA",
+    color: "#000",
     margin: 15,
   },
 });

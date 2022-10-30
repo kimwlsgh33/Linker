@@ -16,6 +16,8 @@ import Ionic from "react-native-vector-icons/Ionicons";
 import TextAndIcon from "../../components/TextAndIcon";
 import IconLeft from "../../components/IconLeft";
 import TextStyle from "../../components/TextStyle";
+import { Auth } from "aws-amplify";
+import { useMeStore } from "../../store";
 
 const navbars = [
   {
@@ -93,6 +95,16 @@ const navbars = [
 export default function ScreenSetting({ navigation, route }) {
   const [text, onChangeText] = useState("Useless Text");
   const [ModalVisible, setModalVisible] = useState(false);
+  const { setMe } = useMeStore();
+
+  const logOut = async () => {
+    try {
+      await Auth.signOut();
+      setMe(null);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -286,9 +298,11 @@ export default function ScreenSetting({ navigation, route }) {
         </Text>
       </View>
       <View style={styles.Overfooterbox}>
-        <Text style={styles.Overfootertext}>로그인</Text>
-        <Text style={styles.Overfootertext}>계정 추가</Text>
-        <Text style={styles.Overfootertext}>로그아웃</Text>
+        {/* <Text style={styles.Overfootertext}>로그인</Text>
+        <Text style={styles.Overfootertext}>계정 추가</Text> */}
+        <Pressable onPress={logOut}>
+          <Text style={styles.Overfootertext}>로그아웃</Text>
+        </Pressable>
       </View>
     </ScrollView>
   );
@@ -296,36 +310,36 @@ export default function ScreenSetting({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000000",
+    backgroundColor: "#FFFAFA",
     borderBottomColor: "#333333",
   },
 
   menutextbox: {
     borderTopColor: "#333333",
     borderBottomColor: "#333333",
-    borderWidth: 1,
+    borderBottomWidth: 1,
   },
 
   footerContainer: {
     justifyContent: "space-between",
     borderBottomColor: "#333333",
-    borderWidth: 1,
+    borderBottomWidth: 1,
   },
 
   footertext: {
     fontSize: 10,
-    color: "#FFFAFA",
+    color: "#000",
     fontWeight: "bold",
     margin: 15,
   },
   Overfooterbox: {
-    backgroundColor: "#000000",
+    backgroundColor: "#FFFAFA",
   },
 
   Overfootertext: {
     fontSize: 15,
     fontWeight: "bold",
-    color: "#FFFAFA",
+    color: "#000",
     margin: 15,
   },
 
@@ -342,7 +356,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingLeft: 4,
-    backgroundColor: "#333333",
+    backgroundColor: "#ccc",
     borderRadius: 10,
   },
 

@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     marginTop: height / 3,
   },
   text: {
+    fontFamily: "BackToSchoolRegular",
     fontSize: 20,
     fontWeight: "bold",
   },
