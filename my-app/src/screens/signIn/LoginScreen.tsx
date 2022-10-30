@@ -21,6 +21,7 @@ import Base64 from "crypto-js/enc-base64";
 import { useMeStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { User } from "../../models";
+import { SALT } from "@env";
 
 // function getHashedPassword(pw) {
 //   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
@@ -38,7 +39,7 @@ const LoginScreen = () => {
   const [pwCheckIn, setPwCheckIn] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const hashDigest = SHA256("1234" + password);
+  const hashDigest = SHA256(SALT + password);
 
   const { setMe } = useMeStore();
 

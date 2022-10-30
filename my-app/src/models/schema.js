@@ -25,8 +25,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "useID": {
-                    "name": "useID",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -61,7 +61,7 @@ export const schema = {
                     "properties": {
                         "name": "byUser",
                         "fields": [
-                            "useID"
+                            "userID"
                         ]
                     }
                 },
@@ -108,8 +108,8 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "useID": {
-                    "name": "useID",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -151,7 +151,7 @@ export const schema = {
                     "properties": {
                         "name": "byUser",
                         "fields": [
-                            "useID"
+                            "userID"
                         ]
                     }
                 },
@@ -295,8 +295,8 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "useID": {
-                    "name": "useID",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -345,7 +345,7 @@ export const schema = {
                     "properties": {
                         "name": "byUser",
                         "fields": [
-                            "useID"
+                            "userID"
                         ]
                     }
                 },
@@ -437,7 +437,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "useID"
+                        "associatedWith": "userID"
                     }
                 },
                 "Comments": {
@@ -451,7 +451,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "useID"
+                        "associatedWith": "userID"
                     }
                 },
                 "Stories": {
@@ -465,7 +465,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "useID"
+                        "associatedWith": "userID"
                     }
                 },
                 "profpic": {
@@ -474,6 +474,14 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "bookMark": {
+                    "name": "bookMark",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -528,5 +536,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "2dfdbd292199aaf6b703dbde94a3cf87"
+    "version": "c0824cf5710afe661aba267683aa33c9"
 };

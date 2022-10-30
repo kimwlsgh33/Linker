@@ -18,6 +18,7 @@ import { Auth } from "aws-amplify";
 import { LinearGradient } from "expo-linear-gradient";
 import { SHA256 } from "crypto-js";
 import Base64 from "crypto-js/enc-base64";
+import { SALT } from "@env";
 
 // function ExampleView(props) {
 //   return <Icon name="ios-person" size={30} color="#4F8EF7" />;
@@ -35,7 +36,7 @@ const SignUp = ({ navigation }) => {
   const [passwordCheck, setPasswordCheck] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const hashDigest = SHA256("1234" + password);
+  const hashDigest = SHA256(SALT + password);
   // function getHashedPassword(password) {
   //   let random = CryptoJS.lib.WordArray.random(128 / 8);
   //   return CryptoJS.SHA256(password, random).toString();

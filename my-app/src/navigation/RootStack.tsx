@@ -44,6 +44,7 @@ import AuthComp from "../screens/AuthComp";
 import TestHub from "../screens/test/screens/TestHub";
 import { Auth, DataStore, Hub } from "aws-amplify";
 import { User } from "../models";
+import CommentScreen from "../screens/home/CommentScreen";
 
 const Stack = createStackNavigator();
 
@@ -54,12 +55,14 @@ function RootStack() {
     try {
       const currentUser = await Auth.currentUserInfo();
       // console.log(JSON.stringify(currentUser, null, 2));
-      const userData = await DataStore.query(User, (user) =>
-        user.username("eq", currentUser.username)
-      );
-      setMe(userData[0]);
+      if (currentUser) {
+        const userData = await DataStore.query(User, (user) =>
+          user.username("eq", currentUser.username)
+        );
+        setMe(userData[0]);
+      }
     } catch (e) {
-      console.log("Empty User Data");
+      console.log("Empty User Data", e.message);
     }
   };
 
@@ -90,6 +93,8 @@ function RootStack() {
           <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
           <Stack.Screen name="Posts" component={Posts} />
           <Stack.Screen name="Story" component={StoryScreen} />
+          <Stack.Screen name="Comment" component={CommentScreen} />
+
           <Stack.Screen name="Discover" component={DiscoverScreen} />
           <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
           <Stack.Screen name="FollowTab" component={FollowTab} />

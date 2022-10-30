@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import useToggle from "../../hooks/useToggle";
 
-function ReelsScreen() {
+function ReelsScreen({ data }) {
   // const animValue = useAnimationValue(0);
 
   // const { width } = useWindowDimensions();
