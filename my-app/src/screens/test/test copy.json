@@ -1,0 +1,71 @@
+{
+  "username": "+821091186277",
+  "pool": {
+    "userPoolId": "ap-northeast-2_6Zok2rufE",
+    "clientId": "1crubscj7gcgjffpmd7fht7b6d",
+    "client": {
+      "endpoint": "https://cognito-idp.ap-northeast-2.amazonaws.com/",
+      "fetchOptions": {}
+    },
+    "advancedSecurityDataCollectionFlag": true
+  },
+  "Session": null,
+  "client": {
+    "endpoint": "https://cognito-idp.ap-northeast-2.amazonaws.com/",
+    "fetchOptions": {}
+  },
+  "signInUserSession": {
+    "idToken": {
+      "jwtToken": "eyJraWQiOiJGSzljakgzTW1uT3V4cHpWU3lMVDZrN1VYd0RYbmxtWEI0blBaeTFYR0FNPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIyZWVhNzYwOS00YzU1LTRmMzQtYTA1ZC1kODlhMTRkMTkxMzkiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTJfNlpvazJydWZFIiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjp0cnVlLCJjb2duaXRvOnVzZXJuYW1lIjoiKzgyMTA5MTE4NjI3NyIsIm9yaWdpbl9qdGkiOiJjNTU2Yjk5NC04MzQyLTQ2MWUtYmNlMi1mYzM1MTNhYzVhZWYiLCJhdWQiOiIxY3J1YnNjajdnY2dqZmZwbWQ3Zmh0N2I2ZCIsImV2ZW50X2lkIjoiMDM2NWZlOWYtNTJmZS00OWVkLThiZjktMDRkMTNlZmI2YWZmIiwidG9rZW5fdXNlIjoiaWQiLCJhdXRoX3RpbWUiOjE2NjcwNjI0MjcsIm5hbWUiOiJqaW5ob2tpbSIsIm5pY2tuYW1lIjoia2ltd2xzZ2g5NyIsInBob25lX251bWJlciI6Iis4MjEwOTExODYyNzciLCJleHAiOjE2NjcwNjYwMjcsImlhdCI6MTY2NzA2MjQyNywianRpIjoiYjI5OGFhOGMtNDI5OS00OTJiLWE3NTUtY2MwZjc1YjUxYTYyIn0.sIWO2PDMkvt-EKNcYN4sSgUEP6chMk2d5z5TGBlbhuXAYSMR64jMOFMW9mzS1L6UvbAzKUOS19_Gzpm0PKbCw-KvfBWFlAh0J26EqawBuxT7OO81H2WaVBrsqP7THbvZ3sa1oo-5dAhUzvGsrrqUdN0F2qayW0NE1OYFPkAvJU_akl5qnKZVcKIeGBUDmDs3UWCIwodOAlA8ISqcBjNe6zvkBIw_IW3EIEMAZwhZASE04LRGLcYZSrDx83EAVlaAd-MdSIQLyKwi_KluP_EShFEaQSvzHa5_NYK5kxDctncEQWpZ9BW4CC8dSulhZKoRh-VE-4ycYcFePo2i4FhMng",
+      "payload": {
+        "sub": "2eea7609-4c55-4f34-a05d-d89a14d19139",
+        "iss": "https://cognito-idp.ap-northeast-2.amazonaws.com/ap-northeast-2_6Zok2rufE",
+        "phone_number_verified": true,
+        "cognito:username": "+821091186277",
+        "origin_jti": "c556b994-8342-461e-bce2-fc3513ac5aef",
+        "aud": "1crubscj7gcgjffpmd7fht7b6d",
+        "event_id": "0365fe9f-52fe-49ed-8bf9-04d13efb6aff",
+        "token_use": "id",
+        "auth_time": 1667062427,
+        "name": "jinhokim",
+        "nickname": "kimwlsgh97",
+        "phone_number": "+821091186277",
+        "exp": 1667066027,
+        "iat": 1667062427,
+        "jti": "b298aa8c-4299-492b-a755-cc0f75b51a62"
+      }
+    },
+    "refreshToken": {
+      "token": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.qB8Xp2NUcueKfQzoZtxc2x5fU3T2pOhfeJdbJXwHEWHh5uC99G-iMxuH7P3PzTj7FNof8Sf2bu8rWqD-vy07ZAq3rEilswZm4wIC83P-ebhYNkp6ZZ2W4nuIeAAnzx82-wmHWL8yYdHm3A1tu6WBedmrc2l7bvHYdnChZ-b6EBMbVCYmDKINhuf_pLrRdxGG42ymF57eC2YO6g2dj_3lVNmE9NqnBhEt8y2WuQXAXI5qowd5joAEpFnhZe8wtvHuzjFBmmgtGLMj45Iwc2q84uA0zCRuy8eI_KC5KZAlvUeSCriaziMd-9IqSwXanyUwy_0-V3UBUM7OmVsRui_Iyg.ixpS28I2w1rzdSzy.33U5BcY9A5lievDNcDDOOozPKqDY80daBNB8Bh6wOKePI_KCFlIxB6f7kx5PNtlKblyT5TUBYSJIasNTUuYIlsZTB6MQxH-kvyixNq0Atu0lGNdtOHAlf2-rJbwuR59k8j3ShgmjC2eHb2TXCF20dNeHXu1fvWPw74OfsPMvrhC8btg_1g9prxLFsPWa5QQXkwz4roNj10DOSjfUwmuO6ChuLdwmgxTUhK7kE8ngz-4jY1FBqL1rLsVsZXFTO0atM7inzYKJeQMZvFe3Xu7rSkCGr-g2ch9rBEVlJy8ku7lFUmqXcmOAWjuFYmbJZVDGGdZl4NocpNtc5FXZsyYfvDW4z8LeMEkZlmaXYfRHSOxu36I2hZ2mrB63FoPH6_mp1LzQwbIskJXaXRIXcdu1wYqWf5sJF4OKnt4FefLWWUTcUYSOtnr9jDE89m3ncMYMtOcctRRF2xynIEy9hQ131k0wrWsb3cIawbw5bOmOTKvQFLrEtzTVw_5lhveycchJ3-LnNc35Gk-OTJaUJ_PoVsXdmIt60EG6J_hQdkFT_UWPQtrJuJ6EKpzPRiNoL9ALe8M2QdcYAHtz1Uh2eawehQwG0HFJcSGkgnuR8jes-WpSPJaeW7-JSFjpCLLDnNnr3_F4h3SVXkmJBvwIWxMVG9SW82F49MiWgd8LrdvzEqSKZ317oHZiBKOcWcIvcbS--N-NvJ-QJZqGMqt8JwWQwH8kjZ0aBIUTptQhAMl6EgkTg1xsFdFWuFUfE3tT_ZZpyereAs781DTFG5YK5zEtZOkk6GaYNQImNgu-myiv6KAy-NIwKgdfQXcR0jir1UWjAYd10dECxBS_iyQfON1rxTh20DYEfaRfqHyrZZ7n3wM2vnQ3vIR4qnLM-kZzpPltgcdG3_aLgmW2X3z79qCCQnap-BdnKyJnZE-ppt-gJb6vftvdEPtTH_wY0aM3MgG8IxMAp3JU_zsDyFdRo-jACGVf8PrGrj0aE6xmLELNsH6TJgEpjDYI5uBa9iLkl7X2svKiS8Jfqe1nyI5E83Y5plCFPJr7I170cGOHTCS3e3d0YxxFKS__MnwYl6EceYpF_m1Z-UQiT2jJGPLH03gbb1etVpbxFtcQFvX6saipDTP1w5sEVePNlr979nlTrSoYYbjswrC6ITV9OaS5YMHPcLMe2d_qUcRqCn5EkN3rSd97QihjlqvVMpgc-wqAkKFo_yHIb0wX7XYSce3YxvtkcnUiGVF6XrFoAIjaWLf-utCpCjhcjuqPfj0EIwt-ESUWjiMPV3ou5ZdfbTx6gc4lKzooqLqGfjF6vAta.Kcs77n3XdX0-lw8XzjcNaQ"
+    },
+    "accessToken": {
+      "jwtToken": "eyJraWQiOiJXVitBd25DcU9wbjRFdmhOdENCM0l3SWFHOGMrNE1BUk52eDNlOVk0NUZZPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIyZWVhNzYwOS00YzU1LTRmMzQtYTA1ZC1kODlhMTRkMTkxMzkiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtbm9ydGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtbm9ydGhlYXN0LTJfNlpvazJydWZFIiwiY2xpZW50X2lkIjoiMWNydWJzY2o3Z2NnamZmcG1kN2ZodDdiNmQiLCJvcmlnaW5fanRpIjoiYzU1NmI5OTQtODM0Mi00NjFlLWJjZTItZmMzNTEzYWM1YWVmIiwiZXZlbnRfaWQiOiIwMzY1ZmU5Zi01MmZlLTQ5ZWQtOGJmOS0wNGQxM2VmYjZhZmYiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjY3MDYyNDI3LCJleHAiOjE2NjcwNjYwMjcsImlhdCI6MTY2NzA2MjQyNywianRpIjoiOWI3YmFkMjYtNmM5MC00ZWY2LTk3ZTEtMDQ2YzhmMjA4Mjk0IiwidXNlcm5hbWUiOiIrODIxMDkxMTg2Mjc3In0.BvncvqNkPSwYJ2WCk8Jjz3sr7VU5__JnhNOZrtabVRPW1ykVk8hVYK1wsT6gulQBLw9Ukxur7MEMKxGx3NuIqpaXlHnj_Oi_29ZdrELRY2HfUQTu_jG0j_5HQ8nQvtsFEIEw68-NHMF9PYJqZKLRCOMydSiKypQ3b6v6_f82OyH6jTu-sCk2sd3TCqMUty0_7PcoFN2E6lc1qQZXHwDKuE7j6qbaVgOArU2vJv0qkJcHoFl1bBXeGMtLeB6hXAfnQ091Ju603PM7uSKokpB97sf6fN6as5V-yrFv5clbB-2LbtmPEe0BUrfZufoWNuj9lkgfIg3qWnfBvWER-v-Xpg",
+      "payload": {
+        "sub": "2eea7609-4c55-4f34-a05d-d89a14d19139",
+        "iss": "https://cognito-idp.ap-northeast-2.amazonaws.com/ap-northeast-2_6Zok2rufE",
+        "client_id": "1crubscj7gcgjffpmd7fht7b6d",
+        "origin_jti": "c556b994-8342-461e-bce2-fc3513ac5aef",
+        "event_id": "0365fe9f-52fe-49ed-8bf9-04d13efb6aff",
+        "token_use": "access",
+        "scope": "aws.cognito.signin.user.admin",
+        "auth_time": 1667062427,
+        "exp": 1667066027,
+        "iat": 1667062427,
+        "jti": "9b7bad26-6c90-4ef6-97e1-046c8f208294",
+        "username": "+821091186277"
+      }
+    },
+    "clockDrift": 0
+  },
+  "authenticationFlowType": "USER_SRP_AUTH",
+  "keyPrefix": "CognitoIdentityServiceProvider.1crubscj7gcgjffpmd7fht7b6d",
+  "userDataKey": "CognitoIdentityServiceProvider.1crubscj7gcgjffpmd7fht7b6d.+821091186277.userData",
+  "attributes": {
+    "sub": "2eea7609-4c55-4f34-a05d-d89a14d19139",
+    "name": "jinhokim",
+    "nickname": "kimwlsgh97",
+    "phone_number_verified": true,
+    "phone_number": "+821091186277"
+  },
+  "preferredMFA": "NOMFA"
+}

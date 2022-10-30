@@ -10,6 +10,8 @@ import {
   Platform,
   Keyboard,
   Pressable,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -19,6 +21,7 @@ import Base64 from "crypto-js/enc-base64";
 import { useMeStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { User } from "../../models";
+import { SALT } from "@env";
 
 // function getHashedPassword(pw) {
 //   let random = CryptoJS.lib.WordArray.random(128 / pw.length);
@@ -28,29 +31,17 @@ import { User } from "../../models";
 // }
 
 const LoginScreen = () => {
-  // const { me, setMe } = useMeStore();
-
-  // const users = async () => {
-  //   const newUser = DataStore.query(User, (test) =>
-  //     test.name("contains", "rlawlsgh97")
-  //   );
-  //   return newUser[0];
-  // };
-
-  // useEffect(() => {
-  //   users().then((test) => setMe(test));
-  // }, []);
-
   const navigation = useNavigation();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [disable, setDisable] = useState(true);
   const [idCheckIn, setIdCheckIn] = useState(false);
   const [pwCheckIn, setPwCheckIn] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const hashDigest = SHA256("1234" + password);
+  const hashDigest = SHA256(SALT + password);
 
-  const { me, setMe } = useMeStore();
+  const { setMe } = useMeStore();
 
   const username = id;
 
@@ -62,55 +53,41 @@ const LoginScreen = () => {
   const newPw = Base64.stringify(hashDigest);
 
   const SignIn = async () => {
-    const regExp = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
-    const SignInEmail = async () => {
-      try {
-        const user = await Auth.signIn(username, newPw);
-        // const UserInfo = {
-        //   username: user.attributes.phone_number,
-        //   name: user.attributes.name,
-        //   nickname: user.attributes.nickname,
-        //   password: user.attributes.password,
-        // };
-        // setUser(UserInfo);
-        const realMe = await DataStore.query(User, (u) =>
-          u.username("eq", user.username)
-        );
-        setMe(realMe[0]);
-        console.log(realMe[0]);
-      } catch (error) {
-        alert("이메일 또는 비밀번호를 확인해 주세요.");
-        console.log("error signing in", error);
-        return;
-      }
-      // navigation.navigate("HomeTab" as any);
+    const isEmailReg = /^[a-zA-Z0-9%-_]+@[a-zA-Z]+\.[a-zA-Z]{2,3}$/;
+
+    const getRealMe = async (username) => {
+      return DataStore.query(User, (u) => u.username("eq", username));
     };
 
-    const SignInPhone = async () => {
-      try {
-        const user = await Auth.signIn(forPhone(username), password);
-        // const UserInfo = {
-        //   username: user.attributes.phone_number,
-        //   name: user.attributes.name,
-        //   nickname: user.attributes.nickname,
-        //   password: user.attributes.password,
-        // };
-        const realMe = await DataStore.query(User, (u) =>
-          u.username("eq", user.username)
-        );
-        setMe(realMe[0]);
-      } catch (error) {
-        alert("전화번호 또는 비밀번호를 확인해 주세요.");
-        console.log("error signing in", error);
+    const finalSignIn = async (isEmail) => {
+      if (loading) {
         return;
       }
-      // navigation.navigate("Welcome" as any);
+
+      setLoading(true);
+      try {
+        const user = isEmail
+          ? await Auth.signIn(username, newPw)
+          : await Auth.signIn(forPhone(username), password);
+
+        const realMe = await getRealMe(user.username);
+        setMe(realMe[0]);
+      } catch (error) {
+        if (isEmail) {
+          Alert.alert("이메일 또는 비밀번호를 확인해 주세요.");
+        } else {
+          Alert.alert("전화번호 또는 비밀번호를 확인해 주세요.");
+        }
+        console.log("error signing in", error);
+        return;
+      } finally {
+        setLoading(false);
+      }
     };
-    if (regExp.test(username)) {
-      SignInEmail();
-    } else {
-      SignInPhone();
-    }
+
+    const isEmail = isEmailReg.test(username);
+
+    finalSignIn(isEmail);
   };
 
   const handleIdChange = (text) => {
@@ -214,7 +191,11 @@ const LoginScreen = () => {
                 android_ripple={{ color: "#FFF" }}
                 disabled={disable}
               >
-                <Text style={styles.buttonText}>로그인</Text>
+                {loading ? (
+                  <ActivityIndicator color="white" />
+                ) : (
+                  <Text style={styles.buttonText}>로그인</Text>
+                )}
               </Pressable>
             </View>
           </KeyboardAvoidingView>

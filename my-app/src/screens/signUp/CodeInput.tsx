@@ -18,21 +18,23 @@ const CodeInput = ({ route }) => {
   const [disable, setDisable] = useState(true);
 
   const navigation = useNavigation();
-  const username = route.params.username;
-  const name = route.params.name;
-  const nick = route.params.nick;
-  const password = route.params.password;
+
+  const { username, name, nick: nickname, password } = route.params;
 
   async function confirmSignUp() {
     try {
-      await Auth.confirmSignUp(username, code);
-      navigation.navigate("Birthday" as any, {
-        username: username,
-        name: name,
-        nick: nick,
-        password: password,
-      });
-      console.log(password);
+      const resAuth = await Auth.confirmSignUp(username, code);
+
+      if (resAuth === "SUCCESS") {
+        const user = {
+          username,
+          name,
+          nickname,
+          password,
+        };
+
+        navigation.navigate("Birthday" as any, { user });
+      }
     } catch (error) {
       console.log("error confirming sign up", error);
     }

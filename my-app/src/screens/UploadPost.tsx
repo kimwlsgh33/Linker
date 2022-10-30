@@ -113,9 +113,6 @@ function UploadPost({ navigation }) {
       const extensions = urlParts.pop();
       const key = `${uuidv4()}.${extensions}`;
 
-      // const uri = `https://thelinker-storage-584534aa-posts113213-staging.s3.ap-northeast-2.amazonaws.com/public/${key}`
-      // const uri2 = `https://${bucket}.s3.${region}.amazonaws.com/public/${key}`
-
       return Storage.put(key, blob, {
         contentType: `image/${extensions}`,
       });
@@ -191,37 +188,38 @@ function UploadPost({ navigation }) {
       return;
     }
 
-    // S3 저장소에 이미지 업로드, key값 가져옴
-    const image = await onUpload();
-    console.log("image", image);
+    try {
+      // S3 저장소에 이미지 업로드, key값 가져옴
+      const image = await onUpload();
 
-    // 태그 존재하는지 확인
-    let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
+      // 태그 존재하는지 확인
+      let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
 
-    console.log("exists tag : ", exists);
+      // 태그 없으면, 새로운 태그 만듬
+      if (exists.length === 0) {
+        exists = await DataStore.save(new Tag({ name: tag }));
+      }
 
-    // 태그 없으면, 새로운 태그 만듬
-    if (exists.length === 0) {
-      exists[0] = await DataStore.save(new Tag({ name: tag }));
+      const post = await DataStore.save(
+        new Post({
+          imageUrls: [image.key],
+          link,
+          text,
+          Tag: exists[0],
+          userID: me.id,
+        })
+      );
+
+      addPost(post);
+      setText("");
+      setLink("");
+      setTag("");
+      setAsset(null);
+      setLoading(false);
+      navigation.navigate("HomeTab");
+    } catch (e) {
+      Alert.alert("Error", e.message);
     }
-
-    const post = await DataStore.save(
-      new Post({
-        imageUri: image.key,
-        link,
-        text,
-        Tag: exists[0],
-        userID: me.id,
-      })
-    );
-
-    addPost(post);
-    setText("");
-    setLink("");
-    setTag("");
-    setAsset(null);
-    setLoading(false);
-    navigation.navigate("HomeTab");
   };
 
   return (

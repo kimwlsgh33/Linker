@@ -1,15 +1,15 @@
 import { DataStore, Storage, Predicates } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Post } from "../../../models";
-import { User } from "../../../models";
 import { useMeStore, usePostStore } from "../../../store";
 import TestPost from "./TestPost";
 
 function TestPosts({ navigation }) {
   const { me, setMe } = useMeStore();
+
   const { posts, setPosts } = usePostStore();
 
   const getPosts = async () => {
@@ -17,28 +17,18 @@ function TestPosts({ navigation }) {
       post.userID("eq", me.id)
     );
     if (!!posts) {
-      console.log("posts : ", posts[0]?.imageUri);
+      console.log("posts : ", posts[0]?.imageUrls);
       setPosts(posts);
     }
   };
 
-  const deletePosts = async () => {
-    const result = await DataStore.delete(Post, Predicates.ALL);
-    console.log("result: ", result);
-  };
-
-  // const setUser = async () => {
-  //   const user = await DataStore.query(User, (user) =>
-  //     user.name("eq", "kimwlsgh97")
-  //   );
-  //   if (!!user) {
-  //     console.log(user[0]);
-  //     setMe(user[0]);
-  //   }
+  // const deletePosts = async () => {
+  //   const result = await DataStore.delete(Post, Predicates.ALL);
+  //   console.log("result: ", result);
   // };
 
   useEffect(() => {
-    getPosts();
+    // getPosts();
   }, []);
 
   return (
@@ -50,7 +40,10 @@ function TestPosts({ navigation }) {
       <TouchableOpacity style={styles.bar} onPress={getPosts}>
         <Text style={styles.barText}>getPosts</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.bar} onPress={deletePosts}>
+      <TouchableOpacity
+        style={styles.bar}
+        // onPress={deletePosts}
+      >
         <Text style={styles.barText}>deletePosts</Text>
       </TouchableOpacity>
 

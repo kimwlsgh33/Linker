@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { View, Text, FlatList } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -16,39 +16,53 @@ import { DataStore } from "aws-amplify";
 import { Post as TPost, User } from "../../models";
 
 const Posts = () => {
-  const navigation = useNavigation(); // 네비게이션을 쓰기 위한 두가지 방법 중 하나 hook
-
-  const [userId, setUserId] = useState("");
-  const [id, setId] = useState(0);
-  const [myId, setMyId] = useState("nieoodie"); // 내 아이디
-  const [mypostPersonImage, setMypostPersonImage] = useState(
-    require("../../../assets/images/jinho.jpeg")
-  ); // 내 프로필 사진
-
   // const [datas, setData] = useState(postInfo); // useState를 이용해 data라는 state를 만들어줌. postInfo를 넣어줌.
   //=======================================================
   //=======================================================
   //=======================================================
   const { posts, setPosts } = usePostStore();
-  const { setMe, addBookMark, following } = useMeStore();
+  const { me, addBookMark, following } = useMeStore();
+  const dummy: TPost[] = useMemo(
+    () =>
+      new Array(10).fill(0).map((_, idx) => {
+        return {
+          id: idx.toString(),
+          text: "test" + idx,
+          link: "https://www.google.com",
+          imageUrls: [
+            "https://picsum.photos/seed/500/500",
+            "https://picsum.photos/500/500",
+          ],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          userID: me.id,
+          Comments: [
+            {
+              id: "1",
+              text: "test1",
+              userID: me.id,
+              postID: idx.toString(),
+            },
+            {
+              id: "2",
+              text: "test2",
+              userID: me.id,
+              postID: idx.toString(),
+            },
+          ],
+        };
+      }),
+    []
+  );
 
   const getPost = async () => {
-    const newPost = await DataStore.query(TPost, (post) =>
-      post.link("eq", "inception.naver.com")
-    );
-    console.log(newPost);
+    const newPost = await DataStore.query(TPost);
     return newPost;
   };
 
-  // const getUser = async () => {
-  //   const newUser = await DataStore.query(User, (user) =>
-  //     user.id("eq", "suntaliquaadipi")
-  //   );
-  //   return newUser[0];
-  // };
-
   useEffect(() => {
-    getPost().then((TPost) => setPosts(TPost));
+    // getPost().then((TPost) => setPosts(TPost));
+    setPosts(dummy);
   }, []);
 
   //=======================================================
@@ -175,7 +189,7 @@ const Posts = () => {
         )}
       />
       <Modal Visible={modal} setVisible={setModal}>
-        <ModalScreen id={id} />
+        <ModalScreen />
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />

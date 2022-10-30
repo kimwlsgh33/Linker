@@ -31,11 +31,13 @@ import SwipedIcon from "../../components/search/SwipedIcon";
 import useToggle from "../../hooks/useToggle";
 import { DataStore } from "aws-amplify";
 import { User } from "../../models";
+import { useMeStore } from "../../store";
 
 // 화면 크기 구하기
 const { width, height } = Dimensions.get("window");
 
 function SearchBar({ toggleContentsVisible = () => {} }) {
+  const { me } = useMeStore();
   const [visible, toggleVisible] = useToggle();
   // 검색 텍스트, 검색 결과
   const [searchText, setSearchText] = useState<string>("");
@@ -83,14 +85,10 @@ function SearchBar({ toggleContentsVisible = () => {} }) {
     // 일정 시간 지나면, 검색 로직 실행
     searchTimeout.current = setTimeout(async () => {
       try {
-        // const res = await axios({
-        //   method: "get",
-        //   url: "https://jsonplaceholder.typicode.com/users",
-        //   responseType: "json",
-        // });
         const res = await DataStore.query(User, (user) =>
-          user.nickname("contains", searchText)
+          user.nickname("contains", searchText).username("ne", me.username)
         );
+
         setUsers(res);
       } catch (e) {
         Alert.alert("검색에 실패했습니다.", e);

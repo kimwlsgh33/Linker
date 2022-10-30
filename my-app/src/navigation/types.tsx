@@ -5,11 +5,7 @@ import type {
 import type { StackScreenProps } from "@react-navigation/stack";
 import type { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import type { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
-<<<<<<< HEAD
-import { TPost, TComment } from "../global";
-=======
-import { Post, Story } from "../models";
->>>>>>> 60c4501136423448532c4e663e703067213ebacd
+import { EagerComment, Post, Story } from "../models";
 
 //=======[ Stack Navigation ]===================================================
 //================================================================================================
@@ -36,7 +32,7 @@ export type RootStackParamList = {
   Modal2: any;
   Modal3: undefined;
   Modal4: any;
-  Comment: { text: string; comments: Comment[]; id: string };
+  Comment: { text: string; comments: EagerComment[]; id: string };
   UploadImage: undefined;
   TestModal: undefined;
   SearchResult: undefined;
