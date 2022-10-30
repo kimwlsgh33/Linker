@@ -15,9 +15,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import { useMeStore, useModalStore, usePostStore } from "../../store";
 import { DataStore, Storage } from "aws-amplify";
-import { User, Post as PPost } from "../../models";
+import { User, Post as PPost, Comment } from "../../models";
 import { id } from "date-fns/locale";
-import { commentLike } from "../../store/slices";
 
 const Post = ({ post }: { post: PPost }) => {
   const { me, setMe, addBookMark } = useMeStore();
@@ -134,14 +133,9 @@ const Post = ({ post }: { post: PPost }) => {
           <Feather
             onPress={() => {
               navigation.navigate("Comment", {
-                id: post.id,
-                text: post.text,
-                // userId: data.userId,
-                // postPersonImage: data.postPersonImage,
-                // me: me, <==== context
-                comments: post.Comments.map((comment) => {
-                  id: comment.id;
-                }),
+                text: post?.text,
+                id: post?.id,
+                comments: Comment[post?.id],
               });
             }}
             name="message-circle"
@@ -183,10 +177,9 @@ const Post = ({ post }: { post: PPost }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Comment", {
-                id: post.id,
-                text: post.text,
-                comments: post?.Comments,
-                // comments: post.Comments,
+                text: post?.text,
+                id: post?.id,
+                comments: Comment[post?.id],
               });
             }}
           >
@@ -203,9 +196,9 @@ const Post = ({ post }: { post: PPost }) => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Comment", {
-                id: post.id,
-                text: post.text,
-                comments: post.Comments,
+                text: post?.text,
+                id: post?.id,
+                comments: Comment[post?.id],
               });
             }}
           >

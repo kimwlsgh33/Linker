@@ -14,7 +14,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-import Modal from "../Modal";
+import PostModal from "../modal/PostModal";
 import ModalScreen from "../modal/ModalScreen";
 import ShareModal from "../modal/ShareModal";
 import LinkModal from "../modal/LinkModal";
@@ -182,31 +182,45 @@ const Posts = () => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <Post post={item} />}
         ListEmptyComponent={() => (
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ fontSize: 40 }}>
-              try follow & get information you want!
+          <View
+            style={{
+              alignItems: "center",
+              backgroundColor: "white",
+              borderRadius: 10,
+              opacity: 0.6,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 40,
+                textAlign: "center",
+                color: "tomato",
+                opacity: 1,
+              }}
+            >
+              try follow & get info you want!
             </Text>
           </View>
         )}
       />
-      <Modal Visible={modal} setVisible={setModal}>
+      <PostModal Visible={modal} setVisible={setModal}>
         <ModalScreen id={id} />
-      </Modal>
-      <Modal Visible={shareModal} setVisible={setShareModal}>
+      </PostModal>
+      <PostModal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />
-      </Modal>
-      <Modal Visible={linkModal} setVisible={setLinkModal}>
+      </PostModal>
+      <PostModal Visible={linkModal} setVisible={setLinkModal}>
         <LinkModal />
-      </Modal>
-      <Modal Visible={qrModal} setVisible={setQrModal}>
+      </PostModal>
+      <PostModal Visible={qrModal} setVisible={setQrModal}>
         <QrModal />
-      </Modal>
-      <Modal Visible={isFavorite} setVisible={setIsFavorite}>
+      </PostModal>
+      <PostModal Visible={isFavorite} setVisible={setIsFavorite}>
         <FavoirteModal />
-      </Modal>
-      <Modal Visible={follow} setVisible={setFollow}>
+      </PostModal>
+      <PostModal Visible={follow} setVisible={setFollow}>
         <FollowModal data={posts} />
-      </Modal>
+      </PostModal>
     </View>
   );
 };

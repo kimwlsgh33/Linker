@@ -12,14 +12,12 @@ import {
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import events from "../../libs/eventEmitter";
 import { useMeStore, usePostStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { Comment } from "../../models";
 
 const CommentScreen = ({ route, Navigation }) => {
   const { id, text, comments: commentList } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
-  const navigation = useNavigation();
   const [comment, setComment] = useState("");
   // const [commentList, setCommentList] = useState(commentArray);
   const { addComment } = usePostStore();

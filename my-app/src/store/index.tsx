@@ -5,7 +5,6 @@ import Modal from "../components/Modal";
 import { Comment } from "../models";
 
 import { User, Post } from "../models";
-import { postsSlice } from "./slices";
 
 type ModalStoreType = {
   modal: boolean;
@@ -129,7 +128,18 @@ export const useMeStore = create<MeStoreType>((set) => ({
 }));
 
 export const usePostStore = create<PostStoreType>((set) => ({
-  posts: [],
+  posts: ([] = [
+    {
+      id: "1",
+      imageUri:
+        "https://images.unsplash.com/photo-1610393878881-1f1b0e1b0f1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+      text: "안녕하세요",
+      likes: [],
+      Comments: [],
+      userID: "nieoodie",
+      link: "https://www.naver.com",
+    },
+  ]),
   setPosts: (posts) => set(() => ({ posts })),
   addComment: ({ comment, postId }) =>
     set((state) => ({
