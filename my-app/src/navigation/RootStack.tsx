@@ -95,7 +95,6 @@ function RootStack() {
           <Stack.Screen name="Posts" component={Posts} />
           <Stack.Screen name="Story" component={StoryScreen} />
           <Stack.Screen name="Comment" component={CommentScreen} />
-
           <Stack.Screen name="Discover" component={DiscoverScreen} />
           <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
           <Stack.Screen name="FollowTab" component={FollowTab} />

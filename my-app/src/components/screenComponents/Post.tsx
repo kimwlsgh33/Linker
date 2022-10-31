@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   userBarInfo: { flexDirection: "row", alignItems: "center" },
   userProfPic: { width: 40, height: 40, borderRadius: 20 },
-  userBarName: { fontSize: 15, fontWeight: "bold" },
+  userBarName: { fontSize: 15, fontWeight: "bold", marginLeft: 10 },
   test: {
     position: "relative",
     justifyContent: "center",

@@ -12,7 +12,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 const { width, height } = Dimensions.get("window");
 
-function Modal2({ navigation }) {
+function Modal2({ navigation, route }) {
+  // const { user } = route.params; // navigation으로 전달하는 data는 route로 가져옴
   const opacity = React.useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

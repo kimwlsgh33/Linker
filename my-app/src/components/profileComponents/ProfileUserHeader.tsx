@@ -12,16 +12,16 @@ export const ProfileUserHeader = ({ user }) => {
   const { me, setMe } = useMeStore();
   const users = async () => {
     const newUser = await DataStore.query(User, (test) =>
-      test.name("contains", "shkim")
+      test.name("eq", "shkim")
     );
     console.log(newUser);
-    return newUser[4];
+    return newUser[0];
   };
   const onSetMe = () => {
     users().then((test) => setMe(test));
   };
 
-  const otherUser = () =>{
+  const returnUser = () =>{
     navigation.navigate("ProfileScreen");
     onSetMe();
   }
@@ -37,7 +37,7 @@ export const ProfileUserHeader = ({ user }) => {
           }}
         >
           <Pressable
-            onPress={otherUser}
+            onPress={returnUser}
             style={({ pressed }) => [
               {
                 opacity: pressed ? 0.2 : 1,

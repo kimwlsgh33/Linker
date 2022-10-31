@@ -103,7 +103,7 @@ export const useMeStore = create<MeStoreType>((set) => ({
     set((state) => ({
       me: {
         ...state.me,
-        following: [...state.me.following, id],
+        // following: [...state.me.following, id],
       },
     }));
   },
@@ -113,7 +113,7 @@ export const useMeStore = create<MeStoreType>((set) => ({
     set((state) => ({
       me: {
         ...state.me,
-        followers: [...state.me.followers, id],
+        // followers: [...state.me.followers, id],
       },
     })),
 

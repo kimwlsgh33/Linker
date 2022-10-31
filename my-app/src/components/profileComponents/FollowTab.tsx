@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -20,8 +20,10 @@ const FollowTab = () => {
   const { me, setMe } = useMeStore();
 
   const users = async () => {
-    const newUser = await DataStore.query(User, (test) =>
-      test.name("contains", "rlawlsgh")
+    const newUser = await DataStore.query(
+      User,
+      (test) => test.name("eq", "jeong")
+      //다른유저 정보가 있어야 함
     );
     console.log(newUser);
     return newUser[0];
@@ -36,7 +38,7 @@ const FollowTab = () => {
   };
 
   let circuls = [];
-  let numberOfCirculs = 15;
+  let numberOfCirculs = 2;
 
   for (let index = 0; index < numberOfCirculs; index++) {
     circuls.push(
@@ -71,7 +73,7 @@ const FollowTab = () => {
               <View style={styles.followRound}></View>
             </Pressable>
             <Text style={{ top: 22, fontFamily: "GangwonEduAllBold" }}>
-              유저ID
+              {me.name}
             </Text>
             <View style={styles.container}>
               <Pressable

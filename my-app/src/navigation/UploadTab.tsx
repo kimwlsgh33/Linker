@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import TakePicture from "../screens/home/TakePicture";
 import UploadImageScreen from "../screens/home/UploadImageScreen";
-import MyTabBar from "./tabBar/MyTabBar";
+import MyTabBar from ".tabBar/MyTabBar";
 
 const Tab = createBottomTabNavigator();
 

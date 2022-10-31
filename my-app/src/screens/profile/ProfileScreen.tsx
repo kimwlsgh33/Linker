@@ -31,7 +31,7 @@ const ProfileScreen = () => {
       <View style={styles.container}>
         <ProfileHeader data={me} user={user} />
         <ProfileBody data={me} user={user} />
-        <ProfileTopTab route={user} />
+        <ProfileTopTab user={user} />
       </View>
     </SafeAreaView>
   );

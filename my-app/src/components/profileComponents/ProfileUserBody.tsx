@@ -18,28 +18,6 @@ export const ProfileUserBody = ({ user }) => {
   const navigation = useNavigation();
   // const { me, setMe } = useMeStore();
 
-  // const storyPressed = useCallback(
-  //   (id) => {
-  //     if (user.id === id) {
-  //       return {
-  //         ...user,
-  //         show: true,
-  //       };
-  //     }
-  //     return user;
-  //   },
-  //   [user]
-  // );
-
-  // const goToStory = () => {
-  //   navigation.navigate("Story", {
-  //     name: user.name,
-  //     image: user.image,
-  //     userName: user.userName,
-  //   });
-  //   storyPressed(user.id);
-  // };
-
   return (
     <SafeAreaView>
       <View>

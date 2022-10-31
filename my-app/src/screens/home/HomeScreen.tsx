@@ -36,7 +36,7 @@ function HomeScreen({ navigation }) {
             fontWeight: "500",
           }}
         >
-          Instagram
+          LINKER
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Pressable
@@ -45,7 +45,7 @@ function HomeScreen({ navigation }) {
               Platform.OS === "ios" && pressed && { opacity: 0.5 },
             ]}
             android_ripple={{ color: "#ccc" }}
-            onPress={() => navigation.navigate("Upload")}
+            onPress={() => navigation.navigate("Upload" as any)}
           >
             <Feather name="plus-square" style={{ fontSize: 24 }} />
           </Pressable>

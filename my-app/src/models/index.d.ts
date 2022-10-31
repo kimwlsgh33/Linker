@@ -1,12 +1,10 @@
 import { ModelInit, MutableModel } from "@aws-amplify/datastore";
-// @ts-ignore
 import {
   LazyLoading,
   LazyLoadingDisabled,
   AsyncCollection,
   AsyncItem,
 } from "@aws-amplify/datastore";
-
 type StoryMetaData = {
   readOnlyFields: "createdAt" | "updatedAt";
 };

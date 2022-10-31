@@ -3,12 +3,12 @@ import { View, Text, FlatList } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import Modal from "../Modal";
-import ModalScreen from "../modal/ModalScreen";
-import ShareModal from "../modal/ShareModal";
-import LinkModal from "../modal/LinkModal";
-import QrModal from "../modal/QrModal";
-import FavoirteModal from "../modal/FavoriteModal";
-import FollowModal from "../modal/FollowModal";
+// import ModalScreen from "../modal/ModalScreen";
+// import ShareModal from "../modal/ShareModal";
+// import LinkModal from "../modal/LinkModal";
+// import QrModal from "../modal/QrModal";
+// import FavoirteModal from "../modal/FavoriteModal";
+// import FollowModal from "../modal/FollowModal";
 
 import Post from "./Post";
 import { usePostStore, useMeStore, useModalStore } from "../../store";
@@ -189,22 +189,22 @@ const Posts = () => {
         )}
       />
       <Modal Visible={modal} setVisible={setModal}>
-        <ModalScreen />
+        {/* <ModalScreen /> */}
       </Modal>
       <Modal Visible={shareModal} setVisible={setShareModal}>
-        <ShareModal />
+        {/* <ShareModal /> */}
       </Modal>
       <Modal Visible={linkModal} setVisible={setLinkModal}>
-        <LinkModal />
+        {/* <LinkModal /> */}
       </Modal>
       <Modal Visible={qrModal} setVisible={setQrModal}>
-        <QrModal />
+        {/* <QrModal /> */}
       </Modal>
       <Modal Visible={isFavorite} setVisible={setIsFavorite}>
-        <FavoirteModal />
+        {/* <FavoirteModal /> */}
       </Modal>
       <Modal Visible={follow} setVisible={setFollow}>
-        <FollowModal data={posts} />
+        {/* <FollowModal data={posts} /> */}
       </Modal>
     </View>
   );
