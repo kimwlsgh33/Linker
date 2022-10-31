@@ -53,7 +53,7 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
 
-      <Stories />
+      {/* <Stories /> */}
       <Posts />
     </SafeAreaView>
   );

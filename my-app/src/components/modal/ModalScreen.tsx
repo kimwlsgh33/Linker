@@ -18,7 +18,7 @@ type ModalProps = {
   id: any;
 };
 
-const ModalScreen = ({ id }: ModalProps) => {
+const ModalScreen = () => {
   const { me, setMe, following, addBookMark, favorite } = useMeStore();
   const { posts, setPosts } = usePostStore();
   const {

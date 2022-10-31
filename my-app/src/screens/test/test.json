@@ -1,19 +1,21 @@
 {
-  "cause": {
-    "error": {},
-    "provider": {
-      "keepAliveAlertTimeoutId": 1244,
-      "keepAliveTimeout": 300000,
-      "keepAliveTimeoutId": 1243,
-      "socketStatus": 1
-    }
+  "username": "+821091186277",
+  "pool": {
+    "userPoolId": "ap-northeast-2_6Zok2rufE",
+    "clientId": "1crubscj7gcgjffpmd7fht7b6d",
+    "client": {
+      "endpoint": "https://cognito-idp.ap-northeast-2.amazonaws.com/",
+      "fetchOptions": {}
+    },
+    "advancedSecurityDataCollectionFlag": true
   },
-  "errorType": "Unknown",
-  "localModel": null,
-  "message": "Connection failed: {\"errors\":[{\"message\":\"Validation error of type FieldUndefined: Field 'show' in type 'Story' is undefined @ 'onCreateStory/show'\"}]}",
-  "model": "Story",
-  "operation": "Create",
-  "process": "subscribe",
-  "recoverySuggestion": "Ensure app code is up to date, auth directives exist and are correct on each model, and that server-side data has not been invalidated by a schema change. If the problem persists, search for or create an issue: https://github.com/aws-amplify/amplify-js/issues",
-  "remoteModel": null
+  "Session": null,
+  "client": {
+    "endpoint": "https://cognito-idp.ap-northeast-2.amazonaws.com/",
+    "fetchOptions": {}
+  },
+  "signInUserSession": null,
+  "authenticationFlowType": "USER_SRP_AUTH",
+  "keyPrefix": "CognitoIdentityServiceProvider.1crubscj7gcgjffpmd7fht7b6d",
+  "userDataKey": "CognitoIdentityServiceProvider.1crubscj7gcgjffpmd7fht7b6d.+821091186277.userData"
 }

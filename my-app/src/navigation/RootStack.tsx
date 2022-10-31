@@ -1,5 +1,5 @@
 // React Basic
-import React from "react";
+import React, { useEffect } from "react";
 // React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 // navigation
@@ -41,11 +41,37 @@ import SearchResultScreen from "../screens/search/SearchResultScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
 import { useMeStore } from "../store";
 import Posts from "../components/screenComponents/Posts";
+import AuthComp from "../screens/AuthComp";
+import TestHub from "../screens/test/screens/TestHub";
+import { Auth, DataStore, Hub } from "aws-amplify";
+import { User } from "../models";
+import CommentScreen from "../screens/home/CommentScreen";
 
 const Stack = createStackNavigator();
 
 function RootStack() {
-  const { me } = useMeStore();
+  const { me, setMe } = useMeStore();
+
+  const getCurrentUser = async () => {
+    try {
+      const currentUser = await Auth.currentUserInfo();
+      // console.log(JSON.stringify(currentUser, null, 2));
+      if (currentUser) {
+        const userData = await DataStore.query(User, (user) =>
+          user.username("eq", currentUser.username)
+        );
+        setMe(userData[0]);
+      }
+    } catch (e) {
+      console.log("Empty User Data", e.message);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUser();
+    // test();
+  }, []);
+
   return (
     <Stack.Navigator screenOptions={{ ...headerOptions }}>
       {!me ? (
@@ -61,39 +87,37 @@ function RootStack() {
           <Stack.Screen name="NameConfirm" component={NameConfirm} />
           <Stack.Screen name="TOS" component={TOSScreen} />
           <Stack.Screen name="LoginEr" component={LoginEr} />
+          <Stack.Screen name="AuthComp" component={AuthComp} />
         </Stack.Group>
       ) : (
-        <>
-          <Stack.Group screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
+        <Stack.Group screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
+          <Stack.Screen name="Posts" component={Posts} />
+          <Stack.Screen name="Story" component={StoryScreen} />
+          <Stack.Screen name="Comment" component={CommentScreen} />
 
-            <Stack.Screen name="Posts" component={Posts} />
-            <Stack.Screen name="Story" component={StoryScreen} />
-            <Stack.Screen name="Discover" component={DiscoverScreen} />
-            <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
-            <Stack.Screen name="FollowTab" component={FollowTab} />
-            <Stack.Screen name="Setting" component={ScreenSetting} />
-            <Stack.Screen name="AddUser2" component={AddUser2} />
-            <Stack.Screen name="Bells2" component={Bells2} />
-            <Stack.Screen name="Lock2" component={Lock2} />
-            <Stack.Screen name="Safety2" component={Safety2} />
-            <Stack.Screen name="User2" component={User2} />
-            <Stack.Screen name="Thema2" component={Thema2} />
-            <Stack.Screen name="PersonalData" component={PersonalData} />
-            <Stack.Screen name="HomeTab" component={HomeTab} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
-            <Stack.Screen name="ProfileUser" component={ProfileUser} />
-            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-            <Stack.Screen name="SearchResult" component={SearchResultScreen} />
-          </Stack.Group>
-
+          <Stack.Screen name="Discover" component={DiscoverScreen} />
+          <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
+          <Stack.Screen name="FollowTab" component={FollowTab} />
+          <Stack.Screen name="Setting" component={ScreenSetting} />
+          <Stack.Screen name="AddUser2" component={AddUser2} />
+          <Stack.Screen name="Bells2" component={Bells2} />
+          <Stack.Screen name="Lock2" component={Lock2} />
+          <Stack.Screen name="Safety2" component={Safety2} />
+          <Stack.Screen name="User2" component={User2} />
+          <Stack.Screen name="Thema2" component={Thema2} />
+          <Stack.Screen name="PersonalData" component={PersonalData} />
+          <Stack.Screen name="HomeTab" component={HomeTab} />
+          <Stack.Screen name="EditProfile" component={EditProfile} />
+          <Stack.Screen name="ProfileUser" component={ProfileUser} />
+          <Stack.Screen name="SearchResult" component={SearchResultScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen
             name="Modal3"
             component={Modal3}
             options={{
               presentation: "transparentModal",
               // animation: "slide_from_bottom",
-              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -102,7 +126,6 @@ function RootStack() {
             options={{
               presentation: "transparentModal",
               // animation: "slide_from_bottom",
-              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -111,10 +134,9 @@ function RootStack() {
             options={{
               presentation: "transparentModal",
               // animation: "slide_from_bottom",
-              headerShown: false,
             }}
           />
-        </>
+        </Stack.Group>
       )}
     </Stack.Navigator>
   );
