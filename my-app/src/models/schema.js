@@ -1,5 +1,64 @@
 export const schema = {
     "models": {
+        "Tag": {
+            "name": "Tag",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "text": {
+                    "name": "text",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Tags",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Story": {
             "name": "Story",
             "fields": {
@@ -20,10 +79,11 @@ export const schema = {
                 },
                 "likes": {
                     "name": "likes",
-                    "isArray": false,
-                    "type": "String",
+                    "isArray": true,
+                    "type": "ID",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "userID": {
                     "name": "userID",
@@ -316,6 +376,28 @@ export const schema = {
                         "associatedWith": "postID"
                     }
                 },
+                "Tag": {
+                    "name": "Tag",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tag"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id",
+                        "targetName": "postTagId"
+                    }
+                },
+                "clicked": {
+                    "name": "clicked",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -331,6 +413,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "postTagId": {
+                    "name": "postTagId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -483,6 +572,14 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
+                "favorite": {
+                    "name": "favorite",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -536,5 +633,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "c0824cf5710afe661aba267683aa33c9"
+    "version": "3343e55e42d42c298c00bfba5bca3d09"
 };

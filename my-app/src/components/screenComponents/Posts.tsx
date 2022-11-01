@@ -1,8 +1,5 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { View, Text, FlatList } from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
-import Modal from "../Modal";
 import ModalScreen from "../modal/ModalScreen";
 import ShareModal from "../modal/ShareModal";
 import LinkModal from "../modal/LinkModal";
@@ -14,6 +11,7 @@ import Post from "./Post";
 import { usePostStore, useMeStore, useModalStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { Post as TPost, User } from "../../models";
+import PostModal from "../modal/PostModal";
 
 const Posts = () => {
   // const [datas, setData] = useState(postInfo); // useState를 이용해 data라는 state를 만들어줌. postInfo를 넣어줌.
@@ -35,21 +33,28 @@ const Posts = () => {
           ],
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
-          userID: me.id,
+          userID: me?.id,
           Comments: [
             {
               id: "1",
               text: "test1",
-              userID: me.id,
+              userID: me?.id,
               postID: idx.toString(),
             },
             {
               id: "2",
               text: "test2",
-              userID: me.id,
+              userID: me?.id,
               postID: idx.toString(),
             },
           ],
+          likes: [],
+          bookMark: [],
+          postTagId: "1",
+          Tag: {
+            id: "1",
+            text: "IU",
+          },
         };
       }),
     []
@@ -188,24 +193,24 @@ const Posts = () => {
           </View>
         )}
       />
-      <Modal Visible={modal} setVisible={setModal}>
+      <PostModal Visible={modal} setVisible={setModal}>
         <ModalScreen />
-      </Modal>
-      <Modal Visible={shareModal} setVisible={setShareModal}>
+      </PostModal>
+      <PostModal Visible={shareModal} setVisible={setShareModal}>
         <ShareModal />
-      </Modal>
-      <Modal Visible={linkModal} setVisible={setLinkModal}>
+      </PostModal>
+      <PostModal Visible={linkModal} setVisible={setLinkModal}>
         <LinkModal />
-      </Modal>
-      <Modal Visible={qrModal} setVisible={setQrModal}>
+      </PostModal>
+      <PostModal Visible={qrModal} setVisible={setQrModal}>
         <QrModal />
-      </Modal>
-      <Modal Visible={isFavorite} setVisible={setIsFavorite}>
+      </PostModal>
+      <PostModal Visible={isFavorite} setVisible={setIsFavorite}>
         <FavoirteModal />
-      </Modal>
-      <Modal Visible={follow} setVisible={setFollow}>
+      </PostModal>
+      <PostModal Visible={follow} setVisible={setFollow}>
         <FollowModal data={posts} />
-      </Modal>
+      </PostModal>
     </View>
   );
 };

@@ -71,6 +71,14 @@ const LoginScreen = () => {
           : await Auth.signIn(forPhone(username), password);
 
         const realMe = await getRealMe(user.username);
+        console.log(realMe);
+
+        if (realMe.length === 0) {
+          Alert.alert("로그인 실패", "존재하지 않는 계정입니다.");
+          setLoading(false);
+          return;
+        }
+
         setMe(realMe[0]);
       } catch (error) {
         if (isEmail) {
