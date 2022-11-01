@@ -53,7 +53,7 @@ function HomeScreen({ navigation }) {
               Platform.OS === "ios" && pressed && { opacity: 0.5 },
             ]}
             android_ripple={{ color: "#ccc" }}
-            onPress={() => navigation.navigate("Upload" as any)}
+            onPress={() => navigation.navigate("UploadPost")}
           >
             <Feather name="plus-square" style={{ fontSize: 24 }} />
           </Pressable>

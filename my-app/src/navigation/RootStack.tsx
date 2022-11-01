@@ -60,7 +60,14 @@ function RootStack() {
         const userData = await DataStore.query(User, (user) =>
           user.username("eq", currentUser.username)
         );
-        setMe(userData[0]);
+
+        const newUser = {
+          ...userData[0],
+          bookMark: userData[0].bookMark ?? [],
+          profpic: userData[0].profpic ?? "",
+        };
+
+        setMe(newUser);
       }
     } catch (e) {
       console.log("Empty User Data", e.message);
@@ -94,7 +101,15 @@ function RootStack() {
           <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
           <Stack.Screen name="Posts" component={Posts} />
           <Stack.Screen name="Story" component={StoryScreen} />
-          <Stack.Screen name="Comment" component={CommentScreen} />
+          <Stack.Screen
+            name="Comment"
+            component={CommentScreen}
+            options={{
+              presentation: "modal",
+              gestureEnabled: true,
+            }}
+          />
+
           <Stack.Screen name="Discover" component={DiscoverScreen} />
           <Stack.Screen name="ProfileTopTab" component={ProfileTopTab} />
           <Stack.Screen name="FollowTab" component={FollowTab} />
