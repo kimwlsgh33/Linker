@@ -28,8 +28,15 @@ function HomeScreen({ navigation }) {
           alignItems: "center",
         }}
       >
+        <Pressable
+        style={({ pressed }) => [
+          { marginRight: 5 },
+          Platform.OS === "ios" && pressed && { opacity: 0.5 },
+        ]}
+        android_ripple={{ color: "#ccc" }}
+        onPress={() => navigation.navigate("Login")}
+        >
         <Text
-          onPress={() => navigation.navigate("Login")}
           style={{
             fontFamily: "BackToSchoolRegular",
             fontSize: 25,
@@ -38,6 +45,7 @@ function HomeScreen({ navigation }) {
         >
           LINKER
         </Text>
+        </Pressable>
         <View style={{ flexDirection: "row" }}>
           <Pressable
             style={({ pressed }) => [

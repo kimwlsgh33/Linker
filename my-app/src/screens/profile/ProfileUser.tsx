@@ -8,8 +8,6 @@ import ProfileUserHeader from "../../components/profileComponents/ProfileUserHea
 import ProfileUserBody from "../../components/profileComponents/ProfileUserBody";
 // database
 import { useMeStore } from "../../store";
-import { DataStore } from "aws-amplify";
-import { User } from "../../models";
 
 const ProfileUser = () => {
   const { me, setMe } = useMeStore();

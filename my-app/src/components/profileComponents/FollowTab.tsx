@@ -6,6 +6,7 @@ import {
   Pressable,
   TextInput,
   StyleSheet,
+  Image,
 } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useNavigation } from "@react-navigation/native";
@@ -22,7 +23,7 @@ const FollowTab = () => {
   const users = async () => {
     const newUser = await DataStore.query(
       User,
-      (test) => test.name("eq", "jeong")
+      (test) => test.name("eq", "gm1")
       //다른유저 정보가 있어야 함
     );
     console.log(newUser);
@@ -40,26 +41,38 @@ const FollowTab = () => {
   let circuls = [];
   let numberOfCirculs = 2;
 
+  const [list, setList] = useState([circuls]);
+
+  const onClick = () => {
+    setList([...list, circuls.slice(1, numberOfCirculs)]);
+  };
+
+  const onDelete = () => {
+    const bye = circuls.filter(item => item !== circuls[2]);
+    setList(bye);
+  };
+
   for (let index = 0; index < numberOfCirculs; index++) {
     circuls.push(
       <View key={index}>
         {index === 0 ? (
           <View style={{ flexDirection: "row" }}>
-            <Pressable
-              style={({ pressed }) => [
-                {
-                  opacity: pressed ? 0.2 : 1,
-                },
-              ]}
-            >
-              <View style={styles.new}>
-                <Ionic name="add" size={30} color="black" />
-              </View>
-            </Pressable>
-            <Text style={{ top: 18, fontFamily: "GangwonEduAllBold" }}>
-              팔로우 추가
-            </Text>
-          </View>
+          <Pressable
+            onPress={onClick}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.2 : 1,
+              },
+            ]}
+          >
+            <View style={styles.new}>
+              <Ionic name="add" size={30} color="black" />
+            </View>
+          </Pressable>
+          <Text style={{ top: 18, fontFamily: "GangwonEduAllBold" }}>
+            팔로우 추가
+          </Text>
+        </View>
         ) : (
           <View style={{ flexDirection: "row" }}>
             <Pressable
@@ -70,13 +83,21 @@ const FollowTab = () => {
                 },
               ]}
             >
-              <View style={styles.followRound}></View>
+              <Image
+                source={
+                  me.profpic
+                    ? { uri: me.profpic }
+                    : require("../../../assets/images/user.png")
+                }
+                style={styles.followRound}
+              />
             </Pressable>
             <Text style={{ top: 22, fontFamily: "GangwonEduAllBold" }}>
               {me.name}
             </Text>
             <View style={styles.container}>
               <Pressable
+                onPress={onDelete}
                 style={({ pressed }) => [
                   {
                     opacity: pressed ? 0.2 : 1,
@@ -104,7 +125,7 @@ const FollowTab = () => {
             <TextInput style={styles.textInput} placeholder="검색" />
           </View>
         </View>
-        <View style={styles.circle}>{circuls}</View>
+        <View style={styles.circle}>{list}</View>
       </ScrollView>
     );
   };
@@ -118,7 +139,7 @@ const FollowTab = () => {
             <TextInput style={styles.textInput} placeholder="검색" />
           </View>
         </View>
-        <View style={styles.circle}>{circuls}</View>
+        <View style={styles.circle}>{list}</View>
       </ScrollView>
     );
   };
@@ -172,7 +193,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 1,
     backgroundColor: "black",
-    opacity: 0.1,
     marginHorizontal: 15,
   },
   container: {

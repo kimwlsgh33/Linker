@@ -6,7 +6,7 @@ type Tag @model @auth(rules: [{allow: public}]) {
 type Story @model @auth(rules: [{allow: public}]) {
   id: ID!
   imageUrls: [String]
-  likes: String
+  likes: [ID]
   userID: ID! @index(name: "byUser")
 }
 
@@ -34,6 +34,7 @@ type Post @model @auth(rules: [{allow: public}]) {
   userID: ID! @index(name: "byUser")
   Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
   Tag: Tag! @hasOne
+  clicked: [ID]
 }
 
 type User @model @auth(rules: [{allow: public}]) {

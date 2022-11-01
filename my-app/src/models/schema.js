@@ -79,10 +79,11 @@ export const schema = {
                 },
                 "likes": {
                     "name": "likes",
-                    "isArray": false,
-                    "type": "String",
+                    "isArray": true,
+                    "type": "ID",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "userID": {
                     "name": "userID",
@@ -389,6 +390,14 @@ export const schema = {
                         "targetName": "postTagId"
                     }
                 },
+                "clicked": {
+                    "name": "clicked",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -623,5 +632,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "0721f00454b499b263c77d92073a1f76"
+    "version": "3343e55e42d42c298c00bfba5bca3d09"
 };
