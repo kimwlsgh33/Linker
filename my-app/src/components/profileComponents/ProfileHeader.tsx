@@ -24,38 +24,31 @@ export const ProfileHeader = ({ data, user }) => {
             <Feather name="chevron-down" style={{ fontSize: 16 }} />
           </Text>
         </Pressable>
-        <View>
-          <Pressable
-            onPress={() => navigation.navigate("Modal2", { user })}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <FontAwesome
-              name="plus-square-o"
-              style={{ fontSize: 22, left: 90 }}
-            />
-          </Pressable>
-        </View>
-        <View>
-          <Pressable
-            onPress={() => navigation.navigate("Modal3")}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <Icon
-              name="menu-outline"
-              style={{
-                fontSize: 29,
-              }}
-            />
-          </Pressable>
-        </View>
+        <Pressable
+          onPress={() => navigation.navigate("Modal2", { user })}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+          ]}
+        >
+          <FontAwesome name="plus-square-o" style={{ fontSize: 22 }} />
+        </Pressable>
+        <Pressable
+          onPress={() => navigation.navigate("Modal3")}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+          ]}
+        >
+          <Icon
+            name="menu-outline"
+            style={{
+              fontSize: 29,
+            }}
+          />
+        </Pressable>
       </View>
     </SafeAreaView>
   );

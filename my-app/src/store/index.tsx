@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react";
+import { Linking } from "react-native";
 import { State } from "react-native-gesture-handler";
+import { List } from "react-native-paper";
 import create from "zustand";
 import Modal from "../components/Modal";
 import { Comment } from "../models";
@@ -54,9 +56,64 @@ type MeStoreType = {
   setMe: (me: User) => void;
   addBookMark: (post_id: string) => any;
   // likePost: (post: Post) => any;
-  following: (id: string) => any;
+  // following: (id: string) => any;
   favorite: (id: string) => any;
 };
+
+export const useMeStore = create<MeStoreType>((set) => ({
+  me: null,
+  setMe: (me) => set(() => ({ me })),
+  addBookMark: (post_id) => {
+    set((state) => ({
+      me: {
+        ...state.me,
+        bookMark: state.me.bookMark.includes(post_id)
+          ? state.me.bookMark.filter((id) => {
+              id != post_id;
+            })
+          : [...state.me.bookMark, post_id],
+      },
+    }));
+  },
+  // likePost: (post: Post) => {
+  //   set((state) => ({
+  //     me: {
+  //       ...state.me,
+  //       likes: [...state.me.likes, post],
+  //     },
+  //   }));
+  // },
+
+  // 내가 팔로우 하는 사람의 아이디를 인자로 받기
+  // following: (id) => {
+  //   set((state) => ({
+  //     me: {
+  //       ...state.me,
+  //       following: state.me.
+  //     },
+  //   }));
+  // },
+
+  // 나를 팔로우 하는 사람의 아이디를 인자로 받기
+  // follower: (id) =>
+  //   set((state) => ({
+  //     me: {
+  //       ...state.me,
+  //       followers: [...state.me.followers, id],
+  //     },
+  //   })),
+
+  // 즐겨찾기 한 사람의 아이디를 인자로 받기
+  favorite: (id) =>
+    set((state) => ({
+      me: {
+        ...state.me,
+        favorite: state.me.favorite.includes(id)
+          ? state.me.favorite.filter((id) => id != id)
+          : [...state.me.favorite, id],
+      },
+    })),
+}));
 
 type PostStoreType = {
   posts: Post[];
@@ -76,56 +133,15 @@ type PostStoreType = {
     user_id: string;
     post_id: string;
   }) => void;
+
+  addClick: ({
+    post_id,
+    user_id,
+  }: {
+    post_id: string;
+    user_id: string;
+  }) => void;
 };
-
-export const useMeStore = create<MeStoreType>((set) => ({
-  me: null,
-  setMe: (me) => set(() => ({ me })),
-  addBookMark: (post_id) => {
-    set((state) => ({
-      me: {
-        ...state.me,
-        bookMark: [...state.me.bookMark, post_id],
-      },
-    }));
-  },
-  // likePost: (post: Post) => {
-  //   set((state) => ({
-  //     me: {
-  //       ...state.me,
-  //       likePosts: [...state.me.likePosts, post],
-  //     },
-  //   }));
-  // },
-
-  // 내가 팔로우 하는 사람의 아이디를 인자로 받기
-  following: (id) => {
-    set((state) => ({
-      me: {
-        ...state.me,
-        following: [...state.me.following, id],
-      },
-    }));
-  },
-
-  // 나를 팔로우 하는 사람의 아이디를 인자로 받기
-  follower: (id) =>
-    set((state) => ({
-      me: {
-        ...state.me,
-        followers: [...state.me.followers, id],
-      },
-    })),
-
-  // 즐겨찾기 한 사람의 아이디를 인자로 받기
-  favorite: (id) =>
-    set((state) => ({
-      me: {
-        ...state.me,
-        favorite: [...state.me.favorite, id],
-      },
-    })),
-}));
 
 export const usePostStore = create<PostStoreType>((set) => ({
   posts: [],
@@ -143,16 +159,40 @@ export const usePostStore = create<PostStoreType>((set) => ({
         return post;
       }),
     })),
+
   addLikeUser: ({ user_id, post_id }) =>
     set((state) => ({
       posts: state.posts.map((post) => {
         if (post.id === post_id) {
           return {
             ...post,
-            likes: [...post.likes, user_id],
+            likes: post.likes.includes(user_id)
+              ? post.likes.filter((id) => id !== id)
+              : [...post.likes, user_id],
           };
         }
         return post;
       }),
     })),
+
+  // 클릭 수 상태 관리 스토어
+  addClick: ({ post_id, user_id }) => {
+    set((state) => ({
+      posts: state.posts.map((post) => {
+        if (post.id === post_id) {
+          return {
+            ...post,
+            clicked: post.clicked.includes(user_id)
+              ? post.clicked
+              : [...post.clicked, user_id],
+          };
+        }
+        return post;
+      }),
+    }));
+  },
 }));
+
+// 0. 클릭 수 상태 관리 하는 스토어
+// 1. 버튼 누름.
+// 2. 클릭 수 1 증가

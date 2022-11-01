@@ -39,6 +39,10 @@ const Post = ({ post }: { post: PPost }) => {
     });
   };
 
+  useEffect(() => {
+    console.log("likeUser", post.likes);
+  }, [post.likes]);
+
   const getUser = async (userID: string) => {
     const user = await DataStore.query(User, userID);
     setUser(user);
@@ -85,7 +89,7 @@ const Post = ({ post }: { post: PPost }) => {
           </TouchableOpacity>
         </View>
 
-        {me.favorite?.includes(post.userID) && (
+        {me?.favorite?.includes(post.userID) && (
           <Pressable
             onPress={() => {
               setIsFavorite(true);
@@ -179,8 +183,12 @@ const Post = ({ post }: { post: PPost }) => {
         )}
         {post.Comments?.length > 0 && (
           <TouchableOpacity onPress={goToComments} style={styles.comments}>
-            <Text style={{ fontWeight: "bold" }}>{user?.nickname}</Text>
-            <Text>{post.Comments[0].text}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontWeight: "bold", marginRight: 5 }}>
+                {user?.nickname}
+              </Text>
+              <Text>{post.Comments[0].text}</Text>
+            </View>
             <View style={{ justifyContent: "center" }}>
               <TouchableOpacity
               // onPress={() => {
