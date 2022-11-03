@@ -19,6 +19,7 @@ import { useMeStore, useModalStore, usePostStore } from "../../store";
 import { DataStore, Storage } from "aws-amplify";
 import { User, Post as PPost } from "../../models";
 import MyPressable from "../MyPressable";
+import { id } from "date-fns/locale";
 const { width } = Dimensions.get("window");
 
 const Post = ({ post }: { post: PPost }) => {
@@ -28,7 +29,7 @@ const Post = ({ post }: { post: PPost }) => {
   );
   const [images, setImages] = useState<string[]>([]);
   const { me, setMe, addBookMark } = useMeStore();
-  const { setPosts, addLikeUser } = usePostStore();
+  const { setPosts, addLikeUser, addCommentLikeUser } = usePostStore();
   const { setModal, setIsFavorite } = useModalStore();
 
   const navigation = useNavigation();
@@ -68,6 +69,10 @@ const Post = ({ post }: { post: PPost }) => {
       setImages(newImages);
     })();
   }, []);
+
+  useEffect(() => {
+    console.log("post", post.Comments);
+  }, [post.Comments]);
 
   const goToComments = () => {
     navigation.navigate("Comment", {
@@ -191,16 +196,21 @@ const Post = ({ post }: { post: PPost }) => {
             </View>
             <View style={{ justifyContent: "center" }}>
               <TouchableOpacity
-              // onPress={() => {
-              //   addRecommentLike({
-              //     id: data.id,
-              //     recomment_id: data.recomment[0]?.id,
-              //   });
-              // }}
+                onPress={() => {
+                  addCommentLikeUser({
+                    user_id: me.id,
+                    post_id: post.id,
+                    comment_id: post.Comments[0].id,
+                  });
+                }}
               >
                 <AntDesign
-                  name={post.Comments[0].likes ? "heart" : "hearto"}
-                  color={post.Comments[0].likes ? "red" : "black"}
+                  name={
+                    post.Comments[0].likes.includes(me.id) ? "heart" : "hearto"
+                  }
+                  color={
+                    post.Comments[0].likes.includes(me.id) ? "red" : "black"
+                  }
                 />
               </TouchableOpacity>
             </View>

@@ -12,23 +12,42 @@ import {
 } from "react-native";
 import Ionic from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import events from "../../libs/eventEmitter";
 import { useMeStore, usePostStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { Comment } from "../../models";
 
 const CommentScreen = ({ route, Navigation }) => {
-  const { id, text, comments: commentList } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
+  const { id, text, comments } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
   const navigation = useNavigation();
   const [comment, setComment] = useState("");
   // const [commentList, setCommentList] = useState(commentArray);
-  const { addComment } = usePostStore();
+  const { addComment, addCommentLikeUser } = usePostStore();
   const { me } = useMeStore();
+
+  const [commentList, setCommentList] = useState(comments);
+  const [commentLikeUser, setCommentLikeUser] = useState(comments.likes);
+
   const saveComment = async (text) => {
+    // console.log(Object.keys(text).find((key) => key === "nativeEvent"));
+
     const newComment = await DataStore.save(
-      new Comment({ postID: id, userID: me.id, text: text })
+      new Comment({ postID: id, userID: me.id, text: text, likes: [] })
     );
     return newComment;
+  };
+
+  const addCommentLike = async (commentID) => {
+    const newComment = await DataStore.query(Comment, (c) =>
+      c.id("eq", commentID)
+    );
+    const amugeona = newComment[0];
+    console.log("new: " + newComment[0]);
+    await DataStore.save(
+      Comment.copyOf(amugeona, (updated) => {
+        updated.likes.includes(me.id) ? null : updated.likes.push(me.id);
+      })
+    );
+    return amugeona;
   };
 
   // 댓글 좋아요 bb
@@ -120,26 +139,31 @@ const CommentScreen = ({ route, Navigation }) => {
                       flexShrink: 1,
                     }}
                   >
-                    {comment.comment}
+                    {comment.text}
                   </Text>
                 </View>
                 <View>{/* 답글달기 */}</View>
                 <TouchableOpacity
                   onPress={() => {
-                    // commentLikePressed(comment.id);
+                    addCommentLike(comment.id).then((c) => {
+                      addCommentLikeUser({
+                        comment_id: c[0].id,
+                        user_id: me.id,
+                        post_id: id,
+                      });
+                    });
+                    console.log(comment.likes);
                   }}
                   style={styles.touchable1}
                 >
                   <AntDesign
-                    name={comment.commentLike ? "heart" : "hearto"}
+                    name={comment?.likes?.includes(me.id) ? "heart" : "hearto"}
                     style={{
                       fontSize: 15,
                     }}
                   />
                   <Text>
-                    {comment.commentLikeCount === 0
-                      ? ""
-                      : comment.commentLikeCount}
+                    {comment?.likes?.length === 0 ? "" : comment?.likes?.length}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -158,10 +182,12 @@ const CommentScreen = ({ route, Navigation }) => {
             placeholderTextColor={"gray"}
             value={comment}
             onChangeText={(text) => setComment(text)}
-            onSubmitEditing={() => {
+            onSubmitEditing={({ nativeEvent: { text } }) => {
               saveComment(text).then((comment) =>
-                addComment({ comment: comment, postId: id })
+                addComment({ comment, postId: id })
               );
+              setCommentList([...commentList, { text }]);
+              setComment("");
             }}
             style={styles.textInput1}
           ></TextInput>

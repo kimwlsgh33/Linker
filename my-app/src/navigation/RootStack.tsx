@@ -106,6 +106,7 @@ function RootStack() {
             options={{
               presentation: "modal",
               gestureEnabled: true,
+              headerShown: true,
             }}
           />
 

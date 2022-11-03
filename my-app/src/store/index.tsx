@@ -75,15 +75,6 @@ export const useMeStore = create<MeStoreType>((set) => ({
       },
     }));
   },
-  // likePost: (post: Post) => {
-  //   set((state) => ({
-  //     me: {
-  //       ...state.me,
-  //       likes: [...state.me.likes, post],
-  //     },
-  //   }));
-  // },
-
   // 내가 팔로우 하는 사람의 아이디를 인자로 받기
   // following: (id) => {
   //   set((state) => ({
@@ -141,10 +132,56 @@ type PostStoreType = {
     post_id: string;
     user_id: string;
   }) => void;
+
+  addCommentLikeUser: ({
+    user_id,
+    post_id,
+    comment_id,
+  }: {
+    user_id: string;
+    post_id: string;
+    comment_id: string;
+  }) => void;
 };
 
 export const usePostStore = create<PostStoreType>((set) => ({
-  posts: [],
+  posts: new Array(10).fill(0).map((_, idx) => {
+    return {
+      id: idx.toString(),
+      text: "test" + idx,
+      link: "https://www.google.com",
+      imageUrls: [
+        "https://picsum.photos/seed/500/500",
+        "https://picsum.photos/500/500",
+      ],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userID: "user_id_test",
+      Comments: [
+        {
+          id: "1",
+          text: "test1",
+          userID: "user_id_test",
+          postID: idx.toString(),
+          likes: [],
+        },
+        {
+          id: "2",
+          text: "test2",
+          userID: "user_id_test",
+          postID: idx.toString(),
+          likes: [],
+        },
+      ],
+      likes: [],
+      bookMark: [],
+      postTagId: "1",
+      Tag: {
+        id: "1",
+        text: "IU",
+      },
+    };
+  }),
   setPosts: (posts) => set(() => ({ posts })),
   addPost: (post) => set((state) => ({ posts: [post, ...state.posts] })),
   addComment: ({ comment, postId }) =>
@@ -169,6 +206,30 @@ export const usePostStore = create<PostStoreType>((set) => ({
             likes: post.likes.includes(user_id)
               ? post.likes.filter((id) => id !== id)
               : [...post.likes, user_id],
+          };
+        }
+        return post;
+      }),
+    })),
+
+  // 댓글 좋아요
+  addCommentLikeUser: ({ user_id, post_id, comment_id }) =>
+    set((state) => ({
+      posts: state.posts.map((post) => {
+        if (post.id === post_id) {
+          return {
+            ...post,
+            Comments: post.Comments.map((comment) => {
+              if (comment.id === comment_id) {
+                return {
+                  ...comment,
+                  likes: comment.likes.includes(user_id)
+                    ? comment.likes.filter((id) => id !== id)
+                    : [...comment.likes, user_id],
+                };
+              }
+              return comment;
+            }),
           };
         }
         return post;
