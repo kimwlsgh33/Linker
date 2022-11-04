@@ -39,82 +39,78 @@ const FollowTab = () => {
   };
 
   let circuls = [];
-  let numberOfCirculs = 2;
+  let circuls2 = [];
 
   const [list, setList] = useState([circuls]);
 
   const onClick = () => {
-    setList([...list, circuls.slice(1, numberOfCirculs)]);
+    setList([...list, circuls.splice(1, 0, circuls2)]);
   };
 
   const onDelete = () => {
-    const bye = circuls.filter(item => item !== circuls[2]);
-    setList(bye);
+    // circuls.filter((item) => item.id !== id);
+    setList([...list, circuls.pop()]);
   };
 
-  for (let index = 0; index < numberOfCirculs; index++) {
-    circuls.push(
-      <View key={index}>
-        {index === 0 ? (
-          <View style={{ flexDirection: "row" }}>
-          <Pressable
-            onPress={onClick}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.2 : 1,
-              },
-            ]}
-          >
-            <View style={styles.new}>
-              <Ionic name="add" size={30} color="black" />
-            </View>
-          </Pressable>
-          <Text style={{ top: 18, fontFamily: "GangwonEduAllBold" }}>
-            팔로우 추가
-          </Text>
+  circuls.push(
+    <View style={{ flexDirection: "row" }} key={me.name}>
+      <Pressable
+        onPress={onClick}
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.2 : 1,
+          },
+        ]}
+      >
+        <View style={styles.new}>
+          <Ionic name="add" size={30} color="black" />
         </View>
-        ) : (
-          <View style={{ flexDirection: "row" }}>
-            <Pressable
-              onPress={otherUser}
-              style={({ pressed }) => [
-                {
-                  opacity: pressed ? 0.2 : 1,
-                },
-              ]}
-            >
-              <Image
-                source={
-                  me.profpic
-                    ? { uri: me.profpic }
-                    : require("../../../assets/images/user.png")
-                }
-                style={styles.followRound}
-              />
-            </Pressable>
-            <Text style={{ top: 22, fontFamily: "GangwonEduAllBold" }}>
-              {me.name}
-            </Text>
-            <View style={styles.container}>
-              <Pressable
-                onPress={onDelete}
-                style={({ pressed }) => [
-                  {
-                    opacity: pressed ? 0.2 : 1,
-                  },
-                  styles.pressable,
-                ]}
-              >
-                <Text style={{ fontSize: 11, fontFamily: "GangwonEduAllBold" }}>
-                  삭제
-                </Text>
-              </Pressable>
-            </View>
-          </View>
-        )}
+      </Pressable>
+      <Text style={{ top: 18, fontFamily: "GangwonEduAllBold" }}>
+        팔로우 추가
+      </Text>
+    </View>
+  );
+
+  circuls2.push(
+    <View style={{ flexDirection: "row" }}>
+      <Pressable
+        onPress={otherUser}
+        style={({ pressed }) => [
+          {
+            opacity: pressed ? 0.2 : 1,
+          },
+        ]}
+      >
+        <Image
+          source={
+            me.profpic
+              ? { uri: me.profpic }
+              : require("../../../assets/images/user.png")
+          }
+          style={styles.followRound}
+        />
+      </Pressable>
+      <Text style={{ top: 22, fontFamily: "GangwonEduAllBold" }}>
+        {me.name}
+      </Text>
+      <View style={styles.container}>
+        <Pressable
+          onPress={onDelete}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.2 : 1,
+            },
+            styles.pressable,
+          ]}
+        >
+          <Text style={{ fontSize: 11, fontFamily: "GangwonEduAllBold" }}>
+            삭제
+          </Text>
+        </Pressable>
       </View>
-    );
-  }
+    </View>
+  );
 
   const Follower = () => {
     return (

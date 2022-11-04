@@ -39,9 +39,9 @@ const Post = ({ post }: { post: PPost }) => {
     });
   };
 
-  useEffect(() => {
-    console.log("likeUser", post.likes);
-  }, [post.likes]);
+  // useEffect(() => {
+  //   console.log("likeUser", post.likes);
+  // }, [post.likes]);
 
   const getUser = async (userID: string) => {
     const user = await DataStore.query(User, userID);
