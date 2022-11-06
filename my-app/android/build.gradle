@@ -34,6 +34,10 @@ buildscript {
     }
 }
 
+project.ext.react = [
+  enableHermes: true  // clean and rebuild if changing
+]
+
 allprojects {
     repositories {
         mavenLocal()

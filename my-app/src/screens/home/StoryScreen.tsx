@@ -9,6 +9,13 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
 import Feather from "react-native-vector-icons/Feather";
 import Ionic from "react-native-vector-icons/Ionicons";
 import Antdesign from "react-native-vector-icons/AntDesign";
@@ -54,12 +61,25 @@ const StoryScreen = ({ route, navigation }) => {
     setHeart(!heart);
   };
 
+  const x = useSharedValue(0);
+  x.value = withRepeat(withSequence(withTiming(400, { duration: 5000 })));
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: x.value,
+        },
+      ],
+    };
+  });
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"black"} barStyle={"light-content"} />
-      <View style={styles.view1}>
-        <View style={{}}></View>
-      </View>
+      {/* 상단 애니메이션 */}
+      <Animated.View style={[styles.topBar, animatedStyle]}></Animated.View>
+      {/* =========== */}
       <View style={styles.view2}>
         <View style={styles.view3}>
           <Image source={image} style={styles.image1} />
@@ -123,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  view1: {
+  topBar: {
     height: 3,
     width: "95%",
     borderWidth: 1,
