@@ -4,9 +4,7 @@ import { State } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 import create from "zustand";
 import Modal from "../components/Modal";
-import { Comment } from "../models";
-
-import { User, Post } from "../models";
+import { User, Post, Comment } from "../models";
 type ModalStoreType = {
   modal: boolean;
   shareModal: boolean;
@@ -49,6 +47,16 @@ export const useModalStore = create<ModalStoreType>((set) => ({
   setIsFavorite: (isFavorite) => set(() => ({ isFavorite: !isFavorite })),
   setFollow: (follow) => set(() => ({ follow: !follow })),
   setIsFollowed: (isFollowed) => set(() => ({ isFollowed: !isFollowed })),
+}));
+
+type CommentStoreType = {
+  comments: Comment[];
+  setComments: (comments: Comment[]) => void;
+};
+
+export const useCommentStore = create<CommentStoreType>((set) => ({
+  comments: [],
+  setComments: (comments: Comment[]) => set(() => ({ comments: comments })),
 }));
 
 type MeStoreType = {
@@ -125,13 +133,7 @@ type PostStoreType = {
     post_id: string;
   }) => void;
 
-  addClick: ({
-    post_id,
-    user_id,
-  }: {
-    post_id: string;
-    user_id: string;
-  }) => void;
+  addClick: ({ post_id, user_id }: { post_id: any; user_id: any }) => void;
 
   addCommentLikeUser: ({
     user_id,
@@ -243,7 +245,7 @@ export const usePostStore = create<PostStoreType>((set) => ({
         if (post.id === post_id) {
           return {
             ...post,
-            clicked: post.clicked.includes(user_id)
+            clicked: post.clicked?.includes(user_id)
               ? post.clicked
               : [...post.clicked, user_id],
           };
@@ -253,7 +255,3 @@ export const usePostStore = create<PostStoreType>((set) => ({
     }));
   },
 }));
-
-// 0. 클릭 수 상태 관리 하는 스토어
-// 1. 버튼 누름.
-// 2. 클릭 수 1 증가

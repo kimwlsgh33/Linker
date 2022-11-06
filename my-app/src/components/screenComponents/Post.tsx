@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
@@ -9,6 +9,7 @@ import {
   Pressable,
   FlatList,
   Dimensions,
+  Linking,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -29,7 +30,8 @@ const Post = ({ post }: { post: PPost }) => {
   );
   const [images, setImages] = useState<string[]>([]);
   const { me, setMe, addBookMark } = useMeStore();
-  const { setPosts, addLikeUser, addCommentLikeUser } = usePostStore();
+  const { setPosts, addLikeUser, addCommentLikeUser, addClick } =
+    usePostStore();
   const { setModal, setIsFavorite } = useModalStore();
 
   const navigation = useNavigation();
@@ -70,10 +72,6 @@ const Post = ({ post }: { post: PPost }) => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log("post", post.Comments);
-  }, [post.Comments]);
-
   const goToComments = () => {
     navigation.navigate("Comment", {
       id: post.id,
@@ -93,7 +91,8 @@ const Post = ({ post }: { post: PPost }) => {
             <Text style={styles.userBarName}>{user?.nickname}</Text>
           </TouchableOpacity>
         </View>
-
+        {/* ============================================== */}
+        {/* 즐겨찾기 */}
         {me?.favorite?.includes(post.userID) && (
           <Pressable
             onPress={() => {
@@ -106,6 +105,8 @@ const Post = ({ post }: { post: PPost }) => {
             />
           </Pressable>
         )}
+        {/* ================================================ */}
+        {/* 더보기 창 */}
         <TouchableOpacity
           onPress={() => {
             setModal(true);
@@ -116,7 +117,8 @@ const Post = ({ post }: { post: PPost }) => {
           <Feather name="more-horizontal" style={{ fontSize: 20 }} />
         </TouchableOpacity>
       </View>
-
+      {/* ================================================= */}
+      {/* 이미지 */}
       <FlatList
         data={images}
         keyExtractor={(_, idx) => idx.toString()}
@@ -128,8 +130,10 @@ const Post = ({ post }: { post: PPost }) => {
         pagingEnabled
       />
       <View style={styles.postInfo}>
-        <View style={styles.iconBar}>
-          <View style={styles.leftIcons}>
+        <View style={[styles.iconBar]}>
+          <View style={styles.Icons}>
+            {/* ============================================ */}
+            {/* 좋아요 */}
             <TouchableOpacity
               onPress={() => {
                 addLikeUser({ user_id: me.id, post_id: post.id });
@@ -144,6 +148,8 @@ const Post = ({ post }: { post: PPost }) => {
                 }}
               />
             </TouchableOpacity>
+            {/* ============================================== */}
+            {/* 댓글 */}
             <TouchableOpacity>
               <Feather
                 onPress={goToComments}
@@ -151,23 +157,54 @@ const Post = ({ post }: { post: PPost }) => {
                 style={{ fontSize: 25, paddingRight: 10 }}
               />
             </TouchableOpacity>
+          </View>
+          {/* ============================================== */}
+          {/* link button */}
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            onPress={() => {
+              Linking.openURL(post.link);
+              addClick({ post_id: post.id, user_id: me.id });
+            }}
+          >
+            <View style={[styles.linkButton, { flexDirection: "column" }]}>
+              <View style={{ alignItems: "center" }}>
+                <Text style={{ fontSize: 15, fontWeight: "bold" }}>
+                  press to link
+                </Text>
+                {post?.clicked?.length > 0 && (
+                  <Text> + {post?.clicked?.length}</Text>
+                )}
+              </View>
+            </View>
+          </TouchableOpacity>
+          {/* =============================================== */}
+          {/* 공유 */}
+          <View style={styles.Icons}>
             <TouchableOpacity>
               <Feather name="send" style={{ fontSize: 25, paddingRight: 10 }} />
             </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={() => {
-              addBookMark(post.id);
-            }}
-          >
-            <FontAwesome
-              name={me?.bookMark?.includes(post.id) ? "bookmark" : "bookmark-o"}
-              style={{
-                fontSize: 25,
+            {/* ================================================= */}
+            {/* 북마크 */}
+            <TouchableOpacity
+              onPress={() => {
+                addBookMark(post.id);
               }}
-            />
-          </TouchableOpacity>
+            >
+              <FontAwesome
+                name={
+                  me?.bookMark?.includes(post.id) ? "bookmark" : "bookmark-o"
+                }
+                style={{
+                  fontSize: 25,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
+          {/* =============================================== */}
         </View>
+        {/* 좋아요 개수 */}
+
         {post.likes?.length > 0 && (
           <Text style={{ fontWeight: "bold" }}>
             좋아요 {post.likes.length}개
@@ -178,7 +215,8 @@ const Post = ({ post }: { post: PPost }) => {
           <Text style={{ fontWeight: "bold" }}>{user?.nickname}</Text>
           <Text style={styles.postText}>{post.text}</Text>
         </View>
-
+        {/* ================================================ */}
+        {/* 댓글 갯수 */}
         {post.Comments?.length > 1 && (
           <TouchableOpacity onPress={goToComments}>
             <Text style={styles.commentsOpener}>
@@ -194,6 +232,8 @@ const Post = ({ post }: { post: PPost }) => {
               </Text>
               <Text>{post.Comments[0].text}</Text>
             </View>
+            {/* =============================================== */}
+            {/* 댓글 좋아요 */}
             <View style={{ justifyContent: "center" }}>
               <TouchableOpacity
                 onPress={() => {
@@ -248,11 +288,17 @@ const styles = StyleSheet.create({
   },
   iconBar: {
     flexDirection: "row",
+    justifyContent: "space-between",
   },
-  leftIcons: {
-    flex: 1,
+  Icons: {
     flexDirection: "row",
   },
+  linkButton: {
+    backgroundColor: "#dcdcdc",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+
   commentsOpener: {
     fontWeight: "bold",
     color: "gray",

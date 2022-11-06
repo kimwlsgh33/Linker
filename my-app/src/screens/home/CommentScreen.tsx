@@ -17,7 +17,7 @@ import { DataStore } from "aws-amplify";
 import { Comment } from "../../models";
 
 const CommentScreen = ({ route, Navigation }) => {
-  const { id, text, comments } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
+  const { id: postId, text, comments } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
   const navigation = useNavigation();
   const [comment, setComment] = useState("");
   // const [commentList, setCommentList] = useState(commentArray);
@@ -25,30 +25,27 @@ const CommentScreen = ({ route, Navigation }) => {
   const { me } = useMeStore();
 
   const [commentList, setCommentList] = useState(comments);
-  const [commentLikeUser, setCommentLikeUser] = useState(comments.likes);
+  const [commentLikeUser, setCommentLikeUser] = useState([]);
 
   const saveComment = async (text) => {
     // console.log(Object.keys(text).find((key) => key === "nativeEvent"));
 
     const newComment = await DataStore.save(
-      new Comment({ postID: id, userID: me.id, text: text, likes: [] })
+      new Comment({ postID: postId, userID: me.id, text: text, likes: [] })
     );
     return newComment;
   };
 
-  const addCommentLike = async (commentID) => {
-    const newComment = await DataStore.query(Comment, (c) =>
-      c.id("eq", commentID)
-    );
-    const amugeona = newComment[0];
-    console.log("new: " + newComment[0]);
-    await DataStore.save(
-      Comment.copyOf(amugeona, (updated) => {
-        updated.likes.includes(me.id) ? null : updated.likes.push(me.id);
-      })
-    );
-    return amugeona;
-  };
+  // const addCommentLike = async (commentID) => {
+  //   const newComment = await DataStore.query(Comment, commentID);
+  //   console.log("new: " + newComment);
+  // await DataStore.save(
+  //   Comment.copyOf(newComment, (updated) => {
+  //     updated.likes.includes(me.id) ? null : updated.likes.push(me.id);
+  //   })
+  // );
+  //   return newComment;
+  // };
 
   // 댓글 좋아요 bb
   // const commentLikePressed = (id) => {
@@ -81,6 +78,15 @@ const CommentScreen = ({ route, Navigation }) => {
   //     id,
   //   });
   // };
+  useEffect(() => {
+    console.log("Comments", commentList);
+  }, [commentList]);
+
+  console.log("====================================");
+  commentList.map((comment) => {
+    console.log("sssss => " + comment.likes);
+    console.log(comment.likes.includes(me.id));
+  });
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -145,19 +151,16 @@ const CommentScreen = ({ route, Navigation }) => {
                 <View>{/* 답글달기 */}</View>
                 <TouchableOpacity
                   onPress={() => {
-                    addCommentLike(comment.id).then((c) => {
-                      addCommentLikeUser({
-                        comment_id: c[0].id,
-                        user_id: me.id,
-                        post_id: id,
-                      });
+                    addCommentLikeUser({
+                      comment_id: comment.id,
+                      user_id: me.id,
+                      post_id: postId,
                     });
-                    console.log(comment.likes);
                   }}
                   style={styles.touchable1}
                 >
                   <AntDesign
-                    name={comment?.likes?.includes(me.id) ? "heart" : "hearto"}
+                    name={comment.likes.includes(me.id) ? "heart" : "hearto"}
                     style={{
                       fontSize: 15,
                     }}
@@ -184,7 +187,7 @@ const CommentScreen = ({ route, Navigation }) => {
             onChangeText={(text) => setComment(text)}
             onSubmitEditing={({ nativeEvent: { text } }) => {
               saveComment(text).then((comment) =>
-                addComment({ comment, postId: id })
+                addComment({ comment, postId: postId })
               );
               setCommentList([...commentList, { text }]);
               setComment("");
