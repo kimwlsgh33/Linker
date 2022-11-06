@@ -8,11 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Stories from "../../components/screenComponents/Stories";
-
 import Feather from "react-native-vector-icons/Feather";
 import Posts from "../../components/screenComponents/Posts";
-import TestPost from "../../components/screenComponents/TestPost";
 
 const { width } = Dimensions.get("screen");
 
@@ -26,6 +23,8 @@ function HomeScreen({ navigation }) {
           paddingVertical: 7,
           paddingHorizontal: 15,
           alignItems: "center",
+          borderBottomWidth: 1,
+          borderBottomColor: "#eee",
         }}
       >
         <Text

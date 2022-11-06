@@ -1,5 +1,5 @@
 // React Basic
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // React Navigation
 import { createStackNavigator } from "@react-navigation/stack";
 // navigation
@@ -33,69 +33,31 @@ import User2 from "../screens/setting/User2";
 import PersonalData from "../screens/setting/PersonalData";
 // navigation header 옵션 설정 파일
 import { headerOptions } from "./navHeaderOptions";
-import Modal from "../components/profileComponents/Modal";
-import Modal2 from "../components/profileComponents/Modal2";
-import Modal3 from "../components/profileComponents/Modal3";
+import Modal from "../screens/profile/Modal";
+import Modal2 from "../screens/profile/Modal2";
+import Modal3 from "../screens/profile/Modal3";
 import ProfileUser from "../screens/profile/ProfileUser";
 import SearchResultScreen from "../screens/search/SearchResultScreen";
 import { useMeStore } from "../store";
 import Posts from "../components/screenComponents/Posts";
 import AuthComp from "../screens/AuthComp";
-import TestHub from "../screens/test/screens/TestHub";
-import { Auth, DataStore, Hub } from "aws-amplify";
-import { User } from "../models";
+
 import CommentScreen from "../screens/home/CommentScreen";
+import ExpoFileSystem from "../screens/test/screens/ExpoFileSystem";
+
+import { useColorScheme } from "react-native";
 
 const Stack = createStackNavigator();
 
 function RootStack() {
-  const { me, setMe } = useMeStore();
-
-  const getCurrentUser = async () => {
-    try {
-      const currentUser = await Auth.currentUserInfo();
-      // console.log(JSON.stringify(currentUser, null, 2));
-      if (currentUser) {
-        const userData = await DataStore.query(User, (user) =>
-          user.username("eq", currentUser.username)
-        );
-
-        const newUser = {
-          ...userData[0],
-          bookMark: userData[0].bookMark ?? [],
-          profpic: userData[0].profpic ?? "",
-        };
-
-        setMe(newUser);
-      }
-    } catch (e) {
-      console.log("Empty User Data", e.message);
-    }
-  };
-
-  useEffect(() => {
-    getCurrentUser();
-    // test();
-  }, []);
+  const { me } = useMeStore();
 
   return (
-    <Stack.Navigator screenOptions={{ ...headerOptions }}>
-      {!me ? (
-        <Stack.Group screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="SignUp" component={SignUp} />
-          <Stack.Screen name="CodeCheck" component={CodeCheck} />
-          <Stack.Screen name="CodeInput" component={CodeInput} />
-          <Stack.Screen name="Birthday" component={BirthdayScreen} />
-          <Stack.Screen name="PwRe" component={PwRe} />
-          <Stack.Screen name="CreateName" component={CreateNameScreen} />
-          <Stack.Screen name="CompleteN" component={CompleteNScreen} />
-          <Stack.Screen name="NameConfirm" component={NameConfirm} />
-          <Stack.Screen name="TOS" component={TOSScreen} />
-          <Stack.Screen name="LoginEr" component={LoginEr} />
-          <Stack.Screen name="AuthComp" component={AuthComp} />
-        </Stack.Group>
-      ) : (
+    <Stack.Navigator
+      screenOptions={{ ...headerOptions }}
+      // initialRouteName="FS"
+    >
+      {!!me ? (
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="OuterHomeTab" component={OuterHomeTab} />
           <Stack.Screen name="Posts" component={Posts} />
@@ -129,7 +91,7 @@ function RootStack() {
             component={Modal3}
             options={{
               presentation: "transparentModal",
-              // animation: "slide_from_bottom",
+              animationEnabled: false,
             }}
           />
           <Stack.Screen
@@ -137,7 +99,7 @@ function RootStack() {
             component={Modal2}
             options={{
               presentation: "transparentModal",
-              // animation: "slide_from_bottom",
+              animationEnabled: false,
             }}
           />
           <Stack.Screen
@@ -145,11 +107,27 @@ function RootStack() {
             component={Modal}
             options={{
               presentation: "transparentModal",
-              // animation: "slide_from_bottom",
+              animationEnabled: false,
             }}
           />
         </Stack.Group>
+      ) : (
+        <Stack.Group screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="CodeCheck" component={CodeCheck} />
+          <Stack.Screen name="CodeInput" component={CodeInput} />
+          <Stack.Screen name="Birthday" component={BirthdayScreen} />
+          <Stack.Screen name="PwRe" component={PwRe} />
+          <Stack.Screen name="CreateName" component={CreateNameScreen} />
+          <Stack.Screen name="CompleteN" component={CompleteNScreen} />
+          <Stack.Screen name="NameConfirm" component={NameConfirm} />
+          <Stack.Screen name="TOS" component={TOSScreen} />
+          <Stack.Screen name="LoginEr" component={LoginEr} />
+          <Stack.Screen name="AuthComp" component={AuthComp} />
+        </Stack.Group>
       )}
+      <Stack.Screen name="FS" component={ExpoFileSystem} />
     </Stack.Navigator>
   );
 }

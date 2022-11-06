@@ -3,6 +3,8 @@ import { View, ScrollView, Image, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
+import { FlatList } from "react-native-gesture-handler";
+import PostThumbnail from "../components/profileComponents/PostThumbnail";
 
 const ProfileTopTab = ({ user }) => {
   const Tab = createMaterialTopTabNavigator();
@@ -24,41 +26,15 @@ const ProfileTopTab = ({ user }) => {
   let squares = [];
   let numberOfSquare = 9;
 
-  for (let index = 0; index < numberOfSquare; index++) {
-    squares.push(
-      <View key={index}>
-        <View>
-          <Pressable
-            onPress={() => {
-              navigation.navigate("Story", {
-                name: user.name,
-                image: user.imageUri,
-                userName: user.username,
-              });
-              storyPressed(user.id);
-            }}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.7 : 1,
-              },
-            ]}
-          >
-            <Image
-              source={{ uri: "https://source.unsplash.com/daily" }}
-              style={{ width: 130, height: 130, marginVertical: 1 }}
-              resizeMode="cover"
-            />
-          </Pressable>
-        </View>
-      </View>
-    );
-  }
-
   const Posts = () => {
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={styles.squares}>{squares}</View>
-      </ScrollView>
+      <FlatList
+        data={squares}
+        renderItem={(item) => <PostThumbnail post={item} />}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      />
     );
   };
   const Video = () => {

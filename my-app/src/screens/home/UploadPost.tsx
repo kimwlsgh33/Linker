@@ -8,29 +8,30 @@ import {
   StyleSheet,
   Text,
   View,
+  FlatList,
 } from "react-native";
 import {
+  type Asset,
   launchCamera,
   launchImageLibrary,
-  type Asset,
 } from "react-native-image-picker";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCmnt from "react-native-vector-icons/MaterialCommunityIcons";
-import MyPressable from "../components/MyPressable";
-import InputBar from "../components/upload/InputBar";
+import MyPressable from "../../components/MyPressable";
+import InputBar from "../../components/upload/InputBar";
 import { DataStore, Storage } from "aws-amplify";
-import { Post, Tag } from "../models";
+import { Post, Tag } from "../../models";
 import { v4 as uuidv4 } from "uuid";
-import { useMeStore, usePostStore } from "../store";
+import { useMeStore, usePostStore } from "../../store";
 
-const { width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window");
 
-function UploadStory({ navigation }) {
+function UploadPost({ navigation }) {
   const { me } = useMeStore();
   const { addPost } = usePostStore();
-  const [asset, setAsset] = useState<Asset | null>(null);
+  const [assets, setAssets] = useState<Asset[]>([]);
 
   const [tag, setTag] = useState<string>("");
   const [link, setLink] = useState<string>("");
@@ -51,7 +52,7 @@ function UploadStory({ navigation }) {
         } else if (result.errorCode) {
           console.log("ImagePicker Error: ", result.errorCode);
         } else {
-          setAsset(result.assets[0]);
+          setAssets(result.assets);
         }
       }
     );
@@ -82,6 +83,7 @@ function UploadStory({ navigation }) {
 
   const onSelectImage = async () => {
     const result = await launchImageLibrary({
+      selectionLimit: 4,
       mediaType: "photo",
       includeBase64: true,
       maxHeight: 512,
@@ -93,14 +95,14 @@ function UploadStory({ navigation }) {
     } else if (result.errorCode) {
       console.log("ImagePicker Error: ", result.errorCode);
     } else {
-      const data = result.assets[0];
-      console.log(result.assets[0].uri);
-      setAsset(data);
+      const data = result.assets;
+      // console.log(result.assets[0].uri);
+      setAssets(data);
       // console.log(Object.keys(result));
     }
   };
 
-  const onUpload = async () => {
+  const onUpload = async (asset) => {
     if (!asset) {
       Alert.alert("Please select an image");
       return;
@@ -111,7 +113,7 @@ function UploadStory({ navigation }) {
       const blob = await response.blob();
       const urlParts = asset.uri.split(".");
       const extensions = urlParts.pop();
-      const key = `${uuidv4()}.${extensions}`;
+      const key = `${me.id}/${uuidv4()}.${extensions}`;
 
       return Storage.put(key, blob, {
         contentType: `image/${extensions}`,
@@ -126,7 +128,7 @@ function UploadStory({ navigation }) {
       return;
     }
     setLoading(true);
-    if (asset === null) {
+    if (assets === null) {
       Alert.alert(
         "에러!",
         "사진을 선택해주세요",
@@ -174,7 +176,7 @@ function UploadStory({ navigation }) {
     } else if (text == "") {
       Alert.alert(
         "에러!",
-        "스토리를 입력해주세요",
+        "게시글을 입력해주세요",
         [
           {
             text: "확인",
@@ -188,37 +190,46 @@ function UploadStory({ navigation }) {
       return;
     }
 
-    // S3 저장소에 이미지 업로드, key값 가져옴
-    const image = await onUpload();
-    console.log("image", image);
+    try {
+      // S3 저장소에 이미지 업로드, key값 가져옴
+      const putResults = await Promise.all(
+        assets.map((asset) => onUpload(asset))
+      );
 
-    // 태그 존재하는지 확인
-    let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
+      // console.log("RESULTS : ", JSON.stringify(imageUrls));
 
-    console.log("exists tag : ", exists);
+      const imageKeys = putResults.map((item) => item.key);
 
-    // 태그 없으면, 새로운 태그 만듬
-    if (!exists) {
-      exists[0] = await DataStore.save(new Tag({ name: tag }));
+      // 태그 존재하는지 확인
+      let exists = await DataStore.query(Tag, (t) => t.text("eq", tag));
+
+      // 태그 없으면, 새로운 태그 만듬
+      if (exists.length === 0) {
+        exists[0] = await DataStore.save(new Tag({ text: tag }));
+      }
+
+      const post = await DataStore.save(
+        new Post({
+          imageUrls: imageKeys,
+          link,
+          text,
+          userID: me.id,
+          Tag: exists[0],
+          postTagId: exists[0].id,
+        })
+      );
+
+      addPost(post);
+      setText("");
+      setLink("");
+      setTag("");
+      navigation.navigate("HomeTab");
+    } catch (e) {
+      Alert.alert("Error", e.message);
+    } finally {
+      setAssets(null);
+      setLoading(false);
     }
-
-    const post = await DataStore.save(
-      new Post({
-        imageUri: image.key,
-        link,
-        text,
-        Tag: exists[0],
-        userID: me.id,
-      })
-    );
-
-    addPost(post);
-    setText("");
-    setLink("");
-    setTag("");
-    setAsset(null);
-    setLoading(false);
-    navigation.navigate("HomeTab");
   };
 
   return (
@@ -247,19 +258,21 @@ function UploadStory({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.selectedImage}>
-        {asset ? (
-          <Image
-            source={{ uri: asset.uri }}
-            style={{ width: "100%", height: "100%" }}
-          />
-        ) : (
+      <FlatList
+        data={assets}
+        renderItem={({ item }) => (
+          <Image source={{ uri: item.uri }} style={{ width }} />
+        )}
+        ListEmptyComponent={
           <View style={styles.noImage}>
             <Text style={styles.noImageText}>이미지를 선택해주세요</Text>
           </View>
-        )}
-        {/* <View style={[styles.icon, styles.absolute]}></View> */}
-      </View>
+        }
+        horizontal
+        pagingEnabled
+      />
+
+      {/* <View style={[styles.icon, styles.absolute]}></View> */}
       <View style={styles.middleBar}>
         {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
           <View style={styles.textView}>
@@ -275,9 +288,9 @@ function UploadStory({ navigation }) {
 
         <View style={{ flexDirection: "row" }}>
           <View style={[styles.icon, { marginRight: 5 }]}>
-            <MyPressable onPress={onSelectImage}>
+            <TouchableOpacity onPress={onSelectImage}>
               <Feather name="image" size={20} />
-            </MyPressable>
+            </TouchableOpacity>
           </View>
           {/* <View style={styles.icon}>
             <MyPressable onPress={requestCameraPermission}>
@@ -292,9 +305,13 @@ function UploadStory({ navigation }) {
             </MyPressable>
           </View> */}
           <View style={styles.icon}>
-            <MyPressable onPress={requestCameraPermission}>
+            <TouchableOpacity
+              onPress={() => {
+                console.log("hi");
+              }}
+            >
               <Feather name="video" size={20} />
-            </MyPressable>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -341,7 +358,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "right",
   },
-  selectedImage: { flex: 1, width: "100%" },
   textView: {
     height: 40,
     justifyContent: "center",
@@ -368,7 +384,6 @@ const styles = StyleSheet.create({
     marginRight: 1,
   },
   noImage: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -428,4 +443,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UploadStory;
+export default UploadPost;

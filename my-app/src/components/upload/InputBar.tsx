@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   inputText: {
     fontSize: 12,
     fontWeight: "bold",
-    fontFamily: "NanumSquareRound",
   },
   input: {
     height: "100%",
