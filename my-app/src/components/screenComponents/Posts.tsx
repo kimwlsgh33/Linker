@@ -20,45 +20,45 @@ const Posts = () => {
   //=======================================================
   const { posts, setPosts } = usePostStore();
   const { me, addBookMark, following } = useMeStore();
-  const dummy: TPost[] = useMemo(
-    () =>
-      new Array(10).fill(0).map((_, idx) => {
-        return {
-          id: idx.toString(),
-          text: "test" + idx,
-          link: "https://www.google.com",
-          imageUrls: [
-            "https://picsum.photos/seed/500/500",
-            "https://picsum.photos/500/500",
-          ],
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          userID: me?.id,
-          Comments: [
-            {
-              id: "1",
-              text: "test1",
-              userID: me?.id,
-              postID: idx.toString(),
-            },
-            {
-              id: "2",
-              text: "test2",
-              userID: me?.id,
-              postID: idx.toString(),
-            },
-          ],
-          likes: [],
-          bookMark: [],
-          postTagId: "1",
-          Tag: {
-            id: "1",
-            text: "IU",
-          },
-        };
-      }),
-    []
-  );
+  // const dummy: TPost[] = useMemo(
+  //   () =>
+  //     new Array(10).fill(0).map((_, idx) => {
+  //       return {
+  //         id: idx.toString(),
+  //         text: "test" + idx,
+  //         link: "https://www.google.com",
+  //         imageUrls: [
+  //           "https://picsum.photos/seed/500/500",
+  //           "https://picsum.photos/500/500",
+  //         ],
+  //         createdAt: new Date().toISOString(),
+  //         updatedAt: new Date().toISOString(),
+  //         userID: me?.id,
+  //         Comments: [
+  //           {
+  //             id: "1",
+  //             text: "test1",
+  //             userID: me?.id,
+  //             postID: idx.toString(),
+  //           },
+  //           {
+  //             id: "2",
+  //             text: "test2",
+  //             userID: me?.id,
+  //             postID: idx.toString(),
+  //           },
+  //         ],
+  //         likes: [],
+  //         bookMark: [],
+  //         postTagId: "1",
+  //         Tag: {
+  //           id: "1",
+  //           text: "IU",
+  //         },
+  //       };
+  //     }),
+  //   []
+  // );
 
   const getPost = async () => {
     const newPost = await DataStore.query(TPost);
@@ -66,8 +66,8 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    // getPost().then((TPost) => setPosts(TPost));
-    setPosts(dummy);
+    getPost().then((TPost) => setPosts(TPost));
+    // setPosts(dummy);
   }, []);
 
   //=======================================================
