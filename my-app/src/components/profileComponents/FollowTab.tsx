@@ -73,7 +73,7 @@ const FollowTab = () => {
   );
 
   circuls2.push(
-    <View style={{ flexDirection: "row" }}>
+    <View style={{ flexDirection: "row" }} key={me.name}>
       <Pressable
         onPress={otherUser}
         style={({ pressed }) => [

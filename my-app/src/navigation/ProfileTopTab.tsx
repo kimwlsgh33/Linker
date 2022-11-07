@@ -32,11 +32,13 @@ const ProfileTopTab = ({ user }) => {
         <View>
           <Pressable
             onPress={() => {
-              navigation.navigate("Story", /*{
+              navigation.navigate(
+                "Story" /*{
                 userName: user.username,
                 name: user.name,
                 image: user.profpic,
-              }*/);
+              }*/
+              );
               // storyPressed(user.id);
             }}
             style={({ pressed }) => [
@@ -60,10 +62,14 @@ const ProfileTopTab = ({ user }) => {
     return (
       <FlatList
         data={squares}
+        numColumns={3}
         renderItem={(item) => <PostThumbnail post={item} />}
         showsVerticalScrollIndicator={false}
-        style={styles.container}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerStyle={{
+          paddingBottom: 100,
+          flexDirection: "column",
+          justifyContent:"space-between"
+        }}
       />
     );
   };
@@ -126,6 +132,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 100
   },
 });
 

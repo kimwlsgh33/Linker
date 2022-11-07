@@ -99,10 +99,12 @@ function Modal({ navigation, route }) {
                 ]}
               >
                 <View style={styles.userBar}>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View style={styles.modalIcon2}>
                     <Entypo name="plus" style={{ fontSize: 20 }} />
                   </View>
                   <Text style={styles.modalText}>계정 추가</Text>
+                  </View>
                   <View>
                     <RadioButton
                       value="second"
