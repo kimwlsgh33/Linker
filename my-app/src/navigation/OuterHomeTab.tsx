@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HomeTab from "./HomeTab";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useNavigationState } from "@react-navigation/native";
-import UploadPost from "../screens/UploadPost";
-import UploadStory from "../screens/UploadStory";
+import UploadPost from "../screens/home/UploadPost";
+import UploadStory from "../screens/home/UploadStory";
 import TestAnim from "../screens/test/screens/TestAnim";
 
 const Tab = createMaterialTopTabNavigator();

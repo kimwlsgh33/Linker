@@ -1,16 +1,18 @@
 import React, { ComponentProps } from "react";
-import { Platform, Pressable } from "react-native";
+import { Platform, Pressable, Text } from "react-native";
 
-function MyPressable({ children, ...props }) {
+function MyPressable({ title, ...props }) {
   return (
     <Pressable
       {...props}
       style={({ pressed }) => [
         {
-          width: "100%",
-          height: "100%",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "tomato",
+
+          margin: 5,
+          borderRadius: 5,
         },
         Platform.OS === "ios" && {
           backgroundColor: pressed ? "rgb(210, 230, 255)" : "white",
@@ -19,7 +21,7 @@ function MyPressable({ children, ...props }) {
       ]}
       android_ripple={{ color: "lightgray" }}
     >
-      {children}
+      <Text style={{ color: "white" }}>{title}</Text>
     </Pressable>
   );
 }

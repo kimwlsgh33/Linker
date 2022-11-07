@@ -3,6 +3,8 @@ import { View, ScrollView, Image, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Ionic from "react-native-vector-icons/Ionicons";
+import { FlatList } from "react-native-gesture-handler";
+import PostThumbnail from "../components/profileComponents/PostThumbnail";
 
 const ProfileTopTab = ({ user }) => {
   const Tab = createMaterialTopTabNavigator();
@@ -56,9 +58,13 @@ const ProfileTopTab = ({ user }) => {
 
   const Posts = () => {
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-        <View style={styles.squares}>{squares}</View>
-      </ScrollView>
+      <FlatList
+        data={squares}
+        renderItem={(item) => <PostThumbnail post={item} />}
+        showsVerticalScrollIndicator={false}
+        style={styles.container}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      />
     );
   };
   const Video = () => {

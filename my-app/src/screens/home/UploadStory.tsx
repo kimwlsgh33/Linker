@@ -18,16 +18,16 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialCmnt from "react-native-vector-icons/MaterialCommunityIcons";
-import MyPressable from "../components/MyPressable";
-import InputBar from "../components/upload/InputBar";
+import MyPressable from "../../components/MyPressable";
+import InputBar from "../../components/upload/InputBar";
 import { DataStore, Storage } from "aws-amplify";
-import { Post, Tag } from "../models";
+import { Post, Tag } from "../../models";
 import { v4 as uuidv4 } from "uuid";
-import { useMeStore, usePostStore } from "../store";
+import { useMeStore, usePostStore } from "../../store";
 
 const { width } = Dimensions.get("window");
 
-function UploadPost({ navigation }) {
+function UploadStory({ navigation }) {
   const { me } = useMeStore();
   const { addPost } = usePostStore();
   const [asset, setAsset] = useState<Asset | null>(null);
@@ -174,7 +174,7 @@ function UploadPost({ navigation }) {
     } else if (text == "") {
       Alert.alert(
         "에러!",
-        "게시글을 입력해주세요",
+        "스토리를 입력해주세요",
         [
           {
             text: "확인",
@@ -188,38 +188,37 @@ function UploadPost({ navigation }) {
       return;
     }
 
-    try {
-      // S3 저장소에 이미지 업로드, key값 가져옴
-      const image = await onUpload();
+    // S3 저장소에 이미지 업로드, key값 가져옴
+    const image = await onUpload();
+    console.log("image", image);
 
-      // 태그 존재하는지 확인
-      let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
+    // 태그 존재하는지 확인
+    let exists = await DataStore.query(Tag, (t) => t.name("eq", tag));
 
-      // 태그 없으면, 새로운 태그 만듬
-      if (exists.length === 0) {
-        exists = await DataStore.save(new Tag({ name: tag }));
-      }
+    console.log("exists tag : ", exists);
 
-      const post = await DataStore.save(
-        new Post({
-          imageUrls: [image.key],
-          link,
-          text,
-          Tag: exists[0],
-          userID: me.id,
-        })
-      );
-
-      addPost(post);
-      setText("");
-      setLink("");
-      setTag("");
-      setAsset(null);
-      setLoading(false);
-      navigation.navigate("HomeTab");
-    } catch (e) {
-      Alert.alert("Error", e.message);
+    // 태그 없으면, 새로운 태그 만듬
+    if (!exists) {
+      exists[0] = await DataStore.save(new Tag({ name: tag }));
     }
+
+    const post = await DataStore.save(
+      new Post({
+        imageUri: image.key,
+        link,
+        text,
+        Tag: exists[0],
+        userID: me.id,
+      })
+    );
+
+    addPost(post);
+    setText("");
+    setLink("");
+    setTag("");
+    setAsset(null);
+    setLoading(false);
+    navigation.navigate("HomeTab");
   };
 
   return (
@@ -429,4 +428,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UploadPost;
+export default UploadStory;

@@ -61,10 +61,10 @@ const Post = ({ post }: { post: PPost }) => {
     (async () => {
       getUserProfpic(post.userID);
 
-      // const newImages = await Promise.all(
-      //   post.imageUrls.map(async (image) => await getImage(image))
-      // );
-      const newImages = post.imageUrls;
+      const newImages = await Promise.all(
+        post.imageUrls.map(async (image) => await getImage(image))
+      );
+      // const newImages = post.imageUrls;
       setImages(newImages);
     })();
   }, []);
@@ -89,7 +89,7 @@ const Post = ({ post }: { post: PPost }) => {
           </TouchableOpacity>
         </View>
 
-        {me?.favorite?.includes(post.userID) && (
+        {me.favorite?.includes(post.userID) && (
           <Pressable
             onPress={() => {
               setIsFavorite(true);
