@@ -182,6 +182,7 @@ export const usePostStore = create<PostStoreType>((set) => ({
         id: "1",
         text: "IU",
       },
+      clicked: [],
     };
   }),
   setPosts: (posts) => set(() => ({ posts })),

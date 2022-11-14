@@ -10,11 +10,11 @@ import {
   ScrollView,
   StyleSheet,
 } from "react-native";
-import Ionic from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useMeStore, usePostStore } from "../../store";
 import { DataStore } from "aws-amplify";
 import { Comment } from "../../models";
+import { previousDay } from "date-fns";
 
 const CommentScreen = ({ route, Navigation }) => {
   const { id: postId, text, comments } = route.params || {}; // comment: commentArray <-- 이렇게 쓰면 commentArray라는 이름으로 쓸 수 있음.
@@ -24,8 +24,8 @@ const CommentScreen = ({ route, Navigation }) => {
   const { addComment, addCommentLikeUser } = usePostStore();
   const { me } = useMeStore();
 
+  // params로 받아온 comment 관리하는 state.
   const [commentList, setCommentList] = useState(comments);
-  const [commentLikeUser, setCommentLikeUser] = useState([]);
 
   const saveComment = async (text) => {
     // console.log(Object.keys(text).find((key) => key === "nativeEvent"));
@@ -36,57 +36,20 @@ const CommentScreen = ({ route, Navigation }) => {
     return newComment;
   };
 
-  // const addCommentLike = async (commentID) => {
-  //   const newComment = await DataStore.query(Comment, commentID);
-  //   console.log("new: " + newComment);
-  // await DataStore.save(
-  //   Comment.copyOf(newComment, (updated) => {
-  //     updated.likes.includes(me.id) ? null : updated.likes.push(me.id);
-  //   })
-  // );
-  //   return newComment;
-  // };
-
-  // 댓글 좋아요 bb
-  // const commentLikePressed = (id) => {
-  //   const newLikePressed = commentList.map((comment) => {
-  //     if (comment.id === id) {
-  //       return {
-  //         ...comment,
-  //         commentLike:
-  //       };
-  //     }
-  //     return comment;
-  //   });
-  //   setCommentList(newLikePressed);
-  // saveCommentLike(id);
-  // };
-
-  // post에 댓글정보 전달.
-  // const saveComment = () => {
-  //   events.emit("saveComment", {
-  //     comment,
-  //     id,
-  //     comment_id: commentList.length + 1,
-  //   });
-  // };
-
-  // post에 댓글 좋아요정보 전달.
-  // const saveCommentLike = (comment_id) => {
-  //   events.emit("saveCommentLike", {
-  //     comment_id,
-  //     id,
-  //   });
-  // };
-  useEffect(() => {
-    console.log("Comments", commentList);
-  }, [commentList]);
-
-  console.log("====================================");
-  commentList.map((comment) => {
-    console.log("sssss => " + comment.likes);
-    console.log(comment.likes.includes(me.id));
-  });
+  const commentLike = (commentId) =>
+    setCommentList((prev) => {
+      return prev.map((item) => {
+        if (item.id === commentId) {
+          return {
+            ...item,
+            likes: item.likes.includes(me.id)
+              ? item.likes.filter((id) => id !== me.id)
+              : [...item.likes, me.id],
+          };
+        }
+        return item;
+      });
+    });
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -156,6 +119,7 @@ const CommentScreen = ({ route, Navigation }) => {
                       user_id: me.id,
                       post_id: postId,
                     });
+                    commentLike(comment.id);
                   }}
                   style={styles.touchable1}
                 >

@@ -14,9 +14,9 @@ import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 // 추가 된 부분
 // ==========================================================
-import com.facebook.react.bridge.JSIModulePackage;
-import com.swmansion.reanimated.ReanimatedJSIModulePackage;
-// =========================================================
+// import com.facebook.react.bridge.JSIModulePackage;
+// import com.swmansion.reanimated.ReanimatedJSIModulePackage;
+// // =========================================================
 import com.myapp.newarchitecture.MainApplicationReactNativeHost;
 
 import expo.modules.ApplicationLifecycleDispatcher;
@@ -62,10 +62,10 @@ public class MainApplication extends Application implements ReactApplication {
     }
   }
  // 추가된 부분
-  @Override
-protected JSIModulPackage getJSIModulePackage() {
-return new ReanimatedJSIModulePackage();
-} 
+//   @Override
+// protected JSIModulPackage getJSIModulePackage() {
+// return new ReanimatedJSIModulePackage();
+// } 
 // ======================================
   @Override
   public void onCreate() {

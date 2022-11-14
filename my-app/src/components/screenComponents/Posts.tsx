@@ -19,7 +19,7 @@ const Posts = () => {
   //=======================================================
   //=======================================================
   const { posts } = usePostStore();
-  const { me, addBookMark, following } = useMeStore();
+  const { me, addBookMark } = useMeStore();
 
   const getPost = async () => {
     const newPost = await DataStore.query(TPost);
@@ -95,11 +95,11 @@ const Posts = () => {
     setQrModal(true);
   };
 
-  const followState = (userId) => {
-    following(userId);
-    setModal(false);
-    setFollow(true);
-  };
+  // const followState = (userId) => {
+  //   following(userId);
+  //   setModal(false);
+  //   setFollow(true);
+  // };
 
   // useEffect(() => {
   //   events.addListener("saveComment", dispatch(addComment({})));

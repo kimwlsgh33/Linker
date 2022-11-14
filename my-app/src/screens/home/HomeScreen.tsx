@@ -25,7 +25,6 @@ function HomeScreen({ navigation }) {
           flexDirection: "row",
           paddingVertical: 7,
           paddingHorizontal: 15,
-          alignItems: "center",
         }}
       >
         <Text
@@ -36,7 +35,7 @@ function HomeScreen({ navigation }) {
             fontWeight: "500",
           }}
         >
-          Instagram
+          Linker
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Pressable
@@ -53,8 +52,8 @@ function HomeScreen({ navigation }) {
         </View>
       </View>
 
-      <Stories />
-      {/* <Posts /> */}
+      {/* <Stories /> */}
+      <Posts />
     </SafeAreaView>
   );
 }

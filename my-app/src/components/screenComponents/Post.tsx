@@ -1,5 +1,5 @@
 import { Link, useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -10,20 +10,65 @@ import {
   FlatList,
   Dimensions,
   Linking,
+  Animated,
+  Easing,
 } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
 import { useMeStore, useModalStore, usePostStore } from "../../store";
 import { DataStore, Storage } from "aws-amplify";
 import { User, Post as PPost } from "../../models";
 import MyPressable from "../MyPressable";
 import { id } from "date-fns/locale";
+
 const { width } = Dimensions.get("window");
 
 const Post = ({ post }: { post: PPost }) => {
+  // 포스트를 두번 누르면 하트 애니메이션이 들어가는 기능. 좋아요도 눌리고.
+  const toggleHeart = (user_id) => {
+    if (user_id in post.likes) {
+      delete post.likes[user_id];
+    } else {
+      post.likes[user_id];
+    }
+    fillHeart();
+  };
+
+  var lastTap = null;
+
+  const doubleTap = () => {
+    console.log("눌렸졍??????");
+    const now = Date.now();
+    const DOUBLE_PRESS_DELAY = 300;
+    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
+      toggleHeart(me.id);
+    } else {
+      lastTap = now;
+    }
+  };
+
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  const fillHeart = () => {
+    Animated.sequence([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 400,
+        easing: Easing.quad,
+        useNativeDriver: true,
+      }),
+      Animated.delay(600),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+  // ===================================================
+
   const [user, setUser] = useState<User | null>(null);
   const [userProfpicSource, setUserProfpicSource] = useState(
     require("../../../assets/images/user.png")
@@ -42,9 +87,14 @@ const Post = ({ post }: { post: PPost }) => {
     });
   };
 
+  const getPost = async () => {
+    const newPost = await DataStore.query(PPost);
+    return newPost;
+  };
+
   useEffect(() => {
-    console.log("likeUser", post.likes);
-  }, [post.likes]);
+    getPost();
+  }, []);
 
   const getUser = async (userID: string) => {
     const user = await DataStore.query(User, userID);
@@ -119,16 +169,28 @@ const Post = ({ post }: { post: PPost }) => {
       </View>
       {/* ================================================= */}
       {/* 이미지 */}
-      <FlatList
-        data={images}
-        keyExtractor={(_, idx) => idx.toString()}
-        renderItem={({ item: image }) => (
-          <Image source={{ uri: image }} style={{ width, height: 380 }} />
-        )}
-        horizontal
-        contentContainerStyle={{ width: width * images.length }}
-        pagingEnabled
-      />
+      <View>
+        <TouchableOpacity onPress={doubleTap}>
+          <FlatList
+            data={images}
+            keyExtractor={(_, idx) => idx.toString()}
+            renderItem={({ item: image }) => (
+              <Image source={{ uri: image }} style={{ width, height: 380 }} />
+            )}
+            horizontal
+            contentContainerStyle={{ width: width * images.length }}
+            pagingEnabled
+          />
+        </TouchableOpacity>
+        <Animated.View style={{ position: "absolute", opacity: opacity }}>
+          {me.id in post.likes ? (
+            <Ionicons name="heart" size={50} color={"white"}></Ionicons>
+          ) : (
+            <Ionicons name="hearto" size={50} color={"white"}></Ionicons>
+          )}
+        </Animated.View>
+      </View>
+
       <View style={styles.postInfo}>
         <View style={[styles.iconBar]}>
           <View style={styles.Icons}>
@@ -159,12 +221,12 @@ const Post = ({ post }: { post: PPost }) => {
             </TouchableOpacity>
           </View>
           {/* ============================================== */}
-          {/* link button */}
+          {/* 링크 버튼 */}
           <TouchableOpacity
             style={{ flex: 1 }}
             onPress={() => {
               Linking.openURL(post.link);
-              addClick({ post_id: post.id, user_id: me.id });
+              addClick({ post_id: post.id, user_id: me?.id });
             }}
           >
             <View style={[styles.linkButton, { flexDirection: "column" }]}>

@@ -12,6 +12,7 @@ import {
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
+  Value,
   withRepeat,
   withSequence,
   withTiming,
@@ -19,6 +20,9 @@ import Animated, {
 import Feather from "react-native-vector-icons/Feather";
 import Ionic from "react-native-vector-icons/Ionicons";
 import Antdesign from "react-native-vector-icons/AntDesign";
+// import ProgressCircle from "../../components/progressComponent/progressCircle";
+// import * as Progress from "react-native-progress";
+import { ReactSVG } from "react";
 
 const StoryScreen = ({ route, navigation }) => {
   const { name } = route.params || {};
@@ -61,24 +65,16 @@ const StoryScreen = ({ route, navigation }) => {
     setHeart(!heart);
   };
 
-  const x = useSharedValue(0);
-  x.value = withRepeat(withSequence(withTiming(400, { duration: 5000 })));
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: x.value,
-        },
-      ],
-    };
-  });
+  // 스토리는 배열임.
+  // 애니메이션이 끝나면 다음 배열의 스토리로 넘어가야 함.
+  // 배열의 length가 0 이 되면 homeScreen으로 돌아감.
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <StatusBar backgroundColor={"black"} barStyle={"light-content"} />
       {/* 상단 애니메이션 */}
-      <Animated.View style={[styles.topBar, animatedStyle]}></Animated.View>
+      {/* <ProgressCircle /> */}
+
       {/* =========== */}
       <View style={styles.view2}>
         <View style={styles.view3}>

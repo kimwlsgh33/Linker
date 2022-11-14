@@ -25,6 +25,8 @@
     "aws-amplify": "^4.3.39",
     "aws-amplify-react-native": "^6.0.5",
     "crypto-js": "^4.1.1",
+    "css-select": "^5.1.0",
+    "css-tree": "^2.2.1",
     "date-fns": "^2.29.3",
     "expo": "~46.0.16",
     "expo-camera": "~12.3.0",
