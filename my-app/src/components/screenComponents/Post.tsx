@@ -22,31 +22,20 @@ import { DataStore, Storage } from "aws-amplify";
 import { User, Post as PPost } from "../../models";
 import MyPressable from "../MyPressable";
 import { id } from "date-fns/locale";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import DoubleClick from "react-native-double-tap";
 
 const { width } = Dimensions.get("window");
 
 const Post = ({ post }: { post: PPost }) => {
   // 포스트를 두번 누르면 하트 애니메이션이 들어가는 기능. 좋아요도 눌리고.
   const toggleHeart = (user_id) => {
-    if (user_id in post.likes) {
-      delete post.likes[user_id];
+    if (post.likes.includes(user_id)) {
+      post.likes.filter((id) => id !== user_id);
     } else {
-      post.likes[user_id];
+      [...post.likes, user_id];
     }
     fillHeart();
-  };
-
-  var lastTap = null;
-
-  const doubleTap = () => {
-    console.log("눌렸졍??????");
-    const now = Date.now();
-    const DOUBLE_PRESS_DELAY = 300;
-    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      toggleHeart(me.id);
-    } else {
-      lastTap = now;
-    }
   };
 
   const opacity = useRef(new Animated.Value(0)).current;
@@ -170,7 +159,13 @@ const Post = ({ post }: { post: PPost }) => {
       {/* ================================================= */}
       {/* 이미지 */}
       <View>
-        <TouchableOpacity onPress={doubleTap}>
+        <DoubleClick
+          doubleTap={() => {
+            toggleHeart(me?.id);
+            addLikeUser({ post_id: post.id, user_id: me?.id });
+          }}
+          delay={200}
+        >
           <FlatList
             data={images}
             keyExtractor={(_, idx) => idx.toString()}
@@ -181,12 +176,17 @@ const Post = ({ post }: { post: PPost }) => {
             contentContainerStyle={{ width: width * images.length }}
             pagingEnabled
           />
-        </TouchableOpacity>
-        <Animated.View style={{ position: "absolute", opacity: opacity }}>
-          {me.id in post.likes ? (
-            <Ionicons name="heart" size={50} color={"white"}></Ionicons>
+        </DoubleClick>
+        <Animated.View
+          style={{
+            position: "absolute",
+            opacity: opacity,
+          }}
+        >
+          {post.likes.includes(me.id) ? (
+            <AntDesign name="heart" size={50} color={"pink"}></AntDesign>
           ) : (
-            <Ionicons name="hearto" size={50} color={"white"}></Ionicons>
+            <AntDesign name="hearto" size={50} color={"pink"}></AntDesign>
           )}
         </Animated.View>
       </View>

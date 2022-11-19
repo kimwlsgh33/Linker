@@ -41,6 +41,7 @@
     "react-native": "0.69.5",
     "react-native-bouncy-checkbox": "^3.0.5",
     "react-native-dotenv": "^3.3.1",
+    "react-native-double-tap": "^1.0.1",
     "react-native-gesture-handler": "^2.7.0",
     "react-native-get-random-values": "^1.8.0",
     "react-native-hyperlink": "^0.0.22",
