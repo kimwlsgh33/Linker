@@ -20,16 +20,13 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useMeStore, useModalStore, usePostStore } from "../../store";
 import { DataStore, Storage } from "aws-amplify";
 import { User, Post as PPost } from "../../models";
-import MyPressable from "../MyPressable";
-import { id } from "date-fns/locale";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import DoubleClick from "react-native-double-tap";
 
 const { width } = Dimensions.get("window");
 
 const Post = ({ post }: { post: PPost }) => {
   // 포스트를 두번 누르면 하트 애니메이션이 들어가는 기능. 좋아요도 눌리고.
-  const toggleHeart = (user_id) => {
+  const toggleHeart = (user_id: string) => {
     if (post.likes.includes(user_id)) {
       post.likes.filter((id) => id !== user_id);
     } else {
@@ -66,7 +63,12 @@ const Post = ({ post }: { post: PPost }) => {
   const { me, setMe, addBookMark } = useMeStore();
   const { setPosts, addLikeUser, addCommentLikeUser, addClick } =
     usePostStore();
-  const { setModal, setIsFavorite } = useModalStore();
+  const {
+    setModal: setPmodal,
+    setIsFavorite,
+    modal: Pmodal,
+    isFavorite,
+  } = useModalStore();
 
   const navigation = useNavigation();
 
@@ -127,7 +129,7 @@ const Post = ({ post }: { post: PPost }) => {
             <Image source={userProfpicSource} style={styles.userProfPic} />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.userBarName}>{user?.nickname}</Text>
+            <Text style={styles.userBarName}>{me.nickname}</Text>
           </TouchableOpacity>
         </View>
         {/* ============================================== */}
@@ -148,7 +150,7 @@ const Post = ({ post }: { post: PPost }) => {
         {/* 더보기 창 */}
         <TouchableOpacity
           onPress={() => {
-            setModal(true);
+            setPmodal(Pmodal);
             // setId(data.id);
             // setUserId(data.userId);
           }}
@@ -158,7 +160,7 @@ const Post = ({ post }: { post: PPost }) => {
       </View>
       {/* ================================================= */}
       {/* 이미지 */}
-      <View>
+      <View style={{ justifyContent: "center" }}>
         <DoubleClick
           doubleTap={() => {
             toggleHeart(me?.id);
@@ -184,9 +186,9 @@ const Post = ({ post }: { post: PPost }) => {
           }}
         >
           {post.likes.includes(me.id) ? (
-            <AntDesign name="heart" size={50} color={"pink"}></AntDesign>
+            <AntDesign name="heart" size={50} color={"black"}></AntDesign>
           ) : (
-            <AntDesign name="hearto" size={50} color={"pink"}></AntDesign>
+            <AntDesign name="hearto" size={50} color={"black"}></AntDesign>
           )}
         </Animated.View>
       </View>
@@ -338,7 +340,7 @@ const styles = StyleSheet.create({
   },
   userBarInfo: { flexDirection: "row", alignItems: "center" },
   userProfPic: { width: 40, height: 40, borderRadius: 20 },
-  userBarName: { fontSize: 15, fontWeight: "bold" },
+  userBarName: { fontSize: 15, fontWeight: "bold", paddingLeft: 10 },
   test: {
     position: "relative",
     justifyContent: "center",

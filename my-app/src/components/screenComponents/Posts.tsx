@@ -58,23 +58,6 @@ const Posts = () => {
     []
   );
 
-  // const favoriteItem = (id) => {
-  //   dispatch(favoritePost(id));
-  //   setFavorite((prev) => !prev);
-  // };
-
-  // const addcomment = ({ text, id }: { text: string; id: any }) => {
-  //   dispatch(addComment({ postId: id, comment: text }));
-  // };
-
-  // const likePressed = useCallback(
-  //   // likePressed라는 함수를 usecallback을 이용해 만들어줌.
-  //   ({ id, userId }) => {
-  //     dispatch(PostLike({ postId: id, userId: userId }));
-  //   },
-  //   [] // data와 setData를 의존성 배열에 넣어줌.
-  // );
-
   const shareModalState = () => {
     setModal(false);
     setShareModal(true);

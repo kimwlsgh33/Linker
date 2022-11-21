@@ -42,8 +42,8 @@ const CommentScreen = ({ route, Navigation }) => {
         if (item.id === commentId) {
           return {
             ...item,
-            likes: item.likes.includes(me.id)
-              ? item.likes.filter((id) => id !== me.id)
+            likes: item?.likes?.includes(me.id)
+              ? item?.likes?.filter((id) => id !== me.id)
               : [...item.likes, me.id],
           };
         }

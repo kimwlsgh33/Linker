@@ -9,17 +9,15 @@ import Evilcons from "react-native-vector-icons/EvilIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Orcticon from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
-import events from "../../libs/eventEmitter";
+
 import { useMeStore, useModalStore, usePostStore } from "../../store";
-import { Post, User } from "../../models";
 
 type ModalProps = {
   id: any;
 };
 
 const ModalScreen = () => {
-  const { me, setMe, following, addBookMark, favorite } = useMeStore();
+  const { me, setMe, addBookMark, favorite } = useMeStore();
   const { posts, setPosts } = usePostStore();
   const {
     setModal,
@@ -58,33 +56,17 @@ const ModalScreen = () => {
     favorite(id);
   };
 
-  const followState = (userId) => {
-    following(userId);
-    setModal(false);
-    setFollow(true);
-  };
+  // const followState = (userId) => {
+  //   following(userId);
+  //   setModal(false);
+  //   setFollow(true);
+  // };
 
   return (
     <>
       {posts.map((post) => {
-        <View
-          style={{
-            backgroundColor: "#424242",
-            height: "60%",
-            borderTopEndRadius: 25,
-            borderTopStartRadius: 25,
-          }}
-        >
-          <View
-            style={{
-              width: "100%",
-              height: "30%",
-              flexDirection: "row",
-              marginTop: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
+        <View style={styles.wholeContainer}>
+          <View style={styles.secContainer}>
             <TouchableOpacity
               style={[styles.topbox]}
               onPress={() => {
@@ -163,7 +145,7 @@ const ModalScreen = () => {
                   favorite(post.userID);
                 }}
               >
-                {me.favorite.includes(post.userID) === false ? (
+                {me?.favorite?.includes(post.userID) === false ? (
                   <View style={{ flexDirection: "row" }}>
                     <AntDesign
                       name="star"
@@ -191,9 +173,9 @@ const ModalScreen = () => {
               </TouchableOpacity>
             </View>
             <View style={styles.centerBottomBox}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => {
-                  followState(post.userID);
+                  // followState(post.userID);
                 }}
               >
                 {me.following.includes(post.userID) === true ? (
@@ -221,7 +203,7 @@ const ModalScreen = () => {
                     </Text>
                   </View>
                 )}
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
           <View style={{ width: "100%", height: "27%", alignItems: "center" }}>
@@ -262,6 +244,20 @@ const ModalScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  wholeContainer: {
+    backgroundColor: "#424242",
+    height: "60%",
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
+  },
+  secContainer: {
+    width: "100%",
+    height: "30%",
+    flexDirection: "row",
+    marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   topbox: {
     backgroundColor: "#585858",
     width: "20%",
