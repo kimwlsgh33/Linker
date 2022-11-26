@@ -160,7 +160,7 @@ const Post = ({ post }: { post: PPost }) => {
       </View>
       {/* ================================================= */}
       {/* 이미지 */}
-      <View style={{ justifyContent: "center" }}>
+      <View style={{}}>
         <DoubleClick
           doubleTap={() => {
             toggleHeart(me?.id);

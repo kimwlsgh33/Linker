@@ -124,7 +124,7 @@ const CommentScreen = ({ route, Navigation }) => {
                   style={styles.touchable1}
                 >
                   <AntDesign
-                    name={comment.likes.includes(me.id) ? "heart" : "hearto"}
+                    name={comment?.likes?.includes(me.id) ? "heart" : "hearto"}
                     style={{
                       fontSize: 15,
                     }}
