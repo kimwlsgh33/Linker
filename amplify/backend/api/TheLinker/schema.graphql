@@ -1,0 +1,55 @@
+type Tag @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String
+}
+
+type Story @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  imageUrls: [String]
+  likes: [ID]
+  userID: ID! @index(name: "byUser")
+}
+
+type Comment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String!
+  likes: [ID]
+  userID: ID! @index(name: "byUser")
+  postID: ID! @index(name: "byPost")
+}
+
+type Term @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  required: Boolean!
+  event: Boolean!
+  night: Boolean!
+}
+
+type Post @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  text: String!
+  link: String!
+  imageUrls: [String]
+  likes: [ID]
+  userID: ID! @index(name: "byUser")
+  Comments: [Comment] @hasMany(indexName: "byPost", fields: ["id"])
+  Tag: Tag! @hasOne
+  clicked: [ID]
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  username: String!
+  name: String!
+  nickname: String!
+  password: String!
+  birthday: String
+  Term: Term! @hasOne
+  Posts: [Post] @hasMany(indexName: "byUser", fields: ["id"])
+  Comments: [Comment] @hasMany(indexName: "byUser", fields: ["id"])
+  Stories: [Story] @hasMany(indexName: "byUser", fields: ["id"])
+  profpic: String
+  bookMark: [ID]
+  favorite: [ID]
+}
+ 
